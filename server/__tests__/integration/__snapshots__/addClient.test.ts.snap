@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing login mutation and getArticles query with bad logins Get Auth with bad logins 1`] = `
+Object {
+  "login": Object {
+    "errors": Array [
+      Object {
+        "field": "email",
+        "message": "That e-mail doesn't exist",
+      },
+    ],
+    "user": null,
+  },
+}
+`;
+
+exports[`Testing login mutation and getArticles query with bad logins Get Auth with bad logins 2`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    [GraphQLError: Cannot return null for non-nullable field PaginationResponse.edges.],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Testing login mutation and getArticles query with good logins Get FieldError with good logins 1`] = `
+Object {
+  "login": Object {
+    "errors": null,
+    "user": Object {
+      "email": "bob@bob.fr",
+      "nickname": "bob",
+    },
+  },
+}
+`;
+
+exports[`Testing login mutation and getArticles query with good logins Get FieldError with good logins 2`] = `
+Object {
+  "data": Object {
+    "getArticles": Object {
+      "edges": Array [
+        Object {
+          "article": "Benign neoplasm of lymph nodes",
+          "author": Object {
+            "email": "bob@bob.fr",
+            "nickname": "bob",
+          },
+          "description": "Drainage of Jejunum, Open Approach, Diagnostic",
+          "image_url": "http://dummyimage.com/181x110.png/ff4444/ffffff",
+          "isPublished": true,
+          "social": Array [],
+          "source": Array [],
+          "tags": Array [],
+          "title": "Alcohol Prep Pads",
+        },
+        Object {
+          "article": "Personal history of poisoning, presenting hazards to health",
+          "author": Object {
+            "email": "bob@bob.fr",
+            "nickname": "bob",
+          },
+          "description": "Supplement L Temporal Bone w Autol Sub, Perc Endo",
+          "image_url": "http://dummyimage.com/130x171.bmp/ff4444/ffffff",
+          "isPublished": false,
+          "social": Array [],
+          "source": Array [],
+          "tags": Array [],
+          "title": "Alprazolam",
+        },
+        Object {
+          "article": "Injury to other intra-abdominal organs with open wound into cavity, unspecified intra-abdominal organ",
+          "author": Object {
+            "email": "bob@bob.fr",
+            "nickname": "bob",
+          },
+          "description": "Supplement Upper Artery with Synth Sub, Perc Endo Approach",
+          "image_url": "http://dummyimage.com/203x190.bmp/dddddd/000000",
+          "isPublished": false,
+          "social": Array [],
+          "source": Array [],
+          "tags": Array [],
+          "title": "Amoxicillin and Clavulanate Potassium",
+        },
+        Object {
+          "article": "Open wound of nose, unspecified site, complicated",
+          "author": Object {
+            "email": "bob@bob.fr",
+            "nickname": "bob",
+          },
+          "description": "Replace R Thumb Phalanx w Autol Sub, Perc Endo",
+          "image_url": "http://dummyimage.com/145x196.jpg/5fa2dd/ffffff",
+          "isPublished": false,
+          "social": Array [],
+          "source": Array [],
+          "tags": Array [],
+          "title": "Banana Boat Deep Tanning Dry SPF 8",
+        },
+        Object {
+          "article": "Other noncollision motor vehicle traffic accident injuring unspecified person",
+          "author": Object {
+            "email": "bob@bob.fr",
+            "nickname": "bob",
+          },
+          "description": "Removal of Int Fix from L Low Femur, Extern Approach",
+          "image_url": "http://dummyimage.com/185x116.jpg/ff4444/ffffff",
+          "isPublished": false,
+          "social": Array [],
+          "source": Array [],
+          "tags": Array [],
+          "title": "Bethanechol Chloride",
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "Bethanechol Chloride",
+        "hasNextPage": true,
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

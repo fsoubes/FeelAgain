@@ -1,0 +1,20 @@
+fragment ArticleFragment on Blog {
+  _id
+  title
+  description
+  image_url
+  tags
+  source
+  social
+  article
+  isPublished
+  createdAt
+  updatedAt
+  totalVoting
+  authRating
+  author {
+    _id
+    nickname
+    email
+  }
+}

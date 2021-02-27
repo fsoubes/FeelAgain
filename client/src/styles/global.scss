@@ -1,0 +1,78 @@
+html,
+body {
+  transition: color 0.5s linear;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#__next {
+  --container-padding: 5x;
+  --container-width: calc(100vw - var(--container-padding) * 2);
+}
+
+@media only screen and (min-width: 900px) {
+  #__next {
+    --container-padding: 32px;
+  }
+}
+
+@media only screen and (min-width: 1370px) {
+  #__next {
+    --container-padding: 20px;
+    --container-width: 1330px;
+  }
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .main {
+    flex: 1;
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  .main-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+}
+
+.cls-1 {
+  isolation: isolate;
+}
+.cls-2 {
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+.cls-3 {
+  fill: url(#gradient_fsoweb);
+}
+.cls-4 {
+  fill: none;
+  stroke-width: 0.495px;
+}
+.cls-4,
+.cls-5 {
+  stroke: gold;
+  stroke-miterlimit: 10;
+}
+.cls-5 {
+  stroke-width: 0.884px;
+  fill: gold;
+}

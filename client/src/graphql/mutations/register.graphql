@@ -1,0 +1,11 @@
+mutation Register($nickname: String!, $email: String!, $password: String!) {
+  register(user: { email: $email, nickname: $nickname, password: $password }) {
+    ...UserFragmentResponse
+  }
+}
+
+mutation Login($email: String!, $password: String!) {
+  login(user: { email: $email, password: $password }) {
+    ...UserFragmentResponse
+  }
+}

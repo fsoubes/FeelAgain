@@ -1,0 +1,11 @@
+query GetArticles($limit: Float!, $cursor: String) {
+  getArticles(limit: $limit, cursor: $cursor) {
+    edges {
+      ...ArticleFragment
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

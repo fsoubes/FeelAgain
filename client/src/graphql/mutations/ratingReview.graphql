@@ -1,0 +1,3 @@
+mutation RatingReview($articleId: String!, $rating: String!) {
+  ratingReview(articleId: $articleId, rating: $rating)
+}

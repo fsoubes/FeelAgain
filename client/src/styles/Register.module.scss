@@ -1,0 +1,50 @@
+.form__register {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__register_header {
+  margin-bottom: 15px;
+  text-align: center;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+  color: black;
+}
+
+.form__register_label {
+  display: block;
+  margin-bottom: 7px;
+  text-align: left;
+  color: black;
+}
+
+.form__register_input {
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+}
+
+.form__register_password {
+  display: flex;
+  justify-content: space-between;
+  a {
+    color: #0366d6;
+  }
+}
+
+.form__register_new {
+  padding: 15px 20px;
+  text-align: center;
+  border: 1px solid #d1d5da;
+  border-radius: 5px;
+  color: black;
+  a {
+    color: #0366d6;
+  }
+}

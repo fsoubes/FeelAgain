@@ -1,0 +1,34 @@
+@import "mixins";
+
+.articles__votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  button {
+    padding: 2px;
+    span {
+      margin-bottom: -6px;
+      margin-top: -6px;
+      font-weight: bold;
+    }
+  }
+  @include tablet() {
+    flex-direction: row;
+    button {
+      min-width: 0px;
+      padding: 0;
+      svg {
+        span {
+          font-size: 1.1rem;
+        }
+      }
+    }
+    span {
+      font-size: 0.8rem;
+    }
+  }
+}
+.articles__total {
+  font-size: 1.05rem;
+}

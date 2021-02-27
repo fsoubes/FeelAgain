@@ -1,0 +1,25 @@
+@mixin mobile() {
+  @media (max-width: 414px) {
+    @content;
+  }
+}
+
+@mixin tablet() {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin hide() {
+  @media (max-width: 1024px) {
+    display: none;
+    @content;
+  }
+}
+
+@mixin show() {
+  @media (min-width: 1025px) {
+    display: none;
+    @content;
+  }
+}

@@ -1,0 +1,75 @@
+@import "mixins";
+
+.navbar__content {
+  padding-left: "5%";
+  display: flex;
+  align-items: center;
+  position: relative;
+  .navbar__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hamburger {
+    @include show() {
+    }
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    height: 100%;
+    z-index: 500;
+    padding-right: 24px;
+    color: #fff;
+  }
+
+  .navbar__links {
+    @include hide() {
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      top: 0;
+      right: 0;
+      background: rgba(5, 30, 57, 0.85);
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      height: 100vh;
+      backdrop-filter: saturate(180%) blur(5px);
+      position: fixed;
+      z-index: 100;
+
+      button {
+        margin: 0 !important;
+        font-size: 1.5rem;
+        padding-left: 0 !important;
+        &:hover {
+          background: unset;
+          transform: scale(1.1);
+          -webkit-transform: scale(1.1);
+        }
+      }
+    }
+    display: flex;
+    button {
+      margin-left: 3rem;
+    }
+  }
+  .navbar__auth {
+    right: 0;
+    position: absolute;
+    padding-right: 5%;
+    .navbar__auth_logout {
+      @include hide() {
+      }
+    }
+    a {
+      color: #fff;
+    }
+  }
+}
+
+.hide {
+  display: none !important;
+}

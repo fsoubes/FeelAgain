@@ -1,0 +1,25 @@
+mutation AddArticle(
+  $title: String!
+  $description: String
+  $image_url: String
+  $tags: [String!]
+  $source: [String!]
+  $social: [String!]
+  $article: String
+  $isPublished: Boolean
+) {
+  addArticle(
+    blog: {
+      title: $title
+      description: $description
+      image_url: $image_url
+      tags: $tags
+      source: $source
+      social: $social
+      article: $article
+      isPublished: $isPublished
+    }
+  ) {
+    ...ArticleFragment
+  }
+}

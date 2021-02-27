@@ -1,0 +1,53 @@
+@import "./tools/functions.scss";
+@import "mixins";
+
+.dashboard__container {
+  --space: 8px;
+  --col: 350px;
+
+  background: #f6f8fa;
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #eaecef;
+  border-radius: 5px;
+  width: var(--container-width);
+  margin-left: auto;
+  margin-right: auto;
+
+  @include mobile() {
+    width: 96%;
+  }
+
+  .dashboard__header {
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+    color: black;
+  }
+  .dashboard__grid {
+    width: 100%;
+    display: grid;
+    grid-gap: space(1);
+    grid-template-columns: repeat(auto-fill, minmax(var(--col, 275px), 1fr));
+
+    @include mobile() {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  input,
+  textarea {
+    border: 1px solid #d5e3ec;
+    background: #f7fafb;
+    border-radius: 3px;
+    color: #121c42;
+    padding: space(1.5) space(1);
+    display: block;
+    width: 100%;
+    outline: none;
+    min-height: 44px;
+    width: 100%;
+  }
+}
