@@ -516,7 +516,7 @@ beforeAll(async () => {
   try {
     seedDB();
     await mongoose.connect(
-      "mongodb://localhost:27017/testpro",
+      "mongodb://localhost:27017/feelagain",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

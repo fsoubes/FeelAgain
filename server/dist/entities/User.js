@@ -13,6 +13,7 @@ exports.UserModel = exports.User = void 0;
 const mongodb_1 = require("mongodb");
 const typegoose_1 = require("@typegoose/typegoose");
 const type_graphql_1 = require("type-graphql");
+const Basket_1 = require("./Basket");
 let User = class User {
 };
 __decorate([
@@ -37,6 +38,11 @@ __decorate([
     typegoose_1.prop({ nullable: true, required: true, unique: true, index: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
+__decorate([
+    type_graphql_1.Field((_type) => Basket_1.Basket),
+    typegoose_1.prop({ ref: Basket_1.Basket, required: false }),
+    __metadata("design:type", Object)
+], User.prototype, "basket", void 0);
 __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)

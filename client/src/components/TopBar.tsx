@@ -8,7 +8,7 @@ import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Link from "next/link";
 import { useMeQuery, useLogoutMutation } from "../generated/graphql";
 import { ToggleThemeContext } from "../theme";
-import Logo from "../svg/logo";
+import Logo from "../svg/feelagain";
 import { isServer } from "../utils/isServer";
 import styles from "../styles/TopBar.module.scss";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -118,13 +118,13 @@ export const TopBar = (): ReactElement => {
               <Logo />
             </div>
           </Link>
-          <Link href="/">
+          {/*   <Link href="/">
             <a>
               <Typography variant="h6" style={!isDark ? { color: "#fff" } : {}}>
                 {NAME}
               </Typography>
             </a>
-          </Link>
+          </Link> */}
           <Button className={styles.hamburger} onClick={() => setOpen(!open)}>
             <MenuIcon />
           </Button>

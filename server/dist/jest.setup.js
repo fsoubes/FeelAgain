@@ -445,7 +445,7 @@ const seedDB = () => __awaiter(void 0, void 0, void 0, function* () {
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     try {
         seedDB();
-        yield mongoose_1.default.connect("mongodb://localhost:27017/testpro", {
+        yield mongoose_1.default.connect("mongodb://localhost:27017/feelagain", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,

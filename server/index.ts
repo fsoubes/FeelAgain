@@ -28,7 +28,7 @@ const main = async () => {
     await mongoose.connect(
       __prod__
         ? (process.env.DATABASE_URL as string)
-        : `mongodb://localhost:27017/testpro`,
+        : `mongodb://localhost:27017/feelagain`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

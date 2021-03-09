@@ -53,7 +53,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         let defaultUser;
         yield mongoose_1.default.connect(constant_1.__prod__
             ? process.env.DATABASE_URL
-            : `mongodb://localhost:27017/testpro`, {
+            : `mongodb://localhost:27017/feelagain`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
