@@ -13,6 +13,10 @@ export class Variants {
 
   @Field()
   @Property({ required: false })
+  product_id: String;
+
+  @Field()
+  @Property({ required: false })
   option1: String;
 
   @Field()

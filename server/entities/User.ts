@@ -5,8 +5,8 @@ import {
   index,
 } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
-import { Ref } from "constant/types";
-import { Basket } from "./Basket";
+// import { Ref } from "../constant/types";
+// import { Basket } from "./Basket";
 
 @ObjectType()
 @index({ email: 1, nickname: 1 }, { unique: true })
@@ -28,9 +28,9 @@ export class User {
   @Property({ nullable: true, required: true, unique: true, index: true })
   email: string;
 
-  @Field((_type) => Basket)
+  /* @Field((_type) => Basket)
   @Property({ ref: Basket, required: false })
-  basket?: Ref<Basket>;
+  basket?: Ref<Basket>; */
 
   @Property({ required: true })
   password: string;

@@ -53,14 +53,14 @@ type FieldError {
 
 type Mutation {
   addArticle(blog: BlogInput!): Blog!
-  addRecipe(recipe: RecipeInput!): Recipe!
+  addShoes: Boolean!
   changePassword(newPassword: String!, token: String!): UserResponse!
   forgotPassword(email: String!): Boolean!
   login(user: UserLogin!): UserResponse!
   logout: Boolean!
-  rate(rate: RateInput!): Recipe!
   ratingReview(articleId: String!, rating: String!): Boolean!
   register(user: UserRegister!): UserResponse!
+  test2(isArg: Boolean!): Boolean!
 }
 
 """Mongo object id scalar type"""
@@ -79,33 +79,8 @@ type PaginationResponse {
 type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
   getSingleArticle(articleId: ObjectId!): Blog!
+  getSingleShoe(articleId: ObjectId!): Boolean!
   me: User
-  recipe(recipeId: ObjectId!): Recipe
-  recipes: [Recipe!]!
-}
-
-type Rate {
-  date: DateTime!
-  user: User!
-  value: Int!
-}
-
-input RateInput {
-  recipeId: ObjectId!
-  value: Int!
-}
-
-type Recipe {
-  _id: ObjectId!
-  author: User!
-  description: String
-  ratings: [Rate!]!
-  title: String!
-}
-
-input RecipeInput {
-  description: String
-  title: String!
 }
 
 type User {

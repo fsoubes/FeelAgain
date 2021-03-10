@@ -1,8 +1,8 @@
-import { Shoes } from "./Shoes";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
-import { Ref } from "constant/types";
+import { Ref } from "../constant/types";
+import { Shoes } from "./Shoes";
 import { User } from "./User";
 
 @ObjectType()
@@ -15,7 +15,7 @@ export class Basket {
   products: Ref<Shoes>[];
 
   @Field((_type) => User)
-  @Property({ ref: User, nullable: false })
+  @Property({ ref: User, nullable: true })
   user: Ref<User>;
 }
 

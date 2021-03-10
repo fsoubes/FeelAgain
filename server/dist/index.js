@@ -47,6 +47,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const createUserLoader_1 = require("./helpers/createUserLoader");
 const seedDatabase_1 = require("./helpers/seedDatabase");
+const middleware_1 = require("graphql-voyager/middleware");
 require("dotenv").config();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -75,6 +76,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             origin: process.env.CORS_ORIGIN,
             credentials: true,
         }));
+        app.use("/voyager", middleware_1.express({ endpointUrl: "/graphql" }));
         app.use(express_session_1.default({
             store: new RedisStore({ client: redis, disableTouch: true }),
             name: constant_1.COOKIE_NAME,

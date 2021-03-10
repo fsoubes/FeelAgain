@@ -16,6 +16,7 @@ import cors from "cors";
 import { createUserLoader } from "./helpers/createUserLoader";
 import { seedDataBase } from "./helpers/seedDatabase";
 import { User } from "entities/User";
+import { express as voyagerMiddleware } from "graphql-voyager/middleware";
 require("dotenv").config();
 
 // Constant
@@ -60,6 +61,8 @@ const main = async () => {
         credentials: true,
       })
     );
+
+    app.use("/voyager", voyagerMiddleware({ endpointUrl: "/graphql" }));
 
     app.use(
       session({

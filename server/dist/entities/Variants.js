@@ -28,6 +28,11 @@ __decorate([
     type_graphql_1.Field(),
     typegoose_1.prop({ required: false }),
     __metadata("design:type", String)
+], Variants.prototype, "product_id", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typegoose_1.prop({ required: false }),
+    __metadata("design:type", String)
 ], Variants.prototype, "option1", void 0);
 __decorate([
     type_graphql_1.Field(),

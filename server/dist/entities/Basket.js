@@ -10,10 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BasketModel = exports.Basket = void 0;
-const Shoes_1 = require("./Shoes");
 const typegoose_1 = require("@typegoose/typegoose");
 const type_graphql_1 = require("type-graphql");
 const mongodb_1 = require("mongodb");
+const Shoes_1 = require("./Shoes");
 const User_1 = require("./User");
 let Basket = class Basket {
 };
@@ -28,7 +28,7 @@ __decorate([
 ], Basket.prototype, "products", void 0);
 __decorate([
     type_graphql_1.Field((_type) => User_1.User),
-    typegoose_1.prop({ ref: User_1.User, nullable: false }),
+    typegoose_1.prop({ ref: User_1.User, nullable: true }),
     __metadata("design:type", Object)
 ], Basket.prototype, "user", void 0);
 Basket = __decorate([

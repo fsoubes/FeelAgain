@@ -23,10 +23,42 @@ __decorate([
     __metadata("design:type", mongodb_1.ObjectId)
 ], Shoes.prototype, "_id", void 0);
 __decorate([
+    typegoose_1.prop({ required: true }),
+    __metadata("design:type", String)
+], Shoes.prototype, "id", void 0);
+__decorate([
+    typegoose_1.prop({ required: true, default: [] }),
+    __metadata("design:type", Array)
+], Shoes.prototype, "switchLinks", void 0);
+__decorate([
+    typegoose_1.prop({ required: true }),
+    __metadata("design:type", String)
+], Shoes.prototype, "switch", void 0);
+__decorate([
     type_graphql_1.Field(),
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
 ], Shoes.prototype, "title", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Shoes.prototype, "score", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Shoes.prototype, "scored_by", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Shoes.prototype, "visited_by", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Shoes.prototype, "bought_by", void 0);
 __decorate([
     type_graphql_1.Field(),
     typegoose_1.prop({ required: true }),
@@ -51,7 +83,7 @@ __decorate([
     type_graphql_1.Field(),
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
-], Shoes.prototype, "prouct_type", void 0);
+], Shoes.prototype, "product_type", void 0);
 __decorate([
     type_graphql_1.Field((_type) => [Variants_1.Variants]),
     typegoose_1.prop({ ref: Variants_1.Variants, default: [], nullable: false }),

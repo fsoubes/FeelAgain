@@ -11,9 +11,34 @@ export class Shoes {
   @Field()
   readonly _id: ObjectId;
 
+  @Property({ required: true })
+  id: String;
+
+  @Property({ required: true, default: [] })
+  switchLinks: [String];
+
+  @Property({ required: true })
+  switch: String;
+
   @Field()
   @Property({ required: true })
   title: String;
+
+  @Field()
+  @Property({ required: true, default: 0 })
+  score: Number;
+
+  @Field()
+  @Property({ required: true, default: 0 })
+  scored_by: Number;
+
+  @Field()
+  @Property({ required: true, default: 0 })
+  visited_by: Number;
+
+  @Field()
+  @Property({ required: true, default: 0 })
+  bought_by: Number;
 
   @Field()
   @Property({ required: true })
@@ -33,7 +58,7 @@ export class Shoes {
 
   @Field()
   @Property({ required: true })
-  prouct_type: String;
+  product_type: String;
 
   @Field((_type) => [Variants])
   @Property({ ref: Variants, default: [], nullable: false })
