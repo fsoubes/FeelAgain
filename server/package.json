@@ -40,7 +40,7 @@
     "graphql-voyager": "^1.0.0-rc.31",
     "ioredis": "^4.19.4",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.10.15",
+    "mongoose": "^5.11.19",
     "nodemailer": "^6.4.17",
     "nodemon": "^2.0.6",
     "redis": "^3.0.2",

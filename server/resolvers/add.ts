@@ -5,16 +5,22 @@ import { readJSON } from "../helpers/readJson";
 import { VariantsModel } from "../entities/Variants";
 import { ImagesModel } from "../entities/Images";
 
+
+
+
 @Resolver((_of) => Shoes)
 export class AddResolver {
   @Mutation(() => Boolean)
   async addShoes(@Ctx() {  }: MyContext) {
-    const data = readJSON("./data/anaki.json");
+    const filenames=["anaki","patricia"]
     try {
+      for(const name of filenames){
+      const data = readJSON(`./data/${name}.json`);
       for (let i = 0; i <= data.length; i++) {
-        if (!data[i]) {
+        if (!data[i] || data[i].product_type === "gif" ) {
           continue;
         }
+
         let { images, variants, ...partialObject } = data[i];
         const shoes = new ShoesModel({ ...partialObject });
 
@@ -38,6 +44,29 @@ export class AddResolver {
         }
 
         await shoes.save();
+      }
+      
+    }
+    return true;
+    } catch (err) {
+      throw err;
+    }
+  }
+  @Mutation(() => Boolean)
+  async addRelation() {
+    try {
+      for await (const doc of ShoesModel.find().cursor()) {
+        for await (const item of doc.switchLinks) { 
+          const switchShoes = await ShoesModel.findOne({ id: item });
+          if (item === doc.id) {
+            doc.switchTitle.push(doc.handle)
+            await doc.save()
+          } else {
+            doc.relatives.push(switchShoes?._id);
+            doc.switchTitle.push(switchShoes?.handle)
+            await doc.save()
+          }
+        }
       }
       return true;
     } catch (err) {

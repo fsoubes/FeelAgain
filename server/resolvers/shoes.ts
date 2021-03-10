@@ -52,6 +52,17 @@ export class ShoesResolver {
     return variants;
   }
 
+  @FieldResolver()
+  async relatives(@Root() shoes: Shoes, @Ctx() {  }: MyContext) {
+    const relatives = await ShoesModel.find({
+      _id: {
+        $in: shoes.relatives,
+      },
+    });
+
+    return relatives;
+  }
+
   @Mutation(() => Boolean)
   async test2(@Arg("isArg") isArg: Boolean, @Ctx() {  }: MyContext) {
     try {

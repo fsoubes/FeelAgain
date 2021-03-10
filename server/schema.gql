@@ -51,6 +51,15 @@ type FieldError {
   message: String!
 }
 
+type Images {
+  _id: ObjectId!
+  height: Float!
+  position: Float!
+  product_id: String!
+  src: String!
+  width: Float!
+}
+
 type Mutation {
   addArticle(blog: BlogInput!): Blog!
   addShoes: Boolean!
@@ -66,6 +75,13 @@ type Mutation {
 """Mongo object id scalar type"""
 scalar ObjectId
 
+type OptionShoes {
+  name: String!
+  position: String!
+  switchTitle: [String!]!
+  values: [String!]!
+}
+
 type PaginationInfo {
   endCursor: String
   hasNextPage: Boolean
@@ -79,8 +95,25 @@ type PaginationResponse {
 type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
   getSingleArticle(articleId: ObjectId!): Blog!
-  getSingleShoe(articleId: ObjectId!): Boolean!
+  getSingleShoe(articleId: ObjectId!): Shoes!
   me: User
+}
+
+type Shoes {
+  _id: ObjectId!
+  body_html: String!
+  bought_by: Float!
+  handle: String!
+  images: [Images!]!
+  options: [OptionShoes!]!
+  product_type: String!
+  score: Float!
+  scored_by: Float!
+  tags: [String!]!
+  title: String!
+  variants: [Variants!]!
+  vendor: String!
+  visited_by: Float!
 }
 
 type User {
@@ -105,4 +138,20 @@ input UserRegister {
 type UserResponse {
   errors: [FieldError!]
   user: User
+}
+
+type Variants {
+  _id: ObjectId!
+  available: String!
+  compare_at_price: String!
+  featured_image: String!
+  grams: Float!
+  option1: String!
+  option2: String!
+  option3: String!
+  price: String!
+  product_id: String!
+  quantity: String!
+  sku: String!
+  title: String!
 }

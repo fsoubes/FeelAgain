@@ -12,12 +12,18 @@ export class Shoes {
   readonly _id: ObjectId;
 
   @Property({ required: true })
-  id: String;
+  id: number;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
 
   @Property({ required: true, default: [] })
   switchLinks: [String];
 
-  @Property({ required: true })
+  @Property({ required: false })
   switch: String;
 
   @Field()
@@ -71,6 +77,16 @@ export class Shoes {
   @Field((_type) => [Images])
   @Property({ ref: Images, default: [], nullable: false })
   images: Ref<Images>[];
+
+  @Field((_type) => [Shoes])
+  @Property({ ref: Shoes, default: [], nullable: true })
+  relatives: Ref<Shoes>[];
+
+  @Field(() => [String])
+  @Property({ type: () => [String], default: [] })
+  switchTitle?: string[];
 }
 
-export const ShoesModel = getModelForClass(Shoes);
+export const ShoesModel = getModelForClass(Shoes, {
+  schemaOptions: { timestamps: true },
+});

@@ -14,8 +14,4 @@ export class OptionShoes {
   @Field(() => [String])
   @Property({ type: () => [String], default: [] })
   values?: string[];
-
-  @Field(() => [String])
-  @Property({ type: () => [String], default: [] })
-  switchTitle?: string[];
 }
