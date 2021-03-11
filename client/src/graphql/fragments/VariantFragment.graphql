@@ -1,0 +1,11 @@
+fragment VariantFragment on Variants {
+  _id
+  title
+  product_id
+  sku
+  available
+  grams
+  quantity
+  price
+  compare_at_price
+}

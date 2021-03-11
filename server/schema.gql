@@ -51,6 +51,14 @@ type FieldError {
   message: String!
 }
 
+input ImageInput {
+  height: Float!
+  position: Float!
+  product_id: String!
+  src: String!
+  width: Float!
+}
+
 type Images {
   _id: ObjectId!
   height: Float!
@@ -62,14 +70,19 @@ type Images {
 
 type Mutation {
   addArticle(blog: BlogInput!): Blog!
+  addImage(Image: ImageInput!, ParentId: String!): String!
+  addRelation: Boolean!
+  addShoe(Shoe: ShoesInput!): ObjectId!
   addShoes: Boolean!
+  addVariant(parentId: String!, Variant: VariantInput!): String!
   changePassword(newPassword: String!, token: String!): UserResponse!
   forgotPassword(email: String!): Boolean!
   login(user: UserLogin!): UserResponse!
   logout: Boolean!
   ratingReview(articleId: String!, rating: String!): Boolean!
   register(user: UserRegister!): UserResponse!
-  test2(isArg: Boolean!): Boolean!
+  removeShoe(ShoeId: String!): String!
+  updateShoe(shoeId: String!, Shoes: String!): Shoes!
 }
 
 """Mongo object id scalar type"""
@@ -78,7 +91,6 @@ scalar ObjectId
 type OptionShoes {
   name: String!
   position: String!
-  switchTitle: [String!]!
   values: [String!]!
 }
 
@@ -94,8 +106,9 @@ type PaginationResponse {
 
 type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
+  getFilterShoes(limit: Float!): [Shoes!]!
   getSingleArticle(articleId: ObjectId!): Blog!
-  getSingleShoe(articleId: ObjectId!): Shoes!
+  getSingleShoe(shoesId: ObjectId!): Shoes!
   me: User
 }
 
@@ -103,17 +116,31 @@ type Shoes {
   _id: ObjectId!
   body_html: String!
   bought_by: Float!
+  createdAt: DateTime!
   handle: String!
   images: [Images!]!
   options: [OptionShoes!]!
   product_type: String!
+  relatives: [Shoes!]!
   score: Float!
   scored_by: Float!
+  switchTitle: [String!]!
   tags: [String!]!
   title: String!
+  updatedAt: DateTime!
   variants: [Variants!]!
   vendor: String!
   visited_by: Float!
+}
+
+input ShoesInput {
+  body_html: String
+  handle: String
+  product_type: String
+  switch: String
+  tags: [String!]
+  title: String!
+  vendor: String
 }
 
 type User {
@@ -138,6 +165,21 @@ input UserRegister {
 type UserResponse {
   errors: [FieldError!]
   user: User
+}
+
+input VariantInput {
+  available: String!
+  compare_at_price: String!
+  featured_image: String!
+  grams: Float!
+  option1: String!
+  option2: String!
+  option3: String!
+  price: String!
+  product_id: String!
+  quantity: String!
+  sku: String!
+  title: String!
 }
 
 type Variants {

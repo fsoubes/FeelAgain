@@ -19,16 +19,21 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  getSingleShoe: Shoes;
+  getFilterShoes: Array<Shoes>;
   me?: Maybe<User>;
-  recipe?: Maybe<Recipe>;
-  recipes: Array<Recipe>;
   getSingleArticle: Blog;
   getArticles: PaginationResponse;
 };
 
 
-export type QueryRecipeArgs = {
-  recipeId: Scalars['ObjectId'];
+export type QueryGetSingleShoeArgs = {
+  shoesId: Scalars['ObjectId'];
+};
+
+
+export type QueryGetFilterShoesArgs = {
+  limit: Scalars['Float'];
 };
 
 
@@ -42,6 +47,64 @@ export type QueryGetArticlesArgs = {
   limit: Scalars['Float'];
 };
 
+export type Shoes = {
+  __typename?: 'Shoes';
+  _id: Scalars['ObjectId'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  title: Scalars['String'];
+  score: Scalars['Float'];
+  scored_by: Scalars['Float'];
+  visited_by: Scalars['Float'];
+  bought_by: Scalars['Float'];
+  handle: Scalars['String'];
+  vendor: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  body_html: Scalars['String'];
+  product_type: Scalars['String'];
+  variants: Array<Variants>;
+  options: Array<OptionShoes>;
+  images: Array<Images>;
+  relatives: Array<Shoes>;
+  switchTitle: Array<Scalars['String']>;
+};
+
+
+
+export type Variants = {
+  __typename?: 'Variants';
+  _id: Scalars['ObjectId'];
+  title: Scalars['String'];
+  product_id: Scalars['String'];
+  option1: Scalars['String'];
+  option2: Scalars['String'];
+  option3: Scalars['String'];
+  sku: Scalars['String'];
+  featured_image: Scalars['String'];
+  available: Scalars['String'];
+  grams: Scalars['Float'];
+  quantity: Scalars['String'];
+  price: Scalars['String'];
+  compare_at_price: Scalars['String'];
+};
+
+export type OptionShoes = {
+  __typename?: 'OptionShoes';
+  name: Scalars['String'];
+  position: Scalars['String'];
+  values: Array<Scalars['String']>;
+};
+
+export type Images = {
+  __typename?: 'Images';
+  _id: Scalars['ObjectId'];
+  position: Scalars['Float'];
+  src: Scalars['String'];
+  product_id: Scalars['String'];
+  width: Scalars['Float'];
+  height: Scalars['Float'];
+};
+
 export type User = {
   __typename?: 'User';
   _id: Scalars['ObjectId'];
@@ -49,24 +112,6 @@ export type User = {
   updatedAt: Scalars['DateTime'];
   nickname: Scalars['String'];
   email: Scalars['String'];
-};
-
-
-
-export type Recipe = {
-  __typename?: 'Recipe';
-  _id: Scalars['ObjectId'];
-  title: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  ratings: Array<Rate>;
-  author: User;
-};
-
-export type Rate = {
-  __typename?: 'Rate';
-  value: Scalars['Int'];
-  date: Scalars['DateTime'];
-  user: User;
 };
 
 export type Blog = {
@@ -112,15 +157,48 @@ export type PaginationInfo = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addShoe: Scalars['ObjectId'];
+  removeShoe: Scalars['String'];
+  updateShoe: Shoes;
+  addImage: Scalars['String'];
+  addVariant: Scalars['String'];
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
-  addRecipe: Recipe;
-  rate: Recipe;
   addArticle: Blog;
   ratingReview: Scalars['Boolean'];
+  addShoes: Scalars['Boolean'];
+  addRelation: Scalars['Boolean'];
+};
+
+
+export type MutationAddShoeArgs = {
+  Shoe: ShoesInput;
+};
+
+
+export type MutationRemoveShoeArgs = {
+  ShoeId: Scalars['String'];
+};
+
+
+export type MutationUpdateShoeArgs = {
+  shoeId: Scalars['String'];
+  Shoes: Scalars['String'];
+};
+
+
+export type MutationAddImageArgs = {
+  ParentId: Scalars['String'];
+  Image: ImageInput;
+};
+
+
+export type MutationAddVariantArgs = {
+  parentId: Scalars['String'];
+  Variant: VariantInput;
 };
 
 
@@ -145,16 +223,6 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationAddRecipeArgs = {
-  recipe: RecipeInput;
-};
-
-
-export type MutationRateArgs = {
-  rate: RateInput;
-};
-
-
 export type MutationAddArticleArgs = {
   blog: BlogInput;
 };
@@ -163,6 +231,39 @@ export type MutationAddArticleArgs = {
 export type MutationRatingReviewArgs = {
   articleId: Scalars['String'];
   rating: Scalars['String'];
+};
+
+export type ShoesInput = {
+  title: Scalars['String'];
+  body_html?: Maybe<Scalars['String']>;
+  vendor?: Maybe<Scalars['String']>;
+  switch?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']>;
+  product_type?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Scalars['String']>>;
+};
+
+export type ImageInput = {
+  position: Scalars['Float'];
+  src: Scalars['String'];
+  product_id: Scalars['String'];
+  width: Scalars['Float'];
+  height: Scalars['Float'];
+};
+
+export type VariantInput = {
+  title: Scalars['String'];
+  product_id: Scalars['String'];
+  option1: Scalars['String'];
+  option2: Scalars['String'];
+  option3: Scalars['String'];
+  sku: Scalars['String'];
+  featured_image: Scalars['String'];
+  available: Scalars['String'];
+  grams: Scalars['Float'];
+  quantity: Scalars['String'];
+  price: Scalars['String'];
+  compare_at_price: Scalars['String'];
 };
 
 export type UserResponse = {
@@ -188,16 +289,6 @@ export type UserLogin = {
   password: Scalars['String'];
 };
 
-export type RecipeInput = {
-  title: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-};
-
-export type RateInput = {
-  recipeId: Scalars['ObjectId'];
-  value: Scalars['Int'];
-};
-
 export type BlogInput = {
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
@@ -216,6 +307,25 @@ export type ArticleFragmentFragment = (
     { __typename?: 'User' }
     & Pick<User, '_id' | 'nickname' | 'email'>
   ) }
+);
+
+export type ImageFragmentFragment = (
+  { __typename?: 'Images' }
+  & Pick<Images, '_id' | 'position' | 'src' | 'product_id' | 'width' | 'height'>
+);
+
+export type ShoesBrowseFragmentFragment = (
+  { __typename?: 'Shoes' }
+  & Pick<Shoes, '_id' | 'title' | 'handle' | 'score' | 'scored_by' | 'product_type'>
+  & { options: Array<(
+    { __typename?: 'OptionShoes' }
+    & Pick<OptionShoes, 'name' | 'position' | 'values'>
+  )> }
+);
+
+export type ShoesArticleFragmentFragment = (
+  { __typename?: 'Shoes' }
+  & Pick<Shoes, 'body_html' | 'vendor' | 'visited_by' | 'switchTitle'>
 );
 
 export type UserFragmentFragment = (
@@ -237,6 +347,11 @@ export type UserFragmentResponseFragment = (
     { __typename?: 'FieldError' }
     & UserFragmentErrorFragment
   )>> }
+);
+
+export type VariantFragmentFragment = (
+  { __typename?: 'Variants' }
+  & Pick<Variants, '_id' | 'title' | 'product_id' | 'sku' | 'available' | 'grams' | 'quantity' | 'price' | 'compare_at_price'>
 );
 
 export type AddArticleMutationVariables = Exact<{
@@ -351,6 +466,23 @@ export type GetArticlesQuery = (
   ) }
 );
 
+export type GetShoesQueryVariables = Exact<{
+  limit: Scalars['Float'];
+}>;
+
+
+export type GetShoesQuery = (
+  { __typename?: 'Query' }
+  & { getFilterShoes: Array<(
+    { __typename?: 'Shoes' }
+    & { images: Array<(
+      { __typename?: 'Images' }
+      & ImageFragmentFragment
+    )> }
+    & ShoesBrowseFragmentFragment
+  )> }
+);
+
 export type GetSingleArticleQueryVariables = Exact<{
   articleId: Scalars['ObjectId'];
 }>;
@@ -361,6 +493,20 @@ export type GetSingleArticleQuery = (
   & { getSingleArticle: (
     { __typename?: 'Blog' }
     & ArticleFragmentFragment
+  ) }
+);
+
+export type GetSingleShoesQueryVariables = Exact<{
+  shoesId: Scalars['ObjectId'];
+}>;
+
+
+export type GetSingleShoesQuery = (
+  { __typename?: 'Query' }
+  & { getSingleShoe: (
+    { __typename?: 'Shoes' }
+    & ShoesBrowseFragmentFragment
+    & ShoesArticleFragmentFragment
   ) }
 );
 
@@ -397,6 +543,39 @@ export const ArticleFragmentFragmentDoc = gql`
   }
 }
     `;
+export const ImageFragmentFragmentDoc = gql`
+    fragment ImageFragment on Images {
+  _id
+  position
+  src
+  product_id
+  width
+  height
+}
+    `;
+export const ShoesBrowseFragmentFragmentDoc = gql`
+    fragment ShoesBrowseFragment on Shoes {
+  _id
+  title
+  handle
+  score
+  scored_by
+  product_type
+  options {
+    name
+    position
+    values
+  }
+}
+    `;
+export const ShoesArticleFragmentFragmentDoc = gql`
+    fragment ShoesArticleFragment on Shoes {
+  body_html
+  vendor
+  visited_by
+  switchTitle
+}
+    `;
 export const UserFragmentFragmentDoc = gql`
     fragment UserFragment on User {
   _id
@@ -422,6 +601,19 @@ export const UserFragmentResponseFragmentDoc = gql`
 }
     ${UserFragmentFragmentDoc}
 ${UserFragmentErrorFragmentDoc}`;
+export const VariantFragmentFragmentDoc = gql`
+    fragment VariantFragment on Variants {
+  _id
+  title
+  product_id
+  sku
+  available
+  grams
+  quantity
+  price
+  compare_at_price
+}
+    `;
 export const AddArticleDocument = gql`
     mutation AddArticle($title: String!, $description: String, $image_url: String, $tags: [String!], $source: [String!], $social: [String!], $article: String, $isPublished: Boolean) {
   addArticle(
@@ -693,6 +885,43 @@ export function useGetArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
+export const GetShoesDocument = gql`
+    query GetShoes($limit: Float!) {
+  getFilterShoes(limit: $limit) {
+    ...ShoesBrowseFragment
+    images {
+      ...ImageFragment
+    }
+  }
+}
+    ${ShoesBrowseFragmentFragmentDoc}
+${ImageFragmentFragmentDoc}`;
+
+/**
+ * __useGetShoesQuery__
+ *
+ * To run a query within a React component, call `useGetShoesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetShoesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetShoesQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useGetShoesQuery(baseOptions: Apollo.QueryHookOptions<GetShoesQuery, GetShoesQueryVariables>) {
+        return Apollo.useQuery<GetShoesQuery, GetShoesQueryVariables>(GetShoesDocument, baseOptions);
+      }
+export function useGetShoesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetShoesQuery, GetShoesQueryVariables>) {
+          return Apollo.useLazyQuery<GetShoesQuery, GetShoesQueryVariables>(GetShoesDocument, baseOptions);
+        }
+export type GetShoesQueryHookResult = ReturnType<typeof useGetShoesQuery>;
+export type GetShoesLazyQueryHookResult = ReturnType<typeof useGetShoesLazyQuery>;
+export type GetShoesQueryResult = Apollo.QueryResult<GetShoesQuery, GetShoesQueryVariables>;
 export const GetSingleArticleDocument = gql`
     query getSingleArticle($articleId: ObjectId!) {
   getSingleArticle(articleId: $articleId) {
@@ -726,6 +955,41 @@ export function useGetSingleArticleLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetSingleArticleQueryHookResult = ReturnType<typeof useGetSingleArticleQuery>;
 export type GetSingleArticleLazyQueryHookResult = ReturnType<typeof useGetSingleArticleLazyQuery>;
 export type GetSingleArticleQueryResult = Apollo.QueryResult<GetSingleArticleQuery, GetSingleArticleQueryVariables>;
+export const GetSingleShoesDocument = gql`
+    query GetSingleShoes($shoesId: ObjectId!) {
+  getSingleShoe(shoesId: $shoesId) {
+    ...ShoesBrowseFragment
+    ...ShoesArticleFragment
+  }
+}
+    ${ShoesBrowseFragmentFragmentDoc}
+${ShoesArticleFragmentFragmentDoc}`;
+
+/**
+ * __useGetSingleShoesQuery__
+ *
+ * To run a query within a React component, call `useGetSingleShoesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSingleShoesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSingleShoesQuery({
+ *   variables: {
+ *      shoesId: // value for 'shoesId'
+ *   },
+ * });
+ */
+export function useGetSingleShoesQuery(baseOptions: Apollo.QueryHookOptions<GetSingleShoesQuery, GetSingleShoesQueryVariables>) {
+        return Apollo.useQuery<GetSingleShoesQuery, GetSingleShoesQueryVariables>(GetSingleShoesDocument, baseOptions);
+      }
+export function useGetSingleShoesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSingleShoesQuery, GetSingleShoesQueryVariables>) {
+          return Apollo.useLazyQuery<GetSingleShoesQuery, GetSingleShoesQueryVariables>(GetSingleShoesDocument, baseOptions);
+        }
+export type GetSingleShoesQueryHookResult = ReturnType<typeof useGetSingleShoesQuery>;
+export type GetSingleShoesLazyQueryHookResult = ReturnType<typeof useGetSingleShoesLazyQuery>;
+export type GetSingleShoesQueryResult = Apollo.QueryResult<GetSingleShoesQuery, GetSingleShoesQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {

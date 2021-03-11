@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          @ {NAME}
+          @ {NAME} - 2021
         </a>
         <Tooltip title="Toggle Theme">
           <Button variant="text" color="inherit" onClick={toggleTheme}>

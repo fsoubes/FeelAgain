@@ -9,6 +9,7 @@ export const paletteColorsDark = {
   background_border: "#0a101a",
   background_hover: "#1f2e41",
   text: "#8b949e",
+  logo: "#f0f0f0",
 };
 
 export const paletteColorsLight = {
@@ -20,6 +21,7 @@ export const paletteColorsLight = {
   background_border: "#0a101a",
   background_hover: "#d4d3d3",
   text: "#050505",
+  logo: "#000",
 };
 
 const options = (dark: boolean): ThemeOptions => {
@@ -140,6 +142,9 @@ const options = (dark: boolean): ThemeOptions => {
           ".Footer_footer__9WsPL::before": {
             background: paletteColors.text,
           },
+          /* ".cls-1, .cls-2, .cls-3": {
+            stroke: paletteColors.logo,
+          }, */
           html: {
             height: "100%",
             padding: 0,

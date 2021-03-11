@@ -1,0 +1,13 @@
+fragment ShoesBrowseFragment on Shoes {
+  _id
+  title
+  handle
+  score
+  scored_by
+  product_type
+  options {
+    name
+    position
+    values
+  }
+}

@@ -1,0 +1,8 @@
+fragment ImageFragment on Images {
+  _id
+  position
+  src
+  product_id
+  width
+  height
+}

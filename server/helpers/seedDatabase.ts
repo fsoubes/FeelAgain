@@ -23,7 +23,19 @@ export async function seedDataBase() {
       "$argon2i$v=19$m=4096,t=3,p=1$SKcpzKdXCrqY4RvImpFKBA$MCO99B5R/yVdICwkRph9lfBAqxeoMxEwppB65aTVSEs",
   } as User);
 
-  await Promise.all([defaultUser.save(), secondUser.save(), thirdUser.save()]);
+  const fourthUser = new UserModel({
+    email: "bob4@bob.fr",
+    nickname: "bob4",
+    password:
+      "$argon2i$v=19$m=4096,t=3,p=1$SKcpzKdXCrqY4RvImpFKBA$MCO99B5R/yVdICwkRph9lfBAqxeoMxEwppB65aTVSEs",
+  } as User);
+
+  await Promise.all([
+    defaultUser.save(),
+    secondUser.save(),
+    thirdUser.save(),
+    fourthUser.save(),
+  ]);
 
   await BlogModel.create(([
     {

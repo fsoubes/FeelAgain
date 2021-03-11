@@ -1,0 +1,8 @@
+query GetShoes($limit: Float!) {
+  getFilterShoes(limit: $limit) {
+    ...ShoesBrowseFragment
+    images {
+      ...ImageFragment
+    }
+  }
+}

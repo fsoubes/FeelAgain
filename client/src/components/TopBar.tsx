@@ -109,7 +109,7 @@ export const TopBar = (): ReactElement => {
             <div
               style={{
                 height: "100%",
-                width: "50px",
+                width: "30px",
                 display: "flex",
                 alignItems: "center",
                 position: "relative",
@@ -118,13 +118,7 @@ export const TopBar = (): ReactElement => {
               <Logo />
             </div>
           </Link>
-          {/*   <Link href="/">
-            <a>
-              <Typography variant="h6" style={!isDark ? { color: "#fff" } : {}}>
-                {NAME}
-              </Typography>
-            </a>
-          </Link> */}
+
           <Button className={styles.hamburger} onClick={() => setOpen(!open)}>
             <MenuIcon />
           </Button>
