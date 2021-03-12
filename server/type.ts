@@ -6,8 +6,10 @@ import { createUserLoader } from "./helpers/createUserLoader";
 
 export type MyContext = {
   user: User;
+
   req: Request & {
-    session: Session & Partial<SessionData> & { userId?: string };
+    session: Session &
+      Partial<SessionData> & { userId?: string } & { isAdmin?: Boolean };
   };
   res: Response;
   redis: Redis;

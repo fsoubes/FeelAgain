@@ -26,6 +26,7 @@ export async function seedDataBase() {
   const fourthUser = new UserModel({
     email: "bob4@bob.fr",
     nickname: "bob4",
+    isAdmin: true,
     password:
       "$argon2i$v=19$m=4096,t=3,p=1$SKcpzKdXCrqY4RvImpFKBA$MCO99B5R/yVdICwkRph9lfBAqxeoMxEwppB65aTVSEs",
   } as User);

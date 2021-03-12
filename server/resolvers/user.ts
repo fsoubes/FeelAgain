@@ -139,6 +139,14 @@ export class UserResolver {
     return user;
   }
 
+  @Query(() => Boolean)
+  async userRole(@Ctx() { req }: MyContext) {
+    if (!req.session.isAdmin) {
+      return false;
+    }
+    return true;
+  }
+
   @Mutation((_returns) => UserResponse)
   async register(
     @Arg("user") userInput: UserRegister,
@@ -225,6 +233,7 @@ export class UserResolver {
     }
 
     req.session.userId = user.id;
+    req.session.isAdmin = user.isAdmin;
 
     return { user };
   }

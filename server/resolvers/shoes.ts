@@ -13,11 +13,12 @@ import { Shoes, ShoesModel } from "../entities/Shoes";
 import { ObjectId } from "mongodb";
 import { ImagesModel } from "../entities/Images";
 import { VariantsModel } from "../entities/Variants";
-import { isAuth } from "../middlewares/isAuth";
 import { toDot } from "../helpers/toDot";
 import { ShoesInput } from "./types/shoes-input";
 import { ImageInput } from "./types/images-input";
 import { VariantInput } from "./types/variants-input";
+import { isAuth } from "../middlewares/isAuth";
+import { isAdmin } from "../middlewares/isAdmin";
 
 @Resolver((_of) => Shoes)
 export class ShoesResolver {
@@ -83,7 +84,7 @@ export class ShoesResolver {
   }
 
   @Mutation(() => ObjectId)
-  @UseMiddleware(isAuth)
+  @UseMiddleware(isAdmin)
   async addShoe(
     @Arg("Shoe") shoeInput: ShoesInput,
     @Ctx() {  }: MyContext

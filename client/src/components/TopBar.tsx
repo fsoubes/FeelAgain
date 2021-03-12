@@ -136,9 +136,9 @@ export const TopBar = (): ReactElement => {
             </Button>
           </Link>
 
-          <Link href="/topics">
+          <Link href="/shop">
             <Button variant="text" color="inherit">
-              &nbsp;STUDIO
+              &nbsp;Shop
             </Button>
           </Link>
 

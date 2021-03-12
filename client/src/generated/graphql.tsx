@@ -22,6 +22,7 @@ export type Query = {
   getSingleShoe: Shoes;
   getFilterShoes: Array<Shoes>;
   me?: Maybe<User>;
+  userRole: Scalars['Boolean'];
   getSingleArticle: Blog;
   getArticles: PaginationResponse;
 };
@@ -325,7 +326,7 @@ export type ShoesBrowseFragmentFragment = (
 
 export type ShoesArticleFragmentFragment = (
   { __typename?: 'Shoes' }
-  & Pick<Shoes, 'body_html' | 'vendor' | 'visited_by' | 'switchTitle'>
+  & Pick<Shoes, 'body_html' | 'vendor' | 'visited_by' | 'switchTitle' | 'createdAt'>
 );
 
 export type UserFragmentFragment = (
@@ -505,6 +506,10 @@ export type GetSingleShoesQuery = (
   { __typename?: 'Query' }
   & { getSingleShoe: (
     { __typename?: 'Shoes' }
+    & { images: Array<(
+      { __typename?: 'Images' }
+      & ImageFragmentFragment
+    )> }
     & ShoesBrowseFragmentFragment
     & ShoesArticleFragmentFragment
   ) }
@@ -519,6 +524,14 @@ export type MeQuery = (
     { __typename?: 'User' }
     & Pick<User, '_id' | 'nickname' | 'email'>
   )> }
+);
+
+export type UserRoleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserRoleQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'userRole'>
 );
 
 export const ArticleFragmentFragmentDoc = gql`
@@ -574,6 +587,7 @@ export const ShoesArticleFragmentFragmentDoc = gql`
   vendor
   visited_by
   switchTitle
+  createdAt
 }
     `;
 export const UserFragmentFragmentDoc = gql`
@@ -960,10 +974,14 @@ export const GetSingleShoesDocument = gql`
   getSingleShoe(shoesId: $shoesId) {
     ...ShoesBrowseFragment
     ...ShoesArticleFragment
+    images {
+      ...ImageFragment
+    }
   }
 }
     ${ShoesBrowseFragmentFragmentDoc}
-${ShoesArticleFragmentFragmentDoc}`;
+${ShoesArticleFragmentFragmentDoc}
+${ImageFragmentFragmentDoc}`;
 
 /**
  * __useGetSingleShoesQuery__
@@ -1024,3 +1042,33 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const UserRoleDocument = gql`
+    query UserRole {
+  userRole
+}
+    `;
+
+/**
+ * __useUserRoleQuery__
+ *
+ * To run a query within a React component, call `useUserRoleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserRoleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserRoleQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserRoleQuery(baseOptions?: Apollo.QueryHookOptions<UserRoleQuery, UserRoleQueryVariables>) {
+        return Apollo.useQuery<UserRoleQuery, UserRoleQueryVariables>(UserRoleDocument, baseOptions);
+      }
+export function useUserRoleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserRoleQuery, UserRoleQueryVariables>) {
+          return Apollo.useLazyQuery<UserRoleQuery, UserRoleQueryVariables>(UserRoleDocument, baseOptions);
+        }
+export type UserRoleQueryHookResult = ReturnType<typeof useUserRoleQuery>;
+export type UserRoleLazyQueryHookResult = ReturnType<typeof useUserRoleLazyQuery>;
+export type UserRoleQueryResult = Apollo.QueryResult<UserRoleQuery, UserRoleQueryVariables>;

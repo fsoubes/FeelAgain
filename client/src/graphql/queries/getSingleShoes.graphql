@@ -2,5 +2,8 @@ query GetSingleShoes($shoesId: ObjectId!) {
   getSingleShoe(shoesId: $shoesId) {
     ...ShoesBrowseFragment
     ...ShoesArticleFragment
+    images {
+      ...ImageFragment
+    }
   }
 }

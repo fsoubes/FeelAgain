@@ -7,6 +7,16 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -17,8 +27,9 @@ a {
 }
 
 #__next {
-  --container-padding: 5x;
+  --container-padding: 20px;
   --container-width: calc(100vw - var(--container-padding) * 2);
+  --space: 8px;
 }
 
 @media only screen and (min-width: 900px) {
@@ -32,6 +43,13 @@ a {
     --container-padding: 20px;
     --container-width: 1330px;
   }
+}
+
+.container__shop {
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: calc(50% - var(--container-width) / 2);
+  padding-right: calc(50% - var(--container-width) / 2);
 }
 
 .container {
@@ -52,30 +70,6 @@ a {
     margin-bottom: 1rem;
   }
 }
-
-// .cls-1 {
-//   isolation: isolate;
-// }
-// .cls-2 {
-//   opacity: 0.5;
-//   mix-blend-mode: multiply;
-// }
-// .cls-3 {
-//   fill: url(#gradient_fsoweb);
-// }
-// .cls-4 {
-//   fill: none;
-//   stroke-width: 0.495px;
-// }
-// .cls-4,
-// .cls-5 {
-//   stroke: gold;
-//   stroke-miterlimit: 10;
-// }
-// .cls-5 {
-//   stroke-width: 0.884px;
-//   fill: gold;
-// }
 
 .cls-1,
 .cls-2,
