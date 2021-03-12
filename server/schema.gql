@@ -110,6 +110,7 @@ type Query {
   getSingleArticle(articleId: ObjectId!): Blog!
   getSingleShoe(shoesId: ObjectId!): Shoes!
   me: User
+  userRole: Boolean!
 }
 
 type Shoes {

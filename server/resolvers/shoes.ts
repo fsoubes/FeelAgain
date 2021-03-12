@@ -52,24 +52,13 @@ export class ShoesResolver {
   }
 
   @FieldResolver()
-  async images(@Root() shoes: Shoes, @Ctx() {  }: MyContext) {
-    const images = await ImagesModel.find({
-      _id: {
-        $in: shoes.images,
-      },
-    });
-    return images;
+  async images(@Root() shoes: Shoes, @Ctx() { imageLoader }: MyContext) {
+    return imageLoader.loadMany(shoes.images as ObjectId[]);
   }
 
   @FieldResolver()
-  async variants(@Root() shoes: Shoes, @Ctx() {  }: MyContext) {
-    const variants = await VariantsModel.find({
-      _id: {
-        $in: shoes.variants,
-      },
-    });
-
-    return variants;
+  async variants(@Root() shoes: Shoes, @Ctx() { variantLoader }: MyContext) {
+    return variantLoader.loadMany(shoes.variants as ObjectId[]);
   }
 
   @FieldResolver()

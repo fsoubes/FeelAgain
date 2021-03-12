@@ -5,9 +5,6 @@ import { readJSON } from "../helpers/readJson";
 import { VariantsModel } from "../entities/Variants";
 import { ImagesModel } from "../entities/Images";
 
-
-
-
 @Resolver((_of) => Shoes)
 export class AddResolver {
   @Mutation(() => Boolean)

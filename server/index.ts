@@ -13,13 +13,15 @@ import connectRedis from "connect-redis";
 import { MyContext } from "./type";
 import mongoose from "mongoose";
 import cors from "cors";
-import { createUserLoader } from "./helpers/createUserLoader";
+import { Loader } from "./loaders/index";
 import { seedDataBase } from "./helpers/seedDatabase";
 import { User } from "entities/User";
 import { express as voyagerMiddleware } from "graphql-voyager/middleware";
 require("dotenv").config();
 
 // Constant
+
+// console.log(Loaders);
 
 const main = async () => {
   try {
@@ -93,8 +95,8 @@ const main = async () => {
         req,
         res,
         user: defaultUser,
-        userLoader: createUserLoader(),
         redis,
+        ...Loader,
       }),
     });
 
