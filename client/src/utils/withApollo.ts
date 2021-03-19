@@ -1,4 +1,4 @@
-import { PaginationResponse } from "./../generated/graphql";
+import { PaginationResponse, PaginationShoes } from "./../generated/graphql";
 import { createWithApollo } from "./createWithApollo.js";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { NextPageContext } from "next";
@@ -29,6 +29,18 @@ const createClient = (ctx: NextPageContext) =>
                 };
               },
             },
+            /* getFilterShoes: {
+              keyArgs: [],
+              merge(
+                existing: PaginationShoes | undefined,
+                incoming: PaginationShoes
+              ): PaginationShoes {
+                return {
+                  ...incoming,
+                  edges: [...(existing?.edges || []), ...incoming.edges],
+                };
+              },
+            }, */
           },
         },
       },

@@ -1,6 +1,5 @@
 fragment ShoesArticleFragment on Shoes {
   body_html
-  vendor
   visited_by
   switchTitle
   createdAt

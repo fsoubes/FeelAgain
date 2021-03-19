@@ -1,7 +1,6 @@
 import React, { ReactElement, useContext, Fragment, useState } from "react";
 import { useApolloClient } from "@apollo/client";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -14,7 +13,6 @@ import styles from "../styles/TopBar.module.scss";
 import MenuIcon from "@material-ui/icons/Menu";
 import useResponsive from "../utils/useResponsive";
 import { makeStyles } from "@material-ui/core/styles";
-import { NAME } from "../constants/constants";
 
 const useStyles = makeStyles({
   show: {
@@ -30,7 +28,6 @@ const useStyles = makeStyles({
 export const TopBar = (): ReactElement => {
   const trigger = useScrollTrigger();
   const classes = useStyles();
-
   const { isTabletorMobile } = useResponsive();
 
   const { isDark } = useContext(ToggleThemeContext);
@@ -113,6 +110,7 @@ export const TopBar = (): ReactElement => {
                 display: "flex",
                 alignItems: "center",
                 position: "relative",
+                cursor: "pointer",
               }}
             >
               <Logo />
@@ -130,15 +128,15 @@ export const TopBar = (): ReactElement => {
               : `${styles.navbar__links}`
           }
         >
-          <Link href="/dashboard">
-            <Button variant="text" color="inherit">
-              &nbsp;Article
-            </Button>
-          </Link>
-
           <Link href="/shop">
             <Button variant="text" color="inherit">
               &nbsp;Shop
+            </Button>
+          </Link>
+
+          <Link href="/blog">
+            <Button variant="text" color="inherit">
+              &nbsp;Blog
             </Button>
           </Link>
 

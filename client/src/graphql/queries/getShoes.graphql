@@ -1,8 +1,14 @@
-query GetShoes($limit: Float!) {
-  getFilterShoes(limit: $limit) {
-    ...ShoesBrowseFragment
-    images {
-      ...ImageFragment
+query GetShoes($limit: Float!, $page: Float!) {
+  getFilterShoes(limit: $limit, page: $page) {
+    pageInfo {
+      total
+      current
+    }
+    edges {
+      ...ShoesBrowseFragment
+      images {
+        ...ImageFragment
+      }
     }
   }
 }

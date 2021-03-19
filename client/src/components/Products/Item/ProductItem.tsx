@@ -7,14 +7,27 @@ interface ProductItemProps {
   title: string;
   price: string;
   id: string;
+  srcIn: string;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({ src, title, price, id }) => {
+const ProductItem: React.FC<ProductItemProps> = ({
+  src,
+  title,
+  price,
+  id,
+  srcIn,
+}) => {
   const router = useRouter();
   return (
     <div onClick={() => router.push(`products/${id}`)}>
       <Tilt style={{ cursor: "pointer" }}>
-        <img alt="Shoes Picture" loading="lazy" src={src}></img>
+        <img
+          alt="Shoes Picture"
+          loading="lazy"
+          src={src}
+          onMouseOver={(e) => (e.currentTarget.src = srcIn)}
+          onMouseOut={(e) => (e.currentTarget.src = src)}
+        ></img>
       </Tilt>
       <div>
         <h3>

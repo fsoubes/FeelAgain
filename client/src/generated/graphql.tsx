@@ -20,7 +20,7 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   getSingleShoe: Shoes;
-  getFilterShoes: Array<Shoes>;
+  getFilterShoes: PaginationShoes;
   me?: Maybe<User>;
   userRole: Scalars['Boolean'];
   getSingleArticle: Blog;
@@ -34,6 +34,7 @@ export type QueryGetSingleShoeArgs = {
 
 
 export type QueryGetFilterShoesArgs = {
+  page: Scalars['Float'];
   limit: Scalars['Float'];
 };
 
@@ -104,6 +105,18 @@ export type Images = {
   product_id: Scalars['String'];
   width: Scalars['Float'];
   height: Scalars['Float'];
+};
+
+export type PaginationShoes = {
+  __typename?: 'PaginationShoes';
+  pageInfo: PaginationPage;
+  edges: Array<Shoes>;
+};
+
+export type PaginationPage = {
+  __typename?: 'PaginationPage';
+  total?: Maybe<Scalars['Float']>;
+  current?: Maybe<Scalars['Float']>;
 };
 
 export type User = {
@@ -317,7 +330,7 @@ export type ImageFragmentFragment = (
 
 export type ShoesBrowseFragmentFragment = (
   { __typename?: 'Shoes' }
-  & Pick<Shoes, '_id' | 'title' | 'handle' | 'score' | 'scored_by' | 'product_type'>
+  & Pick<Shoes, '_id' | 'title' | 'handle' | 'score' | 'vendor' | 'scored_by' | 'product_type'>
   & { options: Array<(
     { __typename?: 'OptionShoes' }
     & Pick<OptionShoes, 'name' | 'position' | 'values'>
@@ -326,7 +339,7 @@ export type ShoesBrowseFragmentFragment = (
 
 export type ShoesArticleFragmentFragment = (
   { __typename?: 'Shoes' }
-  & Pick<Shoes, 'body_html' | 'vendor' | 'visited_by' | 'switchTitle' | 'createdAt'>
+  & Pick<Shoes, 'body_html' | 'visited_by' | 'switchTitle' | 'createdAt'>
 );
 
 export type UserFragmentFragment = (
@@ -469,19 +482,26 @@ export type GetArticlesQuery = (
 
 export type GetShoesQueryVariables = Exact<{
   limit: Scalars['Float'];
+  page: Scalars['Float'];
 }>;
 
 
 export type GetShoesQuery = (
   { __typename?: 'Query' }
-  & { getFilterShoes: Array<(
-    { __typename?: 'Shoes' }
-    & { images: Array<(
-      { __typename?: 'Images' }
-      & ImageFragmentFragment
+  & { getFilterShoes: (
+    { __typename?: 'PaginationShoes' }
+    & { pageInfo: (
+      { __typename?: 'PaginationPage' }
+      & Pick<PaginationPage, 'total' | 'current'>
+    ), edges: Array<(
+      { __typename?: 'Shoes' }
+      & { images: Array<(
+        { __typename?: 'Images' }
+        & ImageFragmentFragment
+      )> }
+      & ShoesBrowseFragmentFragment
     )> }
-    & ShoesBrowseFragmentFragment
-  )> }
+  ) }
 );
 
 export type GetSingleArticleQueryVariables = Exact<{
@@ -572,6 +592,7 @@ export const ShoesBrowseFragmentFragmentDoc = gql`
   title
   handle
   score
+  vendor
   scored_by
   product_type
   options {
@@ -584,7 +605,6 @@ export const ShoesBrowseFragmentFragmentDoc = gql`
 export const ShoesArticleFragmentFragmentDoc = gql`
     fragment ShoesArticleFragment on Shoes {
   body_html
-  vendor
   visited_by
   switchTitle
   createdAt
@@ -900,11 +920,17 @@ export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
 export const GetShoesDocument = gql`
-    query GetShoes($limit: Float!) {
-  getFilterShoes(limit: $limit) {
-    ...ShoesBrowseFragment
-    images {
-      ...ImageFragment
+    query GetShoes($limit: Float!, $page: Float!) {
+  getFilterShoes(limit: $limit, page: $page) {
+    pageInfo {
+      total
+      current
+    }
+    edges {
+      ...ShoesBrowseFragment
+      images {
+        ...ImageFragment
+      }
     }
   }
 }
@@ -924,6 +950,7 @@ ${ImageFragmentFragmentDoc}`;
  * const { data, loading, error } = useGetShoesQuery({
  *   variables: {
  *      limit: // value for 'limit'
+ *      page: // value for 'page'
  *   },
  * });
  */

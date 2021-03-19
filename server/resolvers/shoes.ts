@@ -8,6 +8,8 @@ import {
   FieldResolver,
   Root,
   UseMiddleware,
+  Field,
+  ObjectType,
 } from "type-graphql";
 import { Shoes, ShoesModel } from "../entities/Shoes";
 import { ObjectId } from "mongodb";
@@ -19,6 +21,16 @@ import { ImageInput } from "./types/images-input";
 import { VariantInput } from "./types/variants-input";
 import { isAuth } from "../middlewares/isAuth";
 import { isAdmin } from "../middlewares/isAdmin";
+import { PaginationPage } from "./types/pagination-result";
+
+@ObjectType()
+class PaginationShoes {
+  @Field()
+  pageInfo?: PaginationPage;
+
+  @Field(() => [Shoes])
+  edges?: Shoes[];
+}
 
 @Resolver((_of) => Shoes)
 export class ShoesResolver {
@@ -38,14 +50,20 @@ export class ShoesResolver {
     }
   }
 
-  @Query(() => [Shoes])
+  @Query(() => PaginationShoes)
   async getFilterShoes(
     @Arg("limit") limit: number,
+    @Arg("page") page: number,
     @Ctx() {  }: MyContext
-  ): Promise<Shoes[]> {
+  ): Promise<PaginationShoes> {
     try {
-      const shoes = await ShoesModel.find().limit(limit);
-      return shoes;
+      const totalDocuments = await ShoesModel.countDocuments({}).exec();
+      const options = { limit: limit, skip: limit * (page - 1) };
+      const shoes = await ShoesModel.find({}, {}, options).limit(limit);
+      return {
+        edges: shoes,
+        pageInfo: { total: Math.ceil(totalDocuments / limit), current: page },
+      };
     } catch (err) {
       throw err;
     }

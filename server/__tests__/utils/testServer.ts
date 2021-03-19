@@ -13,7 +13,7 @@ import { TypegooseMiddleware } from "../../middlewares/typegoose-middleware";
 import { Resolvers } from "../../resolvers/index";
 import session from "express-session";
 import cors from "cors";
-import { createUserLoader } from "../../helpers/createUserLoader";
+import { createUserLoader } from "../../loaders/createUserLoader";
 require("dotenv").config();
 
 export default async function testServer(

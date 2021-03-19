@@ -3,6 +3,7 @@ fragment ShoesBrowseFragment on Shoes {
   title
   handle
   score
+  vendor
   scored_by
   product_type
   options {

@@ -7,3 +7,11 @@ export class PaginationInfo {
   @Field({ nullable: true })
   endCursor!: String;
 }
+
+@ObjectType()
+export class PaginationPage {
+  @Field({ nullable: true })
+  total!: number;
+  @Field({ nullable: true })
+  current!: number;
+}

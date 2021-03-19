@@ -21,7 +21,10 @@ const ProductsList: React.FC<ProductsListProps> = ({ shoes }) => {
       <ProductItem
         key={item._id}
         id={item._id}
-        src={item.images[2].src}
+        src={item.vendor === "Anaki" ? item.images[1].src : item.images[0].src}
+        srcIn={
+          item.vendor === "Anaki" ? item.images[2].src : item.images[1].src
+        }
         price={"200,00"}
         title={item.title}
       />

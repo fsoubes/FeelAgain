@@ -14,7 +14,7 @@ import { MyContext } from "./type";
 import mongoose from "mongoose";
 import cors from "cors";
 import { Loader } from "./loaders/index";
-import { seedDataBase } from "./helpers/seedDatabase";
+// import { seedDataBase } from "./helpers/seedDatabase";
 import { User } from "entities/User";
 import { express as voyagerMiddleware } from "graphql-voyager/middleware";
 require("dotenv").config();
@@ -46,8 +46,9 @@ const main = async () => {
         email: "bob@bob.fr",
       });
     } else {
-      await mongoose.connection.db.dropDatabase();
-      defaultUser = await seedDataBase();
+      // await mongoose.connection.db.dropDatabase();
+      // defaultUser = await seedDataBase();
+      console.log("started! ");
     }
 
     // Configurate app w apollo & express
