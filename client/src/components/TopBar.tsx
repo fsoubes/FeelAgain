@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, Fragment, useState } from "react";
+import React, { ReactElement, Fragment, useState } from "react";
 import { useApolloClient } from "@apollo/client";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
@@ -6,13 +6,14 @@ import AppBar from "@material-ui/core/AppBar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Link from "next/link";
 import { useMeQuery, useLogoutMutation } from "../generated/graphql";
-import { ToggleThemeContext } from "../theme";
 import Logo from "../svg/feelagain";
 import { isServer } from "../utils/isServer";
 import styles from "../styles/TopBar.module.scss";
 import MenuIcon from "@material-ui/icons/Menu";
 import useResponsive from "../utils/useResponsive";
 import { makeStyles } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
+import SearchShoes from "./Search/Search";
 
 const useStyles = makeStyles({
   show: {
@@ -30,7 +31,6 @@ export const TopBar = (): ReactElement => {
   const classes = useStyles();
   const { isTabletorMobile } = useResponsive();
 
-  const { isDark } = useContext(ToggleThemeContext);
   const client = useApolloClient();
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   const { data } = useMeQuery({
@@ -52,18 +52,18 @@ export const TopBar = (): ReactElement => {
 
   const logged = (
     <Fragment>
-      <Link href="/login">
+      <Link href="/connexion">
         <Button
           variant="text"
           color="inherit"
           style={{ marginRight: "0.5rem" }}
         >
-          Sign in
+          Connexion
         </Button>
       </Link>
-      <Link href="/register">
+      <Link href="/inscription">
         <Button variant="text" color="inherit" style={menuStyling.notlog}>
-          Sign up
+          Inscription
         </Button>
       </Link>
     </Fragment>
@@ -73,7 +73,18 @@ export const TopBar = (): ReactElement => {
     <Fragment>
       {!isTabletorMobile && (
         <Link href={`/profile/${data?.me?.nickname}`}>
-          {data?.me?.nickname}
+          <Button
+            variant="text"
+            color="inherit"
+            style={{
+              fontSize: "0.7rem",
+              lineHeight: "1.25",
+            }}
+          >
+            Bonjour {data?.me?.nickname}
+            <br />
+            Mon Compte
+          </Button>
         </Link>
       )}
       {isTabletorMobile && (
@@ -93,7 +104,7 @@ export const TopBar = (): ReactElement => {
         color="inherit"
         style={menuStyling.log}
       >
-        Logout
+        Deconnexion
       </Button>
     </Fragment>
   );
@@ -101,7 +112,7 @@ export const TopBar = (): ReactElement => {
   return (
     <AppBar className={trigger ? classes.hide : classes.show} position="sticky">
       <Toolbar className={styles.navbar__content}>
-        <div className={styles.navbar__logo}>
+        <div className={styles.navbar__left}>
           <Link href="/">
             <div
               style={{
@@ -117,41 +128,50 @@ export const TopBar = (): ReactElement => {
             </div>
           </Link>
 
-          <Button className={styles.hamburger} onClick={() => setOpen(!open)}>
-            <MenuIcon />
-          </Button>
-        </div>
-        <div
-          className={
-            !open && isTabletorMobile
-              ? `${styles.hide}`
-              : `${styles.navbar__links}`
-          }
-        >
-          <Link href="/shop">
-            <Button variant="text" color="inherit">
-              &nbsp;Shop
-            </Button>
-          </Link>
+          <div className={styles.hamburger}>
+            <SearchShoes />
 
-          <Link href="/blog">
-            <Button variant="text" color="inherit">
-              &nbsp;Blog
+            <Button onClick={() => setOpen(!open)}>
+              <MenuIcon />
             </Button>
-          </Link>
+          </div>
+          <div
+            className={
+              !open && isTabletorMobile
+                ? `${styles.hide}`
+                : `${styles.navbar__links}`
+            }
+          >
+            <Link href="/shop">
+              <Button variant="text" color="inherit">
+                &nbsp;Shop
+              </Button>
+            </Link>
 
-          <Link href="/topics">
-            <Button variant="text" color="inherit">
-              &nbsp;CONTACT
-            </Button>
-          </Link>
-          {isTabletorMobile && (
-            <Fragment>{!data?.me ? logged : unloged}</Fragment>
-          )}
+            <Link href="/blog">
+              <Button variant="text" color="inherit">
+                &nbsp;Blog
+              </Button>
+            </Link>
+
+            <Link href="/topics">
+              <Button variant="text" color="inherit">
+                &nbsp;CONTACT
+              </Button>
+            </Link>
+            {isTabletorMobile && (
+              <Fragment>{!data?.me ? logged : unloged}</Fragment>
+            )}
+          </div>
         </div>
         {!isTabletorMobile && (
-          <div className={styles.navbar__auth}>
-            <Fragment>{!data?.me ? logged : unloged}</Fragment>
+          <div className={styles.navbar__right}>
+            <div className={styles.search}>
+              <SearchShoes />
+            </div>
+            <div className={styles.navbar__auth}>
+              <Fragment>{!data?.me ? logged : unloged}</Fragment>
+            </div>
           </div>
         )}
       </Toolbar>

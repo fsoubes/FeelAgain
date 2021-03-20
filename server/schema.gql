@@ -3,6 +3,12 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Basket {
+  _id: ObjectId!
+  products: [Shoes!]!
+  user: User!
+}
+
 type Blog {
   _id: ObjectId!
   article: String
@@ -99,18 +105,34 @@ type PaginationInfo {
   hasNextPage: Boolean
 }
 
+type PaginationPage {
+  current: Float
+  total: Float
+}
+
 type PaginationResponse {
   edges: [Blog!]!
   pageInfo: PaginationInfo!
 }
 
+type PaginationShoes {
+  edges: [Shoes!]!
+  pageInfo: PaginationPage!
+}
+
 type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
-  getFilterShoes(limit: Float!): [Shoes!]!
+  getFilterShoes(limit: Float!, page: Float!): PaginationShoes!
+  getShoesByName(search: String!): SearchResults!
   getSingleArticle(articleId: ObjectId!): Blog!
   getSingleShoe(shoesId: ObjectId!): Shoes!
   me: User
   userRole: Boolean!
+}
+
+type SearchResults {
+  edges: [Shoes!]!
+  totalCount: Float!
 }
 
 type Shoes {
@@ -146,6 +168,7 @@ input ShoesInput {
 
 type User {
   _id: ObjectId!
+  basket: Basket!
   createdAt: DateTime!
   email: String!
   nickname: String!

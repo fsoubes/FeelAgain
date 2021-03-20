@@ -1,5 +1,9 @@
 import { Ref } from "./../constant/types";
-import { prop as Property, getModelForClass } from "@typegoose/typegoose";
+import {
+  prop as Property,
+  getModelForClass,
+  index,
+} from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
 import { Variants } from "./Variants";
@@ -7,6 +11,7 @@ import { Images } from "./Images";
 import { OptionShoes } from "./OptionShoes";
 
 @ObjectType()
+@index({ title: 1 }, { unique: true })
 export class Shoes {
   @Field()
   readonly _id: ObjectId;
@@ -27,7 +32,7 @@ export class Shoes {
   switch: String;
 
   @Field()
-  @Property({ required: true })
+  @Property({ required: true, text: true })
   title: String;
 
   @Field()

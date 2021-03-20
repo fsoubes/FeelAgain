@@ -32,6 +32,15 @@ class PaginationShoes {
   edges?: Shoes[];
 }
 
+@ObjectType()
+class SearchResults {
+  @Field()
+  totalCount?: number;
+
+  @Field(() => [Shoes])
+  edges?: Shoes[];
+}
+
 @Resolver((_of) => Shoes)
 export class ShoesResolver {
   @Query(() => Shoes)
@@ -63,6 +72,72 @@ export class ShoesResolver {
       return {
         edges: shoes,
         pageInfo: { total: Math.ceil(totalDocuments / limit), current: page },
+      };
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Query(() => SearchResults)
+  async getShoesByName(
+    @Arg("search") search: string,
+    @Ctx() {  }: MyContext
+  ): Promise<SearchResults> {
+    try {
+      /*  const test = await ShoesModel.aggregate([
+        { $match: { $text: { $search: search, $caseSensitive: true } } },
+        { $sort: { score: { $meta: "textScore" } } },
+        { $match: { score: { $gt: 1 } } },
+      ]).exec();
+      console.log(test.length); */
+
+      // const newSearch = search.replace(" ", "-").trim();
+
+      /* const test = await ShoesModel.aggregate([
+        { $match: { handle: { $regex: newSearch, $options: "i" } } },
+      ]).exec();
+      console.log(test); */
+
+      /* const test = await ShoesModel.find({
+        handle: {
+          $regex: search,
+          $options: "ig",
+        },
+      }); */
+
+      /*   console.log(test);
+
+      await ShoesModel.find(
+        {
+          $text: {
+            $search: search,
+          },
+        },
+
+        { score: { $meta: "textScore" } },
+        { lean: true }
+      )
+        .sort({ score: { $meta: "textScore" } })
+        .then((result) => {
+          result.forEach((item) => console.log(item.score));
+        });
+      */
+
+      const shoes = await ShoesModel.find(
+        {
+          $text: {
+            $search: search,
+          },
+        },
+
+        { score: { $meta: "textScore" } }
+      )
+        .sort({ score: { $meta: "textScore" } })
+        .lean<Shoes[]>();
+
+      return {
+        totalCount: shoes.length,
+        edges: shoes,
       };
     } catch (err) {
       throw err;

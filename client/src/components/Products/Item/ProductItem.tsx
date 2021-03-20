@@ -22,7 +22,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
     <div onClick={() => router.push(`products/${id}`)}>
       <Tilt style={{ cursor: "pointer" }}>
         <img
-          alt="Shoes Picture"
+          alt=""
           loading="lazy"
           src={src}
           onMouseOver={(e) => (e.currentTarget.src = srcIn)}

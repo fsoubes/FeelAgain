@@ -6,6 +6,8 @@ import SunIcon from "@material-ui/icons/WbSunnyOutlined";
 import MoonIcon from "@material-ui/icons/Brightness2Outlined";
 import styles from "../styles/Footer.module.scss";
 import { NAME } from "../constants/constants";
+import Logo from "../svg/feelagain";
+import Link from "next/link";
 
 interface FooterProps {}
 
@@ -14,18 +16,35 @@ export const Footer: React.FC<FooterProps> = () => {
   return (
     <footer>
       <div className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <div
+          className={styles.logo}
+          style={{
+            height: "100%",
+            width: "30px",
+            display: "flex",
+            alignItems: "center",
+            position: "relative",
+            cursor: "pointer",
+          }}
         >
-          @ {NAME} - 2021
-        </a>
-        <Tooltip title="Toggle Theme">
-          <Button variant="text" color="inherit" onClick={toggleTheme}>
-            {isDark ? <SunIcon /> : <MoonIcon />}
-          </Button>
-        </Tooltip>
+          <Link href="/">
+            <Logo />
+          </Link>
+        </div>
+        <div className={styles.copyright}>
+          <a
+            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @ {NAME} - 2021
+          </a>
+          <Tooltip title="Toggle Theme">
+            <Button variant="text" color="inherit" onClick={toggleTheme}>
+              {isDark ? <SunIcon /> : <MoonIcon />}
+            </Button>
+          </Tooltip>
+        </div>
       </div>
     </footer>
   );

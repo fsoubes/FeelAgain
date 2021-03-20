@@ -23,3 +23,11 @@
     @content;
   }
 }
+
+@mixin startToBetween() {
+  @media (max-width: 1024px) {
+    justify-content: space-between;
+    width: 100%;
+    @content;
+  }
+}

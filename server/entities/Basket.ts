@@ -15,8 +15,8 @@ export class Basket {
   products: Ref<Shoes>[];
 
   @Field((_type) => User)
-  @Property({ ref: User, nullable: true })
-  user: Ref<User>;
+  @Property({ ref: "User", nullable: true })
+  public user?: Ref<User>;
 }
 
 export const BasketModel = getModelForClass(Basket);

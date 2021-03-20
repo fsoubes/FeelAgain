@@ -10,9 +10,6 @@ const Feelagain: React.FC<FeelagainProps> = ({}) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 136.97 208.83"
     >
-      <defs>
-        <style></style>
-      </defs>
       <title>feelagain</title>
       <path
         className="cls-1"

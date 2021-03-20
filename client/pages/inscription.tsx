@@ -1,25 +1,19 @@
 import React from "react";
-import { Layout } from "../src/components/Layout";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import styles from "../src/styles/Register.module.scss";
-import NextLink from "next/link";
 import { withApollo } from "../src/utils/withApollo";
-import {
-  useLoginMutation,
-  MeQuery,
-  MeDocument,
-} from "../src/generated/graphql";
 import { useRouter } from "next/router";
+import { useRegisterMutation } from "../src/generated/graphql";
 import { toErrorMap } from "../src/utils/toErrorMap";
+import { Layout } from "../src/components/Layout";
 
-interface LoginProps {}
+interface RegisterProps {}
 
-const Login: React.FC<LoginProps> = ({}) => {
-  const [login] = useLoginMutation();
+const Register: React.FC<RegisterProps> = ({}) => {
+  const [register] = useRegisterMutation();
   const router = useRouter();
-
   return (
     <Layout>
       <Box
@@ -34,33 +28,17 @@ const Login: React.FC<LoginProps> = ({}) => {
         marginTop={5}
       >
         <div className={styles.form__register_header}>
-          <h1>Sign in to FSoWeb</h1>
+          <h1>Inscription à Feel Again</h1>
         </div>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ email: "", nickname: "", password: "" }}
           onSubmit={async (values, { setErrors }) => {
             try {
-              const response = await login({
-                variables: values,
-                update: (cache, { data }) => {
-                  cache.writeQuery<MeQuery>({
-                    query: MeDocument,
-                    data: {
-                      __typename: "Query",
-                      me: data?.login.user,
-                    },
-                  });
-                  cache.evict({ fieldName: "posts:{}" });
-                },
-              });
-              if (response.data?.login.errors) {
-                setErrors(toErrorMap(response.data.login.errors));
-              } else if (response.data?.login.user?._id) {
-                if (typeof router.query.next === "string") {
-                  router.push(router.query.next);
-                } else {
-                  router.push("/");
-                }
+              const response = await register({ variables: values });
+              if (response.data?.register.errors) {
+                setErrors(toErrorMap(response.data.register.errors));
+              } else if (response.data?.register.user) {
+                router.push("/");
               }
             } catch (err) {
               console.log(err);
@@ -76,15 +54,15 @@ const Login: React.FC<LoginProps> = ({}) => {
                 flexDirection="column"
               >
                 <label className={styles.form__register_label}>
-                  Email adress
+                  ADRESSE EMAIL
                 </label>
                 <Field
-                  type="text"
+                  type="email"
                   name="email"
                   autoCapitalize="none"
                   autoCorrect="off"
                   className={styles.form__register_input}
-                ></Field>
+                />
                 {errors.email && (
                   <ErrorMessage name="email">
                     {(msg) => <div style={{ color: "red" }}>{msg}</div>}
@@ -97,18 +75,40 @@ const Login: React.FC<LoginProps> = ({}) => {
                 display="flex"
                 flexDirection="column"
               >
+                <label className={styles.form__register_label}>
+                  NOM D'UTILISATEUR
+                </label>
+                <Field
+                  type="text"
+                  name="nickname"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  className={styles.form__register_input}
+                />
+                {errors.nickname && (
+                  <ErrorMessage name="nickname">
+                    {(msg) => <div style={{ color: "red" }}>{msg}</div>}
+                  </ErrorMessage>
+                )}
+              </Box>
+
+              <Box
+                marginBottom={2}
+                marginTop={2}
+                display="flex"
+                flexDirection="column"
+              >
                 <div className={styles.form__register_password}>
                   <label className={styles.form__register_label}>
-                    Password
+                    MOT DE PASSE
                   </label>
-                  <NextLink href="/forgot-password">Forgot password?</NextLink>
                 </div>
                 <Field
                   className={styles.form__register_input}
                   type="password"
                   name="password"
                   autoComplete="current-password"
-                ></Field>
+                />
                 {errors.password && (
                   <ErrorMessage name="password">
                     {(msg) => <div style={{ color: "red" }}>{msg}</div>}
@@ -120,19 +120,20 @@ const Login: React.FC<LoginProps> = ({}) => {
                 fullWidth
                 variant="contained"
                 color="primary"
-                disabled={isSubmitting}
               >
-                Login
+                S'inscrire
               </Button>
+              <p>
+                Vos données personnelles (email et nom d'utilisateur) ne sont
+                utilisées qu'à des fins d'authentification et ne sont pas
+                partagées avec des tiers
+              </p>
             </Form>
           )}
         </Formik>
-        <p className={styles.form__register_new}>
-          New to FSoWeb ?
-          <NextLink href="/register"> Create an account</NextLink>
-        </p>
       </Box>
     </Layout>
   );
 };
-export default withApollo({ ssr: false })(Login);
+
+export default withApollo({ ssr: false })(Register);

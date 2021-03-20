@@ -1,25 +1,28 @@
 @import "mixins";
 
 .navbar__content {
-  padding-left: "5%";
-  display: flex;
+  display: flex !important;
+  justify-content: space-between !important;
   align-items: center;
   position: relative;
-  .navbar__logo {
+  box-sizing: border-box;
+  padding-left: calc(50% - var(--container-width) / 2) !important;
+  padding-right: calc(50% - var(--container-width) / 2) !important;
+  width: 100%;
+  justify-content: space-between;
+  .navbar__left {
     display: flex;
     justify-content: center;
     align-items: center;
+    @include startToBetween() {
+    }
   }
 
   .hamburger {
     @include show() {
     }
-    position: absolute !important;
-    top: 0;
-    right: 0;
     height: 100%;
     z-index: 500;
-    padding-right: 24px;
     color: #fff;
   }
 
@@ -34,7 +37,7 @@
       text-align: center;
       align-items: center;
       justify-content: center;
-      width: 50%;
+      width: 60%;
       height: 100vh;
       backdrop-filter: saturate(180%) blur(5px);
       position: fixed;
@@ -42,7 +45,7 @@
 
       button {
         margin: 0 !important;
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         padding-left: 0 !important;
         &:hover {
           background: unset;
@@ -56,16 +59,23 @@
       margin-left: 3rem;
     }
   }
-  .navbar__auth {
-    right: 0;
-    position: absolute;
-    padding-right: 5%;
-    .navbar__auth_logout {
-      @include hide() {
-      }
+
+  .navbar__right {
+    display: flex;
+    align-items: center;
+    .search {
+      margin-right: calc(var(--space));
+      border-right: 1px solid white;
+      padding-right: 3px;
     }
-    a {
-      color: #fff;
+    .navbar__auth {
+      .navbar__auth_logout {
+        @include hide() {
+        }
+      }
+      a {
+        color: #fff;
+      }
     }
   }
 }
