@@ -67,6 +67,11 @@
       margin-right: calc(var(--space));
       border-right: 1px solid white;
       padding-right: 3px;
+      display: flex;
+      svg {
+        width: 28px;
+        height: 28px;
+      }
     }
     .navbar__auth {
       .navbar__auth_logout {

@@ -7,7 +7,9 @@ interface ProfileProps {}
 const Profile: React.FC<ProfileProps> = ({}) => {
   return (
     <Layout>
-      <h1>Hello</h1>
+      <div className="container__shop">
+        <h1>Hello</h1>
+      </div>
     </Layout>
   );
 };

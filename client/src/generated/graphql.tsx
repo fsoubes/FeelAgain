@@ -21,6 +21,7 @@ export type Query = {
   __typename?: 'Query';
   getSingleShoe: Shoes;
   getFilterShoes: PaginationShoes;
+  getShoesByName: SearchResults;
   me?: Maybe<User>;
   userRole: Scalars['Boolean'];
   getSingleArticle: Blog;
@@ -36,6 +37,11 @@ export type QueryGetSingleShoeArgs = {
 export type QueryGetFilterShoesArgs = {
   page: Scalars['Float'];
   limit: Scalars['Float'];
+};
+
+
+export type QueryGetShoesByNameArgs = {
+  search: Scalars['String'];
 };
 
 
@@ -119,6 +125,12 @@ export type PaginationPage = {
   current?: Maybe<Scalars['Float']>;
 };
 
+export type SearchResults = {
+  __typename?: 'SearchResults';
+  totalCount: Scalars['Float'];
+  edges: Array<Shoes>;
+};
+
 export type User = {
   __typename?: 'User';
   _id: Scalars['ObjectId'];
@@ -126,6 +138,14 @@ export type User = {
   updatedAt: Scalars['DateTime'];
   nickname: Scalars['String'];
   email: Scalars['String'];
+  basket: Basket;
+};
+
+export type Basket = {
+  __typename?: 'Basket';
+  _id: Scalars['ObjectId'];
+  products: Array<Shoes>;
+  user: User;
 };
 
 export type Blog = {
@@ -494,6 +514,27 @@ export type GetShoesQuery = (
       { __typename?: 'PaginationPage' }
       & Pick<PaginationPage, 'total' | 'current'>
     ), edges: Array<(
+      { __typename?: 'Shoes' }
+      & { images: Array<(
+        { __typename?: 'Images' }
+        & ImageFragmentFragment
+      )> }
+      & ShoesBrowseFragmentFragment
+    )> }
+  ) }
+);
+
+export type GetShoesByNameQueryVariables = Exact<{
+  search: Scalars['String'];
+}>;
+
+
+export type GetShoesByNameQuery = (
+  { __typename?: 'Query' }
+  & { getShoesByName: (
+    { __typename?: 'SearchResults' }
+    & Pick<SearchResults, 'totalCount'>
+    & { edges: Array<(
       { __typename?: 'Shoes' }
       & { images: Array<(
         { __typename?: 'Images' }
@@ -963,6 +1004,46 @@ export function useGetShoesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetShoesQueryHookResult = ReturnType<typeof useGetShoesQuery>;
 export type GetShoesLazyQueryHookResult = ReturnType<typeof useGetShoesLazyQuery>;
 export type GetShoesQueryResult = Apollo.QueryResult<GetShoesQuery, GetShoesQueryVariables>;
+export const GetShoesByNameDocument = gql`
+    query GetShoesByName($search: String!) {
+  getShoesByName(search: $search) {
+    totalCount
+    edges {
+      ...ShoesBrowseFragment
+      images {
+        ...ImageFragment
+      }
+    }
+  }
+}
+    ${ShoesBrowseFragmentFragmentDoc}
+${ImageFragmentFragmentDoc}`;
+
+/**
+ * __useGetShoesByNameQuery__
+ *
+ * To run a query within a React component, call `useGetShoesByNameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetShoesByNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetShoesByNameQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useGetShoesByNameQuery(baseOptions: Apollo.QueryHookOptions<GetShoesByNameQuery, GetShoesByNameQueryVariables>) {
+        return Apollo.useQuery<GetShoesByNameQuery, GetShoesByNameQueryVariables>(GetShoesByNameDocument, baseOptions);
+      }
+export function useGetShoesByNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetShoesByNameQuery, GetShoesByNameQueryVariables>) {
+          return Apollo.useLazyQuery<GetShoesByNameQuery, GetShoesByNameQueryVariables>(GetShoesByNameDocument, baseOptions);
+        }
+export type GetShoesByNameQueryHookResult = ReturnType<typeof useGetShoesByNameQuery>;
+export type GetShoesByNameLazyQueryHookResult = ReturnType<typeof useGetShoesByNameLazyQuery>;
+export type GetShoesByNameQueryResult = Apollo.QueryResult<GetShoesByNameQuery, GetShoesByNameQueryVariables>;
 export const GetSingleArticleDocument = gql`
     query getSingleArticle($articleId: ObjectId!) {
   getSingleArticle(articleId: $articleId) {

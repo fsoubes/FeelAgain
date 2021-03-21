@@ -3,21 +3,21 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { SearchResults } from "../../generated/graphql";
 
 interface ModalProps {
   modalTitle?: string;
   children: JSX.Element;
   isSearch: boolean;
+  reset: React.Dispatch<React.SetStateAction<SearchResults | null>>;
 }
 
 const getModalStyle = () => {
   const top = 15;
-  const left = 50;
 
   return {
     top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${50}%, -${left}%)`,
+    margin: "auto",
   };
 };
 
@@ -25,16 +25,22 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       position: "absolute",
-      width: 400,
+      width: "60%",
       backgroundColor: "#fff",
       border: "2px solid #000",
       boxShadow: theme.shadows[10],
       padding: theme.spacing(2, 4, 3),
+      borderRadius: "3px",
     },
   })
 );
 
-const PopUp: React.FC<ModalProps> = ({ children, modalTitle, isSearch }) => {
+const PopUp: React.FC<ModalProps> = ({
+  children,
+  modalTitle,
+  isSearch,
+  reset,
+}) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -46,6 +52,7 @@ const PopUp: React.FC<ModalProps> = ({ children, modalTitle, isSearch }) => {
 
   const handleClose = () => {
     setOpen(false);
+    reset(null);
   };
 
   return (
@@ -55,6 +62,11 @@ const PopUp: React.FC<ModalProps> = ({ children, modalTitle, isSearch }) => {
       </Button>
 
       <Modal
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"

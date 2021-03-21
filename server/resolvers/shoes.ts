@@ -68,7 +68,8 @@ export class ShoesResolver {
     try {
       const totalDocuments = await ShoesModel.countDocuments({}).exec();
       const options = { limit: limit, skip: limit * (page - 1) };
-      const shoes = await ShoesModel.find({}, {}, options).limit(limit);
+      const shoes = await ShoesModel.find({}, {}, options).lean<Shoes[]>();
+
       return {
         edges: shoes,
         pageInfo: { total: Math.ceil(totalDocuments / limit), current: page },
@@ -83,61 +84,42 @@ export class ShoesResolver {
     @Arg("search") search: string,
     @Ctx() {  }: MyContext
   ): Promise<SearchResults> {
+    const totalSpace = search.split(" ").length - 1;
     try {
-      /*  const test = await ShoesModel.aggregate([
-        { $match: { $text: { $search: search, $caseSensitive: true } } },
-        { $sort: { score: { $meta: "textScore" } } },
-        { $match: { score: { $gt: 1 } } },
-      ]).exec();
-      console.log(test.length); */
-
-      // const newSearch = search.replace(" ", "-").trim();
-
-      /* const test = await ShoesModel.aggregate([
-        { $match: { handle: { $regex: newSearch, $options: "i" } } },
-      ]).exec();
-      console.log(test); */
-
-      /* const test = await ShoesModel.find({
-        handle: {
-          $regex: search,
-          $options: "ig",
-        },
-      }); */
-
-      /*   console.log(test);
-
-      await ShoesModel.find(
+      const shoes = await ShoesModel.aggregate([
         {
-          $text: {
-            $search: search,
+          $match: {
+            $text: {
+              $search: search,
+            },
           },
         },
-
-        { score: { $meta: "textScore" } },
-        { lean: true }
-      )
-        .sort({ score: { $meta: "textScore" } })
-        .then((result) => {
-          result.forEach((item) => console.log(item.score));
-        });
-      */
-
-      const shoes = await ShoesModel.find(
         {
-          $text: {
-            $search: search,
+          $addFields: {
+            score_filter: {
+              $meta: "textScore",
+            },
           },
         },
-
-        { score: { $meta: "textScore" } }
-      )
-        .sort({ score: { $meta: "textScore" } })
-        .lean<Shoes[]>();
+        {
+          $match: {
+            score_filter: { $gt: totalSpace >= 1 ? 1 : 0.5 },
+          },
+        },
+        { $sort: { score_filter: -1, _id: 1 } },
+        {
+          $facet: {
+            pageInfo: [{ $count: "totalRecords" }],
+            resultData: [{ $limit: 10 }],
+          },
+        },
+      ]);
 
       return {
-        totalCount: shoes.length,
-        edges: shoes,
+        totalCount: shoes[0].pageInfo[0]
+          ? shoes[0].pageInfo[0].totalRecords
+          : 0,
+        edges: shoes[0].resultData,
       };
     } catch (err) {
       throw err;

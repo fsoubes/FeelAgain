@@ -14,9 +14,10 @@ const SearchBar = ({ searchConfim, urlSearch }: any) => {
         tabIndex={0}
         type="text"
         autoFocus
-        placeholder="Search (Name)"
+        placeholder="Rechercher un Produit"
         aria-label="Search"
         autoComplete="off"
+        style={{ width: "90%" }}
       />
       <i className="fa fa-search" aria-hidden="true"></i>
     </div>

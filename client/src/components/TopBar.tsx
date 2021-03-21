@@ -12,8 +12,8 @@ import styles from "../styles/TopBar.module.scss";
 import MenuIcon from "@material-ui/icons/Menu";
 import useResponsive from "../utils/useResponsive";
 import { makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
 import SearchShoes from "./Search/Search";
+import Basket from "../svg/basket";
 
 const useStyles = makeStyles({
   show: {
@@ -130,7 +130,11 @@ export const TopBar = (): ReactElement => {
 
           <div className={styles.hamburger}>
             <SearchShoes />
-
+            <Link href="/">
+              <Button>
+                <Basket total={5} />
+              </Button>
+            </Link>
             <Button onClick={() => setOpen(!open)}>
               <MenuIcon />
             </Button>
@@ -168,6 +172,11 @@ export const TopBar = (): ReactElement => {
           <div className={styles.navbar__right}>
             <div className={styles.search}>
               <SearchShoes />
+              <Link href="/panier">
+                <Button>
+                  <Basket total={5} />
+                </Button>
+              </Link>
             </div>
             <div className={styles.navbar__auth}>
               <Fragment>{!data?.me ? logged : unloged}</Fragment>

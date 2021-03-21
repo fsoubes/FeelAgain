@@ -1,0 +1,11 @@
+query GetShoesByName($search: String!) {
+  getShoesByName(search: $search) {
+    totalCount
+    edges {
+      ...ShoesBrowseFragment
+      images {
+        ...ImageFragment
+      }
+    }
+  }
+}
