@@ -1,7 +1,6 @@
 import React from "react";
 import {
   ImageFragmentFragment,
-  Shoes,
   ShoesBrowseFragmentFragment,
 } from "../../generated/graphql";
 import ProductItem from "./Item/ProductItem";
@@ -31,8 +30,6 @@ const ProductsList: React.FC<ProductsListProps> = ({ shoes }) => {
     );
   });
 
-  return (
-    <div className={`${styles.container} container__shop`}>{products}</div>
-  );
+  return <div className={styles.container}>{products}</div>;
 };
 export default ProductsList;

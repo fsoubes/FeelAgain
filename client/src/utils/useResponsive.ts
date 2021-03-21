@@ -11,12 +11,17 @@ const useResponsive = () => {
     maxWidth: 1024,
   });
 
+  const isMobile = useMediaQuery({
+    maxWidth: 414,
+  });
+
   useEnhancedEffect(() => {
     if (typeof window !== "undefined") setIsClient(true);
   }, []);
 
   return {
     isClient,
+    isMobile: isClient ? isMobile : false,
     isTabletorMobile: isClient ? isTabletorMobile : false,
   };
 };

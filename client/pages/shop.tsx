@@ -8,6 +8,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
+import useResponsive from "../src/utils/useResponsive";
 // import { useApolloClient } from "@apollo/client";
 
 interface ShopProps {
@@ -20,6 +21,7 @@ interface selectedItem {
 }
 
 const Shop: NextPage<ShopProps> = ({ page, search }) => {
+  const { isMobile } = useResponsive();
   // const client = useApolloClient();
   const router = useRouter();
   let { data, refetch } = useGetShoesQuery({
@@ -53,26 +55,32 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
     }, 500);
   };
 
+  console.log(isMobile);
+
   return (
     <Layout>
       {data && (
-        <Fragment>
+        <div className="container__shop">
           <ProductsList shoes={data.getFilterShoes?.edges} />
-          <ReactPaginate
-            nextLabel={<ArrowForwardIosIcon style={{ fontSize: 15 }} />}
-            previousLabel={<ArrowBackIosIcon style={{ fontSize: 15 }} />}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={data?.getFilterShoes?.pageInfo.total as number}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handleClick}
-            containerClassName={"pagination"}
-            activeClassName={"active"}
-            initialPage={page ? page - 1 : 0}
-            disableInitialCallback
-          />
-        </Fragment>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <ReactPaginate
+              nextLabel={<ArrowForwardIosIcon style={{ fontSize: 15 }} />}
+              previousLabel={<ArrowBackIosIcon style={{ fontSize: 15 }} />}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={data?.getFilterShoes?.pageInfo.total as number}
+              marginPagesDisplayed={isMobile ? 1 : 2}
+              pageRangeDisplayed={isMobile ? 2 : 5}
+              onPageChange={handleClick}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+              initialPage={page ? page - 1 : 0}
+              disableInitialCallback
+            />
+          </div>
+        </div>
       )}
     </Layout>
   );
