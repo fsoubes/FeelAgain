@@ -8,9 +8,16 @@ interface SearchListProps {
 
 const SearchList: React.FC<SearchListProps> = ({ data }) => {
   const searchList = data.map((item) => {
-    return <SearchItem key={item._id} title={item.title}></SearchItem>;
+    return (
+      <SearchItem
+        key={item._id}
+        title={item.title}
+        image={item.images[1].src}
+        id={item._id}
+      ></SearchItem>
+    );
   });
 
-  return <div>{searchList}</div>;
+  return <ul>{searchList}</ul>;
 };
 export default SearchList;

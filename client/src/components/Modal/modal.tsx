@@ -1,9 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { SearchResults } from "../../generated/graphql";
+import { useRouter } from "next/router";
 
 interface ModalProps {
   modalTitle?: string;
@@ -13,7 +14,7 @@ interface ModalProps {
 }
 
 const getModalStyle = () => {
-  const top = 15;
+  const top = 10;
 
   return {
     top: `${top}%`,
@@ -42,9 +43,20 @@ const PopUp: React.FC<ModalProps> = ({
   reset,
 }) => {
   const classes = useStyles();
+  const router = useRouter();
+
+  useEffect(() => {
+    return () => {
+      if (router) {
+        setOpen(false);
+        reset(null);
+      }
+    };
+  }, [router]);
+
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);

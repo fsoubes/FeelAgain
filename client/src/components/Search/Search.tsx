@@ -33,14 +33,18 @@ const SearchShoes: React.FC<SearchProps> = ({}) => {
     <PopUp modalTitle={"Search"} isSearch={true} reset={setData}>
       <Fragment>
         <SearchBar searchConfim={onEnterSearch}></SearchBar>
-        {data && data.edges.length > 1 && (
+        {data && data.edges.length > 0 && (
           <div className={styles.content}>
             <SearchList data={data.edges}></SearchList>
-            <Link href={`/shop?search=${currentSearch}`}>
-              <a>
-                {"</>"}Voir plus de résultats {data.totalCount}.
-              </a>
-            </Link>
+            {data.edges.length >= 10 && (
+              <div className={styles.more}>
+                <Link href={`/shop?search=${currentSearch}`}>
+                  <a>
+                    {"</>"}Voir plus de résultats {data.totalCount}.
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         )}
         {data && data.edges.length === 0 && <h5>Aucun résultat</h5>}

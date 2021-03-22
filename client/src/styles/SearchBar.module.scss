@@ -1,6 +1,10 @@
 .search {
   &__container {
     padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
   }
 
   &__title {

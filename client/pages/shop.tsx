@@ -45,17 +45,18 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
           pathname: router.pathname,
           query: {
             page,
+            search,
           },
         },
-        `/shop?page=${selected + 1}`,
+        search
+          ? `/shop?page=${selected + 1}&search=${search}`
+          : `/shop?page=${selected + 1}`,
         { shallow: true }
       );
 
       refetch({ page: selected + 1 });
     }, 500);
   };
-
-  console.log(isMobile);
 
   return (
     <Layout>

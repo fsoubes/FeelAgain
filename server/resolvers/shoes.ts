@@ -63,6 +63,7 @@ export class ShoesResolver {
   async getFilterShoes(
     @Arg("limit") limit: number,
     @Arg("page") page: number,
+    // @Arg("search") search: string,
     @Ctx() {  }: MyContext
   ): Promise<PaginationShoes> {
     try {

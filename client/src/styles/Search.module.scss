@@ -1,6 +1,28 @@
 .content {
-  div {
+  overflow-y: auto;
+  overflow-x: hidden;
+  grid-template-columns: repeat(2, 1fr);
+  max-height: calc(100vh - 325px);
+  ul {
     margin-bottom: 1rem;
+    list-style-type: none;
+    padding: 0;
+    li {
+      cursor: pointer;
+      display: inline-grid;
+      grid-template-columns: 150px auto;
+      div:nth-child(1) {
+        img {
+          height: 150px;
+          width: 200px;
+        }
+      }
+    }
+  }
+
+  .more {
+    width: 100;
+    text-align: center;
   }
 
   a {
