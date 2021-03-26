@@ -3,14 +3,20 @@ import { ThemeProvider } from "../src/theme";
 import "../src/styles/global.scss";
 import Head from "next/head";
 import { Footer } from "../src/components/Footer";
+import { useRouter } from "next/router";
+import Dashboard from "./dashboard";
 
 function MyApp({ Component, pageProps }: any) {
+  const router = useRouter();
+
   useEffect(() => {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement?.removeChild(jssStyles);
     }
   }, []);
+
+  console.log(router.pathname.startsWith("/dashboard/"));
 
   return (
     <Fragment>
@@ -20,7 +26,13 @@ function MyApp({ Component, pageProps }: any) {
       </Head>
       <div className="container">
         <ThemeProvider>
-          <Component {...pageProps} />
+          {router.pathname.startsWith("/dashboard/") ? (
+            <Dashboard>
+              <Component {...pageProps} />
+            </Dashboard>
+          ) : (
+            <Component {...pageProps} />
+          )}
           <Footer></Footer>
         </ThemeProvider>
       </div>

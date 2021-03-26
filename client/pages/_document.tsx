@@ -2,7 +2,7 @@ import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@material-ui/core/styles";
 import { darkTheme as theme } from "../src/theme";
-import { NAME } from "../src/constants/constants";
+import { name } from "../src/constants/constants";
 
 export default class MyDocument extends Document {
   render(): React.ReactElement {
@@ -10,8 +10,8 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
-          <meta name="apple-mobile-web-app-title" content={NAME} />
-          <meta name="application-name" content={NAME} />
+          <meta name="apple-mobile-web-app-title" content={name} />
+          <meta name="application-name" content={name} />
           <meta property="og:locale" content="en_GB" />
           <link rel="icon" type="image/png" href="/devx.png" />
           <link

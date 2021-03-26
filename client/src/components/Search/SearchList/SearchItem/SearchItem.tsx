@@ -21,8 +21,12 @@ const SearchItem: React.FC<SearchItemProps> = ({
           <img src={image} alt=""></img>
         </div>
         <div>
-          <h5>{title}</h5>
-          <div>{price}€</div>
+          <div>
+            <div>
+              <h5>{title}</h5>
+            </div>
+            <div>{price}€</div>
+          </div>
         </div>
       </li>
     </Link>

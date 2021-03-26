@@ -12,7 +12,9 @@ const SearchList: React.FC<SearchListProps> = ({ data }) => {
       <SearchItem
         key={item._id}
         title={item.title}
-        image={item.images[1].src}
+        image={
+          item.vendor === "Anaki" ? item.images[2].src : item.images[1].src
+        }
         id={item._id}
       ></SearchItem>
     );

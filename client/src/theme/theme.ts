@@ -142,6 +142,10 @@ const options = (dark: boolean): ThemeOptions => {
           ".Footer_footer__9WsPL::before": {
             background: paletteColors.text,
           },
+
+          ".DashboardMenu_sidebar__container__20Y3N": {
+            background: paletteColors.primary,
+          },
           /* ".cls-1, .cls-2, .cls-3": {
             stroke: paletteColors.logo,
           }, */

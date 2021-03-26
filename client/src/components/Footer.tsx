@@ -5,7 +5,6 @@ import { ToggleThemeContext } from "../theme";
 import SunIcon from "@material-ui/icons/WbSunnyOutlined";
 import MoonIcon from "@material-ui/icons/Brightness2Outlined";
 import styles from "../styles/Footer.module.scss";
-import { NAME } from "../constants/constants";
 import Logo from "../svg/feelagain";
 import Link from "next/link";
 
@@ -37,7 +36,7 @@ export const Footer: React.FC<FooterProps> = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            @ {NAME} - 2021
+            @FeelAgain - 2021
           </a>
           <Tooltip title="Toggle Theme">
             <Button variant="text" color="inherit" onClick={toggleTheme}>

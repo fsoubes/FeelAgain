@@ -132,7 +132,7 @@ export const TopBar = (): ReactElement => {
             <SearchShoes />
             <Link href="/">
               <Button>
-                <Basket total={5} />
+                <Basket total={0} />
               </Button>
             </Link>
             <Button onClick={() => setOpen(!open)}>
@@ -174,7 +174,7 @@ export const TopBar = (): ReactElement => {
               <SearchShoes />
               <Link href="/panier">
                 <Button>
-                  <Basket total={5} />
+                  <Basket total={0} />
                 </Button>
               </Link>
             </div>

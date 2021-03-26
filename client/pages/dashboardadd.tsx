@@ -1,21 +1,23 @@
-import { Box, Button } from "@material-ui/core";
-import { Formik, Form, Field } from "formik";
-import { useRouter } from "next/router";
 import React from "react";
-import { useAddArticleMutation } from "../../src/generated/graphql";
-import styles from "../../src/styles/Dashboard.module.scss";
+import { Layout } from "../src/components/Layout";
+import { withApollo } from "../src/utils/withApollo";
+import { Box } from "@material-ui/core";
+import { Field, Formik, Form } from "formik";
+import styles from "../src/styles/Dashboard.module.scss";
+import { Button } from "@material-ui/core/";
+import { useAddArticleMutation } from "../src/generated/graphql";
+import { useRouter } from "next/router";
+import { useIsAuth } from "../src/utils/useIsAuth";
 
-interface AddProps {}
-
-const AddProduct: React.FC<AddProps> = ({}) => {
+const Dashboard: React.FC<{}> = ({}) => {
+  useIsAuth();
   const router = useRouter();
   const [addArticle] = useAddArticleMutation();
-
   return (
-    <div className={styles.dashboard__container}>
-      <div>
+    <Layout>
+      <div className={styles.dashboard__container}>
         <div className={styles.dashboard__header}>
-          <h1>Ajouter un article</h1>
+          <h1>Add Article</h1>
         </div>
         <Formik
           initialValues={{
@@ -100,29 +102,6 @@ const AddProduct: React.FC<AddProps> = ({}) => {
                       ></img>
                     </div>
                   </Box>
-                  <Box
-                    marginBottom={2}
-                    marginTop={2}
-                    display="flex"
-                    flexDirection="column"
-                  >
-                    <label className={styles.form__register_label}>Image</label>
-                    <Field
-                      type="text"
-                      name="image_url"
-                      autoCapitalize="none"
-                      autoCorrect="off"
-                      className={styles.form__register_input}
-                    ></Field>
-                    <div
-                      style={{ display: "flex", justifyContent: "flex-end" }}
-                    >
-                      <img
-                        style={{ maxWidth: "150px" }}
-                        src={values.image_url}
-                      ></img>
-                    </div>
-                  </Box>
                 </div>
               </section>
               <section>
@@ -152,13 +131,13 @@ const AddProduct: React.FC<AddProps> = ({}) => {
                 variant="contained"
                 color="primary"
               >
-                Ajouter Article
+                Add Article
               </Button>
             </Form>
           )}
         </Formik>
       </div>
-    </div>
+    </Layout>
   );
 };
-export default AddProduct;
+export default withApollo({ ssr: false })(Dashboard);
