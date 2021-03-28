@@ -6,9 +6,6 @@ fragment ShoesBrowseFragment on Shoes {
   vendor
   scored_by
   product_type
-  options {
-    name
-    position
-    values
-  }
+  price
+  size
 }

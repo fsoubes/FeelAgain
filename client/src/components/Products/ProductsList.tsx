@@ -24,7 +24,7 @@ const ProductsList: React.FC<ProductsListProps> = ({ shoes }) => {
         srcIn={
           item.vendor === "Anaki" ? item.images[2].src : item.images[1].src
         }
-        price={"200,00"}
+        price={item.price}
         title={item.title}
       />
     );

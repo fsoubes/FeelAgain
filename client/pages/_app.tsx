@@ -16,8 +16,6 @@ function MyApp({ Component, pageProps }: any) {
     }
   }, []);
 
-  console.log(router.pathname.startsWith("/dashboard/"));
-
   return (
     <Fragment>
       <Head>

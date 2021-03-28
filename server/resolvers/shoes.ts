@@ -22,6 +22,9 @@ import { VariantInput } from "./types/variants-input";
 import { isAuth } from "../middlewares/isAuth";
 import { isAdmin } from "../middlewares/isAdmin";
 import { PaginationPage } from "./types/pagination-result";
+import { getFilteredShoes } from "../helpers/filterShoes";
+import { sortBy } from "./enum/sortingBy";
+import { ShoesInputFilter } from "./types/filtershoes-input";
 
 @ObjectType()
 class PaginationShoes {
@@ -63,17 +66,35 @@ export class ShoesResolver {
   async getFilterShoes(
     @Arg("limit") limit: number,
     @Arg("page") page: number,
-    // @Arg("search") search: string,
+    @Arg("search", { nullable: true }) search: string,
+    @Arg("sort", { nullable: true }) sorting: sortBy,
+    @Arg("filter", { nullable: true }) filter: ShoesInputFilter,
     @Ctx() {  }: MyContext
   ): Promise<PaginationShoes> {
     try {
-      const totalDocuments = await ShoesModel.countDocuments({}).exec();
-      const options = { limit: limit, skip: limit * (page - 1) };
-      const shoes = await ShoesModel.find({}, {}, options).lean<Shoes[]>();
+      limit = limit > 20 ? 20 : limit;
+      const info = await getFilteredShoes(
+        ShoesModel, // Model
+        sorting, // Sorting
+        { page: page, limit: limit, search: search }, // Pagination w where
+        { ...filter }, // Filtering
+        [
+          "title",
+          "handle",
+          "tags",
+          "score",
+          "vendor",
+          "scored_by",
+          "product_type",
+          "price",
+          "size",
+          "images",
+        ] // Select limited data for better performance with lean and select
+      );
 
       return {
-        edges: shoes,
-        pageInfo: { total: Math.ceil(totalDocuments / limit), current: page },
+        edges: info.edges,
+        pageInfo: info.pageInfo,
       };
     } catch (err) {
       throw err;

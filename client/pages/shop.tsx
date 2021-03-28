@@ -25,7 +25,13 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
   // const client = useApolloClient();
   const router = useRouter();
   let { data, refetch } = useGetShoesQuery({
-    variables: { limit: 16, page: page ? page : 1 },
+    variables: {
+      limit: 16,
+      page: page ? page : 1,
+      ...(search && {
+        search: search,
+      }),
+    },
   });
 
   const handleClick = ({ selected }: selectedItem) => {
@@ -62,6 +68,17 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
     <Layout>
       {data && (
         <div className="container__shop">
+          <div
+            className="container__header"
+            style={{ backgroundColor: "transparent" }}
+          >
+            <h4>FeelAgain/Shop</h4>
+            <h4>
+              {search
+                ? `${data?.getFilterShoes.pageInfo.totalItem} résultats pour “${search}”`
+                : `${data?.getFilterShoes.pageInfo.totalItem} articles`}
+            </h4>
+          </div>
           <ProductsList shoes={data.getFilterShoes?.edges} />
           <div
             style={{ width: "100%", display: "flex", justifyContent: "center" }}

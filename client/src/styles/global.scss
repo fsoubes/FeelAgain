@@ -77,6 +77,20 @@ a {
   }
 }
 
+.container__header {
+  background-color: #24292e;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  align-items: center;
+  font-weight: bold;
+  > h4 {
+    padding-left: calc(50% - var(--container-width) / 2);
+    padding-right: calc(50% - var(--container-width) / 2);
+  }
+}
+
 .container__shop {
   margin-top: 2rem;
   box-sizing: border-box;

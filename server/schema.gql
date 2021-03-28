@@ -122,7 +122,7 @@ type PaginationShoes {
 
 type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
-  getFilterShoes(limit: Float!, page: Float!): PaginationShoes!
+  getFilterShoes(filter: ShoesInputFilter, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
   getShoesByName(search: String!): SearchResults!
   getSingleArticle(articleId: ObjectId!): Blog!
   getSingleShoe(shoesId: ObjectId!): Shoes!
@@ -143,10 +143,12 @@ type Shoes {
   handle: String!
   images: [Images!]!
   options: [OptionShoes!]!
+  price: String!
   product_type: String!
   relatives: [Shoes!]!
   score: Float!
   scored_by: Float!
+  size: [Float!]!
   switchTitle: [String!]!
   tags: [String!]!
   title: String!
@@ -164,6 +166,12 @@ input ShoesInput {
   tags: [String!]
   title: String!
   vendor: String
+}
+
+input ShoesInputFilter {
+  product: String
+  size: [Float!]
+  tags: [String!]
 }
 
 type User {

@@ -11,7 +11,7 @@ import { Images } from "./Images";
 import { OptionShoes } from "./OptionShoes";
 
 @ObjectType()
-@index({ title: 1 }, { unique: true })
+@index({ handle: 1 }, { unique: true })
 export class Shoes {
   @Field()
   readonly _id: ObjectId;
@@ -32,7 +32,7 @@ export class Shoes {
   switch: String;
 
   @Field()
-  @Property({ required: true, text: true })
+  @Property({ required: true })
   title: String;
 
   @Field()
@@ -52,7 +52,7 @@ export class Shoes {
   bought_by: Number;
 
   @Field()
-  @Property({ required: true })
+  @Property({ required: true, text: true })
   handle: String;
 
   @Field()
@@ -70,6 +70,14 @@ export class Shoes {
   @Field()
   @Property({ required: true })
   product_type: String;
+
+  @Field()
+  @Property({ required: true })
+  price: String;
+
+  @Field(() => [Number])
+  @Property({ type: () => [Number], default: [] })
+  size: number[];
 
   @Field((_type) => [Variants])
   @Property({ ref: Variants, default: [], nullable: false })

@@ -14,4 +14,6 @@ export class PaginationPage {
   total!: number;
   @Field({ nullable: true })
   current!: number;
+  @Field({ nullable: true })
+  totalItem!: number;
 }

@@ -46,8 +46,9 @@ const main = async () => {
         email: "bob@bob.fr",
       });
     } else {
-      // await mongoose.connection.db.dropDatabase();
-      // defaultUser = await seedDataBase();
+      /* await mongoose.connection.db.dropDatabase();
+      defaultUser = await seedDataBase(); */
+      // await mongoose.get("autoIndex");
       console.log("started! ");
     }
 

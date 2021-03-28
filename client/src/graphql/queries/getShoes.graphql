@@ -1,8 +1,23 @@
-query GetShoes($limit: Float!, $page: Float!) {
-  getFilterShoes(limit: $limit, page: $page) {
+query GetShoes(
+  $limit: Float!
+  $page: Float!
+  $sort: String
+  $search: String
+  $product: String
+  $size: [Float!]
+  $tags: [String!]
+) {
+  getFilterShoes(
+    limit: $limit
+    page: $page
+    search: $search
+    sort: $sort
+    filter: { product: $product, size: $size, tags: $tags }
+  ) {
     pageInfo {
       total
       current
+      totalItem
     }
     edges {
       ...ShoesBrowseFragment

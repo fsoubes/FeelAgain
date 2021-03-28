@@ -9,7 +9,7 @@ import { ImagesModel } from "../entities/Images";
 export class AddResolver {
   @Mutation(() => Boolean)
   async addShoes(@Ctx() {  }: MyContext) {
-    const filenames=["anaki","patricia"]
+    const filenames=["anakiFiltered","patriciaFiltered"]
     try {
       for(const name of filenames){
       const data = readJSON(`./data/${name}.json`);
