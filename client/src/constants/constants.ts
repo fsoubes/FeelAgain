@@ -17,4 +17,34 @@ export const sideBarMenu = [
   },
   { title: "Statistiques", path: "/dashboard/stats", icon: "null", sub: [] },
   { title: "Commandes", path: "/dashboard/delivery", icon: "null", sub: [] },
+  { title: "Utilisateurs", path: "/dashboard/user", icon: "null", sub: [] },
+];
+
+export const productType = [
+  "Ballerines",
+  "Boots",
+  "Bottes",
+  "Derbies",
+  "Escarpins",
+  "Mules",
+  "Sandales",
+];
+
+export const paletteShoes = [
+  "Blanc",
+  "Bronze",
+  "Champagne",
+  "Or",
+  "Argenté",
+  "Beige",
+  "Bleu",
+  "Bordeaux",
+  "Camel",
+  "Jaune",
+  "Marron",
+  "Noir",
+  "Orange",
+  "Rose",
+  "Rouge",
+  "Vert",
 ];

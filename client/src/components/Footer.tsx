@@ -27,7 +27,9 @@ export const Footer: React.FC<FooterProps> = () => {
           }}
         >
           <Link href="/">
-            <Logo />
+            <div>
+              <Logo />
+            </div>
           </Link>
         </div>
         <div className={styles.copyright}>

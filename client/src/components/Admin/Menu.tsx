@@ -14,8 +14,8 @@ const Menu: React.FC<MenuProps> = ({ title }) => {
       <ul className={styles.sidebar__menu}>
         {sideBarMenu.map((item, index) => {
           return item.sub.length === 0 ? (
-            <Link href={item.path}>
-              <li key={index} className={styles.sidebar__item}>
+            <Link href={item.path} key={index}>
+              <li className={styles.sidebar__item}>
                 <span>{item.title}</span>
               </li>
             </Link>
@@ -25,8 +25,8 @@ const Menu: React.FC<MenuProps> = ({ title }) => {
               <ul>
                 {item.sub.map((subtitle, index) => {
                   return (
-                    <Link href={subtitle.path}>
-                      <li key={index} className={styles.sidebar__subitem}>
+                    <Link href={subtitle.path} key={index}>
+                      <li className={styles.sidebar__subitem}>
                         <span>{subtitle.title}</span>
                       </li>
                     </Link>

@@ -4,15 +4,16 @@
 .dashboard__container {
   --space: 8px;
   --col: 350px;
+  --smallcoll: 200px;
   background: #f6f8fa;
   padding: 20px;
   border: 1px solid #eaecef;
   border-radius: 5px;
+  min-height: 100vh;
   // width: var(--container-width);
   // margin-left: auto;
   // margin-right: auto;
   // margin-top: 40px;
-
   width: 100%;
   @include mobile() {
     width: 96%;
@@ -25,6 +26,8 @@
     background-color: transparent;
     border: 0;
     color: black;
+    display: flex;
+    align-items: center;
   }
   .dashboard__grid {
     width: 100%;
@@ -37,10 +40,28 @@
       flex-direction: column;
     }
   }
+
+  .dashboard__grid_small {
+    width: 100%;
+    display: grid;
+    grid-gap: space(1);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--smallcoll, 275px), 1fr)
+    );
+
+    @include mobile() {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
   input,
-  textarea {
+  textarea,
+  select {
     border: 1px solid #d5e3ec;
     // background: #f7fafb;
+    background: white;
     border-radius: 3px;
     color: #121c42;
     padding: space(1.5) space(1);

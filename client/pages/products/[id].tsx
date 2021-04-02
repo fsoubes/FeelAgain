@@ -30,29 +30,43 @@ const Article: NextPage<Props> = ({ id }) => {
   return (
     <Layout>
       <div className={styles.container__article}>
-        <div className={styles.article__header}>
-          <div>
-            <h1>{data?.getSingleShoe.title}</h1>
-            Vendor is {data?.getSingleShoe.vendor} - &nbsp;
-            {data?.getSingleShoe.createdAt}
-          </div>
-          {/* <VoteRating
-            total={data?.getSingleShoe.totalVoting}
-            authRating={data?.getSingleShoe.authRating}
-            articleId={data?.getSingleShoe._id}
-          /> */}
-        </div>
         <div className={styles.article__content}>
-          <img
-            src={data?.getSingleShoe.images[0].src}
-            height="400"
-            width="400"
-            alt="product image"
-          ></img>
-          <div
-            dangerouslySetInnerHTML={getMarkdown(data?.getSingleShoe.body_html)}
-          />
+          <div>
+            <img
+              src={data?.getSingleShoe.images[0].src}
+              height="550"
+              width="500"
+              alt="product image"
+            ></img>
+          </div>
+          <div>
+            <div className={styles.article__header}>
+              <div>
+                <h1>{data?.getSingleShoe.title}</h1>
+                Vendor is {data?.getSingleShoe.vendor} - &nbsp;
+                {data?.getSingleShoe.createdAt}
+              </div>
+            </div>
+            <div
+              dangerouslySetInnerHTML={getMarkdown(
+                data?.getSingleShoe.body_html
+              )}
+            />
+          </div>
         </div>
+        <br />
+        <div>
+          <h1>Vous aimerez aussi</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+            eaque sit adipisci deleniti libero aliquam quae excepturi deserunt
+            minima consequuntur? Numquam enim accusantium veniam similique optio
+            sunt soluta modi unde!
+          </p>
+        </div>
+      </div>
+      <div>
+        <h1>Commentaires client</h1>
       </div>
     </Layout>
   );

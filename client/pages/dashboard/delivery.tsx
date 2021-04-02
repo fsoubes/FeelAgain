@@ -3,6 +3,6 @@ import React from "react";
 interface DeliveryProps {}
 
 const Delivery: React.FC<DeliveryProps> = ({}) => {
-  return <div>Hello</div>;
+  return <h1>Commandes</h1>;
 };
 export default Delivery;
