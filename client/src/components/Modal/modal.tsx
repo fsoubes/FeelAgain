@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
 import { SearchResults } from "../../generated/graphql";
 import { useRouter } from "next/router";
 
@@ -11,6 +10,7 @@ interface ModalProps {
   children: JSX.Element;
   isSearch: boolean;
   reset: React.Dispatch<React.SetStateAction<SearchResults | null>>;
+  icon: JSX.Element;
 }
 
 const getModalStyle = () => {
@@ -41,6 +41,7 @@ const PopUp: React.FC<ModalProps> = ({
   modalTitle,
   isSearch,
   reset,
+  icon,
 }) => {
   const classes = useStyles();
   const router = useRouter();
@@ -70,7 +71,7 @@ const PopUp: React.FC<ModalProps> = ({
   return (
     <Fragment>
       <Button variant="text" color="inherit" onClick={handleOpen}>
-        <SearchIcon></SearchIcon>
+        {icon}
       </Button>
 
       <Modal

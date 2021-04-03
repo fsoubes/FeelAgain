@@ -1,0 +1,20 @@
+.scroll_top {
+  position: fixed;
+  right: 15px;
+  bottom: -100px;
+  transition: 0.15s;
+}
+
+.show_button {
+  bottom: 15px;
+  z-index: 5;
+}
+
+.scroll_top button {
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #172733;
+  color: white;
+  z-index: 5;
+  border-color: transparent;
+}

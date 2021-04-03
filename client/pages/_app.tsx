@@ -5,6 +5,7 @@ import Head from "next/head";
 import { Footer } from "../src/components/Footer";
 import { useRouter } from "next/router";
 import Dashboard from "./dashboard";
+import UpwardScroll from "../src/components/ScrollUp/UpwardScroll";
 
 function MyApp({ Component, pageProps }: any) {
   const router = useRouter();
@@ -24,6 +25,7 @@ function MyApp({ Component, pageProps }: any) {
       </Head>
       <div className="container">
         <ThemeProvider>
+          <UpwardScroll />
           {router.pathname.startsWith("/dashboard/") ? (
             <Dashboard>
               <Component {...pageProps} />

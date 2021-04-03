@@ -14,6 +14,7 @@ import useResponsive from "../utils/useResponsive";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchShoes from "./Search/Search";
 import Basket from "../svg/basket";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles({
   show: {
@@ -30,7 +31,6 @@ export const TopBar = (): ReactElement => {
   const trigger = useScrollTrigger();
   const classes = useStyles();
   const { isTabletorMobile } = useResponsive();
-
   const client = useApolloClient();
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   const { data } = useMeQuery({
@@ -129,7 +129,9 @@ export const TopBar = (): ReactElement => {
           </Link>
 
           <div className={styles.hamburger}>
-            <SearchShoes />
+            <SearchShoes>
+              <SearchIcon />
+            </SearchShoes>
             <Link href="/">
               <Button>
                 <Basket total={0} />
@@ -171,7 +173,9 @@ export const TopBar = (): ReactElement => {
         {!isTabletorMobile && (
           <div className={styles.navbar__right}>
             <div className={styles.search}>
-              <SearchShoes />
+              <SearchShoes>
+                <SearchIcon />
+              </SearchShoes>
               <Link href="/panier">
                 <Button>
                   <Basket total={0} />

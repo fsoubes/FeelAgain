@@ -28,15 +28,15 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current }) => {
         title: "",
         vendor: "",
         product_type: "",
-        description: "",
-        grams: 0,
-        price: 0,
+        body_html: "",
+        grams: 1,
+        price: 1,
         compare_at_price: "",
         colors: ["Blanc"],
         heel: 0,
         size: size,
         tags: ["Cuir", "Noir"],
-        relatives: [],
+        relatives: ["6061007551eeea01f597c852"],
         images: new Array(4).fill({ src: "" }),
         variants: size.map((item) => {
           return {
@@ -76,6 +76,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current }) => {
               await addVariant({
                 variables: {
                   ...variant,
+                  price: variant.price ? variant.price : values.price,
                   grams: shoes.grams,
                   available: variant.quantity > 0 ? true : false,
                   parentId: data.addShoe,

@@ -6,6 +6,7 @@ import FormArray from "../Form/FormArray";
 import FormArraySelect from "../Form/FormArraySelect";
 import styles from "../../styles/Dashboard.module.scss";
 import AddIcon from "@material-ui/icons/Add";
+import SearchShoes from "../Search/Search";
 
 interface ShoesFormProps {
   tags: string[];
@@ -158,7 +159,7 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             </label>
             <Field
               type="number"
-              min="1"
+              min="0"
               name="heel"
               autoCapitalize="none"
               autoCorrect="off"
@@ -186,9 +187,9 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
       <section>
         <div className={styles.dashboard__header}>
           <h1 style={{ textAlign: "left" }}>Relations</h1>
-          <Button>
-            <AddIcon></AddIcon>
-          </Button>
+          <SearchShoes>
+            <AddIcon />
+          </SearchShoes>
         </div>
         <Box marginBottom={2} marginTop={2} display="flex">
           {relatives.length === 0 && (

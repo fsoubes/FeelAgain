@@ -7,9 +7,11 @@ import SearchList from "./SearchList/SearchList";
 import styles from "../../styles/Search.module.scss";
 import Link from "next/link";
 
-interface SearchProps {}
+interface SearchProps {
+  children: JSX.Element;
+}
 
-const SearchShoes: React.FC<SearchProps> = ({}) => {
+const SearchShoes: React.FC<SearchProps> = ({ children }) => {
   const client = useApolloClient();
   const [data, setData] = useState<SearchResults | null>(null);
   const [currentSearch, setCurrentSearch] = useState<String | null>(null);
@@ -30,7 +32,12 @@ const SearchShoes: React.FC<SearchProps> = ({}) => {
   };
 
   return (
-    <PopUp modalTitle={"Search"} isSearch={true} reset={setData}>
+    <PopUp
+      modalTitle={"Search"}
+      isSearch={true}
+      reset={setData}
+      icon={children}
+    >
       <Fragment>
         <SearchBar searchConfim={onEnterSearch}></SearchBar>
         {data && data.edges.length > 0 && (

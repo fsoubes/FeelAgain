@@ -19,7 +19,6 @@ import { toDot } from "../helpers/toDot";
 import { ShoesInput } from "./types/shoes-input";
 import { ImageInput } from "./types/images-input";
 import { VariantInput } from "./types/variants-input";
-import { isAuth } from "../middlewares/isAuth";
 import { isAdmin } from "../middlewares/isAdmin";
 import { PaginationPage } from "./types/pagination-result";
 import { getFilteredShoes } from "../helpers/filterShoes";
@@ -178,6 +177,7 @@ export class ShoesResolver {
     try {
       const addedShoe = new ShoesModel({ ...shoeInput });
       await addedShoe.save();
+      console.log(addedShoe._id);
       return addedShoe._id;
     } catch (err) {
       throw err;
@@ -185,7 +185,7 @@ export class ShoesResolver {
   }
 
   @Mutation(() => String)
-  @UseMiddleware(isAuth)
+  @UseMiddleware(isAdmin)
   async removeShoe(
     @Arg("shoeId") shoeId: String,
     @Ctx() {  }: MyContext
@@ -206,7 +206,7 @@ export class ShoesResolver {
   }
 
   @Mutation(() => Shoes)
-  @UseMiddleware(isAuth)
+  @UseMiddleware(isAdmin)
   async updateShoe(
     @Arg("shoes") shoeInput: ShoesInput,
     @Arg("shoeId") shoeId: string,
@@ -231,7 +231,7 @@ export class ShoesResolver {
   }
 
   @Mutation(() => String)
-  @UseMiddleware(isAuth)
+  @UseMiddleware(isAdmin)
   async addImage(
     @Arg("image") imageInput: ImageInput,
     @Arg("parentId") parentId: String,
@@ -258,7 +258,7 @@ export class ShoesResolver {
   }
 
   @Mutation(() => String)
-  @UseMiddleware(isAuth)
+  @UseMiddleware(isAdmin)
   async addVariant(
     @Arg("variant") variantInput: VariantInput,
     @Arg("parentId") parentId: string,
