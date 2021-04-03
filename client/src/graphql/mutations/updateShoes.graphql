@@ -1,0 +1,31 @@
+mutation UpdateShoe(
+  $title: String!
+  $body_html: String
+  $vendor: String
+  $price: Float!
+  $handle: String
+  $product_type: String
+  $tags: [String!]!
+  $size: [Float!]!
+  $is_published: Boolean!
+  $relatives: [String!]!
+  $shoeId: String!
+) {
+  updateShoe(
+    shoeId: $shoeId
+    shoes: {
+      title: $title
+      body_html: $body_html
+      vendor: $vendor
+      handle: $handle
+      product_type: $product_type
+      tags: $tags
+      size: $size
+      is_published: $is_published
+      price: $price
+      relatives: $relatives
+    }
+  ) {
+    ...ShoesBrowseFragment
+  }
+}

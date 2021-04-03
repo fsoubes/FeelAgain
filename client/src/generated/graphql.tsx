@@ -70,10 +70,11 @@ export type Shoes = {
   bought_by: Scalars['Float'];
   handle: Scalars['String'];
   vendor: Scalars['String'];
+  is_published: Scalars['Boolean'];
   tags: Array<Scalars['String']>;
   body_html: Scalars['String'];
   product_type: Scalars['String'];
-  price: Scalars['String'];
+  price: Scalars['Float'];
   size: Array<Scalars['Float']>;
   variants: Array<Variants>;
   options: Array<OptionShoes>;
@@ -96,9 +97,9 @@ export type Variants = {
   featured_image: Scalars['String'];
   available: Scalars['String'];
   grams: Scalars['Float'];
-  quantity: Scalars['String'];
-  price: Scalars['String'];
-  compare_at_price: Scalars['String'];
+  quantity: Scalars['Float'];
+  price: Scalars['Float'];
+  compare_at_price: Scalars['Float'];
 };
 
 export type OptionShoes = {
@@ -221,30 +222,30 @@ export type Mutation = {
 
 
 export type MutationAddShoeArgs = {
-  Shoe: ShoesInput;
+  shoes: ShoesInput;
 };
 
 
 export type MutationRemoveShoeArgs = {
-  ShoeId: Scalars['String'];
+  shoeId: Scalars['String'];
 };
 
 
 export type MutationUpdateShoeArgs = {
   shoeId: Scalars['String'];
-  Shoes: Scalars['String'];
+  shoes: ShoesInput;
 };
 
 
 export type MutationAddImageArgs = {
-  ParentId: Scalars['String'];
-  Image: ImageInput;
+  parentId: Scalars['String'];
+  image: ImageInput;
 };
 
 
 export type MutationAddVariantArgs = {
   parentId: Scalars['String'];
-  Variant: VariantInput;
+  variant: VariantInput;
 };
 
 
@@ -283,33 +284,33 @@ export type ShoesInput = {
   title: Scalars['String'];
   body_html?: Maybe<Scalars['String']>;
   vendor?: Maybe<Scalars['String']>;
-  switch?: Maybe<Scalars['String']>;
   handle?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Scalars['String']>>;
+  tags: Array<Scalars['String']>;
+  size: Array<Scalars['Float']>;
+  price: Scalars['Float'];
+  relatives: Array<Scalars['String']>;
+  is_published: Scalars['Boolean'];
 };
 
 export type ImageInput = {
   position: Scalars['Float'];
   src: Scalars['String'];
   product_id: Scalars['String'];
-  width: Scalars['Float'];
-  height: Scalars['Float'];
+  width?: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']>;
 };
 
 export type VariantInput = {
   title: Scalars['String'];
   product_id: Scalars['String'];
-  option1: Scalars['String'];
-  option2: Scalars['String'];
-  option3: Scalars['String'];
-  sku: Scalars['String'];
-  featured_image: Scalars['String'];
-  available: Scalars['String'];
+  sku?: Maybe<Scalars['String']>;
+  featured_image?: Maybe<Scalars['String']>;
+  available: Scalars['Boolean'];
   grams: Scalars['Float'];
-  quantity: Scalars['String'];
-  price: Scalars['String'];
-  compare_at_price: Scalars['String'];
+  quantity: Scalars['Float'];
+  price: Scalars['Float'];
+  compare_at_price?: Maybe<Scalars['Float']>;
 };
 
 export type UserResponse = {
@@ -416,6 +417,59 @@ export type AddArticleMutation = (
   ) }
 );
 
+export type AddImageMutationVariables = Exact<{
+  parentId: Scalars['String'];
+  position: Scalars['Float'];
+  src: Scalars['String'];
+  width?: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']>;
+  product_id: Scalars['String'];
+}>;
+
+
+export type AddImageMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addImage'>
+);
+
+export type AddShoeMutationVariables = Exact<{
+  title: Scalars['String'];
+  body_html?: Maybe<Scalars['String']>;
+  vendor?: Maybe<Scalars['String']>;
+  price: Scalars['Float'];
+  handle?: Maybe<Scalars['String']>;
+  product_type?: Maybe<Scalars['String']>;
+  tags: Array<Scalars['String']> | Scalars['String'];
+  size: Array<Scalars['Float']> | Scalars['Float'];
+  is_published: Scalars['Boolean'];
+  relatives: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type AddShoeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addShoe'>
+);
+
+export type AddVariantMutationVariables = Exact<{
+  title: Scalars['String'];
+  product_id: Scalars['String'];
+  sku?: Maybe<Scalars['String']>;
+  featured_image?: Maybe<Scalars['String']>;
+  available: Scalars['Boolean'];
+  grams: Scalars['Float'];
+  quantity: Scalars['Float'];
+  price: Scalars['Float'];
+  compare_at_price?: Maybe<Scalars['Float']>;
+  parentId: Scalars['String'];
+}>;
+
+
+export type AddVariantMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addVariant'>
+);
+
 export type ChangePasswordMutationVariables = Exact<{
   token: Scalars['String'];
   newPassword: Scalars['String'];
@@ -428,6 +482,16 @@ export type ChangePasswordMutation = (
     { __typename?: 'UserResponse' }
     & UserFragmentResponseFragment
   ) }
+);
+
+export type RemoveShoeMutationVariables = Exact<{
+  shoeId: Scalars['String'];
+}>;
+
+
+export type RemoveShoeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeShoe'>
 );
 
 export type ForgotPasswordMutationVariables = Exact<{
@@ -485,6 +549,29 @@ export type LoginMutation = (
   & { login: (
     { __typename?: 'UserResponse' }
     & UserFragmentResponseFragment
+  ) }
+);
+
+export type UpdateShoeMutationVariables = Exact<{
+  title: Scalars['String'];
+  body_html?: Maybe<Scalars['String']>;
+  vendor?: Maybe<Scalars['String']>;
+  price: Scalars['Float'];
+  handle?: Maybe<Scalars['String']>;
+  product_type?: Maybe<Scalars['String']>;
+  tags: Array<Scalars['String']> | Scalars['String'];
+  size: Array<Scalars['Float']> | Scalars['Float'];
+  is_published: Scalars['Boolean'];
+  relatives: Array<Scalars['String']> | Scalars['String'];
+  shoeId: Scalars['String'];
+}>;
+
+
+export type UpdateShoeMutation = (
+  { __typename?: 'Mutation' }
+  & { updateShoe: (
+    { __typename?: 'Shoes' }
+    & ShoesBrowseFragmentFragment
   ) }
 );
 
@@ -740,6 +827,127 @@ export function useAddArticleMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddArticleMutationHookResult = ReturnType<typeof useAddArticleMutation>;
 export type AddArticleMutationResult = Apollo.MutationResult<AddArticleMutation>;
 export type AddArticleMutationOptions = Apollo.BaseMutationOptions<AddArticleMutation, AddArticleMutationVariables>;
+export const AddImageDocument = gql`
+    mutation AddImage($parentId: String!, $position: Float!, $src: String!, $width: Float, $height: Float, $product_id: String!) {
+  addImage(
+    parentId: $parentId
+    image: {position: $position, src: $src, width: $width, height: $height, product_id: $product_id}
+  )
+}
+    `;
+export type AddImageMutationFn = Apollo.MutationFunction<AddImageMutation, AddImageMutationVariables>;
+
+/**
+ * __useAddImageMutation__
+ *
+ * To run a mutation, you first call `useAddImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addImageMutation, { data, loading, error }] = useAddImageMutation({
+ *   variables: {
+ *      parentId: // value for 'parentId'
+ *      position: // value for 'position'
+ *      src: // value for 'src'
+ *      width: // value for 'width'
+ *      height: // value for 'height'
+ *      product_id: // value for 'product_id'
+ *   },
+ * });
+ */
+export function useAddImageMutation(baseOptions?: Apollo.MutationHookOptions<AddImageMutation, AddImageMutationVariables>) {
+        return Apollo.useMutation<AddImageMutation, AddImageMutationVariables>(AddImageDocument, baseOptions);
+      }
+export type AddImageMutationHookResult = ReturnType<typeof useAddImageMutation>;
+export type AddImageMutationResult = Apollo.MutationResult<AddImageMutation>;
+export type AddImageMutationOptions = Apollo.BaseMutationOptions<AddImageMutation, AddImageMutationVariables>;
+export const AddShoeDocument = gql`
+    mutation AddShoe($title: String!, $body_html: String, $vendor: String, $price: Float!, $handle: String, $product_type: String, $tags: [String!]!, $size: [Float!]!, $is_published: Boolean!, $relatives: [String!]!) {
+  addShoe(
+    shoes: {title: $title, body_html: $body_html, vendor: $vendor, handle: $handle, product_type: $product_type, tags: $tags, size: $size, is_published: $is_published, relatives: $relatives, price: $price}
+  )
+}
+    `;
+export type AddShoeMutationFn = Apollo.MutationFunction<AddShoeMutation, AddShoeMutationVariables>;
+
+/**
+ * __useAddShoeMutation__
+ *
+ * To run a mutation, you first call `useAddShoeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddShoeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addShoeMutation, { data, loading, error }] = useAddShoeMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      body_html: // value for 'body_html'
+ *      vendor: // value for 'vendor'
+ *      price: // value for 'price'
+ *      handle: // value for 'handle'
+ *      product_type: // value for 'product_type'
+ *      tags: // value for 'tags'
+ *      size: // value for 'size'
+ *      is_published: // value for 'is_published'
+ *      relatives: // value for 'relatives'
+ *   },
+ * });
+ */
+export function useAddShoeMutation(baseOptions?: Apollo.MutationHookOptions<AddShoeMutation, AddShoeMutationVariables>) {
+        return Apollo.useMutation<AddShoeMutation, AddShoeMutationVariables>(AddShoeDocument, baseOptions);
+      }
+export type AddShoeMutationHookResult = ReturnType<typeof useAddShoeMutation>;
+export type AddShoeMutationResult = Apollo.MutationResult<AddShoeMutation>;
+export type AddShoeMutationOptions = Apollo.BaseMutationOptions<AddShoeMutation, AddShoeMutationVariables>;
+export const AddVariantDocument = gql`
+    mutation AddVariant($title: String!, $product_id: String!, $sku: String, $featured_image: String, $available: Boolean!, $grams: Float!, $quantity: Float!, $price: Float!, $compare_at_price: Float, $parentId: String!) {
+  addVariant(
+    parentId: $parentId
+    variant: {title: $title, product_id: $product_id, sku: $sku, featured_image: $featured_image, available: $available, grams: $grams, quantity: $quantity, price: $price, compare_at_price: $compare_at_price}
+  )
+}
+    `;
+export type AddVariantMutationFn = Apollo.MutationFunction<AddVariantMutation, AddVariantMutationVariables>;
+
+/**
+ * __useAddVariantMutation__
+ *
+ * To run a mutation, you first call `useAddVariantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddVariantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addVariantMutation, { data, loading, error }] = useAddVariantMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      product_id: // value for 'product_id'
+ *      sku: // value for 'sku'
+ *      featured_image: // value for 'featured_image'
+ *      available: // value for 'available'
+ *      grams: // value for 'grams'
+ *      quantity: // value for 'quantity'
+ *      price: // value for 'price'
+ *      compare_at_price: // value for 'compare_at_price'
+ *      parentId: // value for 'parentId'
+ *   },
+ * });
+ */
+export function useAddVariantMutation(baseOptions?: Apollo.MutationHookOptions<AddVariantMutation, AddVariantMutationVariables>) {
+        return Apollo.useMutation<AddVariantMutation, AddVariantMutationVariables>(AddVariantDocument, baseOptions);
+      }
+export type AddVariantMutationHookResult = ReturnType<typeof useAddVariantMutation>;
+export type AddVariantMutationResult = Apollo.MutationResult<AddVariantMutation>;
+export type AddVariantMutationOptions = Apollo.BaseMutationOptions<AddVariantMutation, AddVariantMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($token: String!, $newPassword: String!) {
   changePassword(token: $token, newPassword: $newPassword) {
@@ -773,6 +981,36 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const RemoveShoeDocument = gql`
+    mutation RemoveShoe($shoeId: String!) {
+  removeShoe(shoeId: $shoeId)
+}
+    `;
+export type RemoveShoeMutationFn = Apollo.MutationFunction<RemoveShoeMutation, RemoveShoeMutationVariables>;
+
+/**
+ * __useRemoveShoeMutation__
+ *
+ * To run a mutation, you first call `useRemoveShoeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveShoeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeShoeMutation, { data, loading, error }] = useRemoveShoeMutation({
+ *   variables: {
+ *      shoeId: // value for 'shoeId'
+ *   },
+ * });
+ */
+export function useRemoveShoeMutation(baseOptions?: Apollo.MutationHookOptions<RemoveShoeMutation, RemoveShoeMutationVariables>) {
+        return Apollo.useMutation<RemoveShoeMutation, RemoveShoeMutationVariables>(RemoveShoeDocument, baseOptions);
+      }
+export type RemoveShoeMutationHookResult = ReturnType<typeof useRemoveShoeMutation>;
+export type RemoveShoeMutationResult = Apollo.MutationResult<RemoveShoeMutation>;
+export type RemoveShoeMutationOptions = Apollo.BaseMutationOptions<RemoveShoeMutation, RemoveShoeMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
@@ -930,6 +1168,51 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const UpdateShoeDocument = gql`
+    mutation UpdateShoe($title: String!, $body_html: String, $vendor: String, $price: Float!, $handle: String, $product_type: String, $tags: [String!]!, $size: [Float!]!, $is_published: Boolean!, $relatives: [String!]!, $shoeId: String!) {
+  updateShoe(
+    shoeId: $shoeId
+    shoes: {title: $title, body_html: $body_html, vendor: $vendor, handle: $handle, product_type: $product_type, tags: $tags, size: $size, is_published: $is_published, price: $price, relatives: $relatives}
+  ) {
+    ...ShoesBrowseFragment
+  }
+}
+    ${ShoesBrowseFragmentFragmentDoc}`;
+export type UpdateShoeMutationFn = Apollo.MutationFunction<UpdateShoeMutation, UpdateShoeMutationVariables>;
+
+/**
+ * __useUpdateShoeMutation__
+ *
+ * To run a mutation, you first call `useUpdateShoeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateShoeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateShoeMutation, { data, loading, error }] = useUpdateShoeMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      body_html: // value for 'body_html'
+ *      vendor: // value for 'vendor'
+ *      price: // value for 'price'
+ *      handle: // value for 'handle'
+ *      product_type: // value for 'product_type'
+ *      tags: // value for 'tags'
+ *      size: // value for 'size'
+ *      is_published: // value for 'is_published'
+ *      relatives: // value for 'relatives'
+ *      shoeId: // value for 'shoeId'
+ *   },
+ * });
+ */
+export function useUpdateShoeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateShoeMutation, UpdateShoeMutationVariables>) {
+        return Apollo.useMutation<UpdateShoeMutation, UpdateShoeMutationVariables>(UpdateShoeDocument, baseOptions);
+      }
+export type UpdateShoeMutationHookResult = ReturnType<typeof useUpdateShoeMutation>;
+export type UpdateShoeMutationResult = Apollo.MutationResult<UpdateShoeMutation>;
+export type UpdateShoeMutationOptions = Apollo.BaseMutationOptions<UpdateShoeMutation, UpdateShoeMutationVariables>;
 export const GetArticlesDocument = gql`
     query GetArticles($limit: Float!, $cursor: String) {
   getArticles(limit: $limit, cursor: $cursor) {

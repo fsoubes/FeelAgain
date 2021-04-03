@@ -11,9 +11,9 @@ export class ImageInput {
   @Field()
   product_id: String;
 
-  @Field()
+  @Field({ nullable: true })
   width: Number;
 
-  @Field()
+  @Field({ nullable: true })
   height: Number;
 }

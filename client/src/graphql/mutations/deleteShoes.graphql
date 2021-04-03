@@ -1,0 +1,3 @@
+mutation RemoveShoe($shoeId: String!) {
+  removeShoe(shoeId: $shoeId)
+}

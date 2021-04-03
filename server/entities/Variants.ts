@@ -28,7 +28,7 @@ export class Variants {
   option3: String;
 
   @Field()
-  @Property({ required: true })
+  @Property({ required: false })
   sku: String;
 
   @Field()
@@ -45,15 +45,15 @@ export class Variants {
 
   @Field()
   @Property({ required: true })
-  quantity: String;
+  quantity: Number;
 
   @Field()
   @Property({ required: true })
-  price: String;
+  price: Number;
 
   @Field()
   @Property({ required: false })
-  compare_at_price: String;
+  compare_at_price: Number;
 }
 
 export const VariantsModel = getModelForClass(Variants);

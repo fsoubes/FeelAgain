@@ -1,10 +1,7 @@
-import { Button } from "@material-ui/core";
-import { Formik, Form } from "formik";
 import { NextPage } from "next";
 import React, { useState } from "react";
 import ShoesForm from "../../src/components/Dashboard/ShoesForm";
 import SubTabs from "../../src/components/SubTabs/SubTabs";
-import { useAddArticleMutation } from "../../src/generated/graphql";
 import styles from "../../src/styles/Dashboard.module.scss";
 
 interface AddProps {
@@ -13,7 +10,6 @@ interface AddProps {
 
 const AddProduct: NextPage<AddProps> = ({ content }) => {
   const currentContent = ["general", "images", "variants"];
-  const [addArticle] = useAddArticleMutation();
   const [current, setCurrent] = useState(
     content ? currentContent.indexOf(content) : 0
   );
@@ -30,7 +26,6 @@ const AddProduct: NextPage<AddProps> = ({ content }) => {
           change={setCurrent}
           currentContent={currentContent}
         />
-
         <ShoesForm current={current} />
       </div>
     </div>

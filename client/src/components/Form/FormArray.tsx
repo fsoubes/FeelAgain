@@ -3,13 +3,26 @@ import { Field, FieldArray } from "formik";
 import React from "react";
 import styles from "../../styles/Dashboard.module.scss";
 
+interface Variant {
+  featured_image: string;
+  title: string;
+  quantity: number;
+  price: number;
+}
+
 interface FormArrayProps {
   values: (string | number)[];
   param: string;
   title: string;
+  variants?: Variant[];
 }
 
-const FormArray: React.FC<FormArrayProps> = ({ values, param, title }) => {
+const FormArray: React.FC<FormArrayProps> = ({
+  values,
+  param,
+  title,
+  variants,
+}) => {
   return (
     <FieldArray
       name={param}
@@ -38,18 +51,34 @@ const FormArray: React.FC<FormArrayProps> = ({ values, param, title }) => {
 
                     <button
                       type="button"
-                      onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                      onClick={() => {
+                        arrayHelpers.remove(index);
+                        if (variants) {
+                          variants.splice(index, 1);
+                        }
+                      }} // remove a friend from the list
                     >
                       -
                     </button>
                     <button
                       type="button"
-                      onClick={() =>
+                      onClick={(): void => {
                         arrayHelpers.insert(
                           index + 1,
-                          typeof values[0] === "number" ? values[index] + 1 : ""
-                        )
-                      } // insert an empty string at a position
+                          typeof values[0] === "number"
+                            ? (values[index] as number) + 1
+                            : ""
+                        );
+
+                        if (variants && variants[index]) {
+                          variants.push({
+                            title: "43",
+                            featured_image: "",
+                            quantity: 0,
+                            price: 0,
+                          });
+                        }
+                      }} // insert an empty string at a position
                     >
                       +
                     </button>

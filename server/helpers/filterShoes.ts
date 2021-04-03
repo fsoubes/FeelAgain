@@ -50,6 +50,7 @@ const getCursorOptions = (
 ) => {
   const limit = queryCursorOptions.limit ? queryCursorOptions.limit : 16;
   let match = {
+    // is_published: false,
     ...((queryCursorOptions.search as string) && {
       $text: {
         $search: queryCursorOptions.search,

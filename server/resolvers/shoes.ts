@@ -172,7 +172,7 @@ export class ShoesResolver {
   @Mutation(() => ObjectId)
   @UseMiddleware(isAdmin)
   async addShoe(
-    @Arg("Shoe") shoeInput: ShoesInput,
+    @Arg("shoes") shoeInput: ShoesInput,
     @Ctx() {  }: MyContext
   ): Promise<ObjectId> {
     try {
@@ -187,7 +187,7 @@ export class ShoesResolver {
   @Mutation(() => String)
   @UseMiddleware(isAuth)
   async removeShoe(
-    @Arg("ShoeId") shoeId: String,
+    @Arg("shoeId") shoeId: String,
     @Ctx() {  }: MyContext
   ): Promise<String> {
     try {
@@ -195,7 +195,7 @@ export class ShoesResolver {
       if (removedShoes) {
         await VariantsModel.deleteMany({ _id: { $in: removedShoes.variants } });
         await ImagesModel.deleteMany({ _id: { $in: removedShoes.images } });
-        await ShoesModel.deleteOne(shoeId);
+        await ShoesModel.deleteOne({ shoeId });
         return "Removed";
       } else {
         return "This Shoe is not in the DB!";
@@ -208,12 +208,12 @@ export class ShoesResolver {
   @Mutation(() => Shoes)
   @UseMiddleware(isAuth)
   async updateShoe(
-    @Arg("Shoes") updateShoe: String,
+    @Arg("shoes") shoeInput: ShoesInput,
     @Arg("shoeId") shoeId: string,
     @Ctx() {  }: MyContext
   ): Promise<Shoes | null> {
     try {
-      let dotData = toDot(updateShoe);
+      let dotData = toDot(shoeInput);
       const updateShoes = await ShoesModel.findOneAndUpdate(
         {
           _id: shoeId,
@@ -224,7 +224,6 @@ export class ShoesResolver {
           useFindAndModify: false,
         }
       );
-
       return updateShoes;
     } catch (err) {
       throw err;
@@ -234,8 +233,8 @@ export class ShoesResolver {
   @Mutation(() => String)
   @UseMiddleware(isAuth)
   async addImage(
-    @Arg("Image") imageInput: ImageInput,
-    @Arg("ParentId") parentId: string,
+    @Arg("image") imageInput: ImageInput,
+    @Arg("parentId") parentId: String,
     @Ctx() {  }: MyContext
   ): Promise<String> {
     try {
@@ -261,7 +260,7 @@ export class ShoesResolver {
   @Mutation(() => String)
   @UseMiddleware(isAuth)
   async addVariant(
-    @Arg("Variant") variantInput: VariantInput,
+    @Arg("variant") variantInput: VariantInput,
     @Arg("parentId") parentId: string,
     @Ctx() {  }: MyContext
   ): Promise<String> {

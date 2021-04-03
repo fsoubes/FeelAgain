@@ -58,11 +58,11 @@ type FieldError {
 }
 
 input ImageInput {
-  height: Float!
+  height: Float
   position: Float!
   product_id: String!
   src: String!
-  width: Float!
+  width: Float
 }
 
 type Images {
@@ -76,19 +76,19 @@ type Images {
 
 type Mutation {
   addArticle(blog: BlogInput!): Blog!
-  addImage(Image: ImageInput!, ParentId: String!): String!
+  addImage(image: ImageInput!, parentId: String!): String!
   addRelation: Boolean!
-  addShoe(Shoe: ShoesInput!): ObjectId!
+  addShoe(shoes: ShoesInput!): ObjectId!
   addShoes: Boolean!
-  addVariant(parentId: String!, Variant: VariantInput!): String!
+  addVariant(parentId: String!, variant: VariantInput!): String!
   changePassword(newPassword: String!, token: String!): UserResponse!
   forgotPassword(email: String!): Boolean!
   login(user: UserLogin!): UserResponse!
   logout: Boolean!
   ratingReview(articleId: String!, rating: String!): Boolean!
   register(user: UserRegister!): UserResponse!
-  removeShoe(ShoeId: String!): String!
-  updateShoe(shoeId: String!, Shoes: String!): Shoes!
+  removeShoe(shoeId: String!): String!
+  updateShoe(shoeId: String!, shoes: ShoesInput!): Shoes!
 }
 
 """Mongo object id scalar type"""
@@ -108,6 +108,7 @@ type PaginationInfo {
 type PaginationPage {
   current: Float
   total: Float
+  totalItem: Float
 }
 
 type PaginationResponse {
@@ -142,8 +143,9 @@ type Shoes {
   createdAt: DateTime!
   handle: String!
   images: [Images!]!
+  is_published: Boolean!
   options: [OptionShoes!]!
-  price: String!
+  price: Float!
   product_type: String!
   relatives: [Shoes!]!
   score: Float!
@@ -161,9 +163,12 @@ type Shoes {
 input ShoesInput {
   body_html: String
   handle: String
+  is_published: Boolean!
+  price: Float!
   product_type: String
-  switch: String
-  tags: [String!]
+  relatives: [String!]!
+  size: [Float!]!
+  tags: [String!]!
   title: String!
   vendor: String
 }
@@ -200,32 +205,29 @@ type UserResponse {
 }
 
 input VariantInput {
-  available: String!
-  compare_at_price: String!
-  featured_image: String!
+  available: Boolean!
+  compare_at_price: Float
+  featured_image: String
   grams: Float!
-  option1: String!
-  option2: String!
-  option3: String!
-  price: String!
+  price: Float!
   product_id: String!
-  quantity: String!
-  sku: String!
+  quantity: Float!
+  sku: String
   title: String!
 }
 
 type Variants {
   _id: ObjectId!
   available: String!
-  compare_at_price: String!
+  compare_at_price: Float!
   featured_image: String!
   grams: Float!
   option1: String!
   option2: String!
   option3: String!
-  price: String!
+  price: Float!
   product_id: String!
-  quantity: String!
+  quantity: Float!
   sku: String!
   title: String!
 }

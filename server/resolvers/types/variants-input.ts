@@ -8,33 +8,24 @@ export class VariantInput {
   @Field()
   product_id: String;
 
-  @Field()
-  option1: String;
-
-  @Field()
-  option2: String;
-
-  @Field()
-  option3: String;
-
-  @Field()
+  @Field({ nullable: true })
   sku: String;
 
-  @Field()
+  @Field({ nullable: true })
   featured_image: String;
 
   @Field()
-  available: String;
+  available: Boolean;
 
   @Field()
   grams: Number;
 
   @Field()
-  quantity: String;
+  quantity: Number;
 
   @Field()
-  price: String;
+  price: Number;
 
-  @Field()
-  compare_at_price: String;
+  @Field({ nullable: true })
+  compare_at_price: Number;
 }

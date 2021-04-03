@@ -16,7 +16,7 @@ export class Shoes {
   @Field()
   readonly _id: ObjectId;
 
-  @Property({ required: true })
+  @Property({ required: false })
   id: number;
 
   @Field(() => Date)
@@ -25,7 +25,7 @@ export class Shoes {
   @Field(() => Date)
   updatedAt: Date;
 
-  @Property({ required: true, default: [] })
+  @Property({ required: false, default: [] })
   switchLinks: [String];
 
   @Property({ required: false })
@@ -59,6 +59,10 @@ export class Shoes {
   @Property({ required: true })
   vendor: String;
 
+  @Field()
+  @Property({ required: true, default: true })
+  is_published: Boolean;
+
   @Field(() => [String])
   @Property({ type: () => [String], default: [] })
   tags?: string[];
@@ -73,7 +77,7 @@ export class Shoes {
 
   @Field()
   @Property({ required: true })
-  price: String;
+  price: number;
 
   @Field(() => [Number])
   @Property({ type: () => [Number], default: [] })

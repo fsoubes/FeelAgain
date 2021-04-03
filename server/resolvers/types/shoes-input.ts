@@ -12,14 +12,23 @@ export class ShoesInput {
   vendor: string;
 
   @Field({ nullable: true })
-  switch?: string;
-
-  @Field({ nullable: true })
   handle: string;
 
   @Field({ nullable: true })
   product_type: string;
 
-  @Field(() => [String], { nullable: true })
+  @Field(() => [String])
   tags?: [string];
+
+  @Field(() => [Number])
+  size: number[];
+
+  @Field()
+  price: Number;
+
+  @Field(() => [String])
+  relatives?: [string];
+
+  @Field()
+  is_published: Boolean;
 }

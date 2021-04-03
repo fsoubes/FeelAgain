@@ -8,21 +8,20 @@ import styles from "../../styles/Dashboard.module.scss";
 import AddIcon from "@material-ui/icons/Add";
 
 interface ShoesFormProps {
-  image_url: string;
   tags: string[];
   colors: string[];
   size: number[];
-  relation: string[];
+  relatives: string[];
+  variants: any[];
 }
 
 const GeneralForm: React.FC<ShoesFormProps> = ({
-  image_url,
   tags,
   colors,
   size,
-  relation,
+  relatives,
+  variants,
 }) => {
-  console.log(image_url);
   return (
     <Fragment>
       <section>
@@ -54,14 +53,11 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             <label className={styles.form__register_label}>Vendeur</label>
             <Field
               type="text"
-              name="image_url"
+              name="vendor"
               autoCapitalize="none"
               autoCorrect="off"
               className={styles.form__register_input}
             ></Field>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <img style={{ maxWidth: "150px" }}></img>
-            </div>
           </Box>
           <Box
             marginBottom={2}
@@ -72,7 +68,7 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             <label className={styles.form__register_label}>
               Type de produit
             </label>
-            <Field as="select" name="product">
+            <Field as="select" name="product_type">
               {productType.map((item, index) => (
                 <option value={item} key={index}>
                   {item}
@@ -90,15 +86,12 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             <label className={styles.form__register_label}>Poids (g)</label>
             <Field
               type="number"
-              name="image_url"
+              name="grams"
               autoCapitalize="none"
               min="1"
               autoCorrect="off"
               className={styles.form__register_input}
             ></Field>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <img style={{ maxWidth: "150px" }} src={image_url}></img>
-            </div>
           </Box>
         </div>
       </section>
@@ -122,9 +115,6 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
               className={styles.form__register_input}
               min="1"
             ></Field>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <img style={{ maxWidth: "150px" }} src={image_url}></img>
-            </div>
           </Box>
           <Box
             marginBottom={2}
@@ -135,15 +125,12 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             <label className={styles.form__register_label}>Solde</label>
             <Field
               type="number"
-              name="balance"
+              name="compare_at_price"
               autoCapitalize="none"
               autoCorrect="off"
               className={styles.form__register_input}
               min="1"
             ></Field>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <img style={{ maxWidth: "150px" }} src={image_url}></img>
-            </div>
           </Box>
         </div>
       </section>
@@ -172,7 +159,7 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             <Field
               type="number"
               min="1"
-              name="image_url"
+              name="heel"
               autoCapitalize="none"
               autoCorrect="off"
               className={styles.form__register_input}
@@ -180,7 +167,12 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
           </Box>
         </div>
         <Box marginBottom={2} marginTop={2} display="flex">
-          <FormArray title="Pointure" values={size} param="size"></FormArray>
+          <FormArray
+            title="Pointure"
+            values={size}
+            param="size"
+            variants={variants}
+          ></FormArray>
         </Box>
       </section>
       <section>
@@ -199,7 +191,7 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
           </Button>
         </div>
         <Box marginBottom={2} marginTop={2} display="flex">
-          {relation.length === 0 && (
+          {relatives.length === 0 && (
             <div>
               Il n'y a pas de relation pour cette chaussure actuellement
             </div>
@@ -222,7 +214,7 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
           <Field
             as="textarea"
             type="text"
-            name="article"
+            name="body_html"
             autoCapitalize="none"
             autoCorrect="off"
             className={styles.form__register_input}

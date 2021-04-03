@@ -1,0 +1,19 @@
+mutation AddImage(
+  $parentId: String!
+  $position: Float!
+  $src: String!
+  $width: Float
+  $height: Float
+  $product_id: String!
+) {
+  addImage(
+    parentId: $parentId
+    image: {
+      position: $position
+      src: $src
+      width: $width
+      height: $height
+      product_id: $product_id
+    }
+  )
+}
