@@ -29,7 +29,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           onMouseOut={(e) => (e.currentTarget.src = src)}
         ></img>
       </Tilt>
-      <div>
+      <div style={{ textAlign: "center" }}>
         <h3>
           <span>{title}</span>
         </h3>

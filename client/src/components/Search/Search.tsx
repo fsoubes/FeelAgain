@@ -45,7 +45,7 @@ const SearchShoes: React.FC<SearchProps> = ({ children }) => {
             <SearchList data={data.edges}></SearchList>
             {data.edges.length >= 10 && (
               <div className={styles.more}>
-                <Link href={`/shop?search=${currentSearch}`}>
+                <Link href={`/shop?page=1&search=${currentSearch}`}>
                   <a>
                     {"</>"}Voir plus de résultats {data.totalCount}.
                   </a>

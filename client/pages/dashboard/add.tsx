@@ -25,6 +25,7 @@ const AddProduct: NextPage<AddProps> = ({ content }) => {
           value={current}
           change={setCurrent}
           currentContent={currentContent}
+          path={"/dashboard/add"}
         />
         <ShoesForm current={current} />
       </div>

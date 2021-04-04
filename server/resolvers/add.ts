@@ -19,12 +19,14 @@ export class AddResolver {
         }
 
         let { images, variants, ...partialObject } = data[i];
-        const shoes = new ShoesModel({ ...partialObject });
+        const shoes = new ShoesModel({ ...partialObject,price: parseInt(partialObject.price,) , is_published:true});
 
         for (let j = 0; j < variants.length; j++) {
           const addVariants = new VariantsModel({
             ...variants[j],
             product_id: shoes._id,
+            price: parseInt(variants[j].price),
+            compare_at: parseInt(variants[j].compare_at_price),
             quantity: Math.floor(Math.random() * 50) + 1,
           });
           await addVariants.save();
@@ -34,6 +36,7 @@ export class AddResolver {
         for (let k = 0; k < images.length; k++) {
           const addImages = new ImagesModel({
             ...images[k],
+           
             product_id: shoes._id,
           });
           await addImages.save();

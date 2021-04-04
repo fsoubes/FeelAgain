@@ -6,7 +6,6 @@ import {
   SearchResults,
   GetShoesByNameDocument,
 } from "../../../src/generated/graphql";
-import styles from "../../../src/styles/Search.module.scss";
 import styleDash from "../../../src/styles/DashBoardSearch.module.scss";
 import ProductsList from "../../../src/components/Products/ProductsList";
 

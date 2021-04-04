@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import {
-  AddVariantDocument,
   useAddImageMutation,
   useAddShoeMutation,
   useAddVariantMutation,
@@ -13,41 +12,72 @@ import VariantForm from "./VariantForm";
 
 interface ShoesFormProps {
   current: number;
+  data?: any;
 }
 
-const ShoesForm: React.FC<ShoesFormProps> = ({ current }) => {
+interface Image {
+  src: string;
+}
+
+interface Variants {
+  title: string;
+  quantity: number;
+  featured_image: string;
+  price: number;
+}
+interface Initializer {
+  title: string;
+  vendor: string;
+  product_type: string;
+  body_html: string;
+  grams: number;
+  price: number;
+  compare_at_price: string | number;
+  colors: string[];
+  heel: number;
+  size: number[];
+  tags: string[];
+  relatives: string[];
+  images: Image[];
+  variants: Variants[];
+  is_published: Boolean;
+}
+
+const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
   const [addShoes] = useAddShoeMutation();
   const [addImages] = useAddImageMutation();
   const [addVariant] = useAddVariantMutation();
 
   const size = [35, 36, 37, 38, 39, 40, 41, 42];
 
+  const intialValues: Initializer = {
+    title: "",
+    vendor: "",
+    product_type: "",
+    body_html: "",
+    grams: 1,
+    price: 1,
+    compare_at_price: "",
+    colors: ["Blanc"],
+    heel: 0,
+    size: size,
+    tags: ["Cuir", "Noir"],
+    relatives: ["6061007551eeea01f597c852"],
+    images: new Array(4).fill({ src: "" }),
+    variants: size.map((item) => {
+      return {
+        title: item.toString(),
+        quantity: 0,
+        featured_image: "",
+        price: 0,
+      };
+    }),
+    is_published: false,
+  };
+
   return (
     <Formik
-      initialValues={{
-        title: "",
-        vendor: "",
-        product_type: "",
-        body_html: "",
-        grams: 1,
-        price: 1,
-        compare_at_price: "",
-        colors: ["Blanc"],
-        heel: 0,
-        size: size,
-        tags: ["Cuir", "Noir"],
-        relatives: ["6061007551eeea01f597c852"],
-        images: new Array(4).fill({ src: "" }),
-        variants: size.map((item) => {
-          return {
-            title: item.toString(),
-            quantity: 0,
-            featured_image: "",
-            price: 0,
-          };
-        }),
-        is_published: false,
-      }}
+      initialValues={intialValues}
       onSubmit={async (values, { resetForm }) => {
         try {
           let { variants, images, ...shoes } = { ...values };

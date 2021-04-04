@@ -11,6 +11,7 @@ interface SubTabsProps {
   value: number;
   change: (key: number) => void;
   currentContent: string[];
+  path: string;
 }
 
 const SubTabs: React.FC<SubTabsProps> = ({
@@ -18,6 +19,7 @@ const SubTabs: React.FC<SubTabsProps> = ({
   value,
   change,
   currentContent,
+  path,
 }) => {
   const router = useRouter();
   const updateHandler = (e: React.ChangeEvent<{}>, newValue: number): void => {
@@ -26,7 +28,7 @@ const SubTabs: React.FC<SubTabsProps> = ({
       {
         pathname: router.pathname,
       },
-      `/dashboard/add?content=${currentContent[newValue]}`,
+      `${path}?content=${currentContent[newValue]}`,
       { shallow: true }
     );
   };

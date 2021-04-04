@@ -187,16 +187,23 @@ export class ShoesResolver {
   @Mutation(() => String)
   @UseMiddleware(isAdmin)
   async removeShoe(
-    @Arg("shoeId") shoeId: String,
+    @Arg("shoeId") shoeId: string,
     @Ctx() {  }: MyContext
   ): Promise<String> {
     try {
       const removedShoes = await ShoesModel.findById(shoeId);
-      if (removedShoes) {
+      if (removedShoes && removedShoes.relatives) {
+        for (const rel of removedShoes.relatives) {
+          await ShoesModel.findOneAndUpdate(
+            { _id: rel },
+            { $pull: { relatives: removedShoes._id } },
+            { new: true }
+          );
+        }
         await VariantsModel.deleteMany({ _id: { $in: removedShoes.variants } });
         await ImagesModel.deleteMany({ _id: { $in: removedShoes.images } });
-        await ShoesModel.deleteOne({ shoeId });
-        return "Removed";
+        await ShoesModel.deleteOne({ _id: shoeId });
+        return `Removed ${removedShoes.title}`;
       } else {
         return "This Shoe is not in the DB!";
       }

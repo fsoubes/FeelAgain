@@ -13,9 +13,47 @@
 
 .container > div {
   margin-bottom: 1rem;
-
+  position: relative;
   div:first-child {
     border-radius: 15px;
+    div {
+      width: 100%;
+      height: 350px;
+      background-color: white;
+      background-position: 50% 35%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      button:nth-child(1) {
+        display: none;
+        background: white;
+      }
+      button:nth-child(2) {
+        display: none;
+        background: black;
+        color: white;
+      }
+      &:hover {
+        button:nth-child(1) {
+          background-color: white;
+          display: flex;
+          justify-content: flex-end;
+          position: absolute;
+          padding: 5px 15px;
+          right: 0;
+          svg {
+            fill: red;
+          }
+        }
+        button:nth-child(2) {
+          display: block;
+          position: absolute;
+          padding: 5px 30px;
+          transform: translate(-50%, -50%);
+          bottom: 5px;
+          left: 50%;
+        }
+      }
+    }
   }
 
   h3 {
