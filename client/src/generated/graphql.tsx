@@ -94,7 +94,7 @@ export type Variants = {
   option2: Scalars['String'];
   option3: Scalars['String'];
   sku: Scalars['String'];
-  featured_image: Scalars['String'];
+  featured_image?: Maybe<Scalars['String']>;
   available: Scalars['String'];
   grams: Scalars['Float'];
   quantity: Scalars['Float'];
@@ -392,9 +392,14 @@ export type UserFragmentResponseFragment = (
   )>> }
 );
 
-export type VariantFragmentFragment = (
+export type VariantsFragmentFragment = (
   { __typename?: 'Variants' }
   & Pick<Variants, '_id' | 'title' | 'product_id' | 'sku' | 'available' | 'grams' | 'quantity' | 'price' | 'compare_at_price'>
+);
+
+export type VariantFragmentFragment = (
+  { __typename?: 'Variants' }
+  & Pick<Variants, '_id' | 'title' | 'price' | 'quantity' | 'featured_image'>
 );
 
 export type AddArticleMutationVariables = Exact<{
@@ -645,6 +650,33 @@ export type GetShoesByNameQuery = (
   ) }
 );
 
+export type GetDashboardShoesQueryVariables = Exact<{
+  shoesId: Scalars['ObjectId'];
+}>;
+
+
+export type GetDashboardShoesQuery = (
+  { __typename?: 'Query' }
+  & { getSingleShoe: (
+    { __typename?: 'Shoes' }
+    & Pick<Shoes, '_id' | 'title' | 'body_html' | 'handle' | 'vendor' | 'product_type' | 'price' | 'tags' | 'size'>
+    & { images: Array<(
+      { __typename?: 'Images' }
+      & Pick<Images, '_id' | 'src'>
+    )>, variants: Array<(
+      { __typename?: 'Variants' }
+      & VariantFragmentFragment
+    )>, relatives: Array<(
+      { __typename?: 'Shoes' }
+      & Pick<Shoes, '_id' | 'title'>
+      & { images: Array<(
+        { __typename?: 'Images' }
+        & Pick<Images, '_id' | 'src'>
+      )> }
+    )> }
+  ) }
+);
+
 export type GetSingleArticleQueryVariables = Exact<{
   articleId: Scalars['ObjectId'];
 }>;
@@ -670,6 +702,12 @@ export type GetSingleShoesQuery = (
     & { images: Array<(
       { __typename?: 'Images' }
       & ImageFragmentFragment
+    )>, variants: Array<(
+      { __typename?: 'Variants' }
+      & VariantFragmentFragment
+    )>, relatives: Array<(
+      { __typename?: 'Shoes' }
+      & Pick<Shoes, '_id'>
     )> }
     & ShoesBrowseFragmentFragment
     & ShoesArticleFragmentFragment
@@ -773,8 +811,8 @@ export const UserFragmentResponseFragmentDoc = gql`
 }
     ${UserFragmentFragmentDoc}
 ${UserFragmentErrorFragmentDoc}`;
-export const VariantFragmentFragmentDoc = gql`
-    fragment VariantFragment on Variants {
+export const VariantsFragmentFragmentDoc = gql`
+    fragment VariantsFragment on Variants {
   _id
   title
   product_id
@@ -784,6 +822,15 @@ export const VariantFragmentFragmentDoc = gql`
   quantity
   price
   compare_at_price
+}
+    `;
+export const VariantFragmentFragmentDoc = gql`
+    fragment VariantFragment on Variants {
+  _id
+  title
+  price
+  quantity
+  featured_image
 }
     `;
 export const AddArticleDocument = gql`
@@ -1349,6 +1396,62 @@ export function useGetShoesByNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetShoesByNameQueryHookResult = ReturnType<typeof useGetShoesByNameQuery>;
 export type GetShoesByNameLazyQueryHookResult = ReturnType<typeof useGetShoesByNameLazyQuery>;
 export type GetShoesByNameQueryResult = Apollo.QueryResult<GetShoesByNameQuery, GetShoesByNameQueryVariables>;
+export const GetDashboardShoesDocument = gql`
+    query GetDashboardShoes($shoesId: ObjectId!) {
+  getSingleShoe(shoesId: $shoesId) {
+    _id
+    title
+    body_html
+    handle
+    vendor
+    product_type
+    price
+    tags
+    size
+    images {
+      _id
+      src
+    }
+    variants {
+      ...VariantFragment
+    }
+    relatives {
+      _id
+      title
+      images {
+        _id
+        src
+      }
+    }
+  }
+}
+    ${VariantFragmentFragmentDoc}`;
+
+/**
+ * __useGetDashboardShoesQuery__
+ *
+ * To run a query within a React component, call `useGetDashboardShoesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDashboardShoesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDashboardShoesQuery({
+ *   variables: {
+ *      shoesId: // value for 'shoesId'
+ *   },
+ * });
+ */
+export function useGetDashboardShoesQuery(baseOptions: Apollo.QueryHookOptions<GetDashboardShoesQuery, GetDashboardShoesQueryVariables>) {
+        return Apollo.useQuery<GetDashboardShoesQuery, GetDashboardShoesQueryVariables>(GetDashboardShoesDocument, baseOptions);
+      }
+export function useGetDashboardShoesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDashboardShoesQuery, GetDashboardShoesQueryVariables>) {
+          return Apollo.useLazyQuery<GetDashboardShoesQuery, GetDashboardShoesQueryVariables>(GetDashboardShoesDocument, baseOptions);
+        }
+export type GetDashboardShoesQueryHookResult = ReturnType<typeof useGetDashboardShoesQuery>;
+export type GetDashboardShoesLazyQueryHookResult = ReturnType<typeof useGetDashboardShoesLazyQuery>;
+export type GetDashboardShoesQueryResult = Apollo.QueryResult<GetDashboardShoesQuery, GetDashboardShoesQueryVariables>;
 export const GetSingleArticleDocument = gql`
     query getSingleArticle($articleId: ObjectId!) {
   getSingleArticle(articleId: $articleId) {
@@ -1390,11 +1493,18 @@ export const GetSingleShoesDocument = gql`
     images {
       ...ImageFragment
     }
+    variants {
+      ...VariantFragment
+    }
+    relatives {
+      _id
+    }
   }
 }
     ${ShoesBrowseFragmentFragmentDoc}
 ${ShoesArticleFragmentFragmentDoc}
-${ImageFragmentFragmentDoc}`;
+${ImageFragmentFragmentDoc}
+${VariantFragmentFragmentDoc}`;
 
 /**
  * __useGetSingleShoesQuery__

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import {
+  Shoes,
   useAddImageMutation,
   useAddShoeMutation,
   useAddVariantMutation,
@@ -9,11 +10,6 @@ import {
 import GeneralForm from "./GeneralForm";
 import ImageForm from "./ImageForm";
 import VariantForm from "./VariantForm";
-
-interface ShoesFormProps {
-  current: number;
-  data?: any;
-}
 
 interface Image {
   src: string;
@@ -41,6 +37,11 @@ interface Initializer {
   images: Image[];
   variants: Variants[];
   is_published: Boolean;
+}
+
+interface ShoesFormProps {
+  current: number;
+  data?: Initializer;
 }
 
 const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
@@ -77,7 +78,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
 
   return (
     <Formik
-      initialValues={intialValues}
+      initialValues={data ? data : intialValues}
       onSubmit={async (values, { resetForm }) => {
         try {
           let { variants, images, ...shoes } = { ...values };
@@ -92,7 +93,14 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
             "-"
           )}-${values.colors.join("-")}`;
 
-          const { data } = await addShoes({
+          /*  if (data && shoes) {
+            const filtered = Object.keys(data as Initializer).map((item) => {
+              return data[item] === shoes[item];
+            });
+            console.log(filtered);
+          }
+            */
+          /*  const { data } = await addShoes({
             variables: {
               ...shoes,
               is_published: false,
@@ -127,7 +135,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
                 });
               }
             });
-          }
+          } */
 
           resetForm({});
         } catch (err) {

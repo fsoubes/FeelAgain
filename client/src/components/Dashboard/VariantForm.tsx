@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import styles from "../../styles/Dashboard.module.scss";
 
 interface Variant {
-  featured_image: string;
+  featured_image?: string | undefined;
   title: string;
 }
 

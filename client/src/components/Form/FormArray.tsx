@@ -51,12 +51,16 @@ const FormArray: React.FC<FormArrayProps> = ({
 
                     <button
                       type="button"
-                      onClick={() => {
-                        arrayHelpers.remove(index);
-                        if (variants) {
-                          variants.splice(index, 1);
+                      onClick={async () => {
+                        try {
+                          arrayHelpers.remove(index);
+                          if (variants) {
+                            variants.splice(index, 1);
+                          }
+                        } catch (err) {
+                          throw err;
                         }
-                      }} // remove a friend from the list
+                      }}
                     >
                       -
                     </button>
@@ -72,13 +76,13 @@ const FormArray: React.FC<FormArrayProps> = ({
 
                         if (variants && variants[index]) {
                           variants.push({
-                            title: "43",
+                            title: "",
                             featured_image: "",
                             quantity: 0,
                             price: 0,
                           });
                         }
-                      }} // insert an empty string at a position
+                      }}
                     >
                       +
                     </button>

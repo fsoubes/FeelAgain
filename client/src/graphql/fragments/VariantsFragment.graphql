@@ -1,0 +1,7 @@
+fragment VariantFragment on Variants {
+  _id
+  title
+  price
+  quantity
+  featured_image
+}

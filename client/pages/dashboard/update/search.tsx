@@ -1,42 +1,86 @@
-import { useApolloClient } from "@apollo/client";
-import Link from "next/link";
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import SearchBar from "../../../src/components/Search/UI/SearchBar";
-import {
-  SearchResults,
-  GetShoesByNameDocument,
-} from "../../../src/generated/graphql";
+import { useGetShoesQuery } from "../../../src/generated/graphql";
 import styleDash from "../../../src/styles/DashBoardSearch.module.scss";
 import ProductsList from "../../../src/components/Products/ProductsList";
+import Pagination from "../../../src/components/Pagination/Pagination";
+import { useRouter } from "next/router";
+import { NextPage } from "next";
 
-interface SearchProps {}
+interface SearchProps {
+  page?: number;
+  search: string;
+}
 
-const Search: React.FC<SearchProps> = ({}) => {
-  const client = useApolloClient();
-  const [data, setData] = useState<SearchResults | null>(null);
+const Search: NextPage<SearchProps> = ({ page, search }) => {
+  const router = useRouter();
+
+  const [currentPage, setCurrentPage] = useState<number>(page as number);
+
+  useEffect(() => {
+    setCurrentPage(parseInt(router.query.page as string));
+  }, []);
+
+  const [currentSearch, setSearch] = useState<string>(search ? search : "");
+
+  let { data, refetch } = useGetShoesQuery({
+    variables: {
+      limit: 15,
+      page: currentPage ? currentPage : 1,
+      search: currentSearch,
+    },
+    skip: !currentSearch,
+  });
+
   const onEnterSearch = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.code === "Enter") {
       event.preventDefault();
-      const { data } = await client.query({
-        query: GetShoesByNameDocument,
-        variables: {
-          search: event.currentTarget.value,
+      setSearch(event.currentTarget.value);
+      router.push(
+        {
+          pathname: router.pathname,
+          query: {
+            page: page,
+            search: currentSearch,
+          },
         },
-      });
-      setData(data.getShoesByName as SearchResults);
+        page
+          ? `/dashboard/update/search?page=${page}&search=${currentSearch}`
+          : `/dashboard/update/search?search=${currentSearch}`,
+        { shallow: true }
+      );
     }
   };
 
   return (
     <div className={styleDash.search}>
-      <SearchBar searchConfim={onEnterSearch}></SearchBar>
-      <div className={styleDash.container}>
-        {data && data.edges.length > 0 && <ProductsList shoes={data.edges} />}
-        {data && data.edges.length === 0 && <h1>Aucun résultat</h1>}
-      </div>
+      <SearchBar searchConfim={onEnterSearch} urlSearch={search}></SearchBar>
+      {data && (
+        <div className={styleDash.container}>
+          {data && data.getFilterShoes?.edges.length > 0 ? (
+            <Fragment>
+              <ProductsList shoes={data.getFilterShoes?.edges} />
+              <Pagination
+                refetch={refetch}
+                page={currentPage}
+                total={data?.getFilterShoes?.pageInfo.total as number}
+                path={"/dashboard/update/search"}
+                search={currentSearch}
+              />
+            </Fragment>
+          ) : (
+            <h1>Aucun résultat</h1>
+          )}
+        </div>
+      )}
     </div>
   );
 };
+
+Search.getInitialProps = async ({ query: { page, search } }) => {
+  return { page: parseInt(page as string), search: search as string };
+};
+
 export default Search;

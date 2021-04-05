@@ -1,4 +1,4 @@
-fragment VariantFragment on Variants {
+fragment VariantsFragment on Variants {
   _id
   title
   product_id

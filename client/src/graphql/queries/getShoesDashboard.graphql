@@ -1,0 +1,28 @@
+query GetDashboardShoes($shoesId: ObjectId!) {
+  getSingleShoe(shoesId: $shoesId) {
+    _id
+    title
+    body_html
+    handle
+    vendor
+    product_type
+    price
+    tags
+    size
+    images {
+      _id
+      src
+    }
+    variants {
+      ...VariantFragment
+    }
+    relatives {
+      _id
+      title
+      images {
+        _id
+        src
+      }
+    }
+  }
+}

@@ -1,9 +1,13 @@
-import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
+import { NextPage } from "next";
 import ShoesForm from "../../../src/components/Dashboard/ShoesForm";
 import SubTabs from "../../../src/components/SubTabs/SubTabs";
-import { useGetSingleShoesQuery } from "../../../src/generated/graphql";
+import {
+  Shoes,
+  useGetDashboardShoesQuery,
+} from "../../../src/generated/graphql";
 import styles from "../../../src/styles/Dashboard.module.scss";
+import { paletteShoes } from "../../../src/constants/constants";
 
 interface UpdateProductProps {
   id?: string;
@@ -11,14 +15,44 @@ interface UpdateProductProps {
 }
 
 const UpdateProduct: NextPage<UpdateProductProps> = ({ id, content }) => {
-  const { data } = useGetSingleShoesQuery({
+  const { data } = useGetDashboardShoesQuery({
     variables: { shoesId: id },
   });
 
+  const [shoes, setShoes] = useState<any>("");
+
   useEffect(() => {
     if (data) {
-      const { images, ...shoes } = data.getSingleShoe;
-      console.log(shoes);
+      const regex = /.cm$/g;
+      let { images, variants, relatives, ...shoes } = data.getSingleShoe;
+      const updatedSize = shoes.size.slice();
+      const updateVariant = updatedSize.sort((a, b) => a - b);
+      const updatedVariants = variants
+        .slice()
+        .sort(
+          (a, b) =>
+            updatedSize.indexOf(parseFloat(a.title)) -
+            updatedSize.indexOf(parseFloat(b.title))
+        );
+
+      const heel = parseFloat(shoes.tags.filter((item) => regex.test(item))[0]);
+      const colors = shoes.tags.filter(
+        (item) => paletteShoes.indexOf(item) !== -1
+      );
+      const material = shoes.tags.filter(
+        (item) => !regex.test(item) && paletteShoes.indexOf(item) === -1
+      );
+
+      setShoes({
+        ...shoes,
+        images,
+        relatives,
+        colors: colors,
+        tags: material,
+        heel: heel ? heel : 0,
+        variants: updatedVariants,
+        size: updateVariant,
+      });
     }
   }, [data]);
 
@@ -40,7 +74,7 @@ const UpdateProduct: NextPage<UpdateProductProps> = ({ id, content }) => {
           currentContent={currentContent}
           path={`/dashboard/update/${id}`}
         />
-        {data && <ShoesForm current={current} data={data.getSingleShoe} />}
+        {shoes && <ShoesForm current={current} data={shoes} />}
       </div>
     </div>
   );

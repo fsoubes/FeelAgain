@@ -31,7 +31,7 @@ export class Variants {
   @Property({ required: false })
   sku: String;
 
-  @Field()
+  @Field({ nullable: true })
   @Property({ required: false })
   featured_image: String;
 

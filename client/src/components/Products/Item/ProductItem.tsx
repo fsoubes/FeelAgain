@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 interface ProductItemProps {
   src: string;
   title: string;
-  price: string;
+  price: number;
   id: string;
   srcIn: string;
 }

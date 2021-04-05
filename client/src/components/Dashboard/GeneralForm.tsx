@@ -111,6 +111,7 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             <Field
               type="number"
               name="price"
+              step="0.01"
               autoCapitalize="none"
               autoCorrect="off"
               className={styles.form__register_input}
@@ -160,6 +161,7 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             <Field
               type="number"
               min="0"
+              step="0.5"
               name="heel"
               autoCapitalize="none"
               autoCorrect="off"
@@ -213,11 +215,12 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             Description Article
           </label>
           <Field
+            style={{ minHeight: "160px" }}
             as="textarea"
-            type="text"
             name="body_html"
             autoCapitalize="none"
             autoCorrect="off"
+            spellCheck="false"
             className={styles.form__register_input}
           ></Field>
         </Box>

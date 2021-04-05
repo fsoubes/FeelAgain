@@ -25,7 +25,7 @@ const Latest: NextPage<LatestProps> = ({ page }) => {
 
   let { data, refetch } = useGetShoesQuery({
     variables: {
-      limit: 16,
+      limit: 15,
       page: currentPage ? currentPage : 1,
       sort: "id_desc",
     },

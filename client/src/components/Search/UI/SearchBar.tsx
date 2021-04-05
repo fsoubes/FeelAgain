@@ -2,7 +2,12 @@
 import React, { useRef } from "react";
 import styles from "../../../styles/SearchBar.module.scss";
 
-const SearchBar = ({ searchConfim, urlSearch }: any) => {
+interface SearchBarProps {
+  urlSearch?: string;
+  searchConfim: (event: React.KeyboardEvent<HTMLInputElement>) => Promise<void>;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ searchConfim, urlSearch }) => {
   const searchValue = useRef(null);
 
   return (
