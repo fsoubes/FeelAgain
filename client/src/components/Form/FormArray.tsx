@@ -75,8 +75,10 @@ const FormArray: React.FC<FormArrayProps> = ({
                         );
 
                         if (variants && variants[index]) {
-                          variants.push({
-                            title: "",
+                          const value = parseFloat(variants[index].title) + 1;
+
+                          variants.splice(index + 1, 0, {
+                            title: `${value}`.toString(),
                             featured_image: "",
                             quantity: 0,
                             price: 0,

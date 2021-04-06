@@ -6,6 +6,7 @@ interface filterType {
 
 interface cursorOption {
   search: string | null;
+  is_published: boolean;
   sort: string | null;
   page: number | null;
   limit: number | null;
@@ -50,7 +51,9 @@ const getCursorOptions = (
 ) => {
   const limit = queryCursorOptions.limit ? queryCursorOptions.limit : 16;
   let match = {
-    is_published: true,
+    ...(queryCursorOptions.is_published && {
+      is_published: queryCursorOptions.is_published,
+    }),
     ...((queryCursorOptions.search as string) && {
       $text: {
         $search: queryCursorOptions.search,

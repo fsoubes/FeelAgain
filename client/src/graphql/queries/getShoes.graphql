@@ -6,12 +6,14 @@ query GetShoes(
   $product: String
   $size: [Float!]
   $tags: [String!]
+  $is_published: Boolean
 ) {
   getFilterShoes(
     limit: $limit
     page: $page
     search: $search
     sort: $sort
+    is_published: $is_published
     filter: { product: $product, size: $size, tags: $tags }
   ) {
     pageInfo {

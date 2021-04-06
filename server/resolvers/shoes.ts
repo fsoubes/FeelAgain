@@ -13,8 +13,8 @@ import {
 } from "type-graphql";
 import { Shoes, ShoesModel } from "../entities/Shoes";
 import { ObjectId } from "mongodb";
-import { ImagesModel } from "../entities/Images";
-import { VariantsModel } from "../entities/Variants";
+import { Images, ImagesModel } from "../entities/Images";
+import { Variants, VariantsModel } from "../entities/Variants";
 import { toDot } from "../helpers/toDot";
 import { ShoesInput } from "./types/shoes-input";
 import { ImageInput } from "./types/images-input";
@@ -66,6 +66,8 @@ export class ShoesResolver {
     @Arg("limit") limit: number,
     @Arg("page") page: number,
     @Arg("search", { nullable: true }) search: string,
+    @Arg("is_published", { nullable: true, defaultValue: true })
+    is_published: boolean,
     @Arg("sort", { nullable: true }) sorting: sortBy,
     @Arg("filter", { nullable: true }) filter: ShoesInputFilter,
     @Ctx() {  }: MyContext
@@ -75,7 +77,12 @@ export class ShoesResolver {
       const info = await getFilteredShoes(
         ShoesModel, // Model
         sorting, // Sorting
-        { page: page, limit: limit, search: search }, // Pagination w where
+        {
+          page: page,
+          limit: limit,
+          search: search,
+          is_published: is_published,
+        }, // Pagination w where
         { ...filter }, // Filtering
         [
           "title",
@@ -259,6 +266,56 @@ export class ShoesResolver {
       );
 
       return `Image added to ${parentId}`;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Mutation(() => Images)
+  @UseMiddleware(isAdmin)
+  async updateImage(
+    @Arg("image") imageInput: ImageInput,
+    @Arg("imageId") imageId: string,
+    @Ctx() {  }: MyContext
+  ): Promise<Images | null> {
+    try {
+      let dotData = toDot(imageInput);
+      const updatedImage = await ImagesModel.findOneAndUpdate(
+        {
+          _id: imageId,
+        },
+        dotData,
+        {
+          new: true,
+          useFindAndModify: false,
+        }
+      );
+      return updatedImage;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Mutation(() => Variants)
+  @UseMiddleware(isAdmin)
+  async updateVariant(
+    @Arg("variant") imageInput: VariantInput,
+    @Arg("variantId") variantId: string,
+    @Ctx() {  }: MyContext
+  ): Promise<Variants | null> {
+    try {
+      let dotData = toDot(imageInput);
+      const updatedVariant = await VariantsModel.findOneAndUpdate(
+        {
+          _id: variantId,
+        },
+        dotData,
+        {
+          new: true,
+          useFindAndModify: false,
+        }
+      );
+      return updatedVariant;
     } catch (err) {
       throw err;
     }

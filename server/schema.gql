@@ -67,11 +67,11 @@ input ImageInput {
 
 type Images {
   _id: ObjectId!
-  height: Float!
+  height: Float
   position: Float!
   product_id: String!
   src: String!
-  width: Float!
+  width: Float
 }
 
 type Mutation {
@@ -88,7 +88,9 @@ type Mutation {
   ratingReview(articleId: String!, rating: String!): Boolean!
   register(user: UserRegister!): UserResponse!
   removeShoe(shoeId: String!): String!
+  updateImage(image: ImageInput!, imageId: String!): Images!
   updateShoe(shoeId: String!, shoes: ShoesInput!): Shoes!
+  updateVariant(variant: VariantInput!, variantId: String!): Variants!
 }
 
 """Mongo object id scalar type"""
@@ -123,7 +125,7 @@ type PaginationShoes {
 
 type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
-  getFilterShoes(filter: ShoesInputFilter, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
+  getFilterShoes(filter: ShoesInputFilter, is_published: Boolean = true, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
   getShoesByName(search: String!): SearchResults!
   getSingleArticle(articleId: ObjectId!): Blog!
   getSingleShoe(shoesId: ObjectId!): Shoes!
@@ -163,17 +165,18 @@ type Shoes {
 input ShoesInput {
   body_html: String
   handle: String
-  is_published: Boolean!
-  price: Float!
+  is_published: Boolean
+  price: Float
   product_type: String
-  relatives: [String!]!
-  size: [Float!]!
-  tags: [String!]!
-  title: String!
+  relatives: [String!]
+  size: [Float!]
+  tags: [String!]
+  title: String
   vendor: String
 }
 
 input ShoesInputFilter {
+  is_published: Boolean
   product: String
   size: [Float!]
   tags: [String!]
@@ -220,7 +223,7 @@ type Variants {
   _id: ObjectId!
   available: String!
   compare_at_price: Float!
-  featured_image: String!
+  featured_image: String
   grams: Float!
   option1: String!
   option2: String!

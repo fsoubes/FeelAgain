@@ -79,4 +79,4 @@ const Pagination: React.FC<PaginationProps> = ({
     </div>
   );
 };
-export default Pagination;
+export default React.memo(Pagination);

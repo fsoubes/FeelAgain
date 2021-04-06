@@ -19,11 +19,11 @@ export class Images {
   @Property({ required: true })
   product_id: String;
 
-  @Field()
+  @Field({ nullable: true })
   @Property({ required: false })
   width: Number;
 
-  @Field()
+  @Field({ nullable: true })
   @Property({ required: false })
   height: Number;
 }

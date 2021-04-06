@@ -40,4 +40,4 @@ const Menu: React.FC<MenuProps> = ({ title }) => {
     </div>
   );
 };
-export default Menu;
+export default React.memo(Menu);

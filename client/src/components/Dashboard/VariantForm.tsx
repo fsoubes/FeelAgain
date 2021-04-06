@@ -123,4 +123,4 @@ const VariantForm: React.FC<VariantFormProps> = ({ size, variants }) => {
     />
   );
 };
-export default VariantForm;
+export default React.memo(VariantForm);

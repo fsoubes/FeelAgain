@@ -37,6 +37,7 @@ export type QueryGetSingleShoeArgs = {
 export type QueryGetFilterShoesArgs = {
   filter?: Maybe<ShoesInputFilter>;
   sort?: Maybe<Scalars['String']>;
+  is_published?: Maybe<Scalars['Boolean']>;
   search?: Maybe<Scalars['String']>;
   page: Scalars['Float'];
   limit: Scalars['Float'];
@@ -115,8 +116,8 @@ export type Images = {
   position: Scalars['Float'];
   src: Scalars['String'];
   product_id: Scalars['String'];
-  width: Scalars['Float'];
-  height: Scalars['Float'];
+  width?: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']>;
 };
 
 export type PaginationShoes = {
@@ -136,6 +137,7 @@ export type ShoesInputFilter = {
   product?: Maybe<Scalars['String']>;
   size?: Maybe<Array<Scalars['Float']>>;
   tags?: Maybe<Array<Scalars['String']>>;
+  is_published?: Maybe<Scalars['Boolean']>;
 };
 
 export type SearchResults = {
@@ -208,6 +210,8 @@ export type Mutation = {
   removeShoe: Scalars['String'];
   updateShoe: Shoes;
   addImage: Scalars['String'];
+  updateImage: Images;
+  updateVariant: Variants;
   addVariant: Scalars['String'];
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
@@ -240,6 +244,18 @@ export type MutationUpdateShoeArgs = {
 export type MutationAddImageArgs = {
   parentId: Scalars['String'];
   image: ImageInput;
+};
+
+
+export type MutationUpdateImageArgs = {
+  imageId: Scalars['String'];
+  image: ImageInput;
+};
+
+
+export type MutationUpdateVariantArgs = {
+  variantId: Scalars['String'];
+  variant: VariantInput;
 };
 
 
@@ -281,16 +297,16 @@ export type MutationRatingReviewArgs = {
 };
 
 export type ShoesInput = {
-  title: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
   body_html?: Maybe<Scalars['String']>;
   vendor?: Maybe<Scalars['String']>;
   handle?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
-  tags: Array<Scalars['String']>;
-  size: Array<Scalars['Float']>;
-  price: Scalars['Float'];
-  relatives: Array<Scalars['String']>;
-  is_published: Scalars['Boolean'];
+  tags?: Maybe<Array<Scalars['String']>>;
+  size?: Maybe<Array<Scalars['Float']>>;
+  price?: Maybe<Scalars['Float']>;
+  relatives?: Maybe<Array<Scalars['String']>>;
+  is_published?: Maybe<Scalars['Boolean']>;
 };
 
 export type ImageInput = {
@@ -557,17 +573,35 @@ export type LoginMutation = (
   ) }
 );
 
+export type UpdateImageMutationVariables = Exact<{
+  imageId: Scalars['String'];
+  position: Scalars['Float'];
+  src: Scalars['String'];
+  width?: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']>;
+  product_id: Scalars['String'];
+}>;
+
+
+export type UpdateImageMutation = (
+  { __typename?: 'Mutation' }
+  & { updateImage: (
+    { __typename?: 'Images' }
+    & ImageFragmentFragment
+  ) }
+);
+
 export type UpdateShoeMutationVariables = Exact<{
-  title: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
   body_html?: Maybe<Scalars['String']>;
   vendor?: Maybe<Scalars['String']>;
-  price: Scalars['Float'];
+  price?: Maybe<Scalars['Float']>;
   handle?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
-  tags: Array<Scalars['String']> | Scalars['String'];
-  size: Array<Scalars['Float']> | Scalars['Float'];
-  is_published: Scalars['Boolean'];
-  relatives: Array<Scalars['String']> | Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  size?: Maybe<Array<Scalars['Float']> | Scalars['Float']>;
+  is_published?: Maybe<Scalars['Boolean']>;
+  relatives?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   shoeId: Scalars['String'];
 }>;
 
@@ -577,6 +611,28 @@ export type UpdateShoeMutation = (
   & { updateShoe: (
     { __typename?: 'Shoes' }
     & ShoesBrowseFragmentFragment
+  ) }
+);
+
+export type UpdateVariantMutationVariables = Exact<{
+  title: Scalars['String'];
+  product_id: Scalars['String'];
+  sku?: Maybe<Scalars['String']>;
+  featured_image?: Maybe<Scalars['String']>;
+  available: Scalars['Boolean'];
+  grams: Scalars['Float'];
+  quantity: Scalars['Float'];
+  price: Scalars['Float'];
+  compare_at_price?: Maybe<Scalars['Float']>;
+  variantId: Scalars['String'];
+}>;
+
+
+export type UpdateVariantMutation = (
+  { __typename?: 'Mutation' }
+  & { updateVariant: (
+    { __typename?: 'Variants' }
+    & VariantFragmentFragment
   ) }
 );
 
@@ -608,6 +664,7 @@ export type GetShoesQueryVariables = Exact<{
   product?: Maybe<Scalars['String']>;
   size?: Maybe<Array<Scalars['Float']> | Scalars['Float']>;
   tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  is_published?: Maybe<Scalars['Boolean']>;
 }>;
 
 
@@ -1215,8 +1272,48 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const UpdateImageDocument = gql`
+    mutation UpdateImage($imageId: String!, $position: Float!, $src: String!, $width: Float, $height: Float, $product_id: String!) {
+  updateImage(
+    imageId: $imageId
+    image: {position: $position, src: $src, width: $width, height: $height, product_id: $product_id}
+  ) {
+    ...ImageFragment
+  }
+}
+    ${ImageFragmentFragmentDoc}`;
+export type UpdateImageMutationFn = Apollo.MutationFunction<UpdateImageMutation, UpdateImageMutationVariables>;
+
+/**
+ * __useUpdateImageMutation__
+ *
+ * To run a mutation, you first call `useUpdateImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateImageMutation, { data, loading, error }] = useUpdateImageMutation({
+ *   variables: {
+ *      imageId: // value for 'imageId'
+ *      position: // value for 'position'
+ *      src: // value for 'src'
+ *      width: // value for 'width'
+ *      height: // value for 'height'
+ *      product_id: // value for 'product_id'
+ *   },
+ * });
+ */
+export function useUpdateImageMutation(baseOptions?: Apollo.MutationHookOptions<UpdateImageMutation, UpdateImageMutationVariables>) {
+        return Apollo.useMutation<UpdateImageMutation, UpdateImageMutationVariables>(UpdateImageDocument, baseOptions);
+      }
+export type UpdateImageMutationHookResult = ReturnType<typeof useUpdateImageMutation>;
+export type UpdateImageMutationResult = Apollo.MutationResult<UpdateImageMutation>;
+export type UpdateImageMutationOptions = Apollo.BaseMutationOptions<UpdateImageMutation, UpdateImageMutationVariables>;
 export const UpdateShoeDocument = gql`
-    mutation UpdateShoe($title: String!, $body_html: String, $vendor: String, $price: Float!, $handle: String, $product_type: String, $tags: [String!]!, $size: [Float!]!, $is_published: Boolean!, $relatives: [String!]!, $shoeId: String!) {
+    mutation UpdateShoe($title: String, $body_html: String, $vendor: String, $price: Float, $handle: String, $product_type: String, $tags: [String!], $size: [Float!], $is_published: Boolean, $relatives: [String!], $shoeId: String!) {
   updateShoe(
     shoeId: $shoeId
     shoes: {title: $title, body_html: $body_html, vendor: $vendor, handle: $handle, product_type: $product_type, tags: $tags, size: $size, is_published: $is_published, price: $price, relatives: $relatives}
@@ -1260,6 +1357,50 @@ export function useUpdateShoeMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateShoeMutationHookResult = ReturnType<typeof useUpdateShoeMutation>;
 export type UpdateShoeMutationResult = Apollo.MutationResult<UpdateShoeMutation>;
 export type UpdateShoeMutationOptions = Apollo.BaseMutationOptions<UpdateShoeMutation, UpdateShoeMutationVariables>;
+export const UpdateVariantDocument = gql`
+    mutation UpdateVariant($title: String!, $product_id: String!, $sku: String, $featured_image: String, $available: Boolean!, $grams: Float!, $quantity: Float!, $price: Float!, $compare_at_price: Float, $variantId: String!) {
+  updateVariant(
+    variantId: $variantId
+    variant: {title: $title, product_id: $product_id, sku: $sku, featured_image: $featured_image, available: $available, grams: $grams, quantity: $quantity, price: $price, compare_at_price: $compare_at_price}
+  ) {
+    ...VariantFragment
+  }
+}
+    ${VariantFragmentFragmentDoc}`;
+export type UpdateVariantMutationFn = Apollo.MutationFunction<UpdateVariantMutation, UpdateVariantMutationVariables>;
+
+/**
+ * __useUpdateVariantMutation__
+ *
+ * To run a mutation, you first call `useUpdateVariantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateVariantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateVariantMutation, { data, loading, error }] = useUpdateVariantMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      product_id: // value for 'product_id'
+ *      sku: // value for 'sku'
+ *      featured_image: // value for 'featured_image'
+ *      available: // value for 'available'
+ *      grams: // value for 'grams'
+ *      quantity: // value for 'quantity'
+ *      price: // value for 'price'
+ *      compare_at_price: // value for 'compare_at_price'
+ *      variantId: // value for 'variantId'
+ *   },
+ * });
+ */
+export function useUpdateVariantMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVariantMutation, UpdateVariantMutationVariables>) {
+        return Apollo.useMutation<UpdateVariantMutation, UpdateVariantMutationVariables>(UpdateVariantDocument, baseOptions);
+      }
+export type UpdateVariantMutationHookResult = ReturnType<typeof useUpdateVariantMutation>;
+export type UpdateVariantMutationResult = Apollo.MutationResult<UpdateVariantMutation>;
+export type UpdateVariantMutationOptions = Apollo.BaseMutationOptions<UpdateVariantMutation, UpdateVariantMutationVariables>;
 export const GetArticlesDocument = gql`
     query GetArticles($limit: Float!, $cursor: String) {
   getArticles(limit: $limit, cursor: $cursor) {
@@ -1301,12 +1442,13 @@ export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
 export const GetShoesDocument = gql`
-    query GetShoes($limit: Float!, $page: Float!, $sort: String, $search: String, $product: String, $size: [Float!], $tags: [String!]) {
+    query GetShoes($limit: Float!, $page: Float!, $sort: String, $search: String, $product: String, $size: [Float!], $tags: [String!], $is_published: Boolean) {
   getFilterShoes(
     limit: $limit
     page: $page
     search: $search
     sort: $sort
+    is_published: $is_published
     filter: {product: $product, size: $size, tags: $tags}
   ) {
     pageInfo {
@@ -1344,6 +1486,7 @@ ${ImageFragmentFragmentDoc}`;
  *      product: // value for 'product'
  *      size: // value for 'size'
  *      tags: // value for 'tags'
+ *      is_published: // value for 'is_published'
  *   },
  * });
  */

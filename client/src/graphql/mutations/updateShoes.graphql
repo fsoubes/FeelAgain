@@ -1,14 +1,14 @@
 mutation UpdateShoe(
-  $title: String!
+  $title: String
   $body_html: String
   $vendor: String
-  $price: Float!
+  $price: Float
   $handle: String
   $product_type: String
-  $tags: [String!]!
-  $size: [Float!]!
-  $is_published: Boolean!
-  $relatives: [String!]!
+  $tags: [String!]
+  $size: [Float!]
+  $is_published: Boolean
+  $relatives: [String!]
   $shoeId: String!
 ) {
   updateShoe(

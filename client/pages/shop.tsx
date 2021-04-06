@@ -45,8 +45,10 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
                 : `${data?.getFilterShoes.pageInfo.totalItem} articles`}
             </h4>
           </div>
-          <ProductsList shoes={data.getFilterShoes?.edges} />
-
+          <div style={{ display: "flex" }}>
+            {/* <h1>HelloHelloHelloHello</h1> */}
+            <ProductsList shoes={data.getFilterShoes?.edges} />
+          </div>
           <Pagination
             refetch={refetch}
             page={currentPage}

@@ -57,4 +57,4 @@ const ImageForm: React.FC<ImageFormProps> = ({ images }) => {
   );
 };
 
-export default ImageForm;
+export default React.memo(ImageForm);

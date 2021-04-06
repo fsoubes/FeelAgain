@@ -10,4 +10,7 @@ export class ShoesInputFilter {
 
   @Field(() => [String], { nullable: true })
   tags?: [string];
+
+  @Field({ nullable: true })
+  is_published?: Boolean;
 }

@@ -49,6 +49,7 @@ const UpdateProduct: NextPage<UpdateProductProps> = ({ id, content }) => {
         relatives,
         colors: colors,
         tags: material,
+        initialtags: shoes.tags,
         heel: heel ? heel : 0,
         variants: updatedVariants,
         size: updateVariant,
@@ -74,7 +75,7 @@ const UpdateProduct: NextPage<UpdateProductProps> = ({ id, content }) => {
           currentContent={currentContent}
           path={`/dashboard/update/${id}`}
         />
-        {shoes && <ShoesForm current={current} data={shoes} />}
+        {shoes && <ShoesForm current={current} fetchValues={shoes} />}
       </div>
     </div>
   );

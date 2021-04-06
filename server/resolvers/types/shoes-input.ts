@@ -2,7 +2,7 @@ import { InputType, Field } from "type-graphql";
 
 @InputType()
 export class ShoesInput {
-  @Field()
+  @Field({ nullable: true })
   title: String;
 
   @Field({ nullable: true })
@@ -17,18 +17,18 @@ export class ShoesInput {
   @Field({ nullable: true })
   product_type: string;
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
   tags?: [string];
 
-  @Field(() => [Number])
+  @Field(() => [Number], { nullable: true })
   size: number[];
 
-  @Field()
+  @Field({ nullable: true })
   price: Number;
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
   relatives?: [string];
 
-  @Field()
+  @Field({ nullable: true })
   is_published: Boolean;
 }

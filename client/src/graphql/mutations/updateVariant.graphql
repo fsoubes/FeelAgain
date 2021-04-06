@@ -1,0 +1,29 @@
+mutation UpdateVariant(
+  $title: String!
+  $product_id: String!
+  $sku: String
+  $featured_image: String
+  $available: Boolean!
+  $grams: Float!
+  $quantity: Float!
+  $price: Float!
+  $compare_at_price: Float
+  $variantId: String!
+) {
+  updateVariant(
+    variantId: $variantId
+    variant: {
+      title: $title
+      product_id: $product_id
+      sku: $sku
+      featured_image: $featured_image
+      available: $available
+      grams: $grams
+      quantity: $quantity
+      price: $price
+      compare_at_price: $compare_at_price
+    }
+  ) {
+    ...VariantFragment
+  }
+}

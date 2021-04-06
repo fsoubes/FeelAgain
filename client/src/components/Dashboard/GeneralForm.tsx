@@ -228,4 +228,4 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
     </Fragment>
   );
 };
-export default GeneralForm;
+export default React.memo(GeneralForm);

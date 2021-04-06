@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import {
-  Shoes,
+  AddShoeMutation,
   useAddImageMutation,
   useAddShoeMutation,
   useAddVariantMutation,
+  useUpdateShoeMutation,
 } from "../../generated/graphql";
 import GeneralForm from "./GeneralForm";
 import ImageForm from "./ImageForm";
@@ -22,6 +23,7 @@ interface Variants {
   price: number;
 }
 interface Initializer {
+  _id: string;
   title: string;
   vendor: string;
   product_type: string;
@@ -33,6 +35,7 @@ interface Initializer {
   heel: number;
   size: number[];
   tags: string[];
+  initialtags: string[];
   relatives: string[];
   images: Image[];
   variants: Variants[];
@@ -41,17 +44,21 @@ interface Initializer {
 
 interface ShoesFormProps {
   current: number;
-  data?: Initializer;
+  fetchValues?: Initializer;
 }
 
-const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
-  const [addShoes] = useAddShoeMutation();
+const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
+  const [eventShoes] = fetchValues
+    ? useUpdateShoeMutation()
+    : useAddShoeMutation();
   const [addImages] = useAddImageMutation();
   const [addVariant] = useAddVariantMutation();
 
   const size = [35, 36, 37, 38, 39, 40, 41, 42];
 
   const intialValues: Initializer = {
+    _id: "",
+    initialtags: [""],
     title: "",
     vendor: "",
     product_type: "",
@@ -62,7 +69,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
     colors: ["Blanc"],
     heel: 0,
     size: size,
-    tags: ["Cuir", "Noir"],
+    tags: ["Cuir"],
     relatives: ["6061007551eeea01f597c852"],
     images: new Array(4).fill({ src: "" }),
     variants: size.map((item) => {
@@ -78,38 +85,66 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
 
   return (
     <Formik
-      initialValues={data ? data : intialValues}
+      initialValues={fetchValues ? fetchValues : intialValues}
       onSubmit={async (values, { resetForm }) => {
         try {
-          let { variants, images, ...shoes } = { ...values };
-
           const tags = [
             ...values.tags,
             values.heel ? `${values.heel} cm` : "pas de talon",
             ...values.colors,
           ];
 
-          const handle = `${values.title}-${values.tags.join(
+          const handle = `${values.title.replace(/ /g, "-")}-${values.tags.join(
             "-"
           )}-${values.colors.join("-")}`;
 
-          /*  if (data && shoes) {
-            const filtered = Object.keys(data as Initializer).map((item) => {
-              return data[item] === shoes[item];
-            });
-            console.log(filtered);
-          }
-            */
-          /*  const { data } = await addShoes({
-            variables: {
+          let { variants, images, relatives, ...shoes } = {
+            ...values,
+            tags: tags,
+            handle: handle,
+          };
+
+          let {
+            variants: initialVariants,
+            images: initialImages,
+            relatives: initialRelatives,
+            ...initialShoes
+          } = {
+            ...(fetchValues as Initializer),
+          };
+
+          const filtered = Object.keys(shoes)
+            .filter((item: string) => {
+              return (
+                JSON.stringify((initialShoes as any)[item]) !==
+                JSON.stringify((shoes as any)[item])
+              );
+            })
+            .reduce((obj, key) => {
+              (obj as any)[key] = (shoes as any)[key];
+              return obj;
+            }, {});
+
+          const shoesVariables = {
+            ...(fetchValues && {
+              shoeId: fetchValues?._id as string,
+              ...filtered,
+            }),
+            ...(!fetchValues && {
               ...shoes,
               is_published: false,
-              handle: handle,
-              tags: tags,
+              relatives: relatives,
+            }),
+          };
+
+          let { data } = await eventShoes({
+            variables: {
+              ...(shoesVariables as any),
             },
           });
 
-          if (data?.addShoe) {
+          if (!fetchValues) {
+            const addedId = data as AddShoeMutation;
             for (const variant of variants) {
               await addVariant({
                 variables: {
@@ -117,8 +152,8 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
                   price: variant.price ? variant.price : values.price,
                   grams: shoes.grams,
                   available: variant.quantity > 0 ? true : false,
-                  parentId: data.addShoe,
-                  product_id: data.addShoe,
+                  parentId: addedId.addShoe,
+                  product_id: addedId.addShoe,
                 },
               });
             }
@@ -128,16 +163,22 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
                 await addImages({
                   variables: {
                     ...image,
-                    parentId: data.addShoe,
+                    parentId: addedId.addShoe,
                     position: index,
-                    product_id: data.addShoe,
+                    product_id: addedId.addShoe,
                   },
                 });
               }
             });
-          } */
 
-          resetForm({});
+            resetForm({});
+          } else {
+            const filteredImage = images.filter((item: Image, index) => {});
+
+            const filteredVariant = variants.filter(
+              (item: Variants, index) => {}
+            );
+          }
         } catch (err) {
           throw err;
         }
@@ -158,4 +199,4 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, data }) => {
     </Formik>
   );
 };
-export default ShoesForm;
+export default React.memo(ShoesForm);
