@@ -1,12 +1,12 @@
 mutation UpdateVariant(
-  $title: String!
-  $product_id: String!
+  $title: String
+  $product_id: String
   $sku: String
   $featured_image: String
-  $available: Boolean!
-  $grams: Float!
-  $quantity: Float!
-  $price: Float!
+  $available: Boolean
+  $grams: Float
+  $quantity: Float
+  $price: Float
   $compare_at_price: Float
   $variantId: String!
 ) {

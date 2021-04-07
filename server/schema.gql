@@ -59,9 +59,9 @@ type FieldError {
 
 input ImageInput {
   height: Float
-  position: Float!
-  product_id: String!
-  src: String!
+  position: Float
+  product_id: String
+  src: String
   width: Float
 }
 
@@ -208,15 +208,15 @@ type UserResponse {
 }
 
 input VariantInput {
-  available: Boolean!
+  available: Boolean
   compare_at_price: Float
   featured_image: String
-  grams: Float!
-  price: Float!
-  product_id: String!
-  quantity: Float!
+  grams: Float
+  price: Float
+  product_id: String
+  quantity: Float
   sku: String
-  title: String!
+  title: String
 }
 
 type Variants {

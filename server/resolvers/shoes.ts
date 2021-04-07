@@ -184,7 +184,7 @@ export class ShoesResolver {
     try {
       const addedShoe = new ShoesModel({ ...shoeInput });
       await addedShoe.save();
-      console.log(addedShoe._id);
+
       return addedShoe._id;
     } catch (err) {
       throw err;

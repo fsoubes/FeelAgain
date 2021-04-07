@@ -6,17 +6,23 @@ import {
   useAddImageMutation,
   useAddShoeMutation,
   useAddVariantMutation,
+  useUpdateImageMutation,
   useUpdateShoeMutation,
+  useUpdateVariantMutation,
 } from "../../generated/graphql";
 import GeneralForm from "./GeneralForm";
 import ImageForm from "./ImageForm";
 import VariantForm from "./VariantForm";
+import { compareObject } from "../../utils/compareObject";
+import { useAlert } from "react-alert";
 
 interface Image {
+  _id?: string;
   src: string;
 }
 
 interface Variants {
+  _id?: string;
   title: string;
   quantity: number;
   featured_image: string;
@@ -51,9 +57,14 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
   const [eventShoes] = fetchValues
     ? useUpdateShoeMutation()
     : useAddShoeMutation();
-  const [addImages] = useAddImageMutation();
+  const [eventImage] = fetchValues
+    ? useUpdateImageMutation()
+    : useAddImageMutation();
+  const [eventVariant] = fetchValues
+    ? useUpdateVariantMutation()
+    : useAddVariantMutation();
   const [addVariant] = useAddVariantMutation();
-
+  const alert = useAlert();
   const size = [35, 36, 37, 38, 39, 40, 41, 42];
 
   const intialValues: Initializer = {
@@ -70,7 +81,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     heel: 0,
     size: size,
     tags: ["Cuir"],
-    relatives: ["6061007551eeea01f597c852"],
+    relatives: [],
     images: new Array(4).fill({ src: "" }),
     variants: size.map((item) => {
       return {
@@ -111,24 +122,15 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
             ...initialShoes
           } = {
             ...(fetchValues as Initializer),
+            tags: values.initialtags,
           };
 
-          const filtered = Object.keys(shoes)
-            .filter((item: string) => {
-              return (
-                JSON.stringify((initialShoes as any)[item]) !==
-                JSON.stringify((shoes as any)[item])
-              );
-            })
-            .reduce((obj, key) => {
-              (obj as any)[key] = (shoes as any)[key];
-              return obj;
-            }, {});
+          const filteredShoes = compareObject(shoes, initialShoes);
 
-          const shoesVariables = {
+          const shoesVariable = {
             ...(fetchValues && {
               shoeId: fetchValues?._id as string,
-              ...filtered,
+              ...filteredShoes,
             }),
             ...(!fetchValues && {
               ...shoes,
@@ -137,54 +139,99 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
             }),
           };
 
-          let { data } = await eventShoes({
-            variables: {
-              ...(shoesVariables as any),
-            },
-          });
+          let { data } =
+            Object.keys(shoesVariable).length > 1
+              ? await eventShoes({
+                  variables: {
+                    ...(shoesVariable as any),
+                  },
+                })
+              : { data: null };
 
-          if (!fetchValues) {
-            const addedId = data as AddShoeMutation;
-            for (const variant of variants) {
+          const addedId = data as AddShoeMutation;
+
+          variants.forEach(async (variant, index) => {
+            const filteredVariant =
+              variant._id && fetchValues
+                ? compareObject(variant, initialVariants[index])
+                : {};
+
+            const variantVariable = {
+              ...(fetchValues &&
+                Object.keys(filteredVariant).length > 0 &&
+                variant._id && {
+                  variantId: variant._id as string,
+                  ...filteredVariant,
+                  available: variant.quantity > 0 ? true : false,
+                }),
+              ...(!fetchValues && {
+                ...variant,
+                price: variant.price ? variant.price : values.price,
+                grams: shoes.grams,
+                available: variant.quantity > 0 ? true : false,
+                parentId: addedId.addShoe,
+                product_id: addedId.addShoe,
+              }),
+            };
+
+            if (fetchValues && !variant._id) {
               await addVariant({
                 variables: {
                   ...variant,
                   price: variant.price ? variant.price : values.price,
                   grams: shoes.grams,
                   available: variant.quantity > 0 ? true : false,
-                  parentId: addedId.addShoe,
-                  product_id: addedId.addShoe,
+                  parentId: initialShoes._id,
+                  product_id: initialShoes._id,
                 },
               });
             }
 
-            images.forEach(async (image, index) => {
-              if (image.src) {
-                await addImages({
-                  variables: {
-                    ...image,
-                    parentId: addedId.addShoe,
-                    position: index,
-                    product_id: addedId.addShoe,
-                  },
-                });
-              }
-            });
+            if (Object.keys(variantVariable).length > 0) {
+              await eventVariant({
+                variables: {
+                  ...(variantVariable as any),
+                },
+              });
+            }
+          });
 
-            resetForm({});
-          } else {
-            const filteredImage = images.filter((item: Image, index) => {});
+          images.forEach(async (image, index) => {
+            const filteredImage = compareObject(image, initialImages[index]);
 
-            const filteredVariant = variants.filter(
-              (item: Variants, index) => {}
-            );
-          }
+            const imageVariable = {
+              ...(fetchValues &&
+                Object.keys(filteredImage).length > 0 && {
+                  imageId: image._id as string,
+                  ...filteredImage,
+                  position: index,
+                }),
+              ...(!fetchValues && {
+                ...image,
+                parentId: addedId.addShoe,
+                position: index,
+                product_id: addedId.addShoe,
+              }),
+            };
+
+            if (image.src && Object.keys(imageVariable).length > 0) {
+              await eventImage({
+                variables: {
+                  ...(imageVariable as any),
+                },
+              });
+            }
+          });
+
+          alert.success("It's ok now!");
+
+          if (!fetchValues) resetForm({});
         } catch (err) {
           throw err;
         }
       }}
     >
-      {({ isSubmitting, errors, values }) => (
+      {({ values }) => (
         <Form>
           {current === 0 && <GeneralForm {...values} />}
           {current === 1 && <ImageForm images={values.images} />}
@@ -192,7 +239,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
             <VariantForm size={values.size} variants={values.variants} />
           )}
           <Button type="submit" fullWidth variant="contained" color="primary">
-            Ajouter Produit
+            {fetchValues ? "Modifier Produit" : "Ajouter Produit"}
           </Button>
         </Form>
       )}

@@ -2,13 +2,13 @@ import { InputType, Field } from "type-graphql";
 
 @InputType()
 export class ImageInput {
-  @Field()
+  @Field({ nullable: true })
   position: Number;
 
-  @Field()
+  @Field({ nullable: true })
   src: String;
 
-  @Field()
+  @Field({ nullable: true })
   product_id: String;
 
   @Field({ nullable: true })

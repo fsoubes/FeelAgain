@@ -2,10 +2,10 @@ import { InputType, Field } from "type-graphql";
 
 @InputType()
 export class VariantInput {
-  @Field()
+  @Field({ nullable: true })
   title: String;
 
-  @Field()
+  @Field({ nullable: true })
   product_id: String;
 
   @Field({ nullable: true })
@@ -14,16 +14,16 @@ export class VariantInput {
   @Field({ nullable: true })
   featured_image: String;
 
-  @Field()
+  @Field({ nullable: true })
   available: Boolean;
 
-  @Field()
+  @Field({ nullable: true })
   grams: Number;
 
-  @Field()
+  @Field({ nullable: true })
   quantity: Number;
 
-  @Field()
+  @Field({ nullable: true })
   price: Number;
 
   @Field({ nullable: true })

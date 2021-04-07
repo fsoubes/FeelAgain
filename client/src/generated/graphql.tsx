@@ -310,22 +310,22 @@ export type ShoesInput = {
 };
 
 export type ImageInput = {
-  position: Scalars['Float'];
-  src: Scalars['String'];
-  product_id: Scalars['String'];
+  position?: Maybe<Scalars['Float']>;
+  src?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
   height?: Maybe<Scalars['Float']>;
 };
 
 export type VariantInput = {
-  title: Scalars['String'];
-  product_id: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
   sku?: Maybe<Scalars['String']>;
   featured_image?: Maybe<Scalars['String']>;
-  available: Scalars['Boolean'];
-  grams: Scalars['Float'];
-  quantity: Scalars['Float'];
-  price: Scalars['Float'];
+  available?: Maybe<Scalars['Boolean']>;
+  grams?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
   compare_at_price?: Maybe<Scalars['Float']>;
 };
 
@@ -440,11 +440,11 @@ export type AddArticleMutation = (
 
 export type AddImageMutationVariables = Exact<{
   parentId: Scalars['String'];
-  position: Scalars['Float'];
-  src: Scalars['String'];
+  position?: Maybe<Scalars['Float']>;
+  src?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
   height?: Maybe<Scalars['Float']>;
-  product_id: Scalars['String'];
+  product_id?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -473,14 +473,14 @@ export type AddShoeMutation = (
 );
 
 export type AddVariantMutationVariables = Exact<{
-  title: Scalars['String'];
-  product_id: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
   sku?: Maybe<Scalars['String']>;
   featured_image?: Maybe<Scalars['String']>;
-  available: Scalars['Boolean'];
-  grams: Scalars['Float'];
-  quantity: Scalars['Float'];
-  price: Scalars['Float'];
+  available?: Maybe<Scalars['Boolean']>;
+  grams?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
   compare_at_price?: Maybe<Scalars['Float']>;
   parentId: Scalars['String'];
 }>;
@@ -575,11 +575,11 @@ export type LoginMutation = (
 
 export type UpdateImageMutationVariables = Exact<{
   imageId: Scalars['String'];
-  position: Scalars['Float'];
-  src: Scalars['String'];
+  position?: Maybe<Scalars['Float']>;
+  src?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
   height?: Maybe<Scalars['Float']>;
-  product_id: Scalars['String'];
+  product_id?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -615,14 +615,14 @@ export type UpdateShoeMutation = (
 );
 
 export type UpdateVariantMutationVariables = Exact<{
-  title: Scalars['String'];
-  product_id: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
   sku?: Maybe<Scalars['String']>;
   featured_image?: Maybe<Scalars['String']>;
-  available: Scalars['Boolean'];
-  grams: Scalars['Float'];
-  quantity: Scalars['Float'];
-  price: Scalars['Float'];
+  available?: Maybe<Scalars['Boolean']>;
+  grams?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
   compare_at_price?: Maybe<Scalars['Float']>;
   variantId: Scalars['String'];
 }>;
@@ -932,7 +932,7 @@ export type AddArticleMutationHookResult = ReturnType<typeof useAddArticleMutati
 export type AddArticleMutationResult = Apollo.MutationResult<AddArticleMutation>;
 export type AddArticleMutationOptions = Apollo.BaseMutationOptions<AddArticleMutation, AddArticleMutationVariables>;
 export const AddImageDocument = gql`
-    mutation AddImage($parentId: String!, $position: Float!, $src: String!, $width: Float, $height: Float, $product_id: String!) {
+    mutation AddImage($parentId: String!, $position: Float, $src: String, $width: Float, $height: Float, $product_id: String) {
   addImage(
     parentId: $parentId
     image: {position: $position, src: $src, width: $width, height: $height, product_id: $product_id}
@@ -1011,7 +1011,7 @@ export type AddShoeMutationHookResult = ReturnType<typeof useAddShoeMutation>;
 export type AddShoeMutationResult = Apollo.MutationResult<AddShoeMutation>;
 export type AddShoeMutationOptions = Apollo.BaseMutationOptions<AddShoeMutation, AddShoeMutationVariables>;
 export const AddVariantDocument = gql`
-    mutation AddVariant($title: String!, $product_id: String!, $sku: String, $featured_image: String, $available: Boolean!, $grams: Float!, $quantity: Float!, $price: Float!, $compare_at_price: Float, $parentId: String!) {
+    mutation AddVariant($title: String, $product_id: String, $sku: String, $featured_image: String, $available: Boolean, $grams: Float, $quantity: Float, $price: Float, $compare_at_price: Float, $parentId: String!) {
   addVariant(
     parentId: $parentId
     variant: {title: $title, product_id: $product_id, sku: $sku, featured_image: $featured_image, available: $available, grams: $grams, quantity: $quantity, price: $price, compare_at_price: $compare_at_price}
@@ -1273,7 +1273,7 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const UpdateImageDocument = gql`
-    mutation UpdateImage($imageId: String!, $position: Float!, $src: String!, $width: Float, $height: Float, $product_id: String!) {
+    mutation UpdateImage($imageId: String!, $position: Float, $src: String, $width: Float, $height: Float, $product_id: String) {
   updateImage(
     imageId: $imageId
     image: {position: $position, src: $src, width: $width, height: $height, product_id: $product_id}
@@ -1358,7 +1358,7 @@ export type UpdateShoeMutationHookResult = ReturnType<typeof useUpdateShoeMutati
 export type UpdateShoeMutationResult = Apollo.MutationResult<UpdateShoeMutation>;
 export type UpdateShoeMutationOptions = Apollo.BaseMutationOptions<UpdateShoeMutation, UpdateShoeMutationVariables>;
 export const UpdateVariantDocument = gql`
-    mutation UpdateVariant($title: String!, $product_id: String!, $sku: String, $featured_image: String, $available: Boolean!, $grams: Float!, $quantity: Float!, $price: Float!, $compare_at_price: Float, $variantId: String!) {
+    mutation UpdateVariant($title: String, $product_id: String, $sku: String, $featured_image: String, $available: Boolean, $grams: Float, $quantity: Float, $price: Float, $compare_at_price: Float, $variantId: String!) {
   updateVariant(
     variantId: $variantId
     variant: {title: $title, product_id: $product_id, sku: $sku, featured_image: $featured_image, available: $available, grams: $grams, quantity: $quantity, price: $price, compare_at_price: $compare_at_price}

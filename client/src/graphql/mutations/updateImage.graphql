@@ -1,10 +1,10 @@
 mutation UpdateImage(
   $imageId: String!
-  $position: Float!
-  $src: String!
+  $position: Float
+  $src: String
   $width: Float
   $height: Float
-  $product_id: String!
+  $product_id: String
 ) {
   updateImage(
     imageId: $imageId

@@ -20,7 +20,7 @@ const Menu: React.FC<MenuProps> = ({ title }) => {
               </li>
             </Link>
           ) : (
-            <li key={index} className={styles.sidebar__item}>
+            <li key={index} className={styles.sidebar__topitem}>
               <span>{item.title}</span>
               <ul>
                 {item.sub.map((subtitle, index) => {

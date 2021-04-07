@@ -6,6 +6,17 @@ import { Footer } from "../src/components/Footer";
 import { useRouter } from "next/router";
 import Dashboard from "./dashboard";
 import UpwardScroll from "../src/components/ScrollUp/UpwardScroll";
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "../src/libs/AlertTemplate/index";
+
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.TOP_RIGHT,
+  timeout: 5000,
+  offset: "30px",
+  // you can also just use 'scale'
+  transition: transitions.SCALE,
+};
 
 function MyApp({ Component, pageProps }: any) {
   const router = useRouter();
@@ -24,17 +35,19 @@ function MyApp({ Component, pageProps }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container">
-        <ThemeProvider>
-          <UpwardScroll />
-          {router.pathname.startsWith("/dashboard/") ? (
-            <Dashboard>
+        <AlertProvider template={AlertTemplate} {...options}>
+          <ThemeProvider>
+            <UpwardScroll />
+            {router.pathname.startsWith("/dashboard/") ? (
+              <Dashboard>
+                <Component {...pageProps} />
+              </Dashboard>
+            ) : (
               <Component {...pageProps} />
-            </Dashboard>
-          ) : (
-            <Component {...pageProps} />
-          )}
-          <Footer></Footer>
-        </ThemeProvider>
+            )}
+            <Footer></Footer>
+          </ThemeProvider>
+        </AlertProvider>
       </div>
     </Fragment>
   );

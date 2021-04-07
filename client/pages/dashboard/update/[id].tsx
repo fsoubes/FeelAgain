@@ -17,6 +17,7 @@ interface UpdateProductProps {
 const UpdateProduct: NextPage<UpdateProductProps> = ({ id, content }) => {
   const { data } = useGetDashboardShoesQuery({
     variables: { shoesId: id },
+    fetchPolicy: "network-only",
   });
 
   const [shoes, setShoes] = useState<any>("");
