@@ -14,6 +14,7 @@ interface ShoesFormProps {
   size: number[];
   relatives: string[];
   variants: any[];
+  is_published: Boolean;
 }
 
 const GeneralForm: React.FC<ShoesFormProps> = ({
@@ -22,14 +23,15 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
   size,
   relatives,
   variants,
+  is_published,
 }) => {
   return (
     <Fragment>
       <section>
-        <div className={styles.dashboard__header}>
+        <div className={styles.header}>
           <h1 style={{ textAlign: "left" }}>Informations</h1>
         </div>
-        <div className={styles.dashboard__grid}>
+        <div className={styles.grid}>
           <Box
             marginBottom={2}
             marginTop={2}
@@ -94,13 +96,36 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
               className={styles.form__register_input}
             ></Field>
           </Box>
+          <Box
+            marginBottom={2}
+            marginTop={2}
+            display="flex"
+            flexDirection="column"
+          >
+            <label
+              style={{
+                display: "flex",
+                flexDirection: "row-reverse",
+                alignItems: "center",
+                cursor: "pointer",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Field
+                style={{ width: "inherit", cursor: "pointer" }}
+                type="checkbox"
+                name="is_published"
+              />
+              Rendre disponible ?
+            </label>
+          </Box>
         </div>
       </section>
       <section>
-        <div className={styles.dashboard__header}>
+        <div className={styles.header}>
           <h1 style={{ textAlign: "left" }}>Prix</h1>
         </div>
-        <div className={styles.dashboard__grid}>
+        <div className={styles.grid}>
           <Box
             marginBottom={2}
             marginTop={2}
@@ -137,8 +162,8 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
         </div>
       </section>
       <section>
-        <div className={styles.dashboard__header}>
-          <h1 style={{ textAlign: "left" }}>Couleur</h1>
+        <div className={styles.header}>
+          <h1 style={{ textAlign: "left" }}>Couleurs</h1>
         </div>
         <Box marginBottom={2} marginTop={2} display="flex">
           <FormArraySelect
@@ -150,10 +175,10 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
         </Box>
       </section>
       <section>
-        <div className={styles.dashboard__header}>
+        <div className={styles.header}>
           <h1 style={{ textAlign: "left" }}>Taille</h1>
         </div>
-        <div className={styles.dashboard__grid}>
+        <div className={styles.grid}>
           <Box marginTop={2} display="flex" flexDirection="column">
             <label className={styles.form__register_label}>
               Taille du talon (cm)
@@ -179,30 +204,15 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
         </Box>
       </section>
       <section>
-        <div className={styles.dashboard__header}>
-          <h1 style={{ textAlign: "left" }}>Étiquettes</h1>
+        <div className={styles.header}>
+          <h1 style={{ textAlign: "left" }}>Materiaux</h1>
         </div>
         <Box marginBottom={2} marginTop={2} display="flex">
-          <FormArray title="Étiquette" values={tags} param="tags"></FormArray>
+          <FormArray title="Matériaux" values={tags} param="tags"></FormArray>
         </Box>
       </section>
       <section>
-        <div className={styles.dashboard__header}>
-          <h1 style={{ textAlign: "left" }}>Relations</h1>
-          <SearchShoes>
-            <AddIcon />
-          </SearchShoes>
-        </div>
-        <Box marginBottom={2} marginTop={2} display="flex">
-          {relatives.length === 0 && (
-            <div>
-              Il n'y a pas de relation pour cette chaussure actuellement
-            </div>
-          )}
-        </Box>
-      </section>
-      <section>
-        <div className={styles.dashboard__header}>
+        <div className={styles.header}>
           <h1 style={{ textAlign: "left" }}>Description</h1>
         </div>
         <Box
@@ -211,9 +221,6 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
           display="flex"
           flexDirection="column"
         >
-          <label className={styles.form__register_label}>
-            Description Article
-          </label>
           <Field
             style={{ minHeight: "160px" }}
             as="textarea"
@@ -223,6 +230,28 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
             spellCheck="false"
             className={styles.form__register_input}
           ></Field>
+        </Box>
+      </section>
+      <section>
+        <div className={styles.header}>
+          <h1 style={{ textAlign: "left" }}>Relations</h1>
+          <SearchShoes>
+            <AddIcon />
+          </SearchShoes>
+        </div>
+        <Box marginBottom={2} marginTop={2} display="flex">
+          {relatives.length === 0 && (
+            <div
+              style={{
+                background: "white",
+                width: "100%",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
+            >
+              Il n'y a pas de relation pour cette chaussure actuellement
+            </div>
+          )}
         </Box>
       </section>
     </Fragment>

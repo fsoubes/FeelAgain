@@ -25,10 +25,10 @@ const VariantForm: React.FC<VariantFormProps> = ({ size, variants }) => {
           {initial && initial.length > 0 ? (
             initial.map((item, index) => (
               <section key={index}>
-                <div className={styles.dashboard__header}>
+                <div className={styles.header}>
                   <h1 style={{ textAlign: "left" }}>Variant {item.title}</h1>
                 </div>
-                <div className={styles.dashboard__grid}>
+                <div className={styles.grid}>
                   <Box
                     marginBottom={2}
                     marginTop={2}

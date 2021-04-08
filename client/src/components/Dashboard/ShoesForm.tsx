@@ -15,6 +15,7 @@ import ImageForm from "./ImageForm";
 import VariantForm from "./VariantForm";
 import { compareObject } from "../../utils/compareObject";
 import { useAlert } from "react-alert";
+import { useRouter } from "next/router";
 
 interface Image {
   _id?: string;
@@ -66,6 +67,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
   const [addVariant] = useAddVariantMutation();
   const alert = useAlert();
   const size = [35, 36, 37, 38, 39, 40, 41, 42];
+  const router = useRouter();
 
   const intialValues: Initializer = {
     _id: "",
@@ -134,7 +136,6 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
             }),
             ...(!fetchValues && {
               ...shoes,
-              is_published: false,
               relatives: relatives,
             }),
           };
@@ -148,84 +149,115 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
                 })
               : { data: null };
 
+          setTimeout(() => {
+            Object.keys(shoesVariable).length > 1
+              ? alert.success(
+                  `Chaussure ${shoes.title} ${
+                    fetchValues
+                      ? "correctement modifiée"
+                      : "correctement ajoutée"
+                  }!`
+                )
+              : alert.show("Veuillez remplir le formulaire!");
+          }, 500);
+
           const addedId = data as AddShoeMutation;
 
           variants.forEach(async (variant, index) => {
-            const filteredVariant =
-              variant._id && fetchValues
-                ? compareObject(variant, initialVariants[index])
-                : {};
+            try {
+              const filteredVariant =
+                variant._id && fetchValues
+                  ? compareObject(variant, initialVariants[index])
+                  : {};
 
-            const variantVariable = {
-              ...(fetchValues &&
-                Object.keys(filteredVariant).length > 0 &&
-                variant._id && {
-                  variantId: variant._id as string,
-                  ...filteredVariant,
-                  available: variant.quantity > 0 ? true : false,
-                }),
-              ...(!fetchValues && {
-                ...variant,
-                price: variant.price ? variant.price : values.price,
-                grams: shoes.grams,
-                available: variant.quantity > 0 ? true : false,
-                parentId: addedId.addShoe,
-                product_id: addedId.addShoe,
-              }),
-            };
-
-            if (fetchValues && !variant._id) {
-              await addVariant({
-                variables: {
+              const variantVariable = {
+                ...(fetchValues &&
+                  Object.keys(filteredVariant).length > 0 &&
+                  variant._id && {
+                    variantId: variant._id as string,
+                    ...filteredVariant,
+                    available: variant.quantity > 0 ? true : false,
+                  }),
+                ...(!fetchValues && {
                   ...variant,
                   price: variant.price ? variant.price : values.price,
                   grams: shoes.grams,
                   available: variant.quantity > 0 ? true : false,
-                  parentId: initialShoes._id,
-                  product_id: initialShoes._id,
-                },
-              });
-            }
+                  parentId: addedId.addShoe,
+                  product_id: addedId.addShoe,
+                }),
+              };
 
-            if (Object.keys(variantVariable).length > 0) {
-              await eventVariant({
-                variables: {
-                  ...(variantVariable as any),
-                },
-              });
+              if (fetchValues && !variant._id) {
+                await addVariant({
+                  variables: {
+                    ...variant,
+                    price: variant.price ? variant.price : values.price,
+                    grams: shoes.grams,
+                    available: variant.quantity > 0 ? true : false,
+                    parentId: initialShoes._id,
+                    product_id: initialShoes._id,
+                  },
+                });
+              }
+
+              if (Object.keys(variantVariable).length > 0) {
+                await eventVariant({
+                  variables: {
+                    ...(variantVariable as any),
+                  },
+                });
+              }
+              setTimeout(() => {
+                alert.success(`Pointure ${variant.title} ajoutée!`);
+              }, 500);
+            } catch (err) {
+              throw err;
             }
           });
 
           images.forEach(async (image, index) => {
-            const filteredImage = compareObject(image, initialImages[index]);
+            try {
+              const filteredImage =
+                image._id && fetchValues
+                  ? compareObject(image, initialImages[index])
+                  : {};
 
-            const imageVariable = {
-              ...(fetchValues &&
-                Object.keys(filteredImage).length > 0 && {
-                  imageId: image._id as string,
-                  ...filteredImage,
+              const imageVariable = {
+                ...(fetchValues &&
+                  Object.keys(filteredImage).length > 0 &&
+                  image._id && {
+                    imageId: image._id as string,
+                    ...filteredImage,
+                    position: index,
+                  }),
+                ...(!fetchValues && {
+                  ...image,
+                  parentId: addedId.addShoe,
                   position: index,
+                  product_id: addedId.addShoe,
                 }),
-              ...(!fetchValues && {
-                ...image,
-                parentId: addedId.addShoe,
-                position: index,
-                product_id: addedId.addShoe,
-              }),
-            };
+              };
 
-            if (image.src && Object.keys(imageVariable).length > 0) {
-              await eventImage({
-                variables: {
-                  ...(imageVariable as any),
-                },
-              });
+              if (image.src && Object.keys(imageVariable).length > 0) {
+                await eventImage({
+                  variables: {
+                    ...(imageVariable as any),
+                  },
+                });
+              }
+              setTimeout(() => {
+                alert.success(`Image ajoutée!`);
+              }, 500);
+            } catch (err) {
+              throw err;
             }
           });
 
-          alert.success("It's ok now!");
+          alert.success("Taks are done !");
 
           if (!fetchValues) resetForm({});
+          else router.push("/dashboard/update/latest");
         } catch (err) {
           throw err;
         }

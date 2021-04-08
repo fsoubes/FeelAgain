@@ -27,7 +27,7 @@ const FormArray: React.FC<FormArrayProps> = ({
     <FieldArray
       name={param}
       render={(arrayHelpers) => (
-        <div className={styles.dashboard__grid_small}>
+        <div className={styles.grid_small}>
           {values && values.length > 0 ? (
             values.map((__, index) => (
               <div key={index}>
@@ -39,7 +39,7 @@ const FormArray: React.FC<FormArrayProps> = ({
                   alignItems="flex-start"
                 >
                   <label className={styles.form__register_label}>{title}</label>
-                  <div style={{ display: "flex" }}>
+                  <div style={{ display: "flex", position: "relative" }}>
                     <Field
                       type="text"
                       name={`${param?.toLowerCase()}.${index}`}
@@ -48,46 +48,59 @@ const FormArray: React.FC<FormArrayProps> = ({
                       className={styles.form__register_input}
                       // autoFocus
                     ></Field>
-
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        try {
-                          arrayHelpers.remove(index);
-                          if (variants) {
-                            variants.splice(index, 1);
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column-reverse",
+                        justifyContent: "center",
+                        color: "black",
+                        paddingLeft: "5px",
+                        position: "absolute",
+                        right: "0",
+                        height: "100%",
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            arrayHelpers.remove(index);
+                            if (variants) {
+                              variants.splice(index, 1);
+                            }
+                          } catch (err) {
+                            throw err;
                           }
-                        } catch (err) {
-                          throw err;
-                        }
-                      }}
-                    >
-                      -
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(): void => {
-                        arrayHelpers.insert(
-                          index + 1,
-                          typeof values[0] === "number"
-                            ? (values[index] as number) + 1
-                            : ""
-                        );
+                        }}
+                      >
+                        -
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(): void => {
+                          arrayHelpers.insert(
+                            index + 1,
+                            typeof values[0] === "number"
+                              ? (values[index] as number) + 1
+                              : ""
+                          );
 
-                        if (variants && variants[index]) {
-                          const value = parseFloat(variants[index].title) + 1;
+                          if (variants && variants[index]) {
+                            const value = parseFloat(variants[index].title) + 1;
 
-                          variants.splice(index + 1, 0, {
-                            title: `${value}`.toString(),
-                            featured_image: "",
-                            quantity: 0,
-                            price: 0,
-                          });
-                        }
-                      }}
-                    >
-                      +
-                    </button>
+                            variants.splice(index + 1, 0, {
+                              title: `${value}`.toString(),
+                              featured_image: "",
+                              quantity: 0,
+                              price: 0,
+                            });
+                          }
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </Box>
               </div>

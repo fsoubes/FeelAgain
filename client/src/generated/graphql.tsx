@@ -716,7 +716,7 @@ export type GetDashboardShoesQuery = (
   { __typename?: 'Query' }
   & { getSingleShoe: (
     { __typename?: 'Shoes' }
-    & Pick<Shoes, '_id' | 'title' | 'body_html' | 'handle' | 'vendor' | 'product_type' | 'price' | 'tags' | 'size'>
+    & Pick<Shoes, '_id' | 'title' | 'body_html' | 'handle' | 'vendor' | 'product_type' | 'price' | 'tags' | 'size' | 'is_published'>
     & { images: Array<(
       { __typename?: 'Images' }
       & Pick<Images, '_id' | 'src'>
@@ -1551,6 +1551,7 @@ export const GetDashboardShoesDocument = gql`
     price
     tags
     size
+    is_published
     images {
       _id
       src

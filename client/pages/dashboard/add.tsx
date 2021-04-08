@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import ShoesForm from "../../src/components/Dashboard/ShoesForm";
 import SubTabs from "../../src/components/SubTabs/SubTabs";
 import styles from "../../src/styles/Dashboard.module.scss";
@@ -15,21 +15,19 @@ const AddProduct: NextPage<AddProps> = ({ content }) => {
   );
 
   return (
-    <div className={styles.dashboard__container}>
-      <div>
-        <div className={styles.dashboard__header}>
-          <h1 style={{ width: "100%" }}>Ajouter un produit</h1>
-        </div>
-        <SubTabs
-          title={["General", "Images", "Variants"]}
-          value={current}
-          change={setCurrent}
-          currentContent={currentContent}
-          path={"/dashboard/add"}
-        />
-        <ShoesForm current={current} />
+    <Fragment>
+      <div className={styles.header}>
+        <h1 style={{ width: "100%" }}>Ajouter un produit</h1>
       </div>
-    </div>
+      <SubTabs
+        title={["General", "Images", "Variants"]}
+        value={current}
+        change={setCurrent}
+        currentContent={currentContent}
+        path={"/dashboard/add"}
+      />
+      <ShoesForm current={current} />
+    </Fragment>
   );
 };
 

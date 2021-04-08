@@ -20,7 +20,7 @@ const FormArraySelect: React.FC<FormArraySelectProps> = ({
     <FieldArray
       name={param}
       render={(arrayHelpers) => (
-        <div className={styles.dashboard__grid}>
+        <div className={styles.grid}>
           {values && values.length > 0 ? (
             values.map((__, index) => (
               <div key={index}>
@@ -32,7 +32,13 @@ const FormArraySelect: React.FC<FormArraySelectProps> = ({
                   alignItems="flex-start"
                 >
                   <label className={styles.form__register_label}>{title}</label>
-                  <div style={{ display: "flex", width: "100%" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      position: "relative",
+                    }}
+                  >
                     <Field
                       as="select"
                       name={`${param?.toLowerCase()}.${index}`}
@@ -45,7 +51,20 @@ const FormArraySelect: React.FC<FormArraySelectProps> = ({
                     </Field>
 
                     {index + 1 === values.length && (
-                      <Fragment>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          flexDirection: "column-reverse",
+                          justifyContent: "center",
+                          color: "black",
+                          paddingLeft: "5px",
+                          position: "absolute",
+                          right: "15px",
+                          height: "100%",
+                          cursor: "pointer",
+                        }}
+                      >
                         <button
                           type="button"
                           onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
@@ -58,7 +77,7 @@ const FormArraySelect: React.FC<FormArraySelectProps> = ({
                         >
                           +
                         </button>
-                      </Fragment>
+                      </div>
                     )}
                   </div>
                 </Box>

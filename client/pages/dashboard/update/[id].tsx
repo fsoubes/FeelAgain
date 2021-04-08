@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { NextPage } from "next";
 import ShoesForm from "../../../src/components/Dashboard/ShoesForm";
 import SubTabs from "../../../src/components/SubTabs/SubTabs";
@@ -64,21 +64,19 @@ const UpdateProduct: NextPage<UpdateProductProps> = ({ id, content }) => {
   );
 
   return (
-    <div className={styles.dashboard__container}>
-      <div>
-        <div className={styles.dashboard__header}>
-          <h1 style={{ width: "100%" }}>Modifier un produit</h1>
-        </div>
-        <SubTabs
-          title={["General", "Images", "Variants"]}
-          value={current}
-          change={setCurrent}
-          currentContent={currentContent}
-          path={`/dashboard/update/${id}`}
-        />
-        {shoes && <ShoesForm current={current} fetchValues={shoes} />}
+    <Fragment>
+      <div className={styles.header}>
+        <h1 style={{ width: "100%" }}>Modifier un produit</h1>
       </div>
-    </div>
+      <SubTabs
+        title={["General", "Images", "Variants"]}
+        value={current}
+        change={setCurrent}
+        currentContent={currentContent}
+        path={`/dashboard/update/${id}`}
+      />
+      {shoes && <ShoesForm current={current} fetchValues={shoes} />}
+    </Fragment>
   );
 };
 

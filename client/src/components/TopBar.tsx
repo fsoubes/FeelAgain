@@ -1,5 +1,5 @@
-import React, { ReactElement, Fragment, useState } from "react";
 import { useApolloClient } from "@apollo/client";
+import React, { ReactElement, Fragment, useState, useEffect } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -38,6 +38,17 @@ export const TopBar = (): ReactElement => {
   });
 
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.documentElement.style.overflow = "scroll";
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
 
   const menuStyling = !isTabletorMobile
     ? {
@@ -137,7 +148,7 @@ export const TopBar = (): ReactElement => {
                 <Basket total={0} />
               </Button>
             </Link>
-            <Button onClick={() => setOpen(!open)}>
+            <Button style={{ color: "white" }} onClick={() => setOpen(!open)}>
               <MenuIcon />
             </Button>
           </div>

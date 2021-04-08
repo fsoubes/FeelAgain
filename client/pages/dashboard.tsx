@@ -4,6 +4,7 @@ import { withApollo } from "../src/utils/withApollo";
 import Menu from "../src/components/Admin/Menu";
 import { useIsAdmin } from "../src/utils/useIsAdmin";
 import { useRouter } from "next/router";
+import styles from "../src/styles/Dashboard.module.scss";
 
 interface DashboardProps {}
 
@@ -18,7 +19,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
     <Layout variant={"main-center"}>
       <div className="container__dashboard">
         <Menu title={"Menu"} />
-        {children}
+        <div className={styles.container}>{children}</div>
       </div>
     </Layout>
   );

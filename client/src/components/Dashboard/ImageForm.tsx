@@ -17,10 +17,10 @@ const ImageForm: React.FC<ImageFormProps> = ({ images }) => {
       name="images"
       render={(arrayHelpers) => (
         <section>
-          <div className={styles.dashboard__header}>
+          <div className={styles.header}>
             <h1 style={{ textAlign: "left" }}>Images</h1>
           </div>
-          <div className={styles.dashboard__grid}>
+          <div className={styles.flex_image}>
             {images && images.length > 0 ? (
               images.map((item, index) => (
                 <Box
@@ -40,8 +40,15 @@ const ImageForm: React.FC<ImageFormProps> = ({ images }) => {
                     autoCorrect="off"
                     className={styles.form__register_input}
                   ></Field>
-                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <img style={{ maxWidth: "150px" }} src={item.src}></img>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      background: "white",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    <img src={item.src}></img>
                   </div>
                 </Box>
               ))

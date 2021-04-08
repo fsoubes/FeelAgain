@@ -6,6 +6,8 @@ interface SearchItemProps {
   image: string;
   price?: number;
   id: string;
+  handleClick?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  ref?: HTMLLIElement | null;
 }
 
 const SearchItem: React.FC<SearchItemProps> = ({
@@ -13,10 +15,12 @@ const SearchItem: React.FC<SearchItemProps> = ({
   image,
   price = 50,
   id,
+  handleClick,
+  ref,
 }) => {
   return (
     <Link href={`/products/${id}`}>
-      <li>
+      <li onClick={(e) => console.log("hello")}>
         <div>
           <img src={image} alt=""></img>
         </div>
