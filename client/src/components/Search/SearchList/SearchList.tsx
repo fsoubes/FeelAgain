@@ -5,9 +5,12 @@ import SearchItem from "./SearchItem/SearchItem";
 
 interface SearchListProps {
   data: Shoes[];
+  setSelectedId?:
+    | React.Dispatch<React.SetStateAction<string[] | null>>
+    | undefined;
 }
 
-const SearchList: React.FC<SearchListProps> = ({ data }) => {
+const SearchList: React.FC<SearchListProps> = ({ data, setSelectedId }) => {
   const refs = useRef<Array<HTMLButtonElement | null>>([]);
   useEffect(() => {
     refs.current = refs.current.slice(0, data.length);
@@ -15,22 +18,24 @@ const SearchList: React.FC<SearchListProps> = ({ data }) => {
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     e.preventDefault();
-    const selectedId = e.currentTarget.id;
-    const CurrentselectedRef = refs.current.filter(
-      (item) => item?.id.toString() === selectedId
-    );
 
-    if (CurrentselectedRef[0]?.classList.length !== 1) {
-      CurrentselectedRef[0]?.classList.add("selected");
-    } else {
-      CurrentselectedRef[0].classList.remove("selected");
+    if (setSelectedId) {
+      const selectedId = e.currentTarget.id;
+      const CurrentselectedRef = refs.current.filter(
+        (item) => item?.id.toString() === selectedId
+      );
+
+      if (CurrentselectedRef[0]?.classList.length !== 1) {
+        CurrentselectedRef[0]?.classList.add("selected");
+      } else {
+        CurrentselectedRef[0].classList.remove("selected");
+      }
+
+      const selected = refs.current
+        .filter((item) => item?.className === "selected")
+        .map((item) => item?.id);
+      setSelectedId(selected as string[]);
     }
-
-    const selected = refs.current
-      .filter((item) => item?.className === "selected")
-      .map((item) => item?.id);
-
-    console.log(selected);
   };
 
   const newSearch = data.map((item, index) => {

@@ -7,23 +7,16 @@ import FormArraySelect from "../Form/FormArraySelect";
 import styles from "../../styles/Dashboard.module.scss";
 import AddIcon from "@material-ui/icons/Add";
 import SearchShoes from "../Search/Search";
+import { GeneralFormProps } from "../../types/dashboard";
 
-interface ShoesFormProps {
-  tags: string[];
-  colors: string[];
-  size: number[];
-  relatives: string[];
-  variants: any[];
-  is_published: Boolean;
-}
-
-const GeneralForm: React.FC<ShoesFormProps> = ({
+const GeneralForm: React.FC<GeneralFormProps> = ({
   tags,
   colors,
   size,
   relatives,
   variants,
-  is_published,
+  setRelation,
+  children,
 }) => {
   return (
     <Fragment>
@@ -235,23 +228,12 @@ const GeneralForm: React.FC<ShoesFormProps> = ({
       <section>
         <div className={styles.header}>
           <h1 style={{ textAlign: "left" }}>Relations</h1>
-          <SearchShoes>
+          <SearchShoes isAdding={true} setRelation={setRelation}>
             <AddIcon />
           </SearchShoes>
         </div>
         <Box marginBottom={2} marginTop={2} display="flex">
-          {relatives.length === 0 && (
-            <div
-              style={{
-                background: "white",
-                width: "100%",
-                padding: "5px",
-                borderRadius: "5px",
-              }}
-            >
-              Il n'y a pas de relation pour cette chaussure actuellement
-            </div>
-          )}
+          {children}
         </Box>
       </section>
     </Fragment>

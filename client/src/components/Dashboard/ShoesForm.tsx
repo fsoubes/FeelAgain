@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import {
   AddShoeMutation,
+  Shoes,
   useAddImageMutation,
   useAddShoeMutation,
   useAddVariantMutation,
@@ -16,43 +17,9 @@ import VariantForm from "./VariantForm";
 import { compareObject } from "../../utils/compareObject";
 import { useAlert } from "react-alert";
 import { useRouter } from "next/router";
-
-interface Image {
-  _id?: string;
-  src: string;
-}
-
-interface Variants {
-  _id?: string;
-  title: string;
-  quantity: number;
-  featured_image: string;
-  price: number;
-}
-interface Initializer {
-  _id: string;
-  title: string;
-  vendor: string;
-  product_type: string;
-  body_html: string;
-  grams: number;
-  price: number;
-  compare_at_price: string | number;
-  colors: string[];
-  heel: number;
-  size: number[];
-  tags: string[];
-  initialtags: string[];
-  relatives: string[];
-  images: Image[];
-  variants: Variants[];
-  is_published: Boolean;
-}
-
-interface ShoesFormProps {
-  current: number;
-  fetchValues?: Initializer;
-}
+import { Initializer, Relation, ShoesFormProps } from "../../types/dashboard";
+import { intialValues } from "../../constants/dashboard";
+import ProductListDash from "./Product/ProductList";
 
 const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
   const [eventShoes] = fetchValues
@@ -66,34 +33,25 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     : useAddVariantMutation();
   const [addVariant] = useAddVariantMutation();
   const alert = useAlert();
-  const size = [35, 36, 37, 38, 39, 40, 41, 42];
   const router = useRouter();
+  const [relations, setRelations] = useState<Relation[]>([]);
 
-  const intialValues: Initializer = {
-    _id: "",
-    initialtags: [""],
-    title: "",
-    vendor: "",
-    product_type: "",
-    body_html: "",
-    grams: 1,
-    price: 1,
-    compare_at_price: "",
-    colors: ["Blanc"],
-    heel: 0,
-    size: size,
-    tags: ["Cuir"],
-    relatives: [],
-    images: new Array(4).fill({ src: "" }),
-    variants: size.map((item) => {
-      return {
-        title: item.toString(),
-        quantity: 0,
-        featured_image: "",
-        price: 0,
-      };
-    }),
-    is_published: false,
+  useEffect(() => {
+    if (fetchValues) {
+      setRelations(fetchValues.relatives);
+    }
+  }, [fetchValues]);
+
+  const handleRemove = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string
+  ): Promise<void> => {
+    try {
+      setRelations(relations.filter((item) => item._id !== id));
+      e.stopPropagation();
+    } catch (err) {
+      throw err;
+    }
   };
 
   return (
@@ -265,7 +223,39 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     >
       {({ values }) => (
         <Form>
-          {current === 0 && <GeneralForm {...values} />}
+          {current === 0 && (
+            <GeneralForm {...values} setRelation={setRelations}>
+              <Fragment>
+                {fetchValues?.relatives.length === 0 && relations.length === 0 && (
+                  <div
+                    style={{
+                      width: "100%",
+                      padding: "5px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Il n'y a pas de relation pour cette chaussure actuellement
+                  </div>
+                )}
+                {relations.length > 0 && (
+                  <div
+                    style={{
+                      width: "100%",
+                      padding: "5px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {fetchValues && fetchValues.relatives?.length > 0 && (
+                      <ProductListDash
+                        shoes={relations as Shoes[]}
+                        remove={handleRemove}
+                      ></ProductListDash>
+                    )}
+                  </div>
+                )}
+              </Fragment>
+            </GeneralForm>
+          )}
           {current === 1 && <ImageForm images={values.images} />}
           {current === 2 && (
             <VariantForm size={values.size} variants={values.variants} />

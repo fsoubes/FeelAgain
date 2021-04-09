@@ -41,7 +41,7 @@ const Latest: NextPage<LatestProps> = ({ page }) => {
       await remove({
         variables: { shoeId: id },
       });
-      e.stopPropagation();
+      e?.stopPropagation();
     } catch (err) {
       throw err;
     }

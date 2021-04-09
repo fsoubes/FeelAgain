@@ -20,6 +20,8 @@ query GetDashboardShoes($shoesId: ObjectId!) {
     relatives {
       _id
       title
+      price
+      vendor
       images {
         _id
         src

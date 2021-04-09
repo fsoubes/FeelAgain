@@ -20,7 +20,7 @@ const SearchItem: React.FC<SearchItemProps> = ({
 }) => {
   return (
     <Link href={`/products/${id}`}>
-      <li onClick={(e) => console.log("hello")}>
+      <li>
         <div>
           <img src={image} alt=""></img>
         </div>

@@ -725,7 +725,7 @@ export type GetDashboardShoesQuery = (
       & VariantFragmentFragment
     )>, relatives: Array<(
       { __typename?: 'Shoes' }
-      & Pick<Shoes, '_id' | 'title'>
+      & Pick<Shoes, '_id' | 'title' | 'price' | 'vendor'>
       & { images: Array<(
         { __typename?: 'Images' }
         & Pick<Images, '_id' | 'src'>
@@ -1562,6 +1562,8 @@ export const GetDashboardShoesDocument = gql`
     relatives {
       _id
       title
+      price
+      vendor
       images {
         _id
         src
