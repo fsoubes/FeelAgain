@@ -69,7 +69,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
             "-"
           )}-${values.colors.join("-")}`;
 
-          let { variants, images, relatives, ...shoes } = {
+          let { variants, images, ...shoes } = {
             ...values,
             tags: tags,
             handle: handle,
@@ -78,7 +78,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
           let {
             variants: initialVariants,
             images: initialImages,
-            relatives: initialRelatives,
+            // relatives: initialRelatives,
             ...initialShoes
           } = {
             ...(fetchValues as Initializer),
@@ -87,6 +87,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
 
           const filteredShoes = compareObject(shoes, initialShoes);
 
+          console.log(shoes, initialShoes);
           const shoesVariable = {
             ...(fetchValues && {
               shoeId: fetchValues?._id as string,
@@ -94,7 +95,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
             }),
             ...(!fetchValues && {
               ...shoes,
-              relatives: relatives,
+              relatives: relations.map((item) => item._id),
             }),
           };
 
@@ -245,7 +246,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
                       borderRadius: "5px",
                     }}
                   >
-                    {fetchValues && fetchValues.relatives?.length > 0 && (
+                    {relations && relations.length > 0 && (
                       <ProductListDash
                         shoes={relations as Shoes[]}
                         remove={handleRemove}

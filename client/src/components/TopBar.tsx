@@ -39,16 +39,16 @@ export const TopBar = (): ReactElement => {
 
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (open) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    }
-    return () => {
-      document.documentElement.style.overflow = "scroll";
-      document.body.style.overflow = "unset";
-    };
-  }, [open]);
+  // useEffect(() => {
+  //   if (open) {
+  //     document.documentElement.style.overflow = "hidden";
+  //     document.body.style.overflow = "hidden";
+  //   }
+  //   return () => {
+  //     document.documentElement.style.overflow = "scroll";
+  //     document.body.style.overflow = "unset";
+  //   };
+  // }, [open]);
 
   const menuStyling = !isTabletorMobile
     ? {

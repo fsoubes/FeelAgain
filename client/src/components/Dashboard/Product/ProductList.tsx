@@ -12,10 +12,12 @@ interface ProductListProps {
       images: Array<{ __typename?: "Images" } & ImageFragmentFragment>;
     } & ShoesBrowseFragmentFragment
   >;
-  remove: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: string
-  ) => Promise<void>;
+  remove?:
+    | ((
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        id: string
+      ) => Promise<void>)
+    | undefined;
 }
 
 const ProductListDash: React.FC<ProductListProps> = ({ shoes, remove }) => {
@@ -34,4 +36,4 @@ const ProductListDash: React.FC<ProductListProps> = ({ shoes, remove }) => {
 
   return <div className={styles.container}>{products}</div>;
 };
-export default ProductListDash;
+export default React.memo(ProductListDash);

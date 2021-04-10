@@ -9,10 +9,12 @@ interface ProductItemProps {
   title: string;
   price: number;
   id: string;
-  remove: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: string
-  ) => Promise<void>;
+  remove?:
+    | ((
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        id: string
+      ) => Promise<void>)
+    | undefined;
 }
 
 const ProductItemDash: React.FC<ProductItemProps> = ({
@@ -27,9 +29,13 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
     <div>
       <Tilt style={{ cursor: "pointer" }}>
         <div style={{ backgroundImage: `url( ${src} )` }}>
-          <Button disableRipple onClick={(event) => remove(event, id)}>
-            <CancelIcon />
+          <Button
+            disableRipple
+            onClick={(event) => (remove ? remove(event, id) : null)}
+          >
+            {remove && <CancelIcon />}
           </Button>
+
           <Button
             disableRipple
             onClick={(event) => {
@@ -37,7 +43,7 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
               event.stopPropagation();
             }}
           >
-            Modifier
+            {remove ? "Modifier" : "Aperçu"}
           </Button>
         </div>
       </Tilt>
