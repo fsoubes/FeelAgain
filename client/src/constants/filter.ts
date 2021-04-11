@@ -1,4 +1,42 @@
-const hex = ["#fff", "#ff0000", "#000"];
+const hex = [
+  "#fff",
+  "#cd7f32",
+  "#fad6a5",
+  "#d4af37",
+  "#b5b5bd",
+  "#f2e7bf",
+  "#0000ff",
+  "#6d071a",
+  "#d2a579",
+  "#fce903",
+  "#6e4c4b",
+  "#000",
+  "#fc9303",
+  "#fd6c9e",
+  "#cc0000",
+  "#49b675",
+];
+
+// alt +  shift  +l
+// ctrl + ""
+const myCol = [
+  "Blanc",
+  "Bronze",
+  "Champagne",
+  "Or",
+  "Argenté",
+  "Beige",
+  "Bleu",
+  "Bordeaux",
+  "Camel",
+  "Jaune",
+  "Marron",
+  "Noir",
+  "Orange",
+  "Rose",
+  "Rouge",
+  "Vert",
+];
 
 const mat = [
   "Cuir",
@@ -62,28 +100,7 @@ const sizes = [...(new Array(10) as Size[])].reduce(
   [{ checked: false, size: 35 }] as Size[]
 );
 
-// alt +  shift  +l
-// ctrl + ""
-const myCol = [
-  "Blanc",
-  "Bronze",
-  "Champagne",
-  "Or",
-  "Argenté",
-  "Beige",
-  "Bleu",
-  "Bordeaux",
-  "Camel",
-  "Jaune",
-  "Marron",
-  "Noir",
-  "Orange",
-  "Rose",
-  "Rouge",
-  "Vert",
-];
-
-const colors = ["Blanc", "Rouge", "Noir"].reduce((acc, item, index) => {
+const colors = myCol.reduce((acc, item, index) => {
   acc.push({ checked: false, color: item, hex: hex[index] });
   return acc;
 }, [] as Color[]);

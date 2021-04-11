@@ -123,7 +123,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
           <Typography className={classes.filter_title}>PAR COULEUR</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
-          <FilterList data={filter?.colors} />
+          <FilterList data={filter?.colors} color={true} update={dispatch} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -183,7 +183,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
           <Typography className={classes.filter_title}>PAR POINTURE</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
-          <FilterList data={filter?.sizes} />
+          <FilterList data={filter?.sizes} update={dispatch} />
         </AccordionDetails>
       </Accordion>
     </div>

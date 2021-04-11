@@ -19,6 +19,7 @@ export type UpdateFilterAction = {
   index?: number;
   field?: string;
   values?: FilterList;
+  value?: string | number;
 };
 
 export interface FilterList {

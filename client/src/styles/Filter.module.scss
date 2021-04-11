@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  padding: 0 12px;
+  padding: 0px 11px;
   margin-bottom: 1rem;
   > div {
     padding: 5px;
@@ -16,4 +16,12 @@
 
 .checked {
   border-bottom: 2px solid black;
+}
+
+.color {
+  border: 1px solid #ececec;
+  width: 20px;
+  height: 20px;
+  display: block;
+  position: relative;
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Layout } from "../src/components/Layout";
 import { useGetShoesQuery } from "../src/generated/graphql";
 import { withApollo } from "../src/utils/withApollo";
-import ProductsList from "../src/components/Products/ProductsList";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import Pagination from "../src/components/Pagination/Pagination";
@@ -84,7 +83,6 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
           <div style={{ display: "flex" }}>
             {isFilter && <CustomAccordion />}
             <ProductListDash shoes={data.getFilterShoes?.edges} />
-            {/*  <ProductsList shoes={data.getFilterShoes?.edges} /> */}
           </div>
           <Pagination
             refetch={refetch}

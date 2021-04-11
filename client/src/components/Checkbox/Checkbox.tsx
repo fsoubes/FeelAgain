@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       flexWrap: "wrap",
-
+      marginBottom: " 1rem",
       width: "100%",
     },
     formControl: {
@@ -23,9 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       width: "100%",
       alignItems: "center",
-      "&:hover": {
-        scale: "1.05",
-        fontWeight: "900",
+      "& span": {
+        fontSize: "14px",
+        "&:hover": {
+          color: "black",
+          fontWeight: "bold",
+        },
       },
     },
     checkBox: {
