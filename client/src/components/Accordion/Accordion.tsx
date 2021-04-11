@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import Typography from "@material-ui/core/Typography";
@@ -7,6 +7,9 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import { Button } from "@material-ui/core";
 import CheckboxForm from "../Checkbox/Checkbox";
+import { initialValues } from "../../constants/filter";
+import { filterReducer } from "../../utils/updateFilter";
+import FilterList from "../Filter/FilterList";
 
 interface CustomAccordionProps {
   isFiltering?: Boolean;
@@ -58,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
         color: "white",
       },
     },
+    details: {
+      padding: 0,
+    },
   })
 );
 
@@ -72,9 +78,16 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const [filter, dispatch] = useReducer(filterReducer, initialValues);
+
   return (
     <div className={classes.root}>
-      <Button className={classes.reset}>Réinitialiser</Button>
+      <Button
+        className={classes.reset}
+        onClick={() => dispatch({ type: "reset", values: initialValues })}
+      >
+        Réinitialiser
+      </Button>
       <Accordion
         className={classes.accordion}
         expanded={expanded === "panel1"}
@@ -87,8 +100,14 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
         >
           <Typography className={classes.filter_title}>PAR PRODUIT</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <CheckboxForm />
+        <AccordionDetails className={classes.details}>
+          {filter.categories && (
+            <CheckboxForm
+              state={filter.categories}
+              update={dispatch}
+              field={"categories"}
+            />
+          )}
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -103,12 +122,8 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
         >
           <Typography className={classes.filter_title}>PAR COULEUR</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Donec placerat, lectus sed mattis semper, neque lectus feugiat
-            lectus, varius pulvinar diam eros in elit. Pellentesque convallis
-            laoreet laoreet.
-          </Typography>
+        <AccordionDetails className={classes.details}>
+          <FilterList data={filter?.colors} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -123,12 +138,14 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
         >
           <Typography className={classes.filter_title}>PAR MATIERE</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Donec placerat, lectus sed mattis semper, neque lectus feugiat
-            lectus, varius pulvinar diam eros in elit. Pellentesque convallis
-            laoreet laoreet.
-          </Typography>
+        <AccordionDetails className={classes.details}>
+          {filter.materials && (
+            <CheckboxForm
+              state={filter.materials}
+              update={dispatch}
+              field={"materials"}
+            />
+          )}
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -143,11 +160,14 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
         >
           <Typography className={classes.filter_title}>PAR TALON</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer
-            sit amet egestas eros, vitae egestas augue. Duis vel est augue.
-          </Typography>
+        <AccordionDetails className={classes.details}>
+          {filter.heels && (
+            <CheckboxForm
+              state={filter.heels}
+              update={dispatch}
+              field={"heels"}
+            />
+          )}
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -162,11 +182,8 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
         >
           <Typography className={classes.filter_title}>PAR POINTURE</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer
-            sit amet egestas eros, vitae egestas augue. Duis vel est augue.
-          </Typography>
+        <AccordionDetails className={classes.details}>
+          <FilterList data={filter?.sizes} />
         </AccordionDetails>
       </Accordion>
     </div>
