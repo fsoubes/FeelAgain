@@ -1,14 +1,32 @@
 import React from "react";
 import styles from "../../styles/Sort.module.scss";
 
-interface SortProps {
-  options: String[];
+interface sortoptions {
+  id_asc: string;
+  id_desc: string;
+  price_asc: string;
+  price_desc: string;
+  title_asc: string;
+  title_desc: string;
 }
 
-const Sort: React.FC<SortProps> = ({ options }) => {
-  const listOptions = options.map((item, index) => (
-    <li className={styles.item} key={index}>
-      {item}
+interface SortProps {
+  isSort: String | null;
+  options: sortoptions;
+  setSort: React.Dispatch<React.SetStateAction<String | null>>;
+  closing: React.Dispatch<React.SetStateAction<Boolean>>;
+}
+
+const Sort: React.FC<SortProps> = ({ options, setSort, closing, isSort }) => {
+  const handleClick = (item: any) => {
+    setSort(item);
+    closing(false);
+  };
+
+  const listOptions = Object.keys(options).map((item, index) => (
+    <li className={styles.item} key={index} onClick={() => handleClick(item)}>
+      {(options as any)[item]}
+      {item === isSort ? ` ✓` : ""}
     </li>
   ));
 

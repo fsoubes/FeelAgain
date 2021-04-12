@@ -40,24 +40,24 @@ const myCol = [
 
 const mat = [
   "Cuir",
-  "Cuir imprimé python",
-  "Cuir métallisé",
-  "Cuir verni",
-  "Cuir+glitter",
-  "Cuir+métal",
-  "Cuir+nubuck",
+  "Cuir Imprimé Python",
+  "Cuir Métallisé",
+  "Cuir Verni",
+  "Cuir+Glitter",
+  "Cuir+Métal",
+  "Cuir+Nubuck",
   "Glitter",
-  "Glitter fin",
+  "Glitter Fin",
   "Nubuck",
-  "Nubuck façon caïman",
-  "Nubuck façon python",
-  "Nubuck imprimé",
-  "Nubuck métallisé",
-  "Nubuck métallisé+glitter",
-  "Nubuck python+glitter",
-  "Nubuck+glitter",
+  "Nubuck Façon Caïman",
+  "Nubuck Façon Python",
+  "Nubuck Imprimé",
+  "Nubuck Métallisé",
+  "Nubuck Métallisé+Glitter",
+  "Nubuck Python+Glitter",
+  "Nubuck+Glitter",
   "Suède",
-  "Suède+glitter",
+  "Suède+Glitter",
 ];
 
 const heel = [
@@ -75,6 +75,25 @@ const heel = [
   "8 cm",
   "8.5 cm",
   "9 cm",
+];
+
+const list = [
+  "Blanc",
+  "Bronze",
+  "Champagne",
+  "Or",
+  "Argenté",
+  "Beige",
+  "Bleu",
+  "Bordeaux",
+  "Camel",
+  "Jaune",
+  "Marron",
+  "Noir",
+  "Orange",
+  "Rose",
+  "Rouge",
+  "Vert",
 ];
 
 interface Color {
@@ -122,10 +141,12 @@ const categories = {
   Bottines: false,
   Derbies: false,
   Escarpins: false,
-  Mulles: false,
+  Mules: false,
   Mocassins: false,
   Sandales: false,
 };
+
+const variables = { size: [], tags: [] };
 
 export const initialValues = {
   sizes,
@@ -133,4 +154,5 @@ export const initialValues = {
   heels,
   materials,
   colors,
+  variables,
 };

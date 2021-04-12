@@ -68,6 +68,7 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
                 type: "updateBox",
                 field: field,
                 key: event.target.name,
+                checked: event.target.checked as boolean,
               })
             }
             name={item}

@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect, useCallback } from "react";
 import { Button } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import {
@@ -42,7 +42,22 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     }
   }, [fetchValues]);
 
-  const handleRemove = async (
+  const handleRemove = useCallback(
+    (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+      id: string
+    ): Promise<void> => {
+      try {
+        setRelations(relations.filter((item) => item._id !== id));
+        e.stopPropagation();
+      } catch (err) {
+        throw err;
+      }
+    },
+    []
+  );
+
+  /* const handleRemove = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string
   ): Promise<void> => {
@@ -52,7 +67,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     } catch (err) {
       throw err;
     }
-  };
+  }; */
 
   return (
     <Formik

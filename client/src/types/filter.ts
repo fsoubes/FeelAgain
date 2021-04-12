@@ -8,6 +8,12 @@ export interface Color {
   color: string;
 }
 
+export interface Request {
+  tags?: string[];
+  size?: number[];
+  product?: String;
+}
+
 export interface Size {
   size: number;
   checked: boolean;
@@ -20,6 +26,7 @@ export type UpdateFilterAction = {
   field?: string;
   values?: FilterList;
   value?: string | number;
+  checked?: boolean;
 };
 
 export interface FilterList {
@@ -28,4 +35,5 @@ export interface FilterList {
   materials?: ValueProps;
   colors?: Color[];
   sizes?: Size[];
+  variables?: Request;
 }

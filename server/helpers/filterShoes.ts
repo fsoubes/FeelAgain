@@ -28,6 +28,7 @@ function getFilterOptions<T extends object>(filterOptions: filterType): T {
   let tagsFilter = {
     ...(filterOptions.tags &&
       filterOptions.tags.length > 0 && {
+        // $in: filterOptions.tags,
         $all: filterOptions.tags,
       }),
   };

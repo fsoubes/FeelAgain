@@ -7,6 +7,7 @@ import ProductItem from "./Item/ProductItem";
 import styles from "../../../styles/Shop.module.scss";
 
 interface ProductListProps {
+  path?: String;
   shoes: Array<
     { __typename?: "Shoes" } & {
       images: Array<{ __typename?: "Images" } & ImageFragmentFragment>;
@@ -20,10 +21,15 @@ interface ProductListProps {
     | undefined;
 }
 
-const ProductListDash: React.FC<ProductListProps> = ({ shoes, remove }) => {
+const ProductListDash: React.FC<ProductListProps> = ({
+  shoes,
+  remove,
+  path,
+}) => {
   const products = shoes.map((item) => {
     return (
       <ProductItem
+        path={path as string}
         key={item._id}
         id={item._id}
         src={item.vendor === "Anaki" ? item.images[1].src : item.images[0].src}

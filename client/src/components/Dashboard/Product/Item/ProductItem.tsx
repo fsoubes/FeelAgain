@@ -5,6 +5,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { Button } from "@material-ui/core";
 
 interface ProductItemProps {
+  path: string;
   src: string;
   title: string;
   price: number;
@@ -23,10 +24,16 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
   price,
   id,
   remove,
+  path,
 }) => {
   const router = useRouter();
   return (
-    <div>
+    <div
+      onClick={(event) => {
+        router.push(`/products/${id}`);
+        event.stopPropagation();
+      }}
+    >
       <Tilt style={{ cursor: "pointer" }}>
         <div style={{ backgroundImage: `url( ${src} )` }}>
           <Button
@@ -39,7 +46,7 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
           <Button
             disableRipple
             onClick={(event) => {
-              router.push(`/dashboard/update/${id}`);
+              router.push(path ? `${path}${id}` : `/dashboard/update/${id}`);
               event.stopPropagation();
             }}
           >

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Layout } from "../src/components/Layout";
 import { useGetShoesQuery } from "../src/generated/graphql";
 import { withApollo } from "../src/utils/withApollo";
@@ -11,18 +11,36 @@ import SortIcon from "@material-ui/icons/Sort";
 import CustomAccordion from "../src/components/Accordion/Accordion";
 import ProductListDash from "../src/components/Dashboard/Product/ProductList";
 import Sort from "../src/components/Sort/Sort";
+import Outside from "../src/components/OutsideEvent/Outside";
 
 interface ShopProps {
   page?: number;
   search?: string;
 }
+interface sortoptions {
+  id_asc: string;
+  id_desc: string;
+  price_asc: string;
+  price_desc: string;
+  title_asc: string;
+  title_desc: string;
+}
+
+const sortOptions = {
+  id_asc: "Meilleures ventes",
+  id_desc: "Nouveautés",
+  price_asc: "Prix ascendants",
+  price_desc: "Prix descendants",
+  title_asc: "Alphabétiques A-Z",
+  title_desc: "Alphabétiques Z-A",
+};
 
 const Shop: NextPage<ShopProps> = ({ page, search }) => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(page as number);
-
   const [isFilter, setFilter] = useState<Boolean>(false);
   const [isSorting, setSorting] = useState<Boolean>(false);
+  const [sortingBy, setSort] = useState<String | null>(null);
 
   let { data, refetch } = useGetShoesQuery({
     variables: {
@@ -38,22 +56,13 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
     setCurrentPage(parseInt(router.query.page as string));
   }, []);
 
-  const sortOptions = [
-    "Meilleures ventes",
-    "Nouveautés",
-    "Prix ascendants",
-    "Prix descendants",
-    "Alphabétiques A-Z",
-    "Alphabétiques Z-A",
-  ];
-
   return (
     <Layout>
       {data && (
         <div className="container__shop">
           <div
             className="container__header"
-            style={{ backgroundColor: "#d7d7dd" }}
+            style={{ backgroundColor: "rgba(215, 215, 221,.5" }}
           >
             <h2>FeelAgain/Shop</h2>
             <h2>
@@ -69,20 +78,44 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
             <div>
               <Button onClick={() => setFilter(!isFilter)}>
                 <FilterListIcon />
-                <span>Afficher les filtres</span>
+                <span>{isFilter ? "Masquer" : "Afficher"} les filtres</span>
               </Button>
             </div>
             <div style={{ position: "relative" }}>
-              <Button onClick={() => setSorting(!isSorting)}>
-                <span>Trier</span>
-                <SortIcon />
-              </Button>
-              {isSorting && <Sort options={sortOptions} />}
+              <Outside open={isSorting} setOpen={setSorting}>
+                <Fragment>
+                  <Button
+                    onClick={() => {
+                      setSorting(!isSorting);
+                    }}
+                  >
+                    <span>Trier</span>
+                    <SortIcon />
+                  </Button>
+                  {isSorting && (
+                    <Sort
+                      isSort={sortingBy}
+                      options={sortOptions}
+                      setSort={setSort}
+                      closing={setSorting}
+                    />
+                  )}
+                </Fragment>
+              </Outside>
             </div>
           </div>
-          <div style={{ display: "flex" }}>
-            {isFilter && <CustomAccordion />}
-            <ProductListDash shoes={data.getFilterShoes?.edges} />
+          <div style={{ display: "flex", position: "relative" }}>
+            <CustomAccordion
+              setSort={setSort}
+              refetch={refetch}
+              sortingBy={sortingBy}
+              isOpen={isFilter}
+            />
+
+            <ProductListDash
+              shoes={data.getFilterShoes?.edges}
+              path={"/products/"}
+            />
           </div>
           <Pagination
             refetch={refetch}

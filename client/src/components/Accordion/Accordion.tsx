@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import Typography from "@material-ui/core/Typography";
@@ -10,9 +10,14 @@ import CheckboxForm from "../Checkbox/Checkbox";
 import { initialValues } from "../../constants/filter";
 import { filterReducer } from "../../utils/updateFilter";
 import FilterList from "../Filter/FilterList";
+import styles from "../../styles/Accordion.module.scss";
 
 interface CustomAccordionProps {
   isFiltering?: Boolean;
+  refetch?: any;
+  sortingBy: String | null;
+  isOpen: Boolean;
+  setSort: React.Dispatch<React.SetStateAction<String | null>>;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -67,9 +72,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
+const CustomAccordion: React.FC<CustomAccordionProps> = ({
+  refetch,
+  sortingBy = null,
+  isOpen = false,
+  setSort,
+}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
+
+  const firstUpdate = useRef(true);
 
   const handleChange = (panel: string) => (
     event: React.ChangeEvent<{}>,
@@ -80,11 +92,43 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({}) => {
 
   const [filter, dispatch] = useReducer(filterReducer, initialValues);
 
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+
+    const variables = {
+      ...(filter.variables?.product && { product: filter.variables.product }),
+      ...((filter?.variables?.size?.length as number) > 0 && {
+        size: filter.variables?.size,
+      }),
+      ...((filter?.variables?.tags?.length as number) > 0 && {
+        tags: filter.variables?.tags,
+      }),
+      ...(sortingBy && {
+        sort: sortingBy,
+      }),
+    };
+
+    if (filter && Object.keys(variables as Request).length > 0) {
+      refetch({
+        ...variables,
+      });
+    } else {
+      refetch({ product: null, tags: null, size: null, sort: "id_asc" });
+    }
+  }, [filter, sortingBy, firstUpdate]);
+
   return (
-    <div className={classes.root}>
+    // <div className={classes.root}>
+    <div className={isOpen ? `${styles.container}` : `${styles.hide}`}>
       <Button
         className={classes.reset}
-        onClick={() => dispatch({ type: "reset", values: initialValues })}
+        onClick={() => {
+          setSort(null);
+          dispatch({ type: "reset", values: initialValues });
+        }}
       >
         Réinitialiser
       </Button>
