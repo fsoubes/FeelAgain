@@ -764,7 +764,7 @@ export type GetSingleShoesQuery = (
       & VariantFragmentFragment
     )>, relatives: Array<(
       { __typename?: 'Shoes' }
-      & Pick<Shoes, '_id'>
+      & Pick<Shoes, '_id' | 'title'>
     )> }
     & ShoesBrowseFragmentFragment
     & ShoesArticleFragmentFragment
@@ -1644,6 +1644,7 @@ export const GetSingleShoesDocument = gql`
     }
     relatives {
       _id
+      title
     }
   }
 }

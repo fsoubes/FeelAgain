@@ -10,6 +10,7 @@ query GetSingleShoes($shoesId: ObjectId!) {
     }
     relatives {
       _id
+      title
     }
   }
 }

@@ -1,42 +1,163 @@
 @import "mixins";
 
-.container__article {
-  @include tablet() {
-    max-width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    padding: 1rem 4rem;
-  }
+.main {
+  display: flex;
+  .content__container {
+    .content {
+      max-width: 85%;
+      margin: auto;
+      .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-direction: column;
 
-  @include mobile() {
-    max-width: 96%;
-    margin-left: 2%;
-    margin-right: 2%;
-    padding: 5px;
-  }
+        &:after {
+          content: "";
+          width: 100%;
+          margin-top: 3px;
+          border-bottom: 1px solid black;
+          display: block;
+        }
+      }
 
-  margin-top: 2rem;
-  padding: 2rem 6rem;
-  max-width: 80%;
-  width: 100%;
-  left: auto;
-  right: auto;
-  border-radius: 8px;
+      .form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+        .price {
+          margin-bottom: 2rem;
+        }
 
-  .article__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    h1 {
-      margin-bottom: 5px;
+        .size {
+          font-size: 15px;
+          position: relative;
+          cursor: pointer;
+          border-radius: 0;
+          width: 65%;
+          margin-bottom: 4rem;
+          outline: none;
+          appearance: none;
+        }
+        ul {
+          font-size: 15px;
+          outline: none;
+          appearance: none;
+          border: 0.5px solid black;
+          left: 0;
+          padding: 0;
+          width: 100%;
+          list-style: none;
+          position: absolute;
+          background: #ecf0f5;
+          margin: 0;
+          top: 0;
+
+          .item__size {
+            padding: 10px;
+          }
+
+          .item__relatives {
+            padding: 10px;
+          }
+
+          .item__size:hover {
+            background: darkgrey;
+            color: white;
+          }
+
+          .notavailable {
+            text-decoration: line-through;
+            color: grey;
+          }
+
+          .current {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
+              100% 50% no-repeat;
+          }
+
+          .hidden {
+            display: none;
+          }
+        }
+
+        .card {
+          border-radius: 0;
+          width: 65%;
+          padding: 10px;
+          border: 1px solid black;
+          background: black;
+          color: white;
+          font-weight: 700;
+        }
+
+        .nocard {
+          border-radius: 0;
+          width: 65%;
+          padding: 10px;
+          border: 1px solid black;
+          background: #dc143c;
+          color: black;
+          font-weight: 700;
+        }
+      }
+
+      .description {
+        &:before {
+          content: "";
+          width: 100%;
+          border-bottom: 1px solid black;
+          display: block;
+          margin-bottom: 2rem;
+        }
+      }
     }
   }
-  .article__content {
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
+
+  .images {
+    width: 100%;
+    text-align: center;
+
     img {
-      margin-right: 2rem;
+      max-height: 900px;
+      width: 750px;
+      height: auto;
+      mix-blend-mode: multiply;
+      border: 1px solid black;
     }
+  }
+}
+
+.neighbours,
+.comments {
+  h1:after {
+    content: "";
+    width: 50%;
+    margin-top: 3px;
+    border-bottom: 1px solid black;
+    display: block;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.neighbours,
+.comments,
+.main {
+  margin-bottom: 2rem;
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    letter-spacing: 0.5px;
+    font-weight: bolder;
   }
 }
