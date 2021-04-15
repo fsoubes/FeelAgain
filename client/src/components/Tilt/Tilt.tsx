@@ -4,6 +4,7 @@ import VanillaTilt from "vanilla-tilt";
 interface TiltProps {
   style?: React.CSSProperties | undefined;
   children: JSX.Element;
+  isTilt?: Boolean;
 }
 
 const options = {
@@ -12,10 +13,13 @@ const options = {
   max: 20,
 };
 
-const Tilt: React.FC<TiltProps> = ({ style, children }) => {
+const Tilt: React.FC<TiltProps> = ({ style, children, isTilt = true }) => {
   const divRef = useRef<any>(null);
 
   useEffect((): any => {
+    if (!isTilt) {
+      return;
+    }
     const node = divRef.current;
     if (node) {
       VanillaTilt.init(node, options);

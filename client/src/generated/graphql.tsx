@@ -21,6 +21,7 @@ export type Query = {
   __typename?: 'Query';
   getSingleShoe: Shoes;
   getFilterShoes: PaginationShoes;
+  getClosestShoes: Array<Shoes>;
   getShoesByName: SearchResults;
   me?: Maybe<User>;
   userRole: Scalars['Boolean'];
@@ -41,6 +42,12 @@ export type QueryGetFilterShoesArgs = {
   search?: Maybe<Scalars['String']>;
   page: Scalars['Float'];
   limit: Scalars['Float'];
+};
+
+
+export type QueryGetClosestShoesArgs = {
+  title: Scalars['String'];
+  product: Scalars['String'];
 };
 
 
@@ -654,6 +661,24 @@ export type GetArticlesQuery = (
       & Pick<PaginationInfo, 'hasNextPage' | 'endCursor'>
     ) }
   ) }
+);
+
+export type GetClosestShoesQueryVariables = Exact<{
+  product: Scalars['String'];
+  title: Scalars['String'];
+}>;
+
+
+export type GetClosestShoesQuery = (
+  { __typename?: 'Query' }
+  & { getClosestShoes: Array<(
+    { __typename?: 'Shoes' }
+    & Pick<Shoes, '_id' | 'title' | 'price' | 'vendor'>
+    & { images: Array<(
+      { __typename?: 'Images' }
+      & ImageFragmentFragment
+    )> }
+  )> }
 );
 
 export type GetShoesQueryVariables = Exact<{
@@ -1441,6 +1466,46 @@ export function useGetArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
+export const GetClosestShoesDocument = gql`
+    query GetClosestShoes($product: String!, $title: String!) {
+  getClosestShoes(product: $product, title: $title) {
+    _id
+    title
+    price
+    vendor
+    images {
+      ...ImageFragment
+    }
+  }
+}
+    ${ImageFragmentFragmentDoc}`;
+
+/**
+ * __useGetClosestShoesQuery__
+ *
+ * To run a query within a React component, call `useGetClosestShoesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetClosestShoesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetClosestShoesQuery({
+ *   variables: {
+ *      product: // value for 'product'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useGetClosestShoesQuery(baseOptions: Apollo.QueryHookOptions<GetClosestShoesQuery, GetClosestShoesQueryVariables>) {
+        return Apollo.useQuery<GetClosestShoesQuery, GetClosestShoesQueryVariables>(GetClosestShoesDocument, baseOptions);
+      }
+export function useGetClosestShoesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetClosestShoesQuery, GetClosestShoesQueryVariables>) {
+          return Apollo.useLazyQuery<GetClosestShoesQuery, GetClosestShoesQueryVariables>(GetClosestShoesDocument, baseOptions);
+        }
+export type GetClosestShoesQueryHookResult = ReturnType<typeof useGetClosestShoesQuery>;
+export type GetClosestShoesLazyQueryHookResult = ReturnType<typeof useGetClosestShoesLazyQuery>;
+export type GetClosestShoesQueryResult = Apollo.QueryResult<GetClosestShoesQuery, GetClosestShoesQueryVariables>;
 export const GetShoesDocument = gql`
     query GetShoes($limit: Float!, $page: Float!, $sort: String, $search: String, $product: String, $size: [Float!], $tags: [String!], $is_published: Boolean) {
   getFilterShoes(

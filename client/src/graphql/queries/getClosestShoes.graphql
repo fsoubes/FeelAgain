@@ -1,0 +1,11 @@
+query GetClosestShoes($product: String!, $title: String!) {
+  getClosestShoes(product: $product, title: $title) {
+    _id
+    title
+    price
+    vendor
+    images {
+      ...ImageFragment
+    }
+  }
+}

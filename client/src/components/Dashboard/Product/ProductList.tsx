@@ -7,6 +7,8 @@ import ProductItem from "./Item/ProductItem";
 import styles from "../../../styles/Shop.module.scss";
 
 interface ProductListProps {
+  isTilt?: Boolean;
+  isProduct?: Boolean;
   path?: String;
   shoes: Array<
     { __typename?: "Shoes" } & {
@@ -25,10 +27,13 @@ const ProductListDash: React.FC<ProductListProps> = ({
   shoes,
   remove,
   path,
+  isProduct = false,
+  isTilt = true,
 }) => {
   const products = shoes.map((item) => {
     return (
       <ProductItem
+        isTilt={isTilt}
         path={path as string}
         key={item._id}
         id={item._id}
@@ -40,6 +45,10 @@ const ProductListDash: React.FC<ProductListProps> = ({
     );
   });
 
-  return <div className={styles.container}>{products}</div>;
+  return (
+    <div className={isProduct ? styles.container__product : styles.container}>
+      {products}
+    </div>
+  );
 };
 export default React.memo(ProductListDash);

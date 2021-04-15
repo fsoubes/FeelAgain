@@ -24,6 +24,7 @@ import { PaginationPage } from "./types/pagination-result";
 import { getFilteredShoes } from "../helpers/filterShoes";
 import { sortBy } from "./enum/sortingBy";
 import { ShoesInputFilter } from "./types/filtershoes-input";
+import { productShoes } from "./enum/productShoes";
 
 @ObjectType()
 class PaginationShoes {
@@ -102,6 +103,31 @@ export class ShoesResolver {
         edges: info.edges,
         pageInfo: info.pageInfo,
       };
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Query(() => [Shoes])
+  async getClosestShoes(
+    @Arg("product") product: productShoes,
+    @Arg("title") title: String,
+    @Ctx() {  }: MyContext
+  ): Promise<Shoes[]> {
+    try {
+      const randomShoes = await ShoesModel.aggregate([
+        {
+          $match: {
+            is_published: true,
+            product_type: product,
+            title: { $ne: title },
+          },
+        },
+        { $project: { _id: 1, title: 1, price: 1, images: 1, vendor: 1 } },
+        { $sample: { size: 5 } },
+      ]);
+
+      return randomShoes as Shoes[];
     } catch (err) {
       throw err;
     }

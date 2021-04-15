@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "../../src/components/Layout";
-import { useGetSingleShoesQuery } from "../../src/generated/graphql";
+import {
+  useGetSingleShoesQuery,
+  useGetClosestShoesQuery,
+  Shoes,
+} from "../../src/generated/graphql";
 import { withApollo } from "../../src/utils/withApollo";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-// import VoteRating from "../../src/components/Votes/VoteRating";
 import styles from "../../src/styles/Product.module.scss";
+import styles__search from "../../src/styles/Search.module.scss";
 import { Button } from "@material-ui/core";
 import Outside from "../../src/components/OutsideEvent/Outside";
+import ProductListDash from "../../src/components/Dashboard/Product/ProductList";
 
 interface Props {
   id?: string;
@@ -24,6 +29,14 @@ const Article: NextPage<Props> = ({ id }) => {
     variables: { shoesId: id },
   });
 
+  const { data: dataClosest } = useGetClosestShoesQuery({
+    variables: {
+      product: data?.getSingleShoe?.product_type as string,
+      title: data?.getSingleShoe?.title as string,
+    },
+    skip: !data?.getSingleShoe.product_type,
+  });
+
   const [size, setSize] = useState<number>(36);
   const [index, setIndex] = useState<number>(0);
   const [title, setTitle] = useState<string | undefined>(
@@ -31,6 +44,7 @@ const Article: NextPage<Props> = ({ id }) => {
   );
   const [open, setOpen] = useState<Boolean>(false);
   const [openSize, setOpenSize] = useState<Boolean>(false);
+  const [openCard, setOpenCard] = useState<Boolean>(false);
 
   useEffect(() => {
     if (!id) {
@@ -55,6 +69,9 @@ const Article: NextPage<Props> = ({ id }) => {
 
   return (
     <Layout>
+      {openCard && (
+        <div style={{ background: "white", position: "absolute" }}></div>
+      )}
       <div className="container__shop">
         <div className={styles.main}>
           <div className={styles.images}>
@@ -161,7 +178,11 @@ const Article: NextPage<Props> = ({ id }) => {
                     Pointure non disponible
                   </Button>
                 ) : (
-                  <Button disableRipple className={styles.card}>
+                  <Button
+                    onClick={() => setOpenCard(!openCard)}
+                    disableRipple
+                    className={styles.card}
+                  >
                     Ajouter au Panier
                   </Button>
                 )}
@@ -178,12 +199,15 @@ const Article: NextPage<Props> = ({ id }) => {
         <br />
         <div className={styles.neighbours}>
           <h1>Chaussures que vous pourriez aimer</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-            eaque sit adipisci deleniti libero aliquam quae excepturi deserunt
-            minima consequuntur? Numquam enim accusantium veniam similique optio
-            sunt soluta modi unde!
-          </p>
+          {dataClosest && dataClosest?.getClosestShoes && (
+            <div>
+              <ProductListDash
+                isTilt={false}
+                isProduct={true}
+                shoes={dataClosest?.getClosestShoes as Shoes[]}
+              ></ProductListDash>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.comments}>
