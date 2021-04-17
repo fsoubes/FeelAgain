@@ -1,0 +1,3 @@
+mutation UpdateCartItem($itemId: String!, $quantity: Float!) {
+  updateCartItem(itemId: $itemId, quantity: $quantity)
+}

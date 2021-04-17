@@ -5,7 +5,7 @@
 
 type Basket {
   _id: ObjectId!
-  products: [Shoes!]!
+  products: [CartItem!]!
   user: User!
 }
 
@@ -39,6 +39,12 @@ input BlogInput {
   source: [String!]
   tags: [String!]
   title: String!
+}
+
+type CartItem {
+  _id: ObjectId!
+  quantity: Float
+  variant: Variants!
 }
 
 type Comment {
@@ -76,6 +82,8 @@ type Images {
 
 type Mutation {
   addArticle(blog: BlogInput!): Blog!
+  addCartItem(variantId: String!): String!
+  addGuestCart(isArg: Boolean!): Boolean!
   addImage(image: ImageInput!, parentId: String!): String!
   addRelation: Boolean!
   addShoe(shoes: ShoesInput!): ObjectId!
@@ -85,9 +93,12 @@ type Mutation {
   forgotPassword(email: String!): Boolean!
   login(user: UserLogin!): UserResponse!
   logout: Boolean!
+  mergeGuestCart(isArg: Boolean!): Boolean!
   ratingReview(articleId: String!, rating: String!): Boolean!
   register(user: UserRegister!): UserResponse!
+  removeCartItem(basketId: String!, itemId: String!): String!
   removeShoe(shoeId: String!): String!
+  updateCartItem(itemId: String!, quantity: Float!): String!
   updateImage(image: ImageInput!, imageId: String!): Images!
   updateShoe(shoeId: String!, shoes: ShoesInput!): Shoes!
   updateVariant(variant: VariantInput!, variantId: String!): Variants!
@@ -125,6 +136,8 @@ type PaginationShoes {
 
 type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
+  getBasket: Basket!
+  getClosestShoes(product: String!, title: String!): [Shoes!]!
   getFilterShoes(filter: ShoesInputFilter, is_published: Boolean = true, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
   getShoesByName(search: String!): SearchResults!
   getSingleArticle(articleId: ObjectId!): Blog!
@@ -231,6 +244,7 @@ type Variants {
   price: Float!
   product_id: String!
   quantity: Float!
+  shoes: Shoes!
   sku: String!
   title: String!
 }

@@ -27,6 +27,7 @@ export type Query = {
   userRole: Scalars['Boolean'];
   getSingleArticle: Blog;
   getArticles: PaginationResponse;
+  getBasket: Basket;
 };
 
 
@@ -108,6 +109,7 @@ export type Variants = {
   quantity: Scalars['Float'];
   price: Scalars['Float'];
   compare_at_price: Scalars['Float'];
+  shoes: Shoes;
 };
 
 export type OptionShoes = {
@@ -166,8 +168,15 @@ export type User = {
 export type Basket = {
   __typename?: 'Basket';
   _id: Scalars['ObjectId'];
-  products: Array<Shoes>;
+  products: Array<CartItem>;
   user: User;
+};
+
+export type CartItem = {
+  __typename?: 'CartItem';
+  _id: Scalars['ObjectId'];
+  quantity?: Maybe<Scalars['Float']>;
+  variant: Variants;
 };
 
 export type Blog = {
@@ -229,6 +238,11 @@ export type Mutation = {
   ratingReview: Scalars['Boolean'];
   addShoes: Scalars['Boolean'];
   addRelation: Scalars['Boolean'];
+  addGuestCart: Scalars['Boolean'];
+  mergeGuestCart: Scalars['Boolean'];
+  addCartItem: Scalars['String'];
+  updateCartItem: Scalars['String'];
+  removeCartItem: Scalars['String'];
 };
 
 
@@ -301,6 +315,33 @@ export type MutationAddArticleArgs = {
 export type MutationRatingReviewArgs = {
   articleId: Scalars['String'];
   rating: Scalars['String'];
+};
+
+
+export type MutationAddGuestCartArgs = {
+  isArg: Scalars['Boolean'];
+};
+
+
+export type MutationMergeGuestCartArgs = {
+  isArg: Scalars['Boolean'];
+};
+
+
+export type MutationAddCartItemArgs = {
+  variantId: Scalars['String'];
+};
+
+
+export type MutationUpdateCartItemArgs = {
+  quantity: Scalars['Float'];
+  itemId: Scalars['String'];
+};
+
+
+export type MutationRemoveCartItemArgs = {
+  basketId: Scalars['String'];
+  itemId: Scalars['String'];
 };
 
 export type ShoesInput = {
@@ -445,6 +486,16 @@ export type AddArticleMutation = (
   ) }
 );
 
+export type AddCartItemMutationVariables = Exact<{
+  variantId: Scalars['String'];
+}>;
+
+
+export type AddCartItemMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addCartItem'>
+);
+
 export type AddImageMutationVariables = Exact<{
   parentId: Scalars['String'];
   position?: Maybe<Scalars['Float']>;
@@ -580,6 +631,28 @@ export type LoginMutation = (
   ) }
 );
 
+export type RemoveCartItemMutationVariables = Exact<{
+  itemId: Scalars['String'];
+  basketId: Scalars['String'];
+}>;
+
+
+export type RemoveCartItemMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeCartItem'>
+);
+
+export type UpdateCartItemMutationVariables = Exact<{
+  itemId: Scalars['String'];
+  quantity: Scalars['Float'];
+}>;
+
+
+export type UpdateCartItemMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateCartItem'>
+);
+
 export type UpdateImageMutationVariables = Exact<{
   imageId: Scalars['String'];
   position?: Maybe<Scalars['Float']>;
@@ -659,6 +732,24 @@ export type GetArticlesQuery = (
     )>, pageInfo: (
       { __typename?: 'PaginationInfo' }
       & Pick<PaginationInfo, 'hasNextPage' | 'endCursor'>
+    ) }
+  ) }
+);
+
+export type GetBasketQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBasketQuery = (
+  { __typename?: 'Query' }
+  & { getBasket: (
+    { __typename?: 'Basket' }
+    & Pick<Basket, '_id'>
+    & { products: Array<(
+      { __typename?: 'CartItem' }
+      & Pick<CartItem, '_id' | 'quantity'>
+    )>, user: (
+      { __typename?: 'User' }
+      & UserFragmentFragment
     ) }
   ) }
 );
@@ -956,6 +1047,36 @@ export function useAddArticleMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddArticleMutationHookResult = ReturnType<typeof useAddArticleMutation>;
 export type AddArticleMutationResult = Apollo.MutationResult<AddArticleMutation>;
 export type AddArticleMutationOptions = Apollo.BaseMutationOptions<AddArticleMutation, AddArticleMutationVariables>;
+export const AddCartItemDocument = gql`
+    mutation AddCartItem($variantId: String!) {
+  addCartItem(variantId: $variantId)
+}
+    `;
+export type AddCartItemMutationFn = Apollo.MutationFunction<AddCartItemMutation, AddCartItemMutationVariables>;
+
+/**
+ * __useAddCartItemMutation__
+ *
+ * To run a mutation, you first call `useAddCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCartItemMutation, { data, loading, error }] = useAddCartItemMutation({
+ *   variables: {
+ *      variantId: // value for 'variantId'
+ *   },
+ * });
+ */
+export function useAddCartItemMutation(baseOptions?: Apollo.MutationHookOptions<AddCartItemMutation, AddCartItemMutationVariables>) {
+        return Apollo.useMutation<AddCartItemMutation, AddCartItemMutationVariables>(AddCartItemDocument, baseOptions);
+      }
+export type AddCartItemMutationHookResult = ReturnType<typeof useAddCartItemMutation>;
+export type AddCartItemMutationResult = Apollo.MutationResult<AddCartItemMutation>;
+export type AddCartItemMutationOptions = Apollo.BaseMutationOptions<AddCartItemMutation, AddCartItemMutationVariables>;
 export const AddImageDocument = gql`
     mutation AddImage($parentId: String!, $position: Float, $src: String, $width: Float, $height: Float, $product_id: String) {
   addImage(
@@ -1297,6 +1418,68 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const RemoveCartItemDocument = gql`
+    mutation RemoveCartItem($itemId: String!, $basketId: String!) {
+  removeCartItem(itemId: $itemId, basketId: $basketId)
+}
+    `;
+export type RemoveCartItemMutationFn = Apollo.MutationFunction<RemoveCartItemMutation, RemoveCartItemMutationVariables>;
+
+/**
+ * __useRemoveCartItemMutation__
+ *
+ * To run a mutation, you first call `useRemoveCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeCartItemMutation, { data, loading, error }] = useRemoveCartItemMutation({
+ *   variables: {
+ *      itemId: // value for 'itemId'
+ *      basketId: // value for 'basketId'
+ *   },
+ * });
+ */
+export function useRemoveCartItemMutation(baseOptions?: Apollo.MutationHookOptions<RemoveCartItemMutation, RemoveCartItemMutationVariables>) {
+        return Apollo.useMutation<RemoveCartItemMutation, RemoveCartItemMutationVariables>(RemoveCartItemDocument, baseOptions);
+      }
+export type RemoveCartItemMutationHookResult = ReturnType<typeof useRemoveCartItemMutation>;
+export type RemoveCartItemMutationResult = Apollo.MutationResult<RemoveCartItemMutation>;
+export type RemoveCartItemMutationOptions = Apollo.BaseMutationOptions<RemoveCartItemMutation, RemoveCartItemMutationVariables>;
+export const UpdateCartItemDocument = gql`
+    mutation UpdateCartItem($itemId: String!, $quantity: Float!) {
+  updateCartItem(itemId: $itemId, quantity: $quantity)
+}
+    `;
+export type UpdateCartItemMutationFn = Apollo.MutationFunction<UpdateCartItemMutation, UpdateCartItemMutationVariables>;
+
+/**
+ * __useUpdateCartItemMutation__
+ *
+ * To run a mutation, you first call `useUpdateCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCartItemMutation, { data, loading, error }] = useUpdateCartItemMutation({
+ *   variables: {
+ *      itemId: // value for 'itemId'
+ *      quantity: // value for 'quantity'
+ *   },
+ * });
+ */
+export function useUpdateCartItemMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCartItemMutation, UpdateCartItemMutationVariables>) {
+        return Apollo.useMutation<UpdateCartItemMutation, UpdateCartItemMutationVariables>(UpdateCartItemDocument, baseOptions);
+      }
+export type UpdateCartItemMutationHookResult = ReturnType<typeof useUpdateCartItemMutation>;
+export type UpdateCartItemMutationResult = Apollo.MutationResult<UpdateCartItemMutation>;
+export type UpdateCartItemMutationOptions = Apollo.BaseMutationOptions<UpdateCartItemMutation, UpdateCartItemMutationVariables>;
 export const UpdateImageDocument = gql`
     mutation UpdateImage($imageId: String!, $position: Float, $src: String, $width: Float, $height: Float, $product_id: String) {
   updateImage(
@@ -1466,6 +1649,45 @@ export function useGetArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
+export const GetBasketDocument = gql`
+    query GetBasket {
+  getBasket {
+    _id
+    products {
+      _id
+      quantity
+    }
+    user {
+      ...UserFragment
+    }
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+
+/**
+ * __useGetBasketQuery__
+ *
+ * To run a query within a React component, call `useGetBasketQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBasketQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBasketQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetBasketQuery(baseOptions?: Apollo.QueryHookOptions<GetBasketQuery, GetBasketQueryVariables>) {
+        return Apollo.useQuery<GetBasketQuery, GetBasketQueryVariables>(GetBasketDocument, baseOptions);
+      }
+export function useGetBasketLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBasketQuery, GetBasketQueryVariables>) {
+          return Apollo.useLazyQuery<GetBasketQuery, GetBasketQueryVariables>(GetBasketDocument, baseOptions);
+        }
+export type GetBasketQueryHookResult = ReturnType<typeof useGetBasketQuery>;
+export type GetBasketLazyQueryHookResult = ReturnType<typeof useGetBasketLazyQuery>;
+export type GetBasketQueryResult = Apollo.QueryResult<GetBasketQuery, GetBasketQueryVariables>;
 export const GetClosestShoesDocument = gql`
     query GetClosestShoes($product: String!, $title: String!) {
   getClosestShoes(product: $product, title: $title) {

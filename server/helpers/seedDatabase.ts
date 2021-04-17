@@ -1,27 +1,42 @@
 import { User, UserModel } from "../entities/User";
 import { Blog, BlogModel } from "../entities/Blog";
+import { BasketModel } from "../entities/Basket";
 
 export async function seedDataBase() {
+  const defaultBasket = new BasketModel({});
+  const secondBasket = new BasketModel({});
+  const thirdBasket = new BasketModel({});
+  const fourthBasket = new BasketModel({});
+
   const defaultUser = new UserModel({
     email: "bob@bob.fr",
     nickname: "bob",
     password:
       "$argon2i$v=19$m=4096,t=3,p=1$SKcpzKdXCrqY4RvImpFKBA$MCO99B5R/yVdICwkRph9lfBAqxeoMxEwppB65aTVSEs",
+    basket: defaultBasket._id,
   } as User);
+
+  defaultBasket.user = defaultUser._id;
 
   const secondUser = new UserModel({
     email: "bob2@bob.fr",
     nickname: "bob2",
     password:
       "$argon2i$v=19$m=4096,t=3,p=1$SKcpzKdXCrqY4RvImpFKBA$MCO99B5R/yVdICwkRph9lfBAqxeoMxEwppB65aTVSEs",
+    basket: secondBasket._id,
   } as User);
+
+  secondBasket.user = secondUser._id;
 
   const thirdUser = new UserModel({
     email: "bob3@bob.fr",
     nickname: "bob3",
     password:
       "$argon2i$v=19$m=4096,t=3,p=1$SKcpzKdXCrqY4RvImpFKBA$MCO99B5R/yVdICwkRph9lfBAqxeoMxEwppB65aTVSEs",
+    basket: thirdBasket._id,
   } as User);
+
+  thirdBasket.user = thirdUser._id;
 
   const fourthUser = new UserModel({
     email: "bob4@bob.fr",
@@ -29,13 +44,20 @@ export async function seedDataBase() {
     isAdmin: true,
     password:
       "$argon2i$v=19$m=4096,t=3,p=1$SKcpzKdXCrqY4RvImpFKBA$MCO99B5R/yVdICwkRph9lfBAqxeoMxEwppB65aTVSEs",
+    basket: fourthBasket._id,
   } as User);
+
+  fourthBasket.user = fourthUser._id;
 
   await Promise.all([
     defaultUser.save(),
+    defaultBasket.save(),
     secondUser.save(),
+    secondBasket.save(),
     thirdUser.save(),
+    thirdBasket.save(),
     fourthUser.save(),
+    fourthBasket.save(),
   ]);
 
   await BlogModel.create(([

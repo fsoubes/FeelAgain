@@ -1,11 +1,11 @@
+import { Variants, VariantsModel } from "../entities/Variants";
 import DataLoader from "dataloader";
 import { ObjectId } from "mongodb";
-import { VariantsModel, Variants } from "../entities/Variants";
 
-export const createVariantLoader = () =>
+export const createVariantLoaders = () =>
   new DataLoader<ObjectId, Variants>(async (variantIds) => {
     try {
-      const variant = await VariantsModel.find({
+      const variants = await VariantsModel.find({
         _id: {
           $in: variantIds as ObjectId[],
         },
@@ -13,7 +13,7 @@ export const createVariantLoader = () =>
 
       const variantIdToVariant: Record<string, Variants> = {};
 
-      variant.forEach((u) => {
+      variants.forEach((u) => {
         variantIdToVariant[u.id] = u;
       });
 

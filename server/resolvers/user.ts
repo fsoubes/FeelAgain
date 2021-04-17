@@ -17,6 +17,7 @@ import { validateEmail } from "../helpers/validation";
 import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constant/constant";
 import { sendEmail } from "../helpers/sendEmail";
 import { v4 } from "uuid";
+import { BasketModel } from "../entities/Basket";
 
 @ObjectType()
 export class FieldError {
@@ -188,11 +189,16 @@ export class UserResolver {
 
       const hashedPassword = await argon2.hash(userInput.password);
 
+      const basket = new BasketModel({});
+
       const user = new UserModel({
         ...userInput,
         password: hashedPassword,
+        basket: basket._id,
       } as User);
 
+      basket.user = user._id;
+      await basket.save();
       await user.save();
 
       return { user };

@@ -1,0 +1,25 @@
+query GetBasket {
+  getBasket {
+    _id
+    user {
+      ...UserFragment
+    }
+    products {
+      _id
+      quantity
+      variant {
+        _id
+        title
+        quantity
+        available
+        shoes {
+          _id
+          title
+          images {
+            src
+          }
+        }
+      }
+    }
+  }
+}

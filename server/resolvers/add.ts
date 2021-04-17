@@ -28,6 +28,7 @@ export class AddResolver {
             price: parseInt(variants[j].price),
             compare_at: parseInt(variants[j].compare_at_price),
             quantity: Math.floor(Math.random() * 50) + 1,
+            shoes:shoes._id
           });
           await addVariants.save();
           shoes.variants.push(addVariants._id);
@@ -36,7 +37,6 @@ export class AddResolver {
         for (let k = 0; k < images.length; k++) {
           const addImages = new ImagesModel({
             ...images[k],
-           
             product_id: shoes._id,
           });
           await addImages.save();

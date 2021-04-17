@@ -186,8 +186,8 @@ export class ShoesResolver {
   }
 
   @FieldResolver()
-  async variants(@Root() shoes: Shoes, @Ctx() { variantLoader }: MyContext) {
-    return variantLoader.loadMany(shoes.variants as ObjectId[]);
+  async variants(@Root() shoes: Shoes, @Ctx() { variantLoaders }: MyContext) {
+    return variantLoaders.loadMany(shoes.variants as ObjectId[]);
   }
 
   @FieldResolver()

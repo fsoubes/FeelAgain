@@ -1,6 +1,8 @@
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
+import { Shoes } from "./Shoes";
+import { Ref } from "constant/types";
 
 @ObjectType()
 export class Variants {
@@ -54,6 +56,10 @@ export class Variants {
   @Field()
   @Property({ required: false })
   compare_at_price: Number;
+
+  @Field((_type) => Shoes)
+  @Property({ ref: "Shoes", nullable: true })
+  shoes?: Ref<Shoes>;
 }
 
 export const VariantsModel = getModelForClass(Variants);

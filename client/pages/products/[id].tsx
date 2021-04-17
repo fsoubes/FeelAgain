@@ -9,7 +9,6 @@ import { withApollo } from "../../src/utils/withApollo";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import styles from "../../src/styles/Product.module.scss";
-import styles__search from "../../src/styles/Search.module.scss";
 import { Button } from "@material-ui/core";
 import Outside from "../../src/components/OutsideEvent/Outside";
 import ProductListDash from "../../src/components/Dashboard/Product/ProductList";
@@ -69,9 +68,12 @@ const Article: NextPage<Props> = ({ id }) => {
 
   return (
     <Layout>
-      {openCard && (
-        <div style={{ background: "white", position: "absolute" }}></div>
-      )}
+      <div
+        className={
+          openCard ? `${styles.cart} ${styles.open}` : `${styles.cart}`
+        }
+      ></div>
+
       <div className="container__shop">
         <div className={styles.main}>
           <div className={styles.images}>
