@@ -1,9 +1,6 @@
 query GetBasket {
   getBasket {
     _id
-    user {
-      ...UserFragment
-    }
     products {
       _id
       quantity

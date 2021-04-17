@@ -1,0 +1,56 @@
+.header {
+  background: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  h1 {
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    letter-spacing: 0.5px;
+    font-weight: bolder;
+    color: white;
+  }
+  .close {
+    font-size: 0.8rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+    button {
+      padding: 0;
+      color: white;
+      width: 24px !important;
+      min-width: 24px;
+    }
+  }
+}
+.content {
+  padding: 20px;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+  p {
+    display: flex;
+    justify-content: space-between;
+  }
+  .routing {
+    display: flex;
+    flex-direction: column;
+    button:nth-child(1) {
+      border: 1px solid black;
+      margin-bottom: 0.5rem;
+    }
+    button:nth-child(2) {
+      border: 1px solid black;
+      &:hover {
+        background: black;
+        color: white;
+      }
+    }
+  }
+}

@@ -31,6 +31,9 @@ a {
   --container-padding: 20px;
   --container-width: calc(100vw - var(--container-padding) * 2);
   --space: 6px;
+  --header-height: 64px;
+  scroll-padding-top: var(--header-height);
+  scroll-behavior: smooth;
 }
 
 @media only screen and (min-width: 900px) {

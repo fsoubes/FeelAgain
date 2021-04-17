@@ -1,21 +1,5 @@
 @import "mixins";
 
-.cart {
-  width: 304px;
-  height: calc(100%-64px);
-  top: 64px;
-  transform: translate3d(304px, 0, 0);
-  background: white;
-  transition: transform 0.15s ease-out;
-  position: fixed;
-  right: 0;
-  z-index: 100;
-}
-
-.open {
-  transform: translateZ(0);
-}
-
 .main {
   display: flex;
   flex-wrap: wrap-reverse;

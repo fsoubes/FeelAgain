@@ -4,6 +4,7 @@ import {
   useGetSingleShoesQuery,
   useGetClosestShoesQuery,
   Shoes,
+  useAddCartItemMutation,
 } from "../../src/generated/graphql";
 import { withApollo } from "../../src/utils/withApollo";
 import { NextPage } from "next";
@@ -12,6 +13,9 @@ import styles from "../../src/styles/Product.module.scss";
 import { Button } from "@material-ui/core";
 import Outside from "../../src/components/OutsideEvent/Outside";
 import ProductListDash from "../../src/components/Dashboard/Product/ProductList";
+import CartSideBar from "../../src/components/SideBar/CartSideBar";
+import CartProduct from "../../src/components/Cart/CartProduct";
+import BackDropShadow from "../../src/components/BackDrop/BackDropShadow";
 
 interface Props {
   id?: string;
@@ -35,6 +39,8 @@ const Article: NextPage<Props> = ({ id }) => {
     },
     skip: !data?.getSingleShoe.product_type,
   });
+
+  const [addToCart] = useAddCartItemMutation();
 
   const [size, setSize] = useState<number>(36);
   const [index, setIndex] = useState<number>(0);
@@ -66,14 +72,28 @@ const Article: NextPage<Props> = ({ id }) => {
     setOpen(false);
   };
 
+  const handleClick = async () => {
+    try {
+      setTimeout(async () => {
+        await addToCart({
+          variables: {
+            variantId: data?.getSingleShoe?.variants[index]._id as string,
+          },
+        });
+
+        setOpenCard(!openCard);
+      }, 1000);
+    } catch (err) {
+      throw err;
+    }
+  };
+
   return (
     <Layout>
-      <div
-        className={
-          openCard ? `${styles.cart} ${styles.open}` : `${styles.cart}`
-        }
-      ></div>
-
+      {openCard && <BackDropShadow></BackDropShadow>}
+      <CartSideBar isOpen={openCard}>
+        <CartProduct setOpen={setOpenCard} isOpen={openCard} />
+      </CartSideBar>
       <div className="container__shop">
         <div className={styles.main}>
           <div className={styles.images}>
@@ -181,7 +201,7 @@ const Article: NextPage<Props> = ({ id }) => {
                   </Button>
                 ) : (
                   <Button
-                    onClick={() => setOpenCard(!openCard)}
+                    onClick={handleClick}
                     disableRipple
                     className={styles.card}
                   >

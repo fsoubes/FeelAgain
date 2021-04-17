@@ -28,6 +28,7 @@ export type Query = {
   getSingleArticle: Blog;
   getArticles: PaginationResponse;
   getBasket: Basket;
+  getAllBasket: Array<Basket>;
 };
 
 
@@ -747,10 +748,19 @@ export type GetBasketQuery = (
     & { products: Array<(
       { __typename?: 'CartItem' }
       & Pick<CartItem, '_id' | 'quantity'>
-    )>, user: (
-      { __typename?: 'User' }
-      & UserFragmentFragment
-    ) }
+      & { variant: (
+        { __typename?: 'Variants' }
+        & Pick<Variants, '_id' | 'title' | 'quantity' | 'available'>
+        & { shoes: (
+          { __typename?: 'Shoes' }
+          & Pick<Shoes, '_id' | 'title'>
+          & { images: Array<(
+            { __typename?: 'Images' }
+            & Pick<Images, 'src'>
+          )> }
+        ) }
+      ) }
+    )> }
   ) }
 );
 
@@ -1656,13 +1666,23 @@ export const GetBasketDocument = gql`
     products {
       _id
       quantity
-    }
-    user {
-      ...UserFragment
+      variant {
+        _id
+        title
+        quantity
+        available
+        shoes {
+          _id
+          title
+          images {
+            src
+          }
+        }
+      }
     }
   }
 }
-    ${UserFragmentFragmentDoc}`;
+    `;
 
 /**
  * __useGetBasketQuery__
