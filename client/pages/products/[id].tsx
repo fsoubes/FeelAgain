@@ -19,6 +19,8 @@ import ProductListDash from "../../src/components/Dashboard/Product/ProductList"
 import CartSideBar from "../../src/components/SideBar/CartSideBar";
 import CartProduct from "../../src/components/Cart/CartProduct";
 import BackDropShadow from "../../src/components/BackDrop/BackDropShadow";
+import SelectSize from "../../src/components/Select/SelectSize";
+import SelectRelative from "../../src/components/Select/SelectRelative";
 
 interface Props {
   id?: string;
@@ -46,13 +48,11 @@ const Article: NextPage<Props> = ({ id }) => {
 
   const [addToCart] = useAddCartItemMutation();
 
-  const [size, setSize] = useState<number>(36);
   const [index, setIndex] = useState<number>(0);
   const [title, setTitle] = useState<string | undefined>(
     data?.getSingleShoe?.title as string
   );
   const [open, setOpen] = useState<Boolean>(false);
-  const [openSize, setOpenSize] = useState<Boolean>(false);
   const [openCard, setOpenCard] = useState<Boolean>(false);
 
   const handleChange = (
@@ -110,7 +110,6 @@ const Article: NextPage<Props> = ({ id }) => {
                 },
               });
             }
-            // cache.evict({ fieldName: "posts:{}" });
           },
         });
         setOpenCard(!openCard);
@@ -127,9 +126,11 @@ const Article: NextPage<Props> = ({ id }) => {
   return (
     <Layout>
       {openCard && <BackDropShadow></BackDropShadow>}
-      <CartSideBar isOpen={openCard}>
-        <CartProduct setOpen={setOpenCard} isOpen={openCard} />
-      </CartSideBar>
+      <Outside open={openCard} setOpen={setOpenCard}>
+        <CartSideBar isOpen={openCard}>
+          <CartProduct setOpen={setOpenCard} isOpen={openCard} />
+        </CartSideBar>
+      </Outside>
       <div className="container__shop">
         <div className={styles.main}>
           <div className={styles.images}>
@@ -149,87 +150,27 @@ const Article: NextPage<Props> = ({ id }) => {
                     {data?.getSingleShoe?.price}€
                   </h1>
                 </div>
-
-                <div
-                  className={styles.size}
-                  style={{ zIndex: 50 }}
-                  onClick={() => setOpenSize(!openSize)}
-                >
-                  <Outside open={openSize} setOpen={setOpenSize}>
-                    <ul>
-                      <div
-                        className={styles.current}
-                        style={{ padding: "10px" }}
-                      >
-                        {size}
-                      </div>
-                      {data?.getSingleShoe?.size.map((item, index) => {
-                        return (
-                          <li
-                            onClick={() => {
-                              setSize(item);
-                              setIndex(index);
-                            }}
-                            key={item}
-                            className={
-                              openSize
-                                ? `${styles.item__size} ${
-                                    data.getSingleShoe.variants[index]
-                                      .quantity === 0
-                                      ? styles.notavailable
-                                      : styles.show
-                                  }`
-                                : `${styles.item__size} ${styles.hidden}`
-                            }
-                          >
-                            {item}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </Outside>
-                </div>
-
+                {data && (
+                  <SelectSize
+                    sizes={data?.getSingleShoe?.size as number[]}
+                    setIndex={setIndex}
+                    variants={data?.getSingleShoe.variants}
+                  ></SelectSize>
+                )}
                 {data?.getSingleShoe?.relatives &&
                   data?.getSingleShoe?.relatives?.length > 0 && (
-                    <div
-                      style={{ zIndex: 49 }}
-                      className={styles.size}
-                      onClick={() => setOpen(!open)}
-                    >
-                      <Outside open={open} setOpen={setOpen}>
-                        <ul>
-                          {[
-                            {
-                              title: data?.getSingleShoe?.title,
-                              _id: data?.getSingleShoe?._id,
-                            },
-                            ...data?.getSingleShoe?.relatives,
-                          ].map((item, index) => {
-                            return (
-                              <li
-                                key={item._id}
-                                onClick={(event) =>
-                                  handleChange(event, item._id, item.title)
-                                }
-                                className={
-                                  item.title === title || open
-                                    ? `${styles.item__relatives} ${
-                                        index === 0
-                                          ? styles.current
-                                          : styles.show
-                                      }`
-                                    : `${styles.item__relatives} ${styles.hidden}`
-                                }
-                              >
-                                {item.title}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </Outside>
-                    </div>
+                    <SelectRelative
+                      title={data?.getSingleShoe?.title}
+                      data={[
+                        {
+                          title: data?.getSingleShoe?.title,
+                          _id: data?.getSingleShoe?._id,
+                        },
+                        ...data?.getSingleShoe?.relatives,
+                      ]}
+                    />
                   )}
+
                 {data?.getSingleShoe.variants &&
                 data?.getSingleShoe?.variants[index].quantity === 0 ? (
                   <Button disableRipple className={styles.nocard}>

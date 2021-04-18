@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 interface SmallProductItemProps {
   title: string;
@@ -11,6 +11,7 @@ interface SmallProductItemProps {
   update: (itemId: string, quantity: number) => void;
   id: string;
 }
+const delay = 1;
 
 const SmallProductItem: React.FC<SmallProductItemProps> = ({
   title,
@@ -23,6 +24,31 @@ const SmallProductItem: React.FC<SmallProductItemProps> = ({
   update,
   id,
 }) => {
+  const [value, setValue] = useState<string>("");
+
+  useEffect(
+    () => {
+      if (!value) {
+        return;
+      }
+
+      let timer1 = setTimeout(() => update(id, parseInt(value)), delay * 1000);
+
+      // this will clear Timeout
+      // when component unmount like in willComponentUnmount
+      // and show will not change to true
+      return () => {
+        clearTimeout(timer1);
+      };
+    },
+    // useEffect will run only one time with empty []
+    // if you pass a value to array,
+    // like this - [data]
+    // than clearTimeout will run every time
+    // this value changes (useEffect re-run)
+    [value]
+  );
+
   return (
     <li>
       <div
@@ -51,7 +77,7 @@ const SmallProductItem: React.FC<SmallProductItemProps> = ({
             max="30"
             defaultValue={quantity}
             onChange={async (event) => {
-              update(id, parseInt(event.target.value));
+              setValue(event.target.value);
             }}
           ></input>
         </div>

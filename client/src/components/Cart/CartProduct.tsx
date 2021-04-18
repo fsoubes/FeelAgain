@@ -57,6 +57,7 @@ const CartProduct: React.FC<CartProductProps> = ({ isOpen, setOpen }) => {
                   },
                 });
               }
+              cache.evict({ id: `${basket?.getBasket._id}` });
             },
           });
         }, 350);
