@@ -241,7 +241,7 @@ export type Mutation = {
   addRelation: Scalars['Boolean'];
   addGuestCart: Scalars['Boolean'];
   mergeGuestCart: Scalars['Boolean'];
-  addCartItem: Scalars['String'];
+  addCartItem: CartItem;
   updateCartItem: Scalars['String'];
   removeCartItem: Scalars['String'];
 };
@@ -494,7 +494,22 @@ export type AddCartItemMutationVariables = Exact<{
 
 export type AddCartItemMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'addCartItem'>
+  & { addCartItem: (
+    { __typename?: 'CartItem' }
+    & Pick<CartItem, '_id' | 'quantity'>
+    & { variant: (
+      { __typename?: 'Variants' }
+      & Pick<Variants, '_id' | 'title' | 'quantity' | 'available' | 'price'>
+      & { shoes: (
+        { __typename?: 'Shoes' }
+        & Pick<Shoes, '_id' | 'title' | 'price' | 'vendor'>
+        & { images: Array<(
+          { __typename?: 'Images' }
+          & Pick<Images, 'src'>
+        )> }
+      ) }
+    ) }
+  ) }
 );
 
 export type AddImageMutationVariables = Exact<{
@@ -750,10 +765,10 @@ export type GetBasketQuery = (
       & Pick<CartItem, '_id' | 'quantity'>
       & { variant: (
         { __typename?: 'Variants' }
-        & Pick<Variants, '_id' | 'title' | 'quantity' | 'available'>
+        & Pick<Variants, '_id' | 'title' | 'quantity' | 'available' | 'price'>
         & { shoes: (
           { __typename?: 'Shoes' }
-          & Pick<Shoes, '_id' | 'title'>
+          & Pick<Shoes, '_id' | 'title' | 'price' | 'vendor'>
           & { images: Array<(
             { __typename?: 'Images' }
             & Pick<Images, 'src'>
@@ -1059,7 +1074,26 @@ export type AddArticleMutationResult = Apollo.MutationResult<AddArticleMutation>
 export type AddArticleMutationOptions = Apollo.BaseMutationOptions<AddArticleMutation, AddArticleMutationVariables>;
 export const AddCartItemDocument = gql`
     mutation AddCartItem($variantId: String!) {
-  addCartItem(variantId: $variantId)
+  addCartItem(variantId: $variantId) {
+    _id
+    quantity
+    variant {
+      _id
+      title
+      quantity
+      available
+      price
+      shoes {
+        _id
+        title
+        price
+        vendor
+        images {
+          src
+        }
+      }
+    }
+  }
 }
     `;
 export type AddCartItemMutationFn = Apollo.MutationFunction<AddCartItemMutation, AddCartItemMutationVariables>;
@@ -1671,9 +1705,12 @@ export const GetBasketDocument = gql`
         title
         quantity
         available
+        price
         shoes {
           _id
           title
+          price
+          vendor
           images {
             src
           }

@@ -64,12 +64,12 @@ export class BasketResolver {
       throw err;
     }
   }
-  @Mutation(() => String)
+  @Mutation(() => CartItem)
   @UseMiddleware(isAuth)
   async addCartItem(
     @Arg("variantId") variantId: String,
     @Ctx() { req }: MyContext
-  ): Promise<String> {
+  ): Promise<CartItem> {
     try {
       const item = await CartItemModel.findOneAndUpdate(
         { variant: ObjectId(variantId) },
@@ -92,7 +92,7 @@ export class BasketResolver {
         );
       }
 
-      return `Item added to the shopping cart`;
+      return item;
     } catch (err) {
       throw err;
     }

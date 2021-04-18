@@ -1,3 +1,22 @@
 mutation AddCartItem($variantId: String!) {
-  addCartItem(variantId: $variantId)
+  addCartItem(variantId: $variantId) {
+    _id
+    quantity
+    variant {
+      _id
+      title
+      quantity
+      available
+      price
+      shoes {
+        _id
+        title
+        price
+        vendor
+        images {
+          src
+        }
+      }
+    }
+  }
 }

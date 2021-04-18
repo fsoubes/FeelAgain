@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useApolloClient } from "@apollo/client";
 import { Layout } from "../../src/components/Layout";
 import {
   useGetSingleShoesQuery,
   useGetClosestShoesQuery,
   Shoes,
   useAddCartItemMutation,
+  GetBasketDocument,
+  GetBasketQuery,
 } from "../../src/generated/graphql";
 import { withApollo } from "../../src/utils/withApollo";
 import { NextPage } from "next";
@@ -27,6 +30,7 @@ const getMarkdown = (innerHtml: any) => {
 
 const Article: NextPage<Props> = ({ id }) => {
   const router = useRouter();
+  const client = useApolloClient();
 
   const { data } = useGetSingleShoesQuery({
     variables: { shoesId: id },
@@ -51,16 +55,6 @@ const Article: NextPage<Props> = ({ id }) => {
   const [openSize, setOpenSize] = useState<Boolean>(false);
   const [openCard, setOpenCard] = useState<Boolean>(false);
 
-  useEffect(() => {
-    if (!id) {
-      router.push("/404");
-    }
-  }, [id]);
-
-  useEffect(() => {
-    setTitle(data?.getSingleShoe.title);
-  }, [data]);
-
   const handleChange = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     id: string,
@@ -72,6 +66,12 @@ const Article: NextPage<Props> = ({ id }) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (!id) {
+      router.push("/404");
+    }
+  }, [id]);
+
   const handleClick = async () => {
     try {
       setTimeout(async () => {
@@ -79,14 +79,50 @@ const Article: NextPage<Props> = ({ id }) => {
           variables: {
             variantId: data?.getSingleShoe?.variants[index]._id as string,
           },
-        });
+          update: (cache, { data }) => {
+            const basket = client.readQuery<GetBasketQuery>({
+              query: GetBasketDocument,
+            });
 
+            if (basket?.getBasket && data?.addCartItem) {
+              const isPresent = basket.getBasket.products.filter(
+                (item) => item._id === data?.addCartItem._id
+              );
+
+              const updateData = basket.getBasket.products.map((item) =>
+                item._id === data?.addCartItem._id
+                  ? { ...item, quantity: data.addCartItem?.quantity }
+                  : item
+              );
+
+              cache.writeQuery<GetBasketQuery>({
+                query: GetBasketDocument,
+                data: {
+                  __typename: "Query",
+                  ...basket,
+                  getBasket: {
+                    ...basket.getBasket,
+                    products:
+                      isPresent.length > 0
+                        ? [...updateData]
+                        : [data?.addCartItem, ...updateData],
+                  },
+                },
+              });
+            }
+            // cache.evict({ fieldName: "posts:{}" });
+          },
+        });
         setOpenCard(!openCard);
-      }, 1000);
+      }, 350);
     } catch (err) {
       throw err;
     }
   };
+
+  useEffect(() => {
+    setTitle(data?.getSingleShoe.title);
+  }, [data]);
 
   return (
     <Layout>

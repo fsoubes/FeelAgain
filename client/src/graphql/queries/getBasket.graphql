@@ -9,9 +9,12 @@ query GetBasket {
         title
         quantity
         available
+        price
         shoes {
           _id
           title
+          price
+          vendor
           images {
             src
           }
