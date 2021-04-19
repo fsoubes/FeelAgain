@@ -38,7 +38,7 @@
       display: inline-grid;
       grid-template-columns: 120px auto;
       width: 100%;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid lightgray;
       div:nth-child(1) {
         background-position: 50%;
         background-repeat: no-repeat;
@@ -110,17 +110,33 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .total {
+    font-size: 1.2rem;
+    padding: 10px 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+  }
+
   .routing {
     display: flex;
     flex-direction: column;
-    button:nth-child(1) {
+    align-items: center;
+    width: 100%;
+    a,
+    button {
+      width: 100%;
+    }
+    .action__cart {
       border: 1px solid black;
       margin-bottom: 0.5rem;
     }
-    button:nth-child(2) {
+
+    .action__payment {
       border: 1px solid black;
       &:hover {
-        background: black;
+        background: black !important;
         color: white;
       }
     }

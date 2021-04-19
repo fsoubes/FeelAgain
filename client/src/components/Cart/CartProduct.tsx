@@ -1,6 +1,4 @@
-import { Button } from "@material-ui/core";
-import Link from "next/link";
-import React, { useCallback } from "react";
+import React, { useCallback, Fragment } from "react";
 import {
   GetBasketDocument,
   GetBasketQuery,
@@ -8,18 +6,22 @@ import {
   useRemoveCartItemMutation,
   useUpdateCartItemMutation,
 } from "../../generated/graphql";
-import styles from "../../styles/CartProduct.module.scss";
-import SmallProductList from "../Products/SmallProductList";
 import { useApolloClient } from "@apollo/client";
+import Spinner from "../Spinner/Spinner";
 
 interface CartProductProps {
   isOpen: Boolean;
-  setOpen: React.Dispatch<React.SetStateAction<Boolean>>;
+  children: JSX.Element;
+  setOpen?: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
-const CartProduct: React.FC<CartProductProps> = ({ isOpen, setOpen }) => {
+const CartProduct: React.FC<CartProductProps> = ({
+  isOpen,
+  children,
+  setOpen,
+}) => {
   const client = useApolloClient();
-  const { data } = useGetBasketQuery({
+  const { data, loading } = useGetBasketQuery({
     skip: !isOpen,
   });
 
@@ -45,6 +47,14 @@ const CartProduct: React.FC<CartProductProps> = ({ isOpen, setOpen }) => {
                   (item) => item._id !== itemId
                 );
 
+                cache.evict({
+                  // Often cache.evict will take an options.id property, but that's not necessary
+                  // when evicting from the ROOT_QUERY object, as we're doing here.
+                  fieldName: "products",
+                  // No need to trigger a broadcast here, since writeQuery will take care of that.
+                  broadcast: false,
+                });
+
                 cache.writeQuery<GetBasketQuery>({
                   query: GetBasketDocument,
                   data: {
@@ -57,7 +67,6 @@ const CartProduct: React.FC<CartProductProps> = ({ isOpen, setOpen }) => {
                   },
                 });
               }
-              cache.evict({ id: `${basket?.getBasket._id}` });
             },
           });
         }, 350);
@@ -109,45 +118,21 @@ const CartProduct: React.FC<CartProductProps> = ({ isOpen, setOpen }) => {
     [updateCartItem]
   );
 
-  return (
-    <div>
-      <div className={styles.header}>
-        <h1>Panier</h1>
-        <div className={styles.close}>
-          Fermer
-          <Button onClick={() => setOpen(false)}>X</Button>
-        </div>
+  const params = {
+    data: data,
+    handleUpdate: handleUpdate,
+    handleRemove: handleRemove,
+    ...(setOpen && { setOpen: setOpen }),
+  };
+
+  if (loading) {
+    return (
+      <div>
+        <Spinner></Spinner>
       </div>
-      <div className={styles.content}>
-        {data && (
-          <SmallProductList
-            data={data}
-            remove={handleRemove}
-            update={handleUpdate}
-          />
-        )}
-        <p>
-          <strong>SOUS-TOTAL:</strong>
-          <span style={{ color: "red", fontWeight: "bold" }}>
-            {data?.getBasket.products.reduce(
-              (acc, currentValue) =>
-                acc +
-                currentValue.variant.price * (currentValue.quantity as number),
-              0
-            )}
-            ,00€
-          </span>
-        </p>
-        <div className={styles.routing}>
-          <Link href={"/panier"}>
-            <Button disableRipple>VOIR LE PANIER</Button>
-          </Link>
-          <Link href={"/paiement/id"}>
-            <Button disableRipple>PAIEMENT</Button>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+    );
+  }
+
+  return <Fragment>{React.cloneElement(children, { ...params })}</Fragment>;
 };
 export default CartProduct;

@@ -13,7 +13,7 @@ const SmallProductList: React.FC<SmallProductListProps> = ({
   remove,
   update,
 }) => {
-  const item = data.getBasket?.products.map((item, index) => (
+  const item = data.getBasket?.products.map((item) => (
     <SmallProductItem
       key={item._id}
       src={
@@ -22,6 +22,7 @@ const SmallProductList: React.FC<SmallProductListProps> = ({
           : item.variant.shoes.images[0].src
       }
       id={item._id}
+      size={item.variant.title}
       title={item.variant.shoes.title}
       price={item.variant.price}
       contain={item.variant.shoes.vendor === "Anaki"}

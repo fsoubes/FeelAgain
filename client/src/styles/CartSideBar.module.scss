@@ -1,9 +1,9 @@
 .cart {
-  width: 400px;
+  width: 350px;
   // height: calc(100%-64px); // if top bar is not sticky or fixed
   position: fixed;
   top: 0;
-  transform: translate3d(400px, 0, 0);
+  transform: translate3d(350px, 0, 0);
   transition: transform 0.15s ease-out;
   padding: 64px 0;
   right: 0;

@@ -1,0 +1,135 @@
+.container {
+  text-align: center;
+  font-family: DejaVu Sans Mono, monospace;
+
+  .main__title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    h1 {
+      text-align: center;
+      font-weight: bolder;
+    }
+  }
+
+  .head__row,
+  .product__row,
+  .head__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding: 5px 0;
+
+    .cover {
+      display: block;
+      max-width: 145px;
+      min-width: 100px;
+      padding: 0;
+      flex: 1;
+      padding-right: 15px;
+      .image {
+        background-position: 50%;
+        background-repeat: no-repeat;
+        border-radius: 3px;
+        height: 145px;
+        min-height: 145px;
+        width: 100%;
+      }
+    }
+    .product {
+      padding-left: 10px;
+      flex: 4;
+      text-align: left;
+      .product__header {
+        line-height: 15px;
+        padding-bottom: 15px;
+        .title {
+          font-size: 1rem;
+          display: -webkit-box;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          font-weight: 600;
+          font-family: monospace;
+          letter-spacing: 0.2px;
+        }
+        .size {
+          font-size: 0.75rem;
+          color: grey;
+          font-weight: 600;
+        }
+      }
+      .product__bottom {
+        line-height: 15px;
+        .action {
+          display: table-cell;
+          vertical-align: middle;
+          span {
+            font-size: 0.75rem;
+            padding-right: 5px;
+            color: #0066c0;
+            cursor: pointer;
+            &:hover {
+              color: orange;
+            }
+          }
+          span:nth-child(2) {
+            color: black;
+          }
+        }
+      }
+    }
+    .prix {
+      flex: 1;
+      text-align: left;
+    }
+    .quantity {
+      flex: 1;
+      text-align: center;
+      input {
+        width: 60px;
+        border-radius: 0;
+        padding: 5px;
+      }
+    }
+    .total {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  .head__row {
+    font-weight: bolder;
+    font-size: 1.1rem;
+  }
+  .product__row {
+    background: white;
+    font-size: 1rem;
+    font-family: Lato;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+  }
+
+  .head__total {
+    background: white;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    padding: 0;
+    .total {
+      padding: 10px 0;
+      border-left: 1px solid black;
+    }
+  }
+  .payment {
+    margin-top: 1rem;
+    button {
+      font-family: DejaVu Sans Mono, monospace;
+      background: black;
+      color: white;
+    }
+  }
+}
