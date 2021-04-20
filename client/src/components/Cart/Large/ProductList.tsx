@@ -18,8 +18,12 @@ const ProductList: React.FC<ProductListProps> = ({ data, remove, update }) => {
     return (
       <SmallCartProduct
         data={data}
-        handleUpdate={update}
-        handleRemove={remove}
+        handleUpdate={
+          update as (itemId: string, quantity: number) => Promise<void>
+        }
+        handleRemove={
+          remove as (itemId: string, BasketId: string) => Promise<void>
+        }
       ></SmallCartProduct>
     );
   }
