@@ -102,7 +102,6 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
 
           const filteredShoes = compareObject(shoes, initialShoes);
 
-          console.log(shoes, initialShoes);
           const shoesVariable = {
             ...(fetchValues && {
               shoeId: fetchValues?._id as string,

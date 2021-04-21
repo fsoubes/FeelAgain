@@ -31,13 +31,12 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
             display="flex"
             flexDirection="column"
           >
-            <label className={styles.form__register_label}>Titre</label>
+            <label>Titre</label>
             <Field
               type="text"
               name="title"
               autoCapitalize="none"
               autoCorrect="off"
-              className={styles.form__register_input}
             ></Field>
           </Box>
           <Box
@@ -46,13 +45,12 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
             display="flex"
             flexDirection="column"
           >
-            <label className={styles.form__register_label}>Vendeur</label>
+            <label>Vendeur</label>
             <Field
               type="text"
               name="vendor"
               autoCapitalize="none"
               autoCorrect="off"
-              className={styles.form__register_input}
             ></Field>
           </Box>
           <Box
@@ -61,9 +59,7 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
             display="flex"
             flexDirection="column"
           >
-            <label className={styles.form__register_label}>
-              Type de produit
-            </label>
+            <label>Type de produit</label>
             <Field as="select" name="product_type">
               {productType.map((item, index) => (
                 <option value={item} key={index}>
@@ -79,14 +75,13 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
             display="flex"
             flexDirection="column"
           >
-            <label className={styles.form__register_label}>Poids (g)</label>
+            <label>Poids (g)</label>
             <Field
               type="number"
               name="grams"
               autoCapitalize="none"
               min="1"
               autoCorrect="off"
-              className={styles.form__register_input}
             ></Field>
           </Box>
           <Box
@@ -125,14 +120,13 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
             display="flex"
             flexDirection="column"
           >
-            <label className={styles.form__register_label}>Prix (euro)</label>
+            <label>Prix (euro)</label>
             <Field
               type="number"
               name="price"
               step="0.01"
               autoCapitalize="none"
               autoCorrect="off"
-              className={styles.form__register_input}
               min="1"
             ></Field>
           </Box>
@@ -142,13 +136,12 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
             display="flex"
             flexDirection="column"
           >
-            <label className={styles.form__register_label}>Solde</label>
+            <label>Solde</label>
             <Field
               type="number"
               name="compare_at_price"
               autoCapitalize="none"
               autoCorrect="off"
-              className={styles.form__register_input}
               min="1"
             ></Field>
           </Box>
@@ -183,7 +176,6 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
               name="heel"
               autoCapitalize="none"
               autoCorrect="off"
-              className={styles.form__register_input}
             ></Field>
           </Box>
         </div>
@@ -221,7 +213,6 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
             autoCapitalize="none"
             autoCorrect="off"
             spellCheck="false"
-            className={styles.form__register_input}
           ></Field>
         </Box>
       </section>

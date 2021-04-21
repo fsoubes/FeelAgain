@@ -40,7 +40,7 @@ const LargeCartProduct: React.FC<LargeCartProductProps> = ({
         />
       )}
       <div className={styles.payment}>
-        <Link href={`/checkouts/${data?.getBasket._id}`}>
+        <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
           <Button>PROCEDER AU PAIEMENT</Button>
         </Link>
         {/* <ArrowRightAlt /> */}

@@ -62,9 +62,11 @@
       display: flex;
       flex-direction: column;
     }
-    input textarea,
+
+    input,
+    textarea,
     select {
-      border: 1px solid #d5e3ec;
+      border: 1px solid #d5e3ec !important;
       background: white;
       border-radius: 3px;
       color: #121c42;
@@ -72,13 +74,14 @@
       display: block;
       width: 100%;
       outline: none;
-      min-height: 44px;
+      min-height: 44px !important;
       width: 100%;
       border-radius: 5px;
       &:focus {
         font-weight: bold;
       }
     }
+
     button {
       background-color: transparent;
       border: none;
