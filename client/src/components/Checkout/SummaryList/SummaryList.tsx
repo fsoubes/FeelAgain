@@ -27,4 +27,4 @@ const SummaryList: React.FC<SummaryListProps> = ({ data }) => {
 
   return <ul>{item}</ul>;
 };
-export default SummaryList;
+export default React.memo(SummaryList);

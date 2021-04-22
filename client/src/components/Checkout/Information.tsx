@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "../../styles/InfoCart.module.scss";
 import { Box, Button } from "@material-ui/core";
 import { useRouter } from "next/router";
+import * as Yup from "yup";
 
 interface Info {
   firstname: string;
@@ -13,6 +14,7 @@ interface Info {
   city: string;
   country: string;
   phone: string;
+  mail: string;
 }
 
 interface InformationProps {
@@ -21,6 +23,8 @@ interface InformationProps {
   value: Info;
   setValue: React.Dispatch<React.SetStateAction<Info>>;
 }
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const Information: React.FC<InformationProps> = ({
   id,
@@ -46,7 +50,24 @@ const Information: React.FC<InformationProps> = ({
         initialValues={{
           ...value,
         }}
-        onSubmit={async (values, { setErrors }) => {
+        validationSchema={Yup.object({
+          firstname: Yup.string()
+            .max(15, "Doit être de 20 caractères ou moins")
+            .required("Vous devez remplir les champs requis"),
+          lastname: Yup.string()
+            .max(20, "Doit être de 20 caractères ou moins")
+            .required("Vous devez remplir les champs requis"),
+          zip: Yup.string()
+            .max(5, "Le code postale n'est pas valide")
+            .min(5, "Le code postale n'est pas valide")
+            .required("Vous devez remplir les champs requis"),
+          phone: Yup.string()
+            .max(10, "Le numéro de téléphone n'est pas valide")
+            .min(10, "Le numéro de téléphone n'est pas valide")
+            .matches(phoneRegExp, "Le numéro de téléphone n'est pas valide")
+            .required("Vous devez remplir les champs requis"),
+        })}
+        onSubmit={async (values) => {
           try {
             setValue(values);
             const updated = "delivery";
@@ -77,10 +98,12 @@ const Information: React.FC<InformationProps> = ({
             >
               <label>Prénom</label>
               <Field
+                autoFocus
                 type="text"
                 name="firstname"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="Robert"
               ></Field>
               {errors.firstname && (
                 <ErrorMessage name="firstname">
@@ -97,9 +120,10 @@ const Information: React.FC<InformationProps> = ({
               <label>Nom</label>
               <Field
                 type="text"
-                name="email"
+                name="lastname"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="Dupont"
               ></Field>
               {errors.lastname && (
                 <ErrorMessage name="lastname">
@@ -119,8 +143,9 @@ const Information: React.FC<InformationProps> = ({
                 name="adress"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="1 rue d'evry"
               ></Field>
-              {errors.lastname && (
+              {errors.adress && (
                 <ErrorMessage name="adress">
                   {(msg) => <div style={{ color: "red" }}>{msg}</div>}
                 </ErrorMessage>
@@ -132,18 +157,14 @@ const Information: React.FC<InformationProps> = ({
               display="flex"
               flexDirection="column"
             >
-              <label>Information Complémentaires</label>
+              <label>Information Complémentaires (facultatif)</label>
               <Field
                 type="text"
                 name="more"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="5ème étage ..."
               ></Field>
-              {errors.lastname && (
-                <ErrorMessage name="more">
-                  {(msg) => <div style={{ color: "red" }}>{msg}</div>}
-                </ErrorMessage>
-              )}
             </Box>
             <Box
               marginBottom={2}
@@ -157,9 +178,10 @@ const Information: React.FC<InformationProps> = ({
                 name="zip"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="91000"
               ></Field>
-              {errors.lastname && (
-                <ErrorMessage name="lastname">
+              {errors.zip && (
+                <ErrorMessage name="zip">
                   {(msg) => <div style={{ color: "red" }}>{msg}</div>}
                 </ErrorMessage>
               )}
@@ -176,8 +198,9 @@ const Information: React.FC<InformationProps> = ({
                 name="city"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="Evry"
               ></Field>
-              {errors.lastname && (
+              {errors.city && (
                 <ErrorMessage name="city">
                   {(msg) => <div style={{ color: "red" }}>{msg}</div>}
                 </ErrorMessage>
@@ -195,8 +218,9 @@ const Information: React.FC<InformationProps> = ({
                 name="country"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="France"
               ></Field>
-              {errors.lastname && (
+              {errors.country && (
                 <ErrorMessage name="country">
                   {(msg) => <div style={{ color: "red" }}>{msg}</div>}
                 </ErrorMessage>
@@ -214,22 +238,25 @@ const Information: React.FC<InformationProps> = ({
                 name="phone"
                 autoCapitalize="none"
                 autoCorrect="off"
+                placeholder="0122284866"
               ></Field>
-              {errors.lastname && (
+              {errors.phone && (
                 <ErrorMessage name="phone">
                   {(msg) => <div style={{ color: "red" }}>{msg}</div>}
                 </ErrorMessage>
               )}
             </Box>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={isSubmitting}
-            >
-              Choix de l'expedition
-            </Button>
+            <Box marginBottom={2} marginTop={2}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+              >
+                Choix de l'expedition
+              </Button>
+            </Box>
           </Form>
         )}
       </Formik>

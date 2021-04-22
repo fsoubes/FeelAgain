@@ -32,7 +32,7 @@ const SummaryItem: React.FC<SummaryItemProps> = ({
         </div>
       </div>
       <div>
-        <span>{price},00€&nbsp;</span>
+        <span>{price},00&nbsp;€</span>
         <span>(x{quantity})</span>
       </div>
     </li>

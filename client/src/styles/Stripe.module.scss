@@ -1,0 +1,203 @@
+.AppWrapper {
+  width: 500px;
+  height: 400px;
+  position: relative;
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+      transform: scale3D(0.95, 0.95, 0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale3D(1, 1, 1);
+    }
+  }
+
+  .Form {
+    animation: fade 200ms ease-out;
+    margin-top: 1rem;
+  }
+
+  .FormGroup {
+    margin: 0 15px 20px;
+    padding: 0;
+    border-style: none;
+    background-color: white;
+    will-change: opacity, transform;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    /* box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 #829fff; */
+  }
+
+  .FormRow {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-left: 15px;
+    border-top: 1px solid #819efc;
+    &:focus {
+      border-color: #4869ee;
+      box-shadow: 0 0 0 3px #4869ee3f;
+    }
+  }
+
+  .FormRow:first-child {
+    border-top: none;
+  }
+
+  .FormRowLabel {
+    width: 15%;
+    min-width: 70px;
+    padding: 11px 0;
+    color: #c4f0ff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @keyframes void-animation-out {
+    0%,
+    to {
+      opacity: 1;
+    }
+  }
+  .FormRowInput:-webkit-autofill {
+    -webkit-text-fill-color: #fce883;
+    /* Hack to hide the default webkit autofill */
+    transition: background-color 100000000s;
+    animation: 1ms void-animation-out;
+  }
+
+  .FormRowInput {
+    font-size: 16px;
+    width: 100%;
+    padding: 11px 15px 11px 0;
+    color: #fff;
+    background-color: transparent;
+    animation: 1ms void-animation-out;
+  }
+
+  .StripeElement__webkit_autofill {
+    background: transparent;
+  }
+
+  .StripeElement {
+    width: 100%;
+    padding: 11px 15px 11px 0;
+  }
+
+  input:focus,
+  .StripeElement__focus {
+    box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
+      rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+  }
+
+  .SubmitButton {
+    display: block;
+    font-size: 16px;
+    width: calc(100% - 30px);
+    height: 40px;
+    margin: 40px 15px 0;
+    background-color: black;
+    /* box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 grey; */
+    border-radius: 3px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+    will-change: transform, background-color, box-shadow;
+  }
+
+  .SubmitButton:active {
+    background-color: #d782d9;
+    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 #e298d8;
+    transform: scale(0.99);
+  }
+
+  .SubmitButton.SubmitButton__error {
+    transform: translateY(15px);
+  }
+  .SubmitButton.SubmitButton__error:active {
+    transform: scale(0.99) translateY(15px);
+  }
+
+  .SubmitButton:disabled {
+    opacity: 0.5;
+    cursor: default;
+    background-color: #7795f8;
+    box-shadow: none;
+  }
+
+  .ErrorMessage {
+    color: #9e2146;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    padding: 0 15px;
+    font-size: 13px;
+    margin-top: 0px;
+    width: 100%;
+    transform: translateY(-15px);
+    opacity: 0;
+    animation: fade 150ms ease-out;
+    animation-delay: 50ms;
+    animation-fill-mode: forwards;
+    will-change: opacity, transform;
+  }
+
+  .ErrorMessage svg {
+    margin-right: 10px;
+  }
+
+  .Result {
+    margin-top: 50px;
+    text-align: center;
+    animation: fade 200ms ease-out;
+  }
+
+  .ResultTitle {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 17px;
+    text-align: center;
+  }
+
+  .ResultMessage {
+    color: #9cdbff;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    line-height: 1.6em;
+    text-align: center;
+  }
+
+  .ResetButton {
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+  }
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.container {
+  width: 100%;
+  background: white;
+  margin-top: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

@@ -2,4 +2,35 @@
   margin-top: 1rem;
   width: 100%;
   background: white;
+  .formControlLabel {
+    padding: 0px 5px;
+    margin: 0;
+    width: 100%;
+    flex-direction: row;
+    & span {
+      font-size: 14px;
+      font-weight: normal;
+      &:hover {
+        color: black !important;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .checkBox {
+    padding: 0;
+  }
+  span {
+    font-weight: bold;
+    padding-right: 5px;
+  }
+
+  .contact {
+    padding: 0 5px;
+    .contact__details {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }

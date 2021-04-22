@@ -47,17 +47,16 @@
       }
       div:nth-child(2) {
         display: flex;
-        // align-items: center;
+        align-items: center;
         flex-direction: column;
         line-height: 15px;
         span:nth-child(1) {
           text-align: right;
           width: 100%;
-          font-weight: bold;
         }
         span:nth-child(2) {
-          text-align: right;
           width: 100%;
+          text-align: right;
         }
       }
     }

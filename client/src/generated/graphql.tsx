@@ -775,7 +775,10 @@ export type GetBasketQuery = (
           )> }
         ) }
       ) }
-    )> }
+    )>, user: (
+      { __typename?: 'User' }
+      & Pick<User, '_id' | 'email'>
+    ) }
   ) }
 );
 
@@ -1716,6 +1719,10 @@ export const GetBasketDocument = gql`
           }
         }
       }
+    }
+    user {
+      _id
+      email
     }
   }
 }

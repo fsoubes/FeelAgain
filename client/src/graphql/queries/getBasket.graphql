@@ -21,5 +21,9 @@ query GetBasket {
         }
       }
     }
+    user {
+      _id
+      email
+    }
   }
 }
