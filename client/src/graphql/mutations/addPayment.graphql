@@ -1,0 +1,29 @@
+mutation AddPayment(
+  $stripeId: String!
+  $line1: String
+  $line2: String
+  $postal_code: String
+  $country: String
+  $city: String
+  $email: String
+  $name: String
+  $phone: String
+  $delivery: String
+  $amount: String
+) {
+  addPayment(
+    stripeId: $stripeId
+    details: {
+      line1: $line1
+      line2: $line2
+      postal_code: $postal_code
+      country: $country
+      city: $city
+      email: $email
+      name: $name
+      phone: $phone
+      delivery: $delivery
+      amount: $amount
+    }
+  )
+}

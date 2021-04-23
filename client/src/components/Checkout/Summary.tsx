@@ -6,10 +6,11 @@ import Spinner from "../Spinner/Spinner";
 
 interface SummaryProps {
   setMail: React.Dispatch<React.SetStateAction<string>>;
+  setTotal: React.Dispatch<React.SetStateAction<number>>;
   delivery: boolean;
 }
 
-const Summary: React.FC<SummaryProps> = ({ setMail, delivery }) => {
+const Summary: React.FC<SummaryProps> = ({ setMail, delivery, setTotal }) => {
   const { data, loading } = useGetBasketQuery();
 
   const total = data?.getBasket.products.reduce(
@@ -19,10 +20,11 @@ const Summary: React.FC<SummaryProps> = ({ setMail, delivery }) => {
   );
 
   useEffect(() => {
-    if (data) {
+    if (data && total) {
       setMail(data.getBasket.user.email);
+      setTotal(total as number);
     }
-  }, [data]);
+  }, [data, total]);
 
   return (
     <div className={styles.container}>

@@ -1,7 +1,8 @@
 .AppWrapper {
-  width: 500px;
-  height: 400px;
+  width: 70%;
+  height: 300px;
   position: relative;
+  margin: auto;
 
   @keyframes fade {
     from {
@@ -38,10 +39,6 @@
     align-items: center;
     margin-left: 15px;
     border-top: 1px solid #819efc;
-    &:focus {
-      border-color: #4869ee;
-      box-shadow: 0 0 0 3px #4869ee3f;
-    }
   }
 
   .FormRow:first-child {
@@ -89,13 +86,13 @@
     padding: 11px 15px 11px 0;
   }
 
-  input:focus,
+  /*  input:focus,
   .StripeElement__focus {
     box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
       rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
     -webkit-transition: all 150ms ease;
     transition: all 150ms ease;
-  }
+  } */
 
   .SubmitButton {
     display: block;
@@ -163,7 +160,7 @@
   }
 
   .ResultTitle {
-    color: #fff;
+    color: green;
     font-weight: 500;
     margin-bottom: 8px;
     font-size: 17px;
@@ -171,7 +168,7 @@
   }
 
   .ResultMessage {
-    color: #9cdbff;
+    color: black;
     font-size: 14px;
     font-weight: 400;
     margin-bottom: 25px;

@@ -7,14 +7,14 @@ import * as Yup from "yup";
 
 interface Info {
   firstname: string;
-  lastname: string;
+  name: string;
   adress: string;
   more: string;
   zip: string;
   city: string;
   country: string;
   phone: string;
-  mail: string;
+  email: string;
 }
 
 interface InformationProps {
@@ -54,7 +54,7 @@ const Information: React.FC<InformationProps> = ({
           firstname: Yup.string()
             .max(15, "Doit être de 20 caractères ou moins")
             .required("Vous devez remplir les champs requis"),
-          lastname: Yup.string()
+          name: Yup.string()
             .max(20, "Doit être de 20 caractères ou moins")
             .required("Vous devez remplir les champs requis"),
           zip: Yup.string()
@@ -120,13 +120,13 @@ const Information: React.FC<InformationProps> = ({
               <label>Nom</label>
               <Field
                 type="text"
-                name="lastname"
+                name="name"
                 autoCapitalize="none"
                 autoCorrect="off"
                 placeholder="Dupont"
               ></Field>
-              {errors.lastname && (
-                <ErrorMessage name="lastname">
+              {errors.name && (
+                <ErrorMessage name="name">
                   {(msg) => <div style={{ color: "red" }}>{msg}</div>}
                 </ErrorMessage>
               )}

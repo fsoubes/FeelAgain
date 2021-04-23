@@ -244,6 +244,7 @@ export type Mutation = {
   addCartItem: CartItem;
   updateCartItem: Scalars['String'];
   removeCartItem: Scalars['String'];
+  addPayment: Scalars['String'];
 };
 
 
@@ -345,6 +346,12 @@ export type MutationRemoveCartItemArgs = {
   itemId: Scalars['String'];
 };
 
+
+export type MutationAddPaymentArgs = {
+  details: DetailsInput;
+  stripeId: Scalars['String'];
+};
+
 export type ShoesInput = {
   title?: Maybe<Scalars['String']>;
   body_html?: Maybe<Scalars['String']>;
@@ -410,6 +417,19 @@ export type BlogInput = {
   social?: Maybe<Array<Scalars['String']>>;
   article?: Maybe<Scalars['String']>;
   isPublished?: Maybe<Scalars['Boolean']>;
+};
+
+export type DetailsInput = {
+  line1?: Maybe<Scalars['String']>;
+  line2?: Maybe<Scalars['String']>;
+  postal_code?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  delivery?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
 };
 
 export type ArticleFragmentFragment = (
@@ -525,6 +545,26 @@ export type AddImageMutationVariables = Exact<{
 export type AddImageMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'addImage'>
+);
+
+export type AddPaymentMutationVariables = Exact<{
+  stripeId: Scalars['String'];
+  line1?: Maybe<Scalars['String']>;
+  line2?: Maybe<Scalars['String']>;
+  postal_code?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  delivery?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+}>;
+
+
+export type AddPaymentMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addPayment'>
 );
 
 export type AddShoeMutationVariables = Exact<{
@@ -1162,6 +1202,49 @@ export function useAddImageMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddImageMutationHookResult = ReturnType<typeof useAddImageMutation>;
 export type AddImageMutationResult = Apollo.MutationResult<AddImageMutation>;
 export type AddImageMutationOptions = Apollo.BaseMutationOptions<AddImageMutation, AddImageMutationVariables>;
+export const AddPaymentDocument = gql`
+    mutation AddPayment($stripeId: String!, $line1: String, $line2: String, $postal_code: String, $country: String, $city: String, $email: String, $name: String, $phone: String, $delivery: String, $amount: String) {
+  addPayment(
+    stripeId: $stripeId
+    details: {line1: $line1, line2: $line2, postal_code: $postal_code, country: $country, city: $city, email: $email, name: $name, phone: $phone, delivery: $delivery, amount: $amount}
+  )
+}
+    `;
+export type AddPaymentMutationFn = Apollo.MutationFunction<AddPaymentMutation, AddPaymentMutationVariables>;
+
+/**
+ * __useAddPaymentMutation__
+ *
+ * To run a mutation, you first call `useAddPaymentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPaymentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPaymentMutation, { data, loading, error }] = useAddPaymentMutation({
+ *   variables: {
+ *      stripeId: // value for 'stripeId'
+ *      line1: // value for 'line1'
+ *      line2: // value for 'line2'
+ *      postal_code: // value for 'postal_code'
+ *      country: // value for 'country'
+ *      city: // value for 'city'
+ *      email: // value for 'email'
+ *      name: // value for 'name'
+ *      phone: // value for 'phone'
+ *      delivery: // value for 'delivery'
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useAddPaymentMutation(baseOptions?: Apollo.MutationHookOptions<AddPaymentMutation, AddPaymentMutationVariables>) {
+        return Apollo.useMutation<AddPaymentMutation, AddPaymentMutationVariables>(AddPaymentDocument, baseOptions);
+      }
+export type AddPaymentMutationHookResult = ReturnType<typeof useAddPaymentMutation>;
+export type AddPaymentMutationResult = Apollo.MutationResult<AddPaymentMutation>;
+export type AddPaymentMutationOptions = Apollo.BaseMutationOptions<AddPaymentMutation, AddPaymentMutationVariables>;
 export const AddShoeDocument = gql`
     mutation AddShoe($title: String!, $body_html: String, $vendor: String, $price: Float!, $handle: String, $product_type: String, $tags: [String!]!, $size: [Float!]!, $is_published: Boolean!, $relatives: [String!]!) {
   addShoe(

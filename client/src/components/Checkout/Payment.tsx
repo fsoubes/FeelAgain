@@ -6,14 +6,14 @@ import CheckoutClassic from "../Stripe/CheckoutClassic";
 
 interface Info {
   firstname: string;
-  lastname: string;
+  name: string;
   adress: string;
   more: string;
   zip: string;
   city: string;
   country: string;
   phone: string;
-  mail: string;
+  email: string;
 }
 
 interface Shipping {
@@ -24,10 +24,12 @@ interface Shipping {
 interface PaymentProps {
   billingDetails: Info;
   shippingDetails: Shipping;
-  mailDetail: string;
+  total: string;
 }
 
-const stripePromise = loadStripe("pk_test_6pRNASCoBOKtIshFeQd4XMUh");
+const stripePromise = loadStripe(
+  "pk_test_51IiryrIpiEztyitUSEcaRiSOfJweI34Emi3nrCKYCbCamLH0JCopcyEFJXk7tg0nFbpvIOMjC9cu2z4fkXb8SWFs00Ll4znH1w"
+);
 
 const ELEMENTS_OPTIONS = {
   fonts: [
@@ -41,7 +43,7 @@ const ELEMENTS_OPTIONS = {
 const Payment: React.FC<PaymentProps> = ({
   billingDetails,
   shippingDetails,
-  mailDetail,
+  total,
 }) => {
   return (
     <div className={styles.container}>
@@ -59,9 +61,9 @@ const Payment: React.FC<PaymentProps> = ({
         <div className={styles.AppWrapper}>
           <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
             <CheckoutClassic
+              total={total}
               billingDetails={billingDetails}
               shippingDetails={shippingDetails}
-              mailDetail={mailDetail}
             ></CheckoutClassic>
           </Elements>
         </div>

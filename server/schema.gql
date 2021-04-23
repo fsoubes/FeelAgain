@@ -58,6 +58,19 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+input DetailsInput {
+  amount: String
+  city: String
+  country: String
+  delivery: String
+  email: String
+  line1: String
+  line2: String
+  name: String
+  phone: String
+  postal_code: String
+}
+
 type FieldError {
   field: String!
   message: String!
@@ -82,9 +95,10 @@ type Images {
 
 type Mutation {
   addArticle(blog: BlogInput!): Blog!
-  addCartItem(variantId: String!): String!
+  addCartItem(variantId: String!): CartItem!
   addGuestCart(isArg: Boolean!): Boolean!
   addImage(image: ImageInput!, parentId: String!): String!
+  addPayment(details: DetailsInput!, stripeId: String!): String!
   addRelation: Boolean!
   addShoe(shoes: ShoesInput!): ObjectId!
   addShoes: Boolean!
@@ -135,6 +149,7 @@ type PaginationShoes {
 }
 
 type Query {
+  getAllBasket: [Basket!]!
   getArticles(cursor: String, limit: Float!): PaginationResponse!
   getBasket: Basket!
   getClosestShoes(product: String!, title: String!): [Shoes!]!

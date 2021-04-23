@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-// import "./styles.css";
 import styles from "../../styles/Stripe.module.scss";
 import {
   PaymentMethod,
@@ -9,6 +8,7 @@ import {
   StripeCardElementOptions,
 } from "@stripe/stripe-js";
 import useResponsiveFontSize from "../../utils/useResponsiveFontSize";
+import { useAddPaymentMutation } from "../../generated/graphql";
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -28,7 +28,6 @@ const useOptions = () => {
             color: "#fce883",
           },
           ":focus": {
-            // borderColor: "#4869ee",
             boxShadow: " 0 0 0 3px #4869ee3f",
           },
         },
@@ -64,7 +63,7 @@ const CardField: React.FC<CardFieldProps> = ({ onChange }) => {
 interface SubmitButtonProps {
   processing: boolean;
   disabled: boolean;
-  children: string;
+  children: string | string[];
   error:
     | {
         type: "validation_error";
@@ -125,14 +124,14 @@ const ResetButton = ({ onClick }: any) => (
 
 interface Info {
   firstname: string;
-  lastname: string;
+  name: string;
   adress: string;
   more: string;
   zip: string;
   city: string;
   country: string;
   phone: string;
-  mail: string;
+  email: string;
 }
 
 interface Shipping {
@@ -143,13 +142,13 @@ interface Shipping {
 interface CheckoutClassicProps {
   billingDetails: Info;
   shippingDetails: Shipping;
-  mailDetail: string;
+  total: string;
 }
 
 const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
   billingDetails,
   shippingDetails,
-  mailDetail,
+  total,
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -159,6 +158,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
     null
   );
+  const [payment] = useAddPaymentMutation();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -179,10 +179,47 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
       setProcessing(true);
     }
 
+    const {
+      adress,
+      country,
+      city,
+      zip,
+      more,
+      firstname,
+      ...details
+    } = billingDetails;
+
     const payload = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement) as StripeCardElement,
-      billing_details: { mailDetail, ...billingDetails, ...shippingDetails },
+      metadata: {
+        shipping: shippingDetails.free
+          ? "Point retrait"
+          : "Colissimo à domicile",
+        firstname: firstname,
+      },
+      billing_details: {
+        address: {
+          city: city,
+          country: country ? "FR" : "FR",
+          line1: adress,
+          line2: more,
+          postal_code: zip,
+        },
+        ...details,
+      },
+      // metadata: { firstname, ...shippingDetails },
+    });
+
+    console.log(payload);
+
+    const response = await payment({
+      variables: {
+        stripeId: payload.paymentMethod?.id as string,
+        ...payload.paymentMethod?.billing_details,
+        ...payload.paymentMethod?.billing_details.address,
+        amount: total as string,
+      },
     });
 
     setProcessing(false);
@@ -223,7 +260,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
       </fieldset>
       {error && <ErrorMessage>{error.message as any}</ErrorMessage>}
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
-        Pay $25
+        Payer {total}&nbsp;€
       </SubmitButton>
     </form>
   );

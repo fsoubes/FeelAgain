@@ -14,14 +14,14 @@ interface Props {
 }
 interface Info {
   firstname: string;
-  lastname: string;
+  name: string;
   adress: string;
   more: string;
   zip: string;
   city: string;
   country: string;
   phone: string;
-  mail: string;
+  email: string;
 }
 
 interface Shipping {
@@ -33,17 +33,30 @@ const CheckOut: NextPage<Props> = ({ step, id }) => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<string>(step as string);
   const [mail, setMail] = useState<string>("");
+  const [total, setTotal] = useState<number>(0);
   const [values, setValue] = useState<Info>({
-    mail: "",
+    email: "",
+    firstname: "Robert",
+    name: "Hue",
+    adress: "1 rue d'evry",
+    more: "5ème étage",
+    zip: "93000",
+    city: "Paris",
+    country: "France",
+    phone: "0559921201",
+  });
+
+  /*  const [values, setValue] = useState<Info>({
+    email: "",
     firstname: "",
-    lastname: "",
+    name: "",
     adress: "",
     more: "",
     zip: "",
     city: "",
     country: "",
     phone: "",
-  });
+  }); */
 
   const [shipping, setShipping] = useState<Shipping>({
     free: true,
@@ -63,7 +76,11 @@ const CheckOut: NextPage<Props> = ({ step, id }) => {
         <h3>(2 Articles)</h3>
       </div>
       <div className={styles.content}>
-        <Summary setMail={setMail} delivery={shipping.paid} />
+        <Summary
+          setMail={setMail}
+          delivery={shipping.paid}
+          setTotal={setTotal}
+        />
         {currentStep === "information" && (
           <Information
             id={id as string}
@@ -87,9 +104,19 @@ const CheckOut: NextPage<Props> = ({ step, id }) => {
         )}
         {currentStep === "payment" && (
           <Payment
-            billingDetails={values}
+            billingDetails={{ ...values, email: mail }}
             shippingDetails={shipping}
-            mailDetail={mail}
+            total={
+              shipping.paid
+                ? (
+                    (total as number) +
+                    ((total as number) * 1.4) / 100 +
+                    0.25
+                  ).toFixed(2) + 6
+                : ((total as number) + ((total as number) * 1.4) / 100 + 0.25)
+                    .toFixed(2)
+                    .toString()
+            }
           ></Payment>
         )}
       </div>

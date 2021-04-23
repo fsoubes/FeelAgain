@@ -12,7 +12,9 @@ import {
 import { Basket, BasketModel } from "../entities/Basket";
 import { isAuth } from "../middlewares/isAuth";
 import { CartItemModel, CartItem } from "../entities/CartItem";
-import { User } from "../entities/User";
+import { User, UserModel } from "../entities/User";
+const Stripe = require("stripe");
+import { DetailsInput } from "./types/details-input";
 const ObjectId = require("mongodb").ObjectID;
 
 @Resolver((_of) => Basket)
@@ -135,6 +137,76 @@ export class BasketResolver {
 
       await CartItemModel.deleteOne({ _id: itemId });
       return "Item Removed!";
+    } catch (err) {
+      throw err;
+    }
+  }
+  @Mutation(() => String)
+  @UseMiddleware(isAuth)
+  async addPayment(
+    @Arg("stripeId") stripeId: string,
+    @Arg("details") details: DetailsInput,
+    @Ctx() { req }: MyContext
+  ): Promise<String> {
+    try {
+      let customerId;
+      const user = await UserModel.findById(req.session.userId);
+
+      const email = user ? user.email : "";
+
+      const stripe = Stripe(process.env.STRIPE_SECRET);
+
+      const amount = Math.round(parseFloat(details.amount) * 100);
+
+      const isPresent = await stripe.customers.list({
+        email: email,
+        limit: 1,
+      });
+
+      if (isPresent.data.length === 0) {
+        const customer = await stripe.customers.create({
+          email: email,
+          payment_method: stripeId,
+          invoice_settings: {
+            default_payment_method: stripeId,
+          },
+        });
+        customerId = customer.id;
+      } else {
+        customerId = isPresent.data[0].id;
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create(
+        {
+          customer: customerId,
+          payment_method_types: ["card"],
+          currency: "eur",
+          statement_descriptor: "Statement for bank",
+          amount: amount,
+          confirmation_method: "automatic",
+          payment_method: stripeId,
+          confirm: true,
+          receipt_email: "franck.soubes@gmail.com",
+        },
+        {
+          stripeAccount: process.env.STRIPE_ACCOUNT,
+        }
+      );
+
+      console.log(paymentIntent);
+
+      /* if (paymentIntent.status === "succeeded") {
+        const basket = await BasketModel.findOne({ user: req.session.userId });
+        if (basket) {
+          await CartItemModel.deleteMany({
+            _id: { $in: basket.products },
+          });
+          basket.products = [];
+          await basket.save();
+        }
+      } */
+
+      return "Thanks for the payment!";
     } catch (err) {
       throw err;
     }
