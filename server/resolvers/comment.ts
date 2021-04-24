@@ -1,8 +1,8 @@
 import { MyContext } from "./../type";
 import { Query, Resolver, Mutation, Ctx, Arg } from "type-graphql";
-import { Comment } from "../entities/Comment";
+import { Comments } from "../entities/Comments";
 
-@Resolver((_of) => Comment)
+@Resolver((_of) => Comments)
 export class CommentResolver {
   @Query(() => Boolean)
   async getArticles(@Arg("isArg") isArg: Boolean, @Ctx() {  }: MyContext) {

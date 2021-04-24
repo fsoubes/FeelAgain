@@ -1,11 +1,11 @@
-import { Ref } from "./../constant/types";
+import { Ref } from "../constant/types";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
 import { User } from "./User";
 
 @ObjectType()
-export class Comment {
+export class Comments {
   @Field()
   readonly _id: ObjectId;
 
@@ -18,4 +18,4 @@ export class Comment {
   author: Ref<User>;
 }
 
-export const CommentModel = getModelForClass(Comment);
+export const CommentsModel = getModelForClass(Comments);

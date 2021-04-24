@@ -9,6 +9,7 @@ import {
 } from "@stripe/stripe-js";
 import useResponsiveFontSize from "../../utils/useResponsiveFontSize";
 import { useAddPaymentMutation } from "../../generated/graphql";
+import { Button } from "@material-ui/core";
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -211,8 +212,6 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
       // metadata: { firstname, ...shippingDetails },
     });
 
-    console.log(payload);
-
     const response = await payment({
       variables: {
         stripeId: payload.paymentMethod?.id as string,
@@ -240,11 +239,22 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
   return paymentMethod ? (
     <div className={styles.Result}>
       <div className={styles.ResultTitle} role="alert">
-        Payment successful
+        Paiement réussi
       </div>
       <div className={styles.ResultMessage}>
-        Thanks for trying Stripe Elements. No money was charged, but we
-        generated a PaymentMethod: {paymentMethod.id}
+        Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
+        commande aura été expédié. Vous pouvez suivre l'état de votre commande
+        ou l'annuler (48h) en cliquant sur le boutton ci-dessous.
+        <Button
+          style={{
+            background: "black",
+            color: "white",
+            padding: "5px",
+            marginTop: "1rem",
+          }}
+        >
+          Voir commande
+        </Button>
       </div>
       <ResetButton onClick={reset} />
     </div>

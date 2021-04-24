@@ -3,7 +3,7 @@ import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
 import { User } from "./User";
-import { Comment } from "./Comment";
+import { Comments } from "./Comments";
 
 @ObjectType()
 export class Blog {
@@ -72,9 +72,9 @@ export class Blog {
   @Property({ ref: User, default: [], nullable: false })
   downRating: Ref<User>[];
 
-  @Field((_type) => Comment)
-  @Property({ ref: Comment, required: false })
-  comments?: Ref<Comment>;
+  @Field((_type) => Comments)
+  @Property({ ref: Comments, required: false })
+  comments?: Ref<Comments>;
 }
 
 export const BlogModel = getModelForClass(Blog, {
