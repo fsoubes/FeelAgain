@@ -189,7 +189,7 @@ export const TopBar = (): ReactElement => {
               </SearchShoes>
               <Link href="/panier">
                 <Button>
-                  <Basket total={0} />
+                  <Basket total={5} />
                 </Button>
               </Link>
             </div>

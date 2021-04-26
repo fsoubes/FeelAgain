@@ -1,3 +1,4 @@
+import { OrderResolver } from "./order";
 import { ShoesResolver } from "./shoes";
 import { UserResolver } from "./user";
 import { BlogResolver } from "./blog";
@@ -14,4 +15,5 @@ export const Resolvers = [
   BasketResolver,
   CartItemResolver,
   VariantResolver,
+  OrderResolver,
 ] as const;

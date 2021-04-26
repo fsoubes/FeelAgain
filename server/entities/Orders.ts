@@ -20,21 +20,21 @@ export class Orders {
   @Property({ required: true })
   status: String;
 
-  @Field()
-  @Property({ required: true })
+  @Field({ nullable: true })
+  @Property({ required: false })
   tracking: String;
 
   @Field()
   @Property({ required: true })
   total: number;
 
-  @Field((_type) => [Adress])
-  @Property({ type: () => Adress, default: [] })
-  adress: Adress[];
+  @Field((_type) => Adress)
+  @Property({ type: () => Adress })
+  adress: Adress;
 
-  @Field((_type) => [Comments])
+  @Field((_type) => Comments)
   @Property({ ref: Comments, nullable: true })
-  comments?: Ref<Comments[]>;
+  comments?: Ref<Comments>;
 
   @Field(() => Date)
   createdAt: Date;

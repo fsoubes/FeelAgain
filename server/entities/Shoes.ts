@@ -84,7 +84,7 @@ export class Shoes {
   size: number[];
 
   @Field((_type) => [Variants])
-  @Property({ ref: Variants, default: [], nullable: false })
+  @Property({ ref: "Variants", default: [], nullable: false })
   variants: Ref<Variants>[];
 
   @Field((_type) => [OptionShoes])

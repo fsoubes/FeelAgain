@@ -10,6 +10,7 @@ import {
 import useResponsiveFontSize from "../../utils/useResponsiveFontSize";
 import { useAddPaymentMutation } from "../../generated/graphql";
 import { Button } from "@material-ui/core";
+import Link from "next/link";
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -241,20 +242,25 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
       <div className={styles.ResultTitle} role="alert">
         Paiement réussi
       </div>
-      <div className={styles.ResultMessage}>
+      <div
+        className={styles.ResultMessage}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
         commande aura été expédié. Vous pouvez suivre l'état de votre commande
         ou l'annuler (48h) en cliquant sur le boutton ci-dessous.
-        <Button
-          style={{
-            background: "black",
-            color: "white",
-            padding: "5px",
-            marginTop: "1rem",
-          }}
-        >
-          Voir commande
-        </Button>
+        <Link href="/command">
+          <Button
+            style={{
+              background: "black",
+              color: "white",
+              padding: "5px",
+              marginTop: "1rem",
+            }}
+          >
+            Voir commande
+          </Button>
+        </Link>
       </div>
       <ResetButton onClick={reset} />
     </div>

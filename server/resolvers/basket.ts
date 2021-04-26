@@ -1,3 +1,4 @@
+import { OrdersModel } from "./../entities/Orders";
 import { MyContext } from "./../type";
 import {
   Query,
@@ -193,19 +194,22 @@ export class BasketResolver {
         }
       );
 
-      console.log(paymentIntent);
-
-      /* if (paymentIntent.status === "succeeded") {
+      if (paymentIntent.status === "succeeded") {
         const basket = await BasketModel.findOne({ user: req.session.userId });
+        const adress = {
+          ...details,
+        };
+
         if (basket) {
-          await CartItemModel.deleteMany({
+           /*  await CartItemModel.deleteMany({
             _id: { $in: basket.products },
-          });
+          }); */
+          const command = new OrdersModel({products: basket?.products, total: amount, user: req.session.userId, adress:adress,status:"waiting"})
           basket.products = [];
           await basket.save();
+          await command.save() 
         }
-      } */
-
+      }
       return "Thanks for the payment!";
     } catch (err) {
       throw err;
