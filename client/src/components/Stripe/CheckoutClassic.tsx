@@ -8,9 +8,14 @@ import {
   StripeCardElementOptions,
 } from "@stripe/stripe-js";
 import useResponsiveFontSize from "../../utils/useResponsiveFontSize";
-import { useAddPaymentMutation } from "../../generated/graphql";
+import {
+  GetBasketDocument,
+  GetBasketQuery,
+  useAddPaymentMutation,
+} from "../../generated/graphql";
 import { Button } from "@material-ui/core";
 import Link from "next/link";
+import { useApolloClient } from "@apollo/client";
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -161,6 +166,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
     null
   );
   const [payment] = useAddPaymentMutation();
+  const client = useApolloClient();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -209,6 +215,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
           postal_code: zip,
         },
         ...details,
+        name: `${billingDetails.name} ${firstname}`,
       },
       // metadata: { firstname, ...shippingDetails },
     });
@@ -219,6 +226,33 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
         ...payload.paymentMethod?.billing_details,
         ...payload.paymentMethod?.billing_details.address,
         amount: total as string,
+      },
+      update: (cache) => {
+        const basket = client.readQuery<GetBasketQuery>({
+          query: GetBasketDocument,
+        });
+
+        cache.evict({
+          // Often cache.evict will take an options.id property, but that's not necessary
+          // when evicting from the ROOT_QUERY object, as we're doing here.
+          fieldName: "products",
+          // No need to trigger a broadcast here, since writeQuery will take care of that.
+          broadcast: false,
+        });
+
+        if (basket?.getBasket) {
+          cache.writeQuery<GetBasketQuery>({
+            query: GetBasketDocument,
+            data: {
+              __typename: "Query",
+              ...basket,
+              getBasket: {
+                ...basket.getBasket,
+                products: [],
+              },
+            },
+          });
+        }
       },
     });
 

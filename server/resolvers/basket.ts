@@ -201,6 +201,7 @@ export class BasketResolver {
         };
 
         if (basket) {
+          // remove quantity TODO
            /*  await CartItemModel.deleteMany({
             _id: { $in: basket.products },
           }); */

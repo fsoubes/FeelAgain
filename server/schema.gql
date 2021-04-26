@@ -174,10 +174,12 @@ type PaginationShoes {
 
 type Query {
   getAllBasket: [Basket!]!
+  getAllOrders: [Orders!]!
   getArticles(cursor: String, limit: Float!): PaginationResponse!
   getBasket: Basket!
   getClosestShoes(product: String!, title: String!): [Shoes!]!
   getFilterShoes(filter: ShoesInputFilter, is_published: Boolean = true, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
+  getOrder(orderId: String!): Orders!
   getOrders: [Orders!]!
   getShoesByName(search: String!): SearchResults!
   getSingleArticle(articleId: ObjectId!): Blog!

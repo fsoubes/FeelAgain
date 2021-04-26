@@ -1,0 +1,33 @@
+query GetOrders {
+  getOrders {
+    _id
+    total
+    tracking
+    createdAt
+    adress {
+      name
+      line1
+      line2
+      phone
+      email
+      city
+      postal_code
+      country
+    }
+    user {
+      email
+    }
+    products {
+      quantity
+      variant {
+        title
+        shoes {
+          title
+          images {
+            src
+          }
+        }
+      }
+    }
+  }
+}

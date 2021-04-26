@@ -1,12 +1,32 @@
 import { OrdersModel, Orders } from "./../entities/Orders";
 import { MyContext } from "./../type";
-import { Query, Resolver, Ctx, Arg, FieldResolver, Root } from "type-graphql";
+import {
+  Query,
+  Resolver,
+  Ctx,
+  Arg,
+  FieldResolver,
+  Root,
+  UseMiddleware,
+} from "type-graphql";
 import { User } from "../entities/User";
 import { CartItem } from "../entities/CartItem";
+import { isAdmin } from "../middlewares/isAdmin";
 const ObjectId = require("mongodb").ObjectID;
 
 @Resolver((_of) => Orders)
 export class OrderResolver {
+  @Query(() => [Orders])
+  @UseMiddleware(isAdmin)
+  async getAllOrders(@Ctx() {  }: MyContext) {
+    try {
+      const orders = await OrdersModel.find().limit(10);
+      return orders;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Query(() => [Orders])
   async getOrders(@Ctx() { req }: MyContext) {
     try {
@@ -29,9 +49,13 @@ export class OrderResolver {
     return itemLoader.loadMany(order.products as typeof ObjectId[]);
   }
 
-  async getOrder(@Arg("orderId") orderId: string, @Ctx() {  }: MyContext) {
+  @Query(() => Orders)
+  async getOrder(@Arg("orderId") orderId: string, @Ctx() { req }: MyContext) {
     try {
-      const orders = await OrdersModel.findById(orderId);
+      const orders = await OrdersModel.findOne({
+        _id: orderId,
+        user: req.session.userId,
+      });
       return orders;
     } catch (err) {
       throw err;
