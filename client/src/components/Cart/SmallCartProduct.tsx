@@ -6,7 +6,11 @@ import SmallProductList from "../Products/SmallProductList";
 
 interface SmallCartProductProps {
   data?: GetBasketQuery;
-  handleRemove?: (itemId: string, BasketId: string) => Promise<void>;
+  handleRemove?: (
+    itemId: string,
+    BasketId: string,
+    quantity: number
+  ) => Promise<void>;
   handleUpdate?: (itemId: string, quantity: number) => Promise<void>;
   setOpen?: React.Dispatch<React.SetStateAction<Boolean>>;
 }
@@ -39,7 +43,8 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
             remove={
               handleRemove as (
                 itemId: string,
-                BasketId: string
+                BasketId: string,
+                quantity: number
               ) => Promise<void>
             }
             update={

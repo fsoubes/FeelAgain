@@ -6,6 +6,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import VoteRating from "../../src/components/Votes/VoteRating";
 import styles from "../../src/styles/Article.module.scss";
+import { isServer } from "../../src/utils/isServer";
 
 interface Props {
   id?: string;
@@ -15,6 +16,7 @@ const Article: NextPage<Props> = ({ id }) => {
   const router = useRouter();
   const { data } = useGetSingleArticleQuery({
     variables: { articleId: id },
+    skip: isServer(),
   });
 
   useEffect(() => {

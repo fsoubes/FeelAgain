@@ -7,7 +7,7 @@ import SmallCartProduct from "../SmallCartProduct";
 
 interface ProductListProps {
   data: GetBasketQuery;
-  remove: (itemId: string, BasketId: string) => void;
+  remove: (itemId: string, BasketId: string, quantity: number) => void;
   update: (itemId: string, quantity: number) => void;
 }
 
@@ -22,7 +22,11 @@ const ProductList: React.FC<ProductListProps> = ({ data, remove, update }) => {
           update as (itemId: string, quantity: number) => Promise<void>
         }
         handleRemove={
-          remove as (itemId: string, BasketId: string) => Promise<void>
+          remove as (
+            itemId: string,
+            BasketId: string,
+            quantity: number
+          ) => Promise<void>
         }
       ></SmallCartProduct>
     );
@@ -42,9 +46,11 @@ const ProductList: React.FC<ProductListProps> = ({ data, remove, update }) => {
         title={item.variant.shoes.title}
         price={item.variant.price}
         contain={item.variant.shoes.vendor === "Anaki"}
-        available={(item.quantity as number) < item.variant.quantity}
+        available={(item.quantity as number) <= item.variant.quantity}
         quantity={item.quantity as number}
-        remove={() => remove(item._id, data.getBasket?._id)}
+        remove={() =>
+          remove(item._id, data.getBasket?._id, item.quantity as number)
+        }
         update={update}
       />
     );

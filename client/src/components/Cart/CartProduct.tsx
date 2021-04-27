@@ -2,6 +2,8 @@ import React, { useCallback, Fragment } from "react";
 import {
   GetBasketDocument,
   GetBasketQuery,
+  MeDocument,
+  MeQuery,
   useGetBasketQuery,
   useRemoveCartItemMutation,
   useUpdateCartItemMutation,
@@ -29,17 +31,22 @@ const CartProduct: React.FC<CartProductProps> = ({
   const [updateCartItem] = useUpdateCartItemMutation();
 
   const handleRemove = useCallback(
-    async (itemId: string, BasketId: string) => {
+    async (itemId: string, BasketId: string, quantity: number) => {
       try {
         setTimeout(async () => {
           await removeFromCart({
             variables: {
               itemId: itemId,
               basketId: BasketId,
+              quantity: quantity,
             },
             update: (cache) => {
               const basket = client.readQuery<GetBasketQuery>({
                 query: GetBasketDocument,
+              });
+
+              const currentUser = client.readQuery<MeQuery>({
+                query: MeDocument,
               });
 
               if (basket?.getBasket) {
@@ -55,6 +62,18 @@ const CartProduct: React.FC<CartProductProps> = ({
                   broadcast: false,
                 });
 
+                if (currentUser && currentUser.me) {
+                  cache.writeQuery<MeQuery>({
+                    query: MeDocument,
+                    data: {
+                      __typename: "Query",
+                      me: {
+                        ...currentUser?.me,
+                        items: (currentUser?.me.items as number) - quantity,
+                      },
+                    },
+                  });
+                }
                 cache.writeQuery<GetBasketQuery>({
                   query: GetBasketDocument,
                   data: {
@@ -91,10 +110,40 @@ const CartProduct: React.FC<CartProductProps> = ({
                 query: GetBasketDocument,
               });
 
+              const currentUser = client.readQuery<MeQuery>({
+                query: MeDocument,
+              });
+
               if (basket?.getBasket) {
                 const updateProducts = basket.getBasket.products.map((item) =>
                   item._id === itemId ? { ...item, quantity: quantity } : item
                 );
+
+                if (currentUser && currentUser.me) {
+                  const prevQuantity = updateProducts.reduce((acc, value) => {
+                    acc = acc + (value.quantity as number);
+                    return acc;
+                  }, 0);
+
+                  const updateQuantity =
+                    prevQuantity - (currentUser.me.items as number);
+
+                  cache.writeQuery<MeQuery>({
+                    query: MeDocument,
+                    data: {
+                      __typename: "Query",
+                      me: {
+                        ...currentUser?.me,
+                        items:
+                          updateQuantity > 0
+                            ? (currentUser?.me.items as number) +
+                              Math.abs(updateQuantity)
+                            : (currentUser?.me.items as number) -
+                              Math.abs(updateQuantity),
+                      },
+                    },
+                  });
+                }
 
                 cache.writeQuery<GetBasketQuery>({
                   query: GetBasketDocument,

@@ -8,7 +8,11 @@ import ProductList from "./Large/ProductList";
 
 interface LargeCartProductProps {
   data?: GetBasketQuery;
-  handleRemove?: (itemId: string, BasketId: string) => Promise<void>;
+  handleRemove?: (
+    itemId: string,
+    BasketId: string,
+    quantity: number
+  ) => Promise<void>;
   handleUpdate?: (itemId: string, quantity: number) => Promise<void>;
 }
 
@@ -32,7 +36,11 @@ const LargeCartProduct: React.FC<LargeCartProductProps> = ({
         <ProductList
           data={data}
           remove={
-            handleRemove as (itemId: string, BasketId: string) => Promise<void>
+            handleRemove as (
+              itemId: string,
+              BasketId: string,
+              quantity: number
+            ) => Promise<void>
           }
           update={
             handleUpdate as (itemId: string, quantity: number) => Promise<void>

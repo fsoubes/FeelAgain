@@ -1,3 +1,7 @@
-mutation RemoveCartItem($itemId: String!, $basketId: String!) {
-  removeCartItem(itemId: $itemId, basketId: $basketId)
+mutation RemoveCartItem(
+  $itemId: String!
+  $basketId: String!
+  $quantity: Float!
+) {
+  removeCartItem(itemId: $itemId, basketId: $basketId, quantity: $quantity)
 }

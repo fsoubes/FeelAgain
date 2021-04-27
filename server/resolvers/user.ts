@@ -46,6 +46,16 @@ export class UserResolver {
     return "not allowed to see";
   }
 
+  @FieldResolver(() => Number)
+  async items(@Root() user: User, @Ctx() {  }: MyContext) {
+    try {
+      const basket = await BasketModel.findById(user.basket).select("total");
+      return basket?.total;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Mutation(() => UserResponse)
   async changePassword(
     @Arg("token") token: string,

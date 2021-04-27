@@ -3,4 +3,5 @@ fragment UserFragment on User {
   nickname
   email
   createdAt
+  items
 }

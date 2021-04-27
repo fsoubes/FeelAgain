@@ -32,7 +32,7 @@ export const TopBar = (): ReactElement => {
   const classes = useStyles();
   const { isTabletorMobile } = useResponsive();
   const client = useApolloClient();
-  const [logout, { loading: logoutFetching }] = useLogoutMutation();
+  const [logout] = useLogoutMutation();
   const { data } = useMeQuery({
     skip: isServer(),
   });
@@ -145,7 +145,11 @@ export const TopBar = (): ReactElement => {
             </SearchShoes>
             <Link href="/">
               <Button>
-                <Basket total={0} />
+                {data && (
+                  <Basket
+                    total={data?.me?.items ? (data?.me?.items as number) : 0}
+                  />
+                )}
               </Button>
             </Link>
             <Button style={{ color: "white" }} onClick={() => setOpen(!open)}>
@@ -189,7 +193,11 @@ export const TopBar = (): ReactElement => {
               </SearchShoes>
               <Link href="/panier">
                 <Button>
-                  <Basket total={5} />
+                  {data && (
+                    <Basket
+                      total={data?.me?.items ? (data?.me?.items as number) : 0}
+                    />
+                  )}
                 </Button>
               </Link>
             </div>

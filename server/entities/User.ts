@@ -24,6 +24,10 @@ export class User {
   @Property({ nullable: true, unique: true, index: true })
   nickname?: string;
 
+  @Field({ nullable: true })
+  @Property({ default: 0, min: 0 })
+  items?: number;
+
   @Property({ required: true, default: false })
   isAdmin: boolean;
 

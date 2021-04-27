@@ -13,9 +13,17 @@ export class CartItem {
   @Property({ required: true, default: 0 })
   quantity: number;
 
+  @Field({ defaultValue: false })
+  @Property({ required: true, default: false })
+  order: boolean;
+
   @Field((_type) => Variants)
   @Property({ ref: "Variants" })
   variant: Ref<Variants>;
+
+  @Field((_type) => String)
+  @Property({ required: true })
+  user: String;
 }
 
 export const CartItemModel = getModelForClass(CartItem);

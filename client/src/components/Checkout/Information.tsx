@@ -172,7 +172,7 @@ const Information: React.FC<InformationProps> = ({
               display="flex"
               flexDirection="column"
             >
-              <label>Code Postale</label>
+              <label>Code Postal</label>
               <Field
                 type="text"
                 name="zip"

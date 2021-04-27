@@ -16,6 +16,7 @@ import { CartItemModel, CartItem } from "../entities/CartItem";
 import { User, UserModel } from "../entities/User";
 const Stripe = require("stripe");
 import { DetailsInput } from "./types/details-input";
+import { VariantsModel } from "../entities/Variants";
 const ObjectId = require("mongodb").ObjectID;
 
 @Resolver((_of) => Basket)
@@ -75,12 +76,16 @@ export class BasketResolver {
   ): Promise<CartItem> {
     try {
       const item = await CartItemModel.findOneAndUpdate(
-        { variant: ObjectId(variantId) },
+        {
+          variant: ObjectId(variantId),
+          user: req.session.userId,
+          order: false,
+        },
         {
           $inc: { quantity: 1 },
           variant: ObjectId(variantId),
         },
-        { new: true, upsert: true }
+        { new: true, upsert: true, useFindAndModify: false }
       );
 
       if (item.quantity === 1) {
@@ -90,8 +95,9 @@ export class BasketResolver {
           },
           {
             $push: { products: item._id },
+            $inc: { total: 1 },
           },
-          { new: true }
+          { new: true, useFindAndModify: false }
         );
       }
 
@@ -105,18 +111,31 @@ export class BasketResolver {
   async updateCartItem(
     @Arg("itemId") itemId: string,
     @Arg("quantity") quantity: number,
-    @Ctx() {  }: MyContext
+    @Ctx() { req }: MyContext
   ): Promise<String> {
     try {
-      await CartItemModel.findOneAndUpdate(
-        {
-          _id: itemId,
-        },
-        {
-          quantity: quantity,
-        },
-        { new: true }
-      );
+      const currentItem = await CartItemModel.findById(itemId);
+
+      if (currentItem) {
+        const prevQuantity = currentItem.quantity;
+        const updateQuantity = quantity - prevQuantity;
+        currentItem.quantity = quantity;
+        await currentItem.save();
+        if (updateQuantity !== 0)
+          await BasketModel.findOneAndUpdate(
+            { user: req.session.userId },
+            {
+              $inc: {
+                total:
+                  updateQuantity > 0
+                    ? Math.abs(updateQuantity)
+                    : -Math.abs(updateQuantity),
+              },
+            },
+            { useFindAndModify: false, new: true }
+          );
+      }
+
       return `Updated!`;
     } catch (err) {
       throw err;
@@ -127,12 +146,13 @@ export class BasketResolver {
   async removeCartItem(
     @Arg("itemId") itemId: string,
     @Arg("basketId") basketId: string,
+    @Arg("quantity") quantity: number,
     @Ctx() {  }: MyContext
   ): Promise<String> {
     try {
       await BasketModel.findByIdAndUpdate(
         { _id: basketId },
-        { $pull: { products: ObjectId(itemId) } },
+        { $pull: { products: ObjectId(itemId) }, $inc: { total: -quantity } },
         { useFindAndModify: false, new: true }
       );
 
@@ -142,6 +162,20 @@ export class BasketResolver {
       throw err;
     }
   }
+
+  /*  @Mutation(() => String)
+  @UseMiddleware(isAuth)
+  async refundPayment():   @Arg("stripeId") stripeId: string,
+    @Arg("details") details: DetailsInput,
+    @Ctx() { req }: MyContext 
+  Promise<String> {
+    try {
+      return "Refund!";
+    } catch (err) {
+      throw err;
+    }
+  } */
+
   @Mutation(() => String)
   @UseMiddleware(isAuth)
   async addPayment(
@@ -202,13 +236,35 @@ export class BasketResolver {
 
         if (basket) {
           // remove quantity TODO
-           /*  await CartItemModel.deleteMany({
-            _id: { $in: basket.products },
-          }); */
-          const command = new OrdersModel({products: basket?.products, total: amount, user: req.session.userId, adress:adress,status:"waiting"})
+          for (const prod of basket.products) {
+            const product = await CartItemModel.findByIdAndUpdate(
+              {
+                _id: prod,
+              },
+              { order: true },
+              { useFindAndModify: false, upsert: true }
+            );
+            if (product) {
+              const variant = await VariantsModel.findById(product.variant);
+              if (variant) {
+                variant.quantity =
+                  (variant.quantity as number) - product.quantity;
+                await variant.save();
+              }
+            }
+          }
+
+          const command = new OrdersModel({
+            products: basket.products,
+            total: amount,
+            user: req.session.userId,
+            adress: adress,
+            status: "waiting",
+          });
           basket.products = [];
+          basket.total = 0;
           await basket.save();
-          await command.save() 
+          await command.save();
         }
       }
       return "Thanks for the payment!";

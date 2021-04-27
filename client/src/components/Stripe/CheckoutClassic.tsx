@@ -11,6 +11,8 @@ import useResponsiveFontSize from "../../utils/useResponsiveFontSize";
 import {
   GetBasketDocument,
   GetBasketQuery,
+  MeDocument,
+  MeQuery,
   useAddPaymentMutation,
 } from "../../generated/graphql";
 import { Button } from "@material-ui/core";
@@ -232,6 +234,10 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
           query: GetBasketDocument,
         });
 
+        const currentUser = client.readQuery<MeQuery>({
+          query: MeDocument,
+        });
+
         cache.evict({
           // Often cache.evict will take an options.id property, but that's not necessary
           // when evicting from the ROOT_QUERY object, as we're doing here.
@@ -240,7 +246,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
           broadcast: false,
         });
 
-        if (basket?.getBasket) {
+        if (basket?.getBasket && currentUser && currentUser.me) {
           cache.writeQuery<GetBasketQuery>({
             query: GetBasketDocument,
             data: {
@@ -249,6 +255,17 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
               getBasket: {
                 ...basket.getBasket,
                 products: [],
+              },
+            },
+          });
+
+          cache.writeQuery<MeQuery>({
+            query: MeDocument,
+            data: {
+              __typename: "Query",
+              me: {
+                ...currentUser?.me,
+                items: 0,
               },
             },
           });

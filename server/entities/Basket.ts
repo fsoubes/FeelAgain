@@ -14,6 +14,10 @@ export class Basket {
   @Property({ ref: CartItem, default: [], nullable: true })
   products: Ref<CartItem>[];
 
+  @Field({ nullable: true })
+  @Property({ default: 0, min: 0 })
+  total: number;
+
   @Field((_type) => User)
   @Property({ ref: "User", nullable: true })
   user?: Ref<User>;

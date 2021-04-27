@@ -19,6 +19,7 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  getAllOrders: Array<Orders>;
   getOrders: Array<Orders>;
   getOrder: Orders;
   getSingleShoe: Shoes;
@@ -94,6 +95,7 @@ export type CartItem = {
   _id: Scalars['ObjectId'];
   quantity?: Maybe<Scalars['Float']>;
   variant: Variants;
+  user: Scalars['String'];
 };
 
 export type Variants = {
@@ -183,6 +185,7 @@ export type User = {
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   nickname: Scalars['String'];
+  items?: Maybe<Scalars['Float']>;
   email: Scalars['String'];
   basket: Basket;
 };
@@ -191,6 +194,7 @@ export type Basket = {
   __typename?: 'Basket';
   _id: Scalars['ObjectId'];
   products: Array<CartItem>;
+  total?: Maybe<Scalars['Float']>;
   user: User;
 };
 
@@ -375,6 +379,7 @@ export type MutationUpdateCartItemArgs = {
 
 
 export type MutationRemoveCartItemArgs = {
+  quantity: Scalars['Float'];
   basketId: Scalars['String'];
   itemId: Scalars['String'];
 };
@@ -491,7 +496,7 @@ export type ShoesArticleFragmentFragment = (
 
 export type UserFragmentFragment = (
   { __typename?: 'User' }
-  & Pick<User, '_id' | 'nickname' | 'email' | 'createdAt'>
+  & Pick<User, '_id' | 'nickname' | 'email' | 'createdAt' | 'items'>
 );
 
 export type UserFragmentErrorFragment = (
@@ -723,6 +728,7 @@ export type LoginMutation = (
 export type RemoveCartItemMutationVariables = Exact<{
   itemId: Scalars['String'];
   basketId: Scalars['String'];
+  quantity: Scalars['Float'];
 }>;
 
 
@@ -1063,7 +1069,11 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, '_id' | 'nickname' | 'email'>
+    & Pick<User, '_id' | 'nickname' | 'email' | 'items'>
+    & { basket: (
+      { __typename?: 'Basket' }
+      & Pick<Basket, '_id' | 'total'>
+    ) }
   )> }
 );
 
@@ -1134,6 +1144,7 @@ export const UserFragmentFragmentDoc = gql`
   nickname
   email
   createdAt
+  items
 }
     `;
 export const UserFragmentErrorFragmentDoc = gql`
@@ -1650,8 +1661,8 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const RemoveCartItemDocument = gql`
-    mutation RemoveCartItem($itemId: String!, $basketId: String!) {
-  removeCartItem(itemId: $itemId, basketId: $basketId)
+    mutation RemoveCartItem($itemId: String!, $basketId: String!, $quantity: Float!) {
+  removeCartItem(itemId: $itemId, basketId: $basketId, quantity: $quantity)
 }
     `;
 export type RemoveCartItemMutationFn = Apollo.MutationFunction<RemoveCartItemMutation, RemoveCartItemMutationVariables>;
@@ -1671,6 +1682,7 @@ export type RemoveCartItemMutationFn = Apollo.MutationFunction<RemoveCartItemMut
  *   variables: {
  *      itemId: // value for 'itemId'
  *      basketId: // value for 'basketId'
+ *      quantity: // value for 'quantity'
  *   },
  * });
  */
@@ -2340,6 +2352,11 @@ export const MeDocument = gql`
     _id
     nickname
     email
+    items
+    basket {
+      _id
+      total
+    }
   }
 }
     `;

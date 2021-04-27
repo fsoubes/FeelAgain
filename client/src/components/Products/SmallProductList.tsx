@@ -4,7 +4,7 @@ import { GetBasketQuery } from "../../generated/graphql";
 
 interface SmallProductListProps {
   data: GetBasketQuery;
-  remove: (itemId: string, BasketId: string) => void;
+  remove: (itemId: string, BasketId: string, quantity: number) => void;
   update: (itemId: string, quantity: number) => void;
 }
 
@@ -26,9 +26,11 @@ const SmallProductList: React.FC<SmallProductListProps> = ({
       title={item.variant.shoes.title}
       price={item.variant.price}
       contain={item.variant.shoes.vendor === "Anaki"}
-      available={(item.quantity as number) < item.variant.quantity}
+      available={(item.quantity as number) <= item.variant.quantity}
       quantity={item.quantity as number}
-      remove={() => remove(item._id, data.getBasket?._id)}
+      remove={() =>
+        remove(item._id, data.getBasket?._id, item.quantity as number)
+      }
       update={update}
     ></SmallProductItem>
   ));

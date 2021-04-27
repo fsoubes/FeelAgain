@@ -26,6 +26,8 @@ const SmallProductItem: React.FC<SmallProductItemProps> = ({
   size,
   id,
 }) => {
+  // console.log(quantity);
+
   return (
     <li>
       <div
@@ -67,4 +69,4 @@ const SmallProductItem: React.FC<SmallProductItemProps> = ({
     </li>
   );
 };
-export default React.memo(SmallProductItem);
+export default SmallProductItem;
