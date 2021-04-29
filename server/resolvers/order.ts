@@ -32,7 +32,8 @@ export class OrderResolver {
     try {
       const orders = await OrdersModel.find({
         user: req.session.userId,
-      });
+      }).limit(10);
+
       return orders;
     } catch (err) {
       throw err;
@@ -46,7 +47,7 @@ export class OrderResolver {
 
   @FieldResolver(() => CartItem)
   async products(@Root() order: Orders, @Ctx() { itemLoader }: MyContext) {
-    return itemLoader.loadMany(order.products as typeof ObjectId[]);
+    return itemLoader(false).loadMany(order.products as typeof ObjectId[]);
   }
 
   @Query(() => Orders)

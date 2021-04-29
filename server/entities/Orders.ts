@@ -6,6 +6,7 @@ import { User } from "./User";
 import { CartItem } from "./CartItem";
 import { Adress } from "./Adress";
 import { Comments } from "./Comments";
+import { StatusOrder } from "../resolvers/enum/statusOrder";
 
 @ObjectType()
 export class Orders {
@@ -16,9 +17,9 @@ export class Orders {
   @Property({ ref: CartItem, default: [], nullable: true })
   products: Ref<CartItem>[];
 
-  @Field()
-  @Property({ required: true })
-  status: String;
+  @Field((_type) => StatusOrder)
+  @Property({ required: true, default: "UP" })
+  status: StatusOrder;
 
   @Field({ nullable: true })
   @Property({ required: false })

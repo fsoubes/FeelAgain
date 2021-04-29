@@ -21,6 +21,6 @@ export type MyContext = {
   variantLoaders: ReturnType<typeof createVariantLoaders>;
   variantLoader: ReturnType<typeof createVariantLoader>;
   imageLoader: ReturnType<typeof createImageLoader>;
-  itemLoader: ReturnType<typeof createCartItemLoader>;
+  itemLoader: (isCart: boolean) => ReturnType<typeof createCartItemLoader>;
   shoesLoader: ReturnType<typeof createShoesLoader>;
 };

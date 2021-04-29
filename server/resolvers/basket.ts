@@ -49,7 +49,7 @@ export class BasketResolver {
 
   @FieldResolver(() => CartItem)
   async products(@Root() baskets: Basket, @Ctx() { itemLoader }: MyContext) {
-    return itemLoader.loadMany(baskets.products as typeof ObjectId[]);
+    return itemLoader(true).loadMany(baskets.products as typeof ObjectId[]);
   }
 
   @Mutation(() => Boolean)
@@ -97,7 +97,17 @@ export class BasketResolver {
             $push: { products: item._id },
             $inc: { total: 1 },
           },
-          { new: true, useFindAndModify: false }
+          { new: true, useFindAndModify: false, upsert: true }
+        );
+      } else {
+        await BasketModel.findOneAndUpdate(
+          {
+            user: req.session.userId,
+          },
+          {
+            $inc: { total: 1 },
+          },
+          { new: true, useFindAndModify: false, upsert: true }
         );
       }
 

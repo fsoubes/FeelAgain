@@ -18,11 +18,13 @@ query GetOrders {
       email
     }
     products {
+      _id
       quantity
       variant {
         title
         shoes {
           title
+          vendor
           images {
             src
           }

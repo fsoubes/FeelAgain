@@ -1,0 +1,28 @@
+.item {
+  display: inline-grid;
+  grid-template-columns: 125px auto;
+  width: 100%;
+
+  .item__image {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    height: 125px;
+    box-shadow: rgba(115, 115, 138, 0.15) 0px 5px 60px -2px inset,
+      rgba(0, 0, 0, 0.15) 0px 1px 30px -18px inset;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .item__info {
+    .title {
+      font-weight: bold;
+      color: rgb(47, 72, 136);
+      cursor: pointer;
+    }
+    .size {
+      font-size: 0.8rem;
+      color: rgb(151, 150, 150);
+    }
+  }
+}

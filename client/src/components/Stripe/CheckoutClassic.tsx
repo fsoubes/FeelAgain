@@ -300,7 +300,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
         Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
         commande aura été expédié. Vous pouvez suivre l'état de votre commande
         ou l'annuler (48h) en cliquant sur le boutton ci-dessous.
-        <Link href="/command">
+        <Link href="/order">
           <Button
             style={{
               background: "black",

@@ -22,6 +22,8 @@ query GetOrder($orderId: String!) {
       variant {
         title
         shoes {
+          _id
+          vendor
           title
           images {
             src

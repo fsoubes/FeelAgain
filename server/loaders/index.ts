@@ -10,6 +10,6 @@ export const Loader = {
   variantLoaders: createVariantLoaders(),
   variantLoader: createVariantLoader(),
   imageLoader: createImageLoader(),
-  itemLoader: createCartItemLoader(),
+  itemLoader: (isCart: boolean) => createCartItemLoader(isCart),
   shoesLoader: createShoesLoader(),
 } as const;

@@ -80,7 +80,7 @@ export type Orders = {
   __typename?: 'Orders';
   _id: Scalars['ObjectId'];
   products: Array<CartItem>;
-  status: Scalars['String'];
+  status: StatusOrder;
   tracking?: Maybe<Scalars['String']>;
   total: Scalars['Float'];
   adress: Adress;
@@ -94,6 +94,7 @@ export type CartItem = {
   __typename?: 'CartItem';
   _id: Scalars['ObjectId'];
   quantity?: Maybe<Scalars['Float']>;
+  order?: Maybe<Scalars['Boolean']>;
   variant: Variants;
   user: Scalars['String'];
 };
@@ -158,6 +159,14 @@ export type Images = {
   width?: Maybe<Scalars['Float']>;
   height?: Maybe<Scalars['Float']>;
 };
+
+/** status of order */
+export enum StatusOrder {
+  Attente = 'Attente',
+  Envoye = 'Envoye',
+  Livre = 'Livre',
+  Annule = 'Annule'
+}
 
 export type Adress = {
   __typename?: 'Adress';
@@ -903,7 +912,7 @@ export type GetOrderQuery = (
         & Pick<Variants, 'title'>
         & { shoes: (
           { __typename?: 'Shoes' }
-          & Pick<Shoes, 'title'>
+          & Pick<Shoes, '_id' | 'vendor' | 'title'>
           & { images: Array<(
             { __typename?: 'Images' }
             & Pick<Images, 'src'>
@@ -930,13 +939,13 @@ export type GetOrdersQuery = (
       & Pick<User, 'email'>
     ), products: Array<(
       { __typename?: 'CartItem' }
-      & Pick<CartItem, 'quantity'>
+      & Pick<CartItem, '_id' | 'quantity'>
       & { variant: (
         { __typename?: 'Variants' }
         & Pick<Variants, 'title'>
         & { shoes: (
           { __typename?: 'Shoes' }
-          & Pick<Shoes, 'title'>
+          & Pick<Shoes, 'title' | 'vendor'>
           & { images: Array<(
             { __typename?: 'Images' }
             & Pick<Images, 'src'>
@@ -1070,10 +1079,6 @@ export type MeQuery = (
   & { me?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, '_id' | 'nickname' | 'email' | 'items'>
-    & { basket: (
-      { __typename?: 'Basket' }
-      & Pick<Basket, '_id' | 'total'>
-    ) }
   )> }
 );
 
@@ -2013,6 +2018,8 @@ export const GetOrderDocument = gql`
       variant {
         title
         shoes {
+          _id
+          vendor
           title
           images {
             src
@@ -2070,11 +2077,13 @@ export const GetOrdersDocument = gql`
       email
     }
     products {
+      _id
       quantity
       variant {
         title
         shoes {
           title
+          vendor
           images {
             src
           }
@@ -2353,10 +2362,6 @@ export const MeDocument = gql`
     nickname
     email
     items
-    basket {
-      _id
-      total
-    }
   }
 }
     `;

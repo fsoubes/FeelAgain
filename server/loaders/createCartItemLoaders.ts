@@ -2,7 +2,7 @@ import DataLoader from "dataloader";
 import { ObjectId } from "mongodb";
 import { CartItemModel, CartItem } from "./../entities/CartItem";
 
-export const createCartItemLoader = () =>
+export const createCartItemLoader = (isCart = false) =>
   new DataLoader<ObjectId, CartItem>(async (itemIds) => {
     try {
       const items = await CartItemModel.find({
@@ -21,7 +21,7 @@ export const createCartItemLoader = () =>
         (itemId) => variantIdToVariant[String(itemId)]
       );
 
-      return sortedItems.reverse();
+      return isCart ? sortedItems.reverse() : sortedItems;
     } catch (err) {
       throw err;
     }

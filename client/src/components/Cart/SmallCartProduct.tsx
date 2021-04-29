@@ -75,7 +75,7 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
               VOIR LE PANIER
             </Button>
           </Link>
-          <Link href={"/paiement/id"}>
+          <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
             <Button className={styles.action__payment} disableRipple>
               PAIEMENT
             </Button>
