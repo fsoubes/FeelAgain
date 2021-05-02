@@ -8,7 +8,7 @@ interface Props {
   id?: string;
 }
 
-const DetailOrder: NextPage<Props> = ({ id }) => {
+const CommentOrder: NextPage<Props> = ({ id }) => {
   const router = useRouter();
 
   return (
@@ -18,7 +18,7 @@ const DetailOrder: NextPage<Props> = ({ id }) => {
   );
 };
 
-DetailOrder.getInitialProps = ({ query: { id } }) => {
+CommentOrder.getInitialProps = ({ query: { id } }) => {
   if (id?.length === 24) {
     return { id: id as string };
   } else {
@@ -26,4 +26,4 @@ DetailOrder.getInitialProps = ({ query: { id } }) => {
   }
 };
 
-export default withApollo({ ssr: false })(DetailOrder);
+export default withApollo({ ssr: false })(CommentOrder);

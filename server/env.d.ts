@@ -7,5 +7,7 @@ declare namespace NodeJS {
     CORS_ORIGIN: string;
     STRIPE_SECRET: string;
     STRIPE_ACCOUNT: string;
+    LAPOSTE_KEY: string;
+    LAPOSTE_KEY_DEV: string;
   }
 }

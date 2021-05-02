@@ -10,6 +10,8 @@ interface OrderListProps {
 }
 
 const OrderList: React.FC<OrderListProps> = ({ data }) => {
+  console.log(data.status);
+
   const products = data.products.map((item) => {
     return (
       <OrderItem
@@ -63,17 +65,23 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
       </div>
 
       <div className={styles.content}>
-        <div>
-          <h2>En attente d'expedition</h2>
+        <div className={styles.left__content}>
+          <h2>{data.status}</h2>
           <ul>{products}</ul>
         </div>
         <div className={styles.action}>
           <Link href={`/order/follow/${data._id}`}>
             <Button>Suivre votre colis</Button>
           </Link>
-          <Button>Annulation</Button>
-          <Button>Détails de la commande</Button>
-          <Button>Poster un avis</Button>
+          <Link href={`/order/cancel/${data._id}`}>
+            <Button>Annulation</Button>
+          </Link>
+          <Link href={`/order/follow/${data._id}`}>
+            <Button>Détails de la commande</Button>
+          </Link>
+          <Link href={`/order/comment/${data._id}`}>
+            <Button>Poster un avis</Button>
+          </Link>
         </div>
       </div>
     </div>

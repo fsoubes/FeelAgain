@@ -31,6 +31,9 @@ a {
   --container-padding: 20px;
   --container-width: calc(100vw - var(--container-padding) * 2);
   --space: 6px;
+  --container-padding-order: 20px;
+  --space-order: 6px;
+  --container-order: calc(100vw - var(--container-padding-order) * 2);
   --header-height: 64px;
   scroll-padding-top: var(--header-height);
   scroll-behavior: smooth;
@@ -45,7 +48,8 @@ a {
 @media only screen and (min-width: 1370px) {
   #__next {
     --container-padding: 20px;
-    --container-width: 1430px; //+100
+    --container-width: 1430px;
+    --container-order: 1430px;
   }
 }
 
@@ -101,6 +105,14 @@ a {
   width: 100%;
   padding-left: calc(50% - var(--container-width) / 2);
   padding-right: calc(50% - var(--container-width) / 2);
+}
+
+.container__order {
+  margin-top: 2rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: calc(50% - var(--container-order) / 2);
+  padding-right: calc(50% - var(--container-order) / 2);
 }
 
 .container__dashboard {

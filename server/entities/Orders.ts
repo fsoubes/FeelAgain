@@ -19,11 +19,23 @@ export class Orders {
 
   @Field((_type) => StatusOrder)
   @Property({ required: true, default: "UP" })
-  status: StatusOrder;
+  test: StatusOrder;
+
+  @Field((_type) => String)
+  @Property({ required: true, default: "" })
+  status: String;
+
+  @Field((_type) => String)
+  @Property({ required: true, default: "" })
+  payment_intent: String;
 
   @Field({ nullable: true })
-  @Property({ required: false })
+  @Property({ required: true, default: "" })
   tracking: String;
+
+  @Field()
+  @Property({ required: false })
+  timeline: number;
 
   @Field()
   @Property({ required: true })

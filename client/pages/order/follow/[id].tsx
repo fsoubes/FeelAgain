@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import Timeline from "../../../src/components/Timeline/Timeline";
 import { useGetOrderQuery } from "../../../src/generated/graphql";
 import styles from "../../../src/styles/Order.module.scss";
+import Spinner from "../../../src/components/Spinner/Spinner";
+import Link from "next/link";
 
 interface Props {
   id?: string;
@@ -14,38 +16,43 @@ interface Props {
 const DetailOrder: NextPage<Props> = ({ id }) => {
   const router = useRouter();
 
-  const { data } = useGetOrderQuery({ variables: { orderId: id as string } });
+  const { data, loading } = useGetOrderQuery({
+    variables: { orderId: id as string },
+  });
 
   return (
     <Layout>
       <div className="container__shop">
         <div className={styles.order__header}>
-          <h1>Livraison prévue 23 juin</h1>
+          <h1>{data?.getOrder.status}</h1>
           {data && (
             <div className={styles.order__images}>
+              {loading && <Spinner></Spinner>}
               {data.getOrder.products.map((item) => {
                 return (
-                  <div
-                    className={styles.order__image}
-                    style={{
-                      backgroundImage: `url(${
-                        item.variant.shoes.vendor === "Anaki"
-                          ? item.variant.shoes.images[1].src
-                          : item.variant.shoes.images[0].src
-                      })`,
-                      backgroundSize:
-                        item.variant.shoes.vendor === "Anaki"
-                          ? "contain"
-                          : "cover",
-                    }}
-                  ></div>
+                  <Link href={`/products/${item.variant.shoes._id}`}>
+                    <div
+                      className={styles.order__image}
+                      style={{
+                        backgroundImage: `url(${
+                          item.variant.shoes.vendor === "Anaki"
+                            ? item.variant.shoes.images[1].src
+                            : item.variant.shoes.images[0].src
+                        })`,
+                        backgroundSize:
+                          item.variant.shoes.vendor === "Anaki"
+                            ? "contain"
+                            : "cover",
+                      }}
+                    ></div>
+                  </Link>
                 );
               })}
             </div>
           )}
         </div>
         <div className={styles.main}>
-          <Timeline></Timeline>
+          <Timeline timeline={data?.getOrder.timeline}></Timeline>
           <div className={styles.main__info}>
             <div className={styles.card__container}>
               <h1>Adress de livraison</h1>
@@ -85,4 +92,4 @@ DetailOrder.getInitialProps = ({ query: { id } }) => {
   }
 };
 
-export default withApollo({ ssr: true })(DetailOrder);
+export default withApollo({ ssr: false })(DetailOrder);

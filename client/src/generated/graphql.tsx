@@ -80,8 +80,10 @@ export type Orders = {
   __typename?: 'Orders';
   _id: Scalars['ObjectId'];
   products: Array<CartItem>;
-  status: StatusOrder;
+  test: StatusOrder;
+  status: Scalars['String'];
   tracking?: Maybe<Scalars['String']>;
+  timeline: Scalars['Float'];
   total: Scalars['Float'];
   adress: Adress;
   comments: Comments;
@@ -897,7 +899,7 @@ export type GetOrderQuery = (
   { __typename?: 'Query' }
   & { getOrder: (
     { __typename?: 'Orders' }
-    & Pick<Orders, '_id' | 'total' | 'tracking' | 'createdAt'>
+    & Pick<Orders, '_id' | 'total' | 'tracking' | 'createdAt' | 'timeline' | 'status'>
     & { adress: (
       { __typename?: 'Adress' }
       & Pick<Adress, 'name' | 'line1' | 'line2' | 'phone' | 'email' | 'city' | 'postal_code' | 'country'>
@@ -930,7 +932,7 @@ export type GetOrdersQuery = (
   { __typename?: 'Query' }
   & { getOrders: Array<(
     { __typename?: 'Orders' }
-    & Pick<Orders, '_id' | 'total' | 'tracking' | 'createdAt'>
+    & Pick<Orders, '_id' | 'total' | 'tracking' | 'createdAt' | 'status'>
     & { adress: (
       { __typename?: 'Adress' }
       & Pick<Adress, 'name' | 'line1' | 'line2' | 'phone' | 'email' | 'city' | 'postal_code' | 'country'>
@@ -945,7 +947,7 @@ export type GetOrdersQuery = (
         & Pick<Variants, 'title'>
         & { shoes: (
           { __typename?: 'Shoes' }
-          & Pick<Shoes, 'title' | 'vendor'>
+          & Pick<Shoes, '_id' | 'title' | 'vendor'>
           & { images: Array<(
             { __typename?: 'Images' }
             & Pick<Images, 'src'>
@@ -2000,6 +2002,8 @@ export const GetOrderDocument = gql`
     total
     tracking
     createdAt
+    timeline
+    status
     adress {
       name
       line1
@@ -2063,6 +2067,7 @@ export const GetOrdersDocument = gql`
     total
     tracking
     createdAt
+    status
     adress {
       name
       line1
@@ -2082,6 +2087,7 @@ export const GetOrdersDocument = gql`
       variant {
         title
         shoes {
+          _id
           title
           vendor
           images {

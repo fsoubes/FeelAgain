@@ -17,7 +17,17 @@ import { User, UserModel } from "../entities/User";
 const Stripe = require("stripe");
 import { DetailsInput } from "./types/details-input";
 import { VariantsModel } from "../entities/Variants";
+import { randomIntFromInterval } from "../helpers/randomNumber";
 const ObjectId = require("mongodb").ObjectID;
+
+const dataset = [
+  // "8R11111111110",
+  "115111111111111",
+  "5S11111111110",
+  "3SAAAA1111111",
+  "6P01007508742",
+  "6T11111111110",
+];
 
 @Resolver((_of) => Basket)
 export class BasketResolver {
@@ -208,7 +218,7 @@ export class BasketResolver {
         limit: 1,
       });
 
-      if (isPresent.data.length === 0) {
+      if (isPresent.data.length === 0 && user) {
         const customer = await stripe.customers.create({
           email: email,
           payment_method: stripeId,
@@ -216,6 +226,11 @@ export class BasketResolver {
             default_payment_method: stripeId,
           },
         });
+
+        user.customer_id = customer.id;
+
+        await user.save();
+
         customerId = customer.id;
       } else {
         customerId = isPresent.data[0].id;
@@ -270,6 +285,8 @@ export class BasketResolver {
             user: req.session.userId,
             adress: adress,
             status: "waiting",
+            tracking: dataset[randomIntFromInterval(0, 4)],
+            payment_intent: paymentIntent.id,
           });
           basket.products = [];
           basket.total = 0;

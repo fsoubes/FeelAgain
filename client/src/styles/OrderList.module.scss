@@ -42,16 +42,17 @@
     padding: 2rem;
     align-items: center;
     justify-content: space-between;
-
-    h2 {
-      margin-bottom: 1rem;
-      color: darkgreen;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .left__content {
+      max-width: 75%;
+      h2 {
+        color: darkgreen;
+        margin-bottom: 2rem;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
     }
     .action {
       display: flex;

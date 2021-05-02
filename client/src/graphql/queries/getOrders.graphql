@@ -4,6 +4,7 @@ query GetOrders {
     total
     tracking
     createdAt
+    status
     adress {
       name
       line1
@@ -23,6 +24,7 @@ query GetOrders {
       variant {
         title
         shoes {
+          _id
           title
           vendor
           images {

@@ -4,6 +4,8 @@ query GetOrder($orderId: String!) {
     total
     tracking
     createdAt
+    timeline
+    status
     adress {
       name
       line1

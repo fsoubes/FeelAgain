@@ -20,6 +20,10 @@ export class User {
   @Field(() => Date)
   updatedAt: Date;
 
+  @Field((_type) => String)
+  @Property({ required: false, default: "" })
+  customer_id: String;
+
   @Field()
   @Property({ nullable: true, unique: true, index: true })
   nickname?: string;
