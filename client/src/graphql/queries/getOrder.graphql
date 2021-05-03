@@ -22,7 +22,9 @@ query GetOrder($orderId: String!) {
     products {
       quantity
       variant {
+        _id
         title
+        price
         shoes {
           _id
           vendor

@@ -121,7 +121,6 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   }, [filter, sortingBy, firstUpdate]);
 
   return (
-    // <div className={classes.root}>
     <div className={isOpen ? `${styles.container}` : `${styles.hide}`}>
       <Button
         className={classes.reset}

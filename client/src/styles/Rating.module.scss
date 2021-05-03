@@ -1,0 +1,10 @@
+.container__icon {
+  cursor: pointer;
+  .icon {
+    font-size: 2rem;
+    stroke: darkorange;
+    &:hover {
+      scale: 1.1;
+    }
+  }
+}

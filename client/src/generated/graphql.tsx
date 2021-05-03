@@ -82,6 +82,7 @@ export type Orders = {
   products: Array<CartItem>;
   test: StatusOrder;
   status: Scalars['String'];
+  payment_intent: Scalars['String'];
   tracking?: Maybe<Scalars['String']>;
   timeline: Scalars['Float'];
   total: Scalars['Float'];
@@ -187,6 +188,7 @@ export type Comments = {
   __typename?: 'Comments';
   _id: Scalars['ObjectId'];
   message: Scalars['String'];
+  score: Scalars['Float'];
   author: User;
 };
 
@@ -195,6 +197,7 @@ export type User = {
   _id: Scalars['ObjectId'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
+  customer_id: Scalars['String'];
   nickname: Scalars['String'];
   items?: Maybe<Scalars['Float']>;
   email: Scalars['String'];
@@ -271,6 +274,8 @@ export type PaginationInfo = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  refundOrder: Scalars['String'];
+  addReview: Scalars['Boolean'];
   addShoe: Scalars['ObjectId'];
   removeShoe: Scalars['String'];
   updateShoe: Shoes;
@@ -293,6 +298,13 @@ export type Mutation = {
   updateCartItem: Scalars['String'];
   removeCartItem: Scalars['String'];
   addPayment: Scalars['String'];
+};
+
+
+export type MutationRefundOrderArgs = {
+  total: Scalars['Float'];
+  updated: Array<Scalars['String']>;
+  orderId: Scalars['String'];
 };
 
 
@@ -707,6 +719,18 @@ export type RatingReviewMutation = (
   & Pick<Mutation, 'ratingReview'>
 );
 
+export type RefundOrderMutationVariables = Exact<{
+  orderId: Scalars['String'];
+  updated: Array<Scalars['String']> | Scalars['String'];
+  total: Scalars['Float'];
+}>;
+
+
+export type RefundOrderMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'refundOrder'>
+);
+
 export type RegisterMutationVariables = Exact<{
   nickname: Scalars['String'];
   email: Scalars['String'];
@@ -890,6 +914,23 @@ export type GetClosestShoesQuery = (
   )> }
 );
 
+export type GetMinShoesQueryVariables = Exact<{
+  shoesId: Scalars['ObjectId'];
+}>;
+
+
+export type GetMinShoesQuery = (
+  { __typename?: 'Query' }
+  & { getSingleShoe: (
+    { __typename?: 'Shoes' }
+    & { images: Array<(
+      { __typename?: 'Images' }
+      & ImageFragmentFragment
+    )> }
+    & ShoesBrowseFragmentFragment
+  ) }
+);
+
 export type GetOrderQueryVariables = Exact<{
   orderId: Scalars['String'];
 }>;
@@ -911,7 +952,7 @@ export type GetOrderQuery = (
       & Pick<CartItem, 'quantity'>
       & { variant: (
         { __typename?: 'Variants' }
-        & Pick<Variants, 'title'>
+        & Pick<Variants, '_id' | 'title' | 'price'>
         & { shoes: (
           { __typename?: 'Shoes' }
           & Pick<Shoes, '_id' | 'vendor' | 'title'>
@@ -1600,6 +1641,38 @@ export function useRatingReviewMutation(baseOptions?: Apollo.MutationHookOptions
 export type RatingReviewMutationHookResult = ReturnType<typeof useRatingReviewMutation>;
 export type RatingReviewMutationResult = Apollo.MutationResult<RatingReviewMutation>;
 export type RatingReviewMutationOptions = Apollo.BaseMutationOptions<RatingReviewMutation, RatingReviewMutationVariables>;
+export const RefundOrderDocument = gql`
+    mutation RefundOrder($orderId: String!, $updated: [String!]!, $total: Float!) {
+  refundOrder(orderId: $orderId, updated: $updated, total: $total)
+}
+    `;
+export type RefundOrderMutationFn = Apollo.MutationFunction<RefundOrderMutation, RefundOrderMutationVariables>;
+
+/**
+ * __useRefundOrderMutation__
+ *
+ * To run a mutation, you first call `useRefundOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefundOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refundOrderMutation, { data, loading, error }] = useRefundOrderMutation({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      updated: // value for 'updated'
+ *      total: // value for 'total'
+ *   },
+ * });
+ */
+export function useRefundOrderMutation(baseOptions?: Apollo.MutationHookOptions<RefundOrderMutation, RefundOrderMutationVariables>) {
+        return Apollo.useMutation<RefundOrderMutation, RefundOrderMutationVariables>(RefundOrderDocument, baseOptions);
+      }
+export type RefundOrderMutationHookResult = ReturnType<typeof useRefundOrderMutation>;
+export type RefundOrderMutationResult = Apollo.MutationResult<RefundOrderMutation>;
+export type RefundOrderMutationOptions = Apollo.BaseMutationOptions<RefundOrderMutation, RefundOrderMutationVariables>;
 export const RegisterDocument = gql`
     mutation Register($nickname: String!, $email: String!, $password: String!) {
   register(user: {email: $email, nickname: $nickname, password: $password}) {
@@ -1995,6 +2068,43 @@ export function useGetClosestShoesLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetClosestShoesQueryHookResult = ReturnType<typeof useGetClosestShoesQuery>;
 export type GetClosestShoesLazyQueryHookResult = ReturnType<typeof useGetClosestShoesLazyQuery>;
 export type GetClosestShoesQueryResult = Apollo.QueryResult<GetClosestShoesQuery, GetClosestShoesQueryVariables>;
+export const GetMinShoesDocument = gql`
+    query GetMinShoes($shoesId: ObjectId!) {
+  getSingleShoe(shoesId: $shoesId) {
+    ...ShoesBrowseFragment
+    images {
+      ...ImageFragment
+    }
+  }
+}
+    ${ShoesBrowseFragmentFragmentDoc}
+${ImageFragmentFragmentDoc}`;
+
+/**
+ * __useGetMinShoesQuery__
+ *
+ * To run a query within a React component, call `useGetMinShoesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMinShoesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMinShoesQuery({
+ *   variables: {
+ *      shoesId: // value for 'shoesId'
+ *   },
+ * });
+ */
+export function useGetMinShoesQuery(baseOptions: Apollo.QueryHookOptions<GetMinShoesQuery, GetMinShoesQueryVariables>) {
+        return Apollo.useQuery<GetMinShoesQuery, GetMinShoesQueryVariables>(GetMinShoesDocument, baseOptions);
+      }
+export function useGetMinShoesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMinShoesQuery, GetMinShoesQueryVariables>) {
+          return Apollo.useLazyQuery<GetMinShoesQuery, GetMinShoesQueryVariables>(GetMinShoesDocument, baseOptions);
+        }
+export type GetMinShoesQueryHookResult = ReturnType<typeof useGetMinShoesQuery>;
+export type GetMinShoesLazyQueryHookResult = ReturnType<typeof useGetMinShoesLazyQuery>;
+export type GetMinShoesQueryResult = Apollo.QueryResult<GetMinShoesQuery, GetMinShoesQueryVariables>;
 export const GetOrderDocument = gql`
     query GetOrder($orderId: String!) {
   getOrder(orderId: $orderId) {
@@ -2020,7 +2130,9 @@ export const GetOrderDocument = gql`
     products {
       quantity
       variant {
+        _id
         title
+        price
         shoes {
           _id
           vendor

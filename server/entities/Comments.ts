@@ -13,6 +13,10 @@ export class Comments {
   @Property({ required: true })
   message: String;
 
+  @Field()
+  @Property({ required: true, default: 0, min: 0, max: 5 })
+  score: Number;
+
   @Field((_type) => User)
   @Property({ ref: User, required: true })
   author: Ref<User>;

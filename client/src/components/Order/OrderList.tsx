@@ -73,15 +73,19 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
           <Link href={`/order/follow/${data._id}`}>
             <Button>Suivre votre colis</Button>
           </Link>
-          <Link href={`/order/cancel/${data._id}`}>
-            <Button>Annulation</Button>
-          </Link>
+          {data.status !== "Votre colis a été retiré" && (
+            <Link href={`/order/cancel/${data._id}`}>
+              <Button>Annulation</Button>
+            </Link>
+          )}
           <Link href={`/order/follow/${data._id}`}>
             <Button>Détails de la commande</Button>
           </Link>
-          <Link href={`/order/comment/${data._id}`}>
-            <Button>Poster un avis</Button>
-          </Link>
+          {data.status !== "Votre colis a été retiré" && (
+            <Link href={`/order/comment/${data.products[0].variant.shoes._id}`}>
+              <Button>Poster un avis</Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

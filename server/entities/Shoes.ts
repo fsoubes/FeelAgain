@@ -36,7 +36,7 @@ export class Shoes {
   title: String;
 
   @Field()
-  @Property({ required: true, default: 0 })
+  @Property({ required: true, default: 0, min: 0, max: 5 })
   score: Number;
 
   @Field()

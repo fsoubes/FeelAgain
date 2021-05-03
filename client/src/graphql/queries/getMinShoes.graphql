@@ -1,0 +1,8 @@
+query GetMinShoes($shoesId: ObjectId!) {
+  getSingleShoe(shoesId: $shoesId) {
+    ...ShoesBrowseFragment
+    images {
+      ...ImageFragment
+    }
+  }
+}

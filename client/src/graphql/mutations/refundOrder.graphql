@@ -1,0 +1,3 @@
+mutation RefundOrder($orderId: String!, $updated: [String!]!, $total: Float!) {
+  refundOrder(orderId: $orderId, updated: $updated, total: $total)
+}

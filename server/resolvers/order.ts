@@ -1,3 +1,4 @@
+import { CommentsModel } from "./../entities/Comments";
 import { OrdersModel, Orders } from "./../entities/Orders";
 import { MyContext } from "./../type";
 import {
@@ -11,31 +12,107 @@ import {
   Mutation,
 } from "type-graphql";
 import { User } from "../entities/User";
-import { CartItem } from "../entities/CartItem";
+import { CartItem, CartItemModel } from "../entities/CartItem";
 import { isAdmin } from "../middlewares/isAdmin";
+import { Variants } from "../entities/Variants";
 const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const Stripe = require("stripe");
+
+interface ValueProps {
+  [key: string]: number;
+}
 
 @Resolver((_of) => Orders)
 export class OrderResolver {
   @Mutation(() => String)
   async refundOrder(
     @Arg("orderId") orderId: String,
+    @Arg("updated", () => [String]) updated: string[],
+    @Arg("total") total: number,
     @Ctx() {  }: MyContext
   ): Promise<String> {
     try {
-      let res;
-      const order = await OrdersModel.findById({ orderId });
       const stripe = Stripe(process.env.STRIPE_SECRET);
+      const order = await OrdersModel.findById(orderId).populate("products");
+
       if (stripe && order) {
-        res = await stripe.refunds.create({
-          amount: order.total,
+        await stripe.refunds.create({
+          amount: total * 100,
           payment_intent: order.payment_intent,
         });
       }
-      console.log(res);
-      return "Refund";
+
+      const duplicate = updated.reduce(
+        (acc, item) => {
+          acc[item] = acc[item] ? acc[item] + 1 : 1;
+          return acc;
+        },
+        {} as Record<keyof ValueProps, number>
+      );
+
+      if (order) {
+        const products = order.products.slice() as CartItem[];
+
+        // products.map(async (item) => {
+        for (const item of products) {
+          const variantId = item.variant as Variants;
+          const currentId = item._id;
+          if (
+            duplicate[variantId._id.toString()] &&
+            duplicate[variantId._id.toString()] !== item.quantity
+          ) {
+            await CartItemModel.findOneAndUpdate(
+              { _id: currentId },
+              { quantity: duplicate[variantId._id.toString()] },
+              { useFindAndModify: false, upsert: true }
+            );
+          } else if (
+            duplicate[variantId._id.toString()] &&
+            duplicate[variantId._id.toString()] === item.quantity
+          ) {
+            continue;
+          } else {
+            order.products.splice(
+              order.products.findIndex(
+                (a) => a.toString() === currentId.toString()
+              ),
+              1
+            );
+
+            await CartItemModel.deleteOne({
+              _id: currentId,
+            });
+
+            if (order.products.length === 0) {
+              await OrdersModel.deleteOne({ _id: order._id });
+            }
+          }
+          await order.save();
+        }
+      }
+
+      return "Refund !";
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Mutation(() => Boolean)
+  async addReview(@Ctx() {  }: MyContext) {
+    try {
+      const review = new CommentsModel({});
+      await review.save();
+
+      const order = await OrdersModel.findById(
+        {},
+        { $push: { comments: review._id } },
+        { useFindAndModify: false, upsert: true }
+      );
+
+      console.log(order);
+
+      return true;
     } catch (err) {
       throw err;
     }
@@ -74,7 +151,9 @@ export class OrderResolver {
             },
           }
         );
+
         const resBody = await res.json();
+
         data.push(resBody);
       }
 

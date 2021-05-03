@@ -24,7 +24,7 @@ const dataset = [
   // "8R11111111110",
   "115111111111111",
   "5S11111111110",
-  "3SAAAA1111111",
+  // "3SAAAA1111111",
   "6P01007508742",
   "6T11111111110",
 ];
@@ -285,7 +285,7 @@ export class BasketResolver {
             user: req.session.userId,
             adress: adress,
             status: "waiting",
-            tracking: dataset[randomIntFromInterval(0, 4)],
+            tracking: dataset[randomIntFromInterval(0, 3)],
             payment_intent: paymentIntent.id,
           });
           basket.products = [];
