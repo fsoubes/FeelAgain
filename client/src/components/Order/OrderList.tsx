@@ -4,13 +4,14 @@ import OrderItem from "./OrderItem/OrderItem";
 import styles from "../../styles/OrderList.module.scss";
 import { Button } from "@material-ui/core";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface OrderListProps {
   data: Orders;
 }
 
 const OrderList: React.FC<OrderListProps> = ({ data }) => {
-  console.log(data.status);
+  const router = useRouter();
 
   const products = data.products.map((item) => {
     return (
@@ -81,10 +82,22 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
           <Link href={`/order/follow/${data._id}`}>
             <Button>Détails de la commande</Button>
           </Link>
-          {data.status !== "Votre colis a été retiré" && (
+          {/*   {data.status !== "Votre colis a été retiré" && (
             <Link href={`/order/comment/${data.products[0].variant.shoes._id}`}>
               <Button>Poster un avis</Button>
             </Link>
+          )} */}
+          {data.status !== "Votre colis a été retiré" && (
+            <Button
+              onClick={() =>
+                router.push({
+                  pathname: `/order/comment/${data.products[0].variant.shoes._id}`,
+                  query: { item: data.products[0]._id },
+                })
+              }
+            >
+              Poster un avis
+            </Button>
           )}
         </div>
       </div>

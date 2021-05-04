@@ -19,6 +19,7 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  getAllOrderProducts: Array<CartItem>;
   getAllOrders: Array<Orders>;
   getOrders: Array<Orders>;
   getOrder: Orders;
@@ -76,48 +77,25 @@ export type QueryGetArticlesArgs = {
   limit: Scalars['Float'];
 };
 
-export type Orders = {
-  __typename?: 'Orders';
-  _id: Scalars['ObjectId'];
-  products: Array<CartItem>;
-  test: StatusOrder;
-  status: Scalars['String'];
-  payment_intent: Scalars['String'];
-  tracking?: Maybe<Scalars['String']>;
-  timeline: Scalars['Float'];
-  total: Scalars['Float'];
-  adress: Adress;
-  comments: Comments;
-  createdAt: Scalars['DateTime'];
-  user: User;
-};
-
-
 export type CartItem = {
   __typename?: 'CartItem';
   _id: Scalars['ObjectId'];
   quantity?: Maybe<Scalars['Float']>;
   order?: Maybe<Scalars['Boolean']>;
+  comments?: Maybe<Comments>;
   variant: Variants;
   user: Scalars['String'];
 };
 
-export type Variants = {
-  __typename?: 'Variants';
+
+export type Comments = {
+  __typename?: 'Comments';
   _id: Scalars['ObjectId'];
+  comment: Scalars['String'];
   title: Scalars['String'];
-  product_id: Scalars['String'];
-  option1: Scalars['String'];
-  option2: Scalars['String'];
-  option3: Scalars['String'];
-  sku: Scalars['String'];
-  featured_image?: Maybe<Scalars['String']>;
-  available: Scalars['String'];
-  grams: Scalars['Float'];
-  quantity: Scalars['Float'];
-  price: Scalars['Float'];
-  compare_at_price: Scalars['Float'];
-  shoes: Shoes;
+  score: Scalars['Float'];
+  product: Shoes;
+  author: User;
 };
 
 export type Shoes = {
@@ -138,6 +116,7 @@ export type Shoes = {
   product_type: Scalars['String'];
   price: Scalars['Float'];
   size: Array<Scalars['Float']>;
+  comments: Array<Comments>;
   variants: Array<Variants>;
   options: Array<OptionShoes>;
   images: Array<Images>;
@@ -145,6 +124,24 @@ export type Shoes = {
   switchTitle: Array<Scalars['String']>;
 };
 
+
+export type Variants = {
+  __typename?: 'Variants';
+  _id: Scalars['ObjectId'];
+  title: Scalars['String'];
+  product_id: Scalars['String'];
+  option1: Scalars['String'];
+  option2: Scalars['String'];
+  option3: Scalars['String'];
+  sku: Scalars['String'];
+  featured_image?: Maybe<Scalars['String']>;
+  available: Scalars['String'];
+  grams: Scalars['Float'];
+  quantity: Scalars['Float'];
+  price: Scalars['Float'];
+  compare_at_price: Scalars['Float'];
+  shoes: Shoes;
+};
 
 export type OptionShoes = {
   __typename?: 'OptionShoes';
@@ -161,6 +158,41 @@ export type Images = {
   product_id: Scalars['String'];
   width?: Maybe<Scalars['Float']>;
   height?: Maybe<Scalars['Float']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  _id: Scalars['ObjectId'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  customer_id: Scalars['String'];
+  nickname: Scalars['String'];
+  items?: Maybe<Scalars['Float']>;
+  email: Scalars['String'];
+  basket: Basket;
+};
+
+export type Basket = {
+  __typename?: 'Basket';
+  _id: Scalars['ObjectId'];
+  products: Array<CartItem>;
+  total?: Maybe<Scalars['Float']>;
+  user: User;
+};
+
+export type Orders = {
+  __typename?: 'Orders';
+  _id: Scalars['ObjectId'];
+  products: Array<CartItem>;
+  test: StatusOrder;
+  status: Scalars['String'];
+  payment_intent: Scalars['String'];
+  tracking?: Maybe<Scalars['String']>;
+  timeline: Scalars['Float'];
+  total: Scalars['Float'];
+  adress: Adress;
+  createdAt: Scalars['DateTime'];
+  user: User;
 };
 
 /** status of order */
@@ -182,34 +214,6 @@ export type Adress = {
   email?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   delivery?: Maybe<Scalars['String']>;
-};
-
-export type Comments = {
-  __typename?: 'Comments';
-  _id: Scalars['ObjectId'];
-  message: Scalars['String'];
-  score: Scalars['Float'];
-  author: User;
-};
-
-export type User = {
-  __typename?: 'User';
-  _id: Scalars['ObjectId'];
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
-  customer_id: Scalars['String'];
-  nickname: Scalars['String'];
-  items?: Maybe<Scalars['Float']>;
-  email: Scalars['String'];
-  basket: Basket;
-};
-
-export type Basket = {
-  __typename?: 'Basket';
-  _id: Scalars['ObjectId'];
-  products: Array<CartItem>;
-  total?: Maybe<Scalars['Float']>;
-  user: User;
 };
 
 export type PaginationShoes = {
@@ -305,6 +309,14 @@ export type MutationRefundOrderArgs = {
   total: Scalars['Float'];
   updated: Array<Scalars['String']>;
   orderId: Scalars['String'];
+};
+
+
+export type MutationAddReviewArgs = {
+  comments: CommentInput;
+  reviewId?: Maybe<Scalars['String']>;
+  itemId: Scalars['String'];
+  shoesId: Scalars['String'];
 };
 
 
@@ -411,6 +423,12 @@ export type MutationRemoveCartItemArgs = {
 export type MutationAddPaymentArgs = {
   details: DetailsInput;
   stripeId: Scalars['String'];
+};
+
+export type CommentInput = {
+  title?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Float']>;
+  comment?: Maybe<Scalars['String']>;
 };
 
 export type ShoesInput = {
@@ -626,6 +644,21 @@ export type AddPaymentMutationVariables = Exact<{
 export type AddPaymentMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'addPayment'>
+);
+
+export type AddReviewMutationVariables = Exact<{
+  shoesId: Scalars['String'];
+  itemId: Scalars['String'];
+  reviewId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Float']>;
+  title?: Maybe<Scalars['String']>;
+  comment?: Maybe<Scalars['String']>;
+}>;
+
+
+export type AddReviewMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addReview'>
 );
 
 export type AddShoeMutationVariables = Exact<{
@@ -1405,6 +1438,46 @@ export function useAddPaymentMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddPaymentMutationHookResult = ReturnType<typeof useAddPaymentMutation>;
 export type AddPaymentMutationResult = Apollo.MutationResult<AddPaymentMutation>;
 export type AddPaymentMutationOptions = Apollo.BaseMutationOptions<AddPaymentMutation, AddPaymentMutationVariables>;
+export const AddReviewDocument = gql`
+    mutation AddReview($shoesId: String!, $itemId: String!, $reviewId: String, $score: Float, $title: String, $comment: String) {
+  addReview(
+    shoesId: $shoesId
+    itemId: $itemId
+    reviewId: $reviewId
+    comments: {score: $score, title: $title, comment: $comment}
+  )
+}
+    `;
+export type AddReviewMutationFn = Apollo.MutationFunction<AddReviewMutation, AddReviewMutationVariables>;
+
+/**
+ * __useAddReviewMutation__
+ *
+ * To run a mutation, you first call `useAddReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addReviewMutation, { data, loading, error }] = useAddReviewMutation({
+ *   variables: {
+ *      shoesId: // value for 'shoesId'
+ *      itemId: // value for 'itemId'
+ *      reviewId: // value for 'reviewId'
+ *      score: // value for 'score'
+ *      title: // value for 'title'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useAddReviewMutation(baseOptions?: Apollo.MutationHookOptions<AddReviewMutation, AddReviewMutationVariables>) {
+        return Apollo.useMutation<AddReviewMutation, AddReviewMutationVariables>(AddReviewDocument, baseOptions);
+      }
+export type AddReviewMutationHookResult = ReturnType<typeof useAddReviewMutation>;
+export type AddReviewMutationResult = Apollo.MutationResult<AddReviewMutation>;
+export type AddReviewMutationOptions = Apollo.BaseMutationOptions<AddReviewMutation, AddReviewMutationVariables>;
 export const AddShoeDocument = gql`
     mutation AddShoe($title: String!, $body_html: String, $vendor: String, $price: Float!, $handle: String, $product_type: String, $tags: [String!]!, $size: [Float!]!, $is_published: Boolean!, $relatives: [String!]!) {
   addShoe(

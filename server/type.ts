@@ -8,6 +8,8 @@ import { Session, SessionData } from "express-session";
 import { User } from "./entities/User";
 import { createVariantLoader } from "loaders/createVariantLoader";
 import { createShoesLoader } from "loaders/createShoesLoader";
+import { createCommentLoader } from "loaders/createCommentLoader";
+import { createCommentsLoader } from "loaders/createCommentsLoader";
 
 export type MyContext = {
   user: User;
@@ -20,6 +22,8 @@ export type MyContext = {
   userLoader: ReturnType<typeof createUserLoader>;
   variantLoaders: ReturnType<typeof createVariantLoaders>;
   variantLoader: ReturnType<typeof createVariantLoader>;
+  commentsLoader: ReturnType<typeof createCommentsLoader>;
+  commentLoader: ReturnType<typeof createCommentLoader>;
   imageLoader: ReturnType<typeof createImageLoader>;
   itemLoader: (isCart: boolean) => ReturnType<typeof createCartItemLoader>;
   shoesLoader: ReturnType<typeof createShoesLoader>;

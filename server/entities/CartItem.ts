@@ -3,6 +3,7 @@ import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
 import { Ref } from "../constant/types";
 import { Variants } from "./Variants";
+import { Comments } from "./Comments";
 
 @ObjectType()
 export class CartItem {
@@ -16,6 +17,10 @@ export class CartItem {
   @Field({ defaultValue: false })
   @Property({ required: true, default: false })
   order: boolean;
+
+  @Field((_type) => Comments, { defaultValue: null })
+  @Property({ ref: "Comments", nullable: true })
+  comments: Ref<Comments>;
 
   @Field((_type) => Variants)
   @Property({ ref: "Variants" })

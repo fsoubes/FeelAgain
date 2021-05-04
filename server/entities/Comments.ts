@@ -3,6 +3,7 @@ import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
 import { User } from "./User";
+import { Shoes } from "./Shoes";
 
 @ObjectType()
 export class Comments {
@@ -11,11 +12,19 @@ export class Comments {
 
   @Field()
   @Property({ required: true })
-  message: String;
+  comment: String;
+
+  @Field()
+  @Property({ required: true })
+  title: String;
 
   @Field()
   @Property({ required: true, default: 0, min: 0, max: 5 })
   score: Number;
+
+  @Field((_type) => Shoes)
+  @Property({ ref: Shoes, required: true })
+  product: Ref<Shoes>;
 
   @Field((_type) => User)
   @Property({ ref: User, required: true })

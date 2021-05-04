@@ -4,6 +4,8 @@ import { createUserLoader } from "./createUserLoader";
 import { createCartItemLoader } from "./createCartItemLoaders";
 import { createVariantLoader } from "./createVariantLoader";
 import { createShoesLoader } from "./createShoesLoader";
+import { createCommentLoader } from "./createCommentLoader";
+import { createCommentsLoader } from "./createCommentsLoader";
 
 export const Loader = {
   userLoader: createUserLoader(),
@@ -12,4 +14,6 @@ export const Loader = {
   imageLoader: createImageLoader(),
   itemLoader: (isCart: boolean) => createCartItemLoader(isCart),
   shoesLoader: createShoesLoader(),
+  commentLoader: createCommentLoader(),
+  commentsLoader: createCommentsLoader(),
 } as const;

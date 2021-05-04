@@ -9,6 +9,7 @@ import { ObjectId } from "mongodb";
 import { Variants } from "./Variants";
 import { Images } from "./Images";
 import { OptionShoes } from "./OptionShoes";
+import { Comments } from "./Comments";
 
 @ObjectType()
 @index({ handle: 1 }, { unique: true })
@@ -82,6 +83,10 @@ export class Shoes {
   @Field(() => [Number])
   @Property({ type: () => [Number], default: [] })
   size: number[];
+
+  @Field((_type) => [Comments])
+  @Property({ ref: "Comments", default: [], nullable: false })
+  comments: Ref<Comments>[];
 
   @Field((_type) => [Variants])
   @Property({ ref: "Variants", default: [], nullable: false })

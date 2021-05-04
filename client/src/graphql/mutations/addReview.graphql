@@ -1,0 +1,15 @@
+mutation AddReview(
+  $shoesId: String!
+  $itemId: String!
+  $reviewId: String
+  $score: Float
+  $title: String
+  $comment: String
+) {
+  addReview(
+    shoesId: $shoesId
+    itemId: $itemId
+    reviewId: $reviewId
+    comments: { score: $score, title: $title, comment: $comment }
+  )
+}

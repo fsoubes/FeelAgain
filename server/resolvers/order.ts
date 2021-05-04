@@ -15,6 +15,9 @@ import { User } from "../entities/User";
 import { CartItem, CartItemModel } from "../entities/CartItem";
 import { isAdmin } from "../middlewares/isAdmin";
 import { Variants } from "../entities/Variants";
+import { isAuth } from "../middlewares/isAuth";
+import { CommentInput } from "./types/comment-input";
+import { ShoesModel } from "../entities/Shoes";
 const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const Stripe = require("stripe");
@@ -54,7 +57,6 @@ export class OrderResolver {
       if (order) {
         const products = order.products.slice() as CartItem[];
 
-        // products.map(async (item) => {
         for (const item of products) {
           const variantId = item.variant as Variants;
           const currentId = item._id;
@@ -91,7 +93,6 @@ export class OrderResolver {
           await order.save();
         }
       }
-
       return "Refund !";
     } catch (err) {
       throw err;
@@ -99,20 +100,71 @@ export class OrderResolver {
   }
 
   @Mutation(() => Boolean)
-  async addReview(@Ctx() {  }: MyContext) {
+  async addReview(
+    @Arg("shoesId") shoesId: String,
+    @Arg("itemId") itemId: String,
+    @Arg("reviewId", { nullable: true }) reviewId: String,
+    @Arg("comments") comments: CommentInput,
+    @Ctx() { req }: MyContext
+  ) {
     try {
-      const review = new CommentsModel({});
-      await review.save();
-
-      const order = await OrdersModel.findById(
-        {},
-        { $push: { comments: review._id } },
-        { useFindAndModify: false, upsert: true }
+      const review = await CommentsModel.findOneAndUpdate(
+        {
+          _id: ObjectId(reviewId),
+        },
+        { ...comments, author: req.session.userId, product: shoesId as string },
+        {
+          useFindAndModify: false,
+          new: reviewId ? false : true,
+          upsert: true,
+        }
       );
 
-      console.log(order);
+      if (review) {
+        await CartItemModel.findOneAndUpdate(
+          { _id: ObjectId(itemId) },
+          { comments: review._id },
+          { useFindAndModify: false, new: true }
+        );
+
+        let shoes = await ShoesModel.findById(shoesId);
+
+        if (shoes) {
+          const shoesScore = shoes.score as number;
+          const scoredBy = shoes.scored_by as number;
+          const currentScore = comments.score as number;
+          if (reviewId) {
+            shoes.score =
+              shoes.scored_by === 1
+                ? currentScore
+                : (shoesScore * scoredBy -
+                    (review.score as number) +
+                    currentScore) /
+                  scoredBy;
+            shoes.scored_by = scoredBy;
+          } else {
+            shoes.score =
+              (shoesScore * scoredBy + currentScore) / (scoredBy + 1);
+            shoes.scored_by = scoredBy + 1;
+          }
+          await shoes.save();
+        }
+      }
 
       return true;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Query(() => [CartItem])
+  @UseMiddleware(isAuth)
+  async getAllOrderProducts(@Ctx() { req }: MyContext): Promise<CartItem[]> {
+    try {
+      const orders = await CartItemModel.find({
+        user: req.session.userId,
+      }).limit(10);
+      return orders;
     } catch (err) {
       throw err;
     }

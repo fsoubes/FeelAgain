@@ -5,7 +5,6 @@ import { Ref } from "../constant/types";
 import { User } from "./User";
 import { CartItem } from "./CartItem";
 import { Adress } from "./Adress";
-import { Comments } from "./Comments";
 import { StatusOrder } from "../resolvers/enum/statusOrder";
 
 @ObjectType()
@@ -44,10 +43,6 @@ export class Orders {
   @Field((_type) => Adress)
   @Property({ type: () => Adress })
   adress: Adress;
-
-  @Field((_type) => Comments)
-  @Property({ ref: Comments, nullable: true })
-  comments?: Ref<Comments>;
 
   @Field(() => Date)
   createdAt: Date;
