@@ -9,6 +9,9 @@ interface OrderItemProps {
   size: string;
   contain: boolean;
   id: string;
+  detail: boolean;
+  vendor?: string;
+  price?: number;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({
@@ -18,6 +21,9 @@ const OrderItem: React.FC<OrderItemProps> = ({
   size,
   contain,
   id,
+  detail,
+  vendor,
+  price,
 }) => {
   return (
     <li className={styles.item}>
@@ -36,7 +42,22 @@ const OrderItem: React.FC<OrderItemProps> = ({
             {title}&nbsp;(x{quantity})
           </div>
         </Link>
-        <div className={styles.size}>{size.split("/")[0]}</div>
+        <div className={styles.size}>
+          <strong>Pointure: &nbsp;</strong>
+          {size.split("/")[0]}
+        </div>
+        {detail && (
+          <div className={styles.size}>
+            <strong>Vendu par: &nbsp;</strong>
+            {vendor}
+          </div>
+        )}
+        {detail && (
+          <div className={styles.size} style={{ color: "#B12704" }}>
+            EUR &nbsp;
+            {price}
+          </div>
+        )}
       </div>
     </li>
   );

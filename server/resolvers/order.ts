@@ -99,7 +99,7 @@ export class OrderResolver {
     }
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   async addReview(
     @Arg("shoesId") shoesId: String,
     @Arg("itemId") itemId: String,
@@ -151,7 +151,7 @@ export class OrderResolver {
         }
       }
 
-      return true;
+      return review ? (review._id.toString() as string) : "Added!";
     } catch (err) {
       throw err;
     }

@@ -20,6 +20,7 @@ query GetOrder($orderId: String!) {
       email
     }
     products {
+      _id
       quantity
       variant {
         _id

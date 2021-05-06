@@ -15,23 +15,36 @@
       justify-content: space-between;
       width: 100%;
       .header__info,
-      .header__command {
+      .header__command,
+      .header__command_recap {
         display: flex;
-        .header__content {
+        .header__content,
+        .header__content_recap {
           display: flex;
           flex-direction: column;
           margin-right: 2rem;
           span {
-            color: black;
+            color: #0f1111;
             font-size: 0.85rem;
           }
+        }
+
+        .header__command_recap {
+          flex-direction: row !important;
+          justify-content: space-between;
         }
 
         .header__content > div {
           margin-right: 0;
         }
       }
-      .header__command > div {
+
+      .header__command_recap {
+        width: 300px;
+      }
+
+      .header__command,
+      .header__command_recap > div {
         margin-right: 0 !important;
       }
     }

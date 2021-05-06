@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "../../../src/components/Layout";
 import { withApollo } from "../../../src/utils/withApollo";
 import { NextPage } from "next";
 import {
   useAddReviewMutation,
   useGetMinShoesQuery,
+  useGetReviewQuery,
 } from "../../../src/generated/graphql";
 import styles from "../../../src/styles/Comment.module.scss";
 import { Button } from "@material-ui/core";
 import RatingIcon from "../../../src/components/StarRating/Rating";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {
   id?: string;
@@ -18,6 +20,10 @@ interface Props {
 
 const CommentOrder: NextPage<Props> = ({ id, itemId }) => {
   const { data } = useGetMinShoesQuery({ variables: { shoesId: id } });
+  const { data: review } = useGetReviewQuery({
+    variables: { shoesId: id as string },
+  });
+  const router = useRouter();
   const [addComment] = useAddReviewMutation();
   const [title, setTitle] = useState<string>("");
   const [comment, setComment] = useState<string>("");
@@ -33,22 +39,32 @@ const CommentOrder: NextPage<Props> = ({ id, itemId }) => {
     setRating(index);
   };
 
+  useEffect(() => {
+    if (review) {
+      setRating(review?.getReview.score as number);
+    }
+  }, [review]);
+
   const handleClick = async (id: string, itemId: string) => {
     if (!rating || !title || !comment) {
       return;
     }
 
-    await addComment({
+    const { data } = await addComment({
       variables: {
         shoesId: id,
         itemId: itemId,
         comment: comment,
         score: rating,
         title: title,
+        ...(review && review.getReview && { reviewId: review.getReview._id }),
       },
     });
 
-    return null;
+    router.push({
+      pathname: `/order/comments`,
+      query: { thanks: data?.addReview },
+    });
   };
 
   return (
@@ -112,6 +128,7 @@ const CommentOrder: NextPage<Props> = ({ id, itemId }) => {
             <h3>Ajouter un titre</h3>
             <div className={styles.input}>
               <input
+                defaultValue={review?.getReview.title as string}
                 placeholder={"Une information majeure"}
                 onChange={(event) => setTitle(event?.target.value)}
               ></input>
@@ -121,6 +138,7 @@ const CommentOrder: NextPage<Props> = ({ id, itemId }) => {
             <h3>Ajouter un commentaire écrit</h3>
             <div className={styles.input}>
               <textarea
+                defaultValue={review?.getReview.comment as string}
                 onChange={(event) => setComment(event?.target.value)}
                 placeholder={"Un commentaire sur le produit"}
               ></textarea>

@@ -7,15 +7,16 @@
   padding-right: 0;
   padding-left: 0;
   position: relative;
-  transition: 0.3s ease;
   left: 0;
   display: block;
+  transform: translateZ(0);
+  transition: transform 0.3s ease-out;
   > div:nth-child(2) {
     border-top: 1px solid black !important;
   }
 }
 .hide {
-  left: -100%;
+  transform: translate3d(-500px, 0, 0);
   width: 0;
   max-width: 0;
   min-width: 0;

@@ -10,23 +10,23 @@ export class Comments {
   @Field()
   readonly _id: ObjectId;
 
-  @Field()
+  @Field({ nullable: true })
   @Property({ required: true })
   comment: String;
 
-  @Field()
+  @Field({ nullable: true })
   @Property({ required: true })
   title: String;
 
-  @Field()
+  @Field({ nullable: true })
   @Property({ required: true, default: 0, min: 0, max: 5 })
   score: Number;
 
-  @Field((_type) => Shoes)
+  @Field((_type) => Shoes, { nullable: true })
   @Property({ ref: Shoes, required: true })
   product: Ref<Shoes>;
 
-  @Field((_type) => User)
+  @Field((_type) => User, { nullable: true })
   @Property({ ref: User, required: true })
   author: Ref<User>;
 }

@@ -1,0 +1,23 @@
+query GetCartItems {
+  getCartItems {
+    _id
+    comments {
+      _id
+      score
+      comment
+      title
+    }
+    variant {
+      _id
+      title
+      shoes {
+        _id
+        title
+        vendor
+        images {
+          src
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+query GetReview($shoesId: String!) {
+  getReview(shoesId: $shoesId) {
+    _id
+    title
+    comment
+    score
+  }
+}

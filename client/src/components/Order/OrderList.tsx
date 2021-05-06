@@ -27,6 +27,7 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
         contain={item.variant.shoes.vendor === "Anaki"}
         quantity={item.quantity as number}
         id={item.variant.shoes._id}
+        detail={false}
       ></OrderItem>
     );
   });
@@ -51,9 +52,7 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
             </div>
             <div className={styles.header__content}>
               <span style={{ fontWeight: "bold" }}>LIVRAISON À</span>
-              <span>
-                {data.adress.line1} - {data.adress.city}
-              </span>
+              <span>{data.adress.name}</span>
             </div>
           </div>
           <div className={styles.header__command}>
@@ -79,7 +78,7 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
               <Button>Annulation</Button>
             </Link>
           )}
-          <Link href={`/order/follow/${data._id}`}>
+          <Link href={`/order/detail/${data._id}`}>
             <Button>Détails de la commande</Button>
           </Link>
           {/*   {data.status !== "Votre colis a été retiré" && (
@@ -89,12 +88,16 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
           )} */}
           {data.status !== "Votre colis a été retiré" && (
             <Button
-              onClick={() =>
-                router.push({
-                  pathname: `/order/comment/${data.products[0].variant.shoes._id}`,
-                  query: { item: data.products[0]._id },
-                })
-              }
+              onClick={() => {
+                if (data.products.length === 1) {
+                  router.push({
+                    pathname: `/order/comment/${data.products[0].variant.shoes._id}`,
+                    query: { item: data.products[0]._id },
+                  });
+                } else {
+                  router.push("/order/comments");
+                }
+              }}
             >
               Poster un avis
             </Button>
