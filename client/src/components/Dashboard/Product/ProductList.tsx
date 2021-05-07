@@ -41,6 +41,8 @@ const ProductListDash: React.FC<ProductListProps> = ({
         price={item.price}
         title={item.title}
         remove={remove}
+        score={item.score}
+        scoredBy={item.scored_by}
       />
     );
   });

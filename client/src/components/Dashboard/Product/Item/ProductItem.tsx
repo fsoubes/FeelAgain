@@ -4,6 +4,8 @@ import Tilt from "../../../Tilt/Tilt";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { Button } from "@material-ui/core";
 import LazyLoadWrapper from "../../../LazyLoad/LazyLoadWrapper";
+import RatingIcon from "../../../StarRating/Rating";
+import RatingRes from "../../../StarRating/RatingRes";
 
 interface ProductItemProps {
   isTilt: Boolean;
@@ -12,6 +14,8 @@ interface ProductItemProps {
   title: string;
   price: number;
   id: string;
+  score?: number;
+  scoredBy?: number;
   remove?:
     | ((
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -28,6 +32,8 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
   remove,
   path,
   isTilt,
+  score,
+  scoredBy,
 }) => {
   const router = useRouter();
   return (
@@ -46,7 +52,6 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
             >
               {remove && <CancelIcon />}
             </Button>
-
             <Button
               disableRipple
               onClick={(event) => {
@@ -56,6 +61,14 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
             >
               {remove ? "Modifier" : "Aperçu"}
             </Button>
+            {!remove && (
+              <div>
+                <RatingRes rating={score as number} />
+                <span>
+                  {score} pour {scoredBy} utilisateurs
+                </span>
+              </div>
+            )}
           </div>
         </LazyLoadWrapper>
       </Tilt>

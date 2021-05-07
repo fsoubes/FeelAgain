@@ -8,18 +8,19 @@ interface StarIconProps {
 interface RatingIconProps {
   index: number;
   rating: number;
-  hoverRating: number;
+  hoverRating?: number;
   onMouseEnter: (index: number) => void;
   onMouseLeave: () => void;
   onSaveRating: (index: number) => void;
 }
 
-const StarIcon: React.FC<StarIconProps> = ({ fill }) => {
+export const StarIcon: React.FC<StarIconProps> = ({ fill }) => {
   return (
     <Star
       className={styles.icon}
       style={{
         fill: fill,
+        stroke: "orange",
       }}
     />
   );
@@ -34,7 +35,7 @@ const RatingIcon: React.FC<RatingIconProps> = ({
   onSaveRating,
 }) => {
   const fill = useMemo(() => {
-    if (hoverRating >= index) {
+    if ((hoverRating as number) >= index) {
       return "orange";
     } else if (!hoverRating && rating >= index) {
       return "orange";
