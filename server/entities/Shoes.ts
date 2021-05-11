@@ -41,8 +41,28 @@ export class Shoes {
   score: Number;
 
   @Field()
-  @Property({ required: true, default: 0 })
+  @Property({ required: true, default: 0, min: 0 })
   scored_by: Number;
+
+  @Field()
+  @Property({ required: true, default: 0, min: 0, max: 5 })
+  score_1: Number;
+
+  @Field()
+  @Property({ required: true, default: 0, min: 0, max: 5 })
+  score_2: Number;
+
+  @Field()
+  @Property({ required: true, default: 0, min: 0, max: 5 })
+  score_3: Number;
+
+  @Field()
+  @Property({ required: true, default: 0, min: 0, max: 5 })
+  score_4: Number;
+
+  @Field()
+  @Property({ required: true, default: 0, min: 0, max: 5 })
+  score_5: Number;
 
   @Field()
   @Property({ required: true, default: 0 })

@@ -12,6 +12,8 @@ import BackDropShadow from "../../src/components/BackDrop/BackDropShadow";
 import { withApollo } from "../../src/utils/withApollo";
 import SmallCartProduct from "../../src/components/Cart/SmallCartProduct";
 import ProdutDetail from "../../src/components/Products/ProdutDetail";
+import CommentsList from "../../src/components/Comments/CommentsList";
+import ScoreShoes from "../../src/components/Score/ScoreShoes";
 
 interface Props {
   id?: string;
@@ -73,9 +75,13 @@ const Article: NextPage<Props> = ({ id }) => {
             </div>
           )}
         </div>
-      </div>
-      <div className={styles.comments}>
-        <h1>Commentaires client</h1>
+        <div className={styles.comments}>
+          <h1>Commentaires client</h1>
+          <div className={styles.comments__container}>
+            <ScoreShoes></ScoreShoes>
+            <CommentsList comments={["", ""]}></CommentsList>
+          </div>
+        </div>
       </div>
     </Layout>
   );

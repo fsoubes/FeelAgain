@@ -21,7 +21,7 @@ const StarHalf: React.FC = ({}) => {
 
 const RatingRes: React.FC<RatingResProps> = ({ rating }) => {
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       {[0, 1, 2, 3, 4].map((item) => {
         return item + 0.5 === roundHalf(rating) ? (
           <StarHalf key={item}></StarHalf>

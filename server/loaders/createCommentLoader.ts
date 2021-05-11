@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb";
 export const createCommentLoader = () =>
   new DataLoader<ObjectId, Comments>(async (commentIds) => {
     try {
+      console.log(commentIds);
       const comment = await CommentsModel.find({
         _id: {
           $in: commentIds as ObjectId[],

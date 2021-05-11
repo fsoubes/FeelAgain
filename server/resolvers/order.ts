@@ -142,10 +142,19 @@ export class OrderResolver {
                     currentScore) /
                   scoredBy;
             shoes.scored_by = scoredBy;
+            (shoes as any)[`score_${review.score}`] =
+              (shoes as any)[`score_${review.score}`] !== 0
+                ? (shoes as any)[`score_${review.score}`] - 1
+                : 0;
+            (shoes as any)[`score_${comments.score as number}`] =
+              (shoes as any)[`score_${comments.score as number}`] + 1;
           } else {
             shoes.score =
               (shoesScore * scoredBy + currentScore) / (scoredBy + 1);
             shoes.scored_by = scoredBy + 1;
+            (shoes as any)[`score_${comments.score as number}`] =
+              (shoes as any)[`score_${comments.score as number}`] + 1;
+            shoes.comments.push(review._id);
           }
           await shoes.save();
         }

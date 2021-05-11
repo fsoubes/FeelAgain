@@ -191,6 +191,14 @@ export class ShoesResolver {
   }
 
   @FieldResolver()
+  async comments(@Root() item: Shoes, @Ctx() { commentLoader }: MyContext) {
+    if (item.comments.length === 0) {
+      return [];
+    }
+    return commentLoader.loadMany(item.comments as ObjectId[]);
+  }
+
+  @FieldResolver()
   async relatives(@Root() shoes: Shoes, @Ctx() {  }: MyContext) {
     const relatives = await ShoesModel.find({
       _id: {
