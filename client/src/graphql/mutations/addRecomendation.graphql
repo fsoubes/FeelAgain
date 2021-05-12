@@ -1,0 +1,3 @@
+mutation AddRecommendation($commentId: String!) {
+  addRecommendation(commentId: $commentId)
+}

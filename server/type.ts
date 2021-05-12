@@ -23,7 +23,9 @@ export type MyContext = {
   variantLoaders: ReturnType<typeof createVariantLoaders>;
   variantLoader: ReturnType<typeof createVariantLoader>;
   commentsLoader: ReturnType<typeof createCommentsLoader>;
-  commentLoader: ReturnType<typeof createCommentLoader>;
+  commentLoader: (
+    currentUser: string
+  ) => ReturnType<typeof createCommentLoader>;
   imageLoader: ReturnType<typeof createImageLoader>;
   itemLoader: (isCart: boolean) => ReturnType<typeof createCartItemLoader>;
   shoesLoader: ReturnType<typeof createShoesLoader>;

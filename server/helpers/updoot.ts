@@ -1,7 +1,7 @@
 import { Blog } from "../entities/Blog";
 import { DocumentType } from "@typegoose/typegoose/lib/types";
 
-const mapToString = (array: any): any => array.map((item: any) => item.toString());
+export const mapToString = (array: any): any => array.map((item: any) => item.toString());
 
 export const isUpdoot = (
   currentUser: String | undefined,

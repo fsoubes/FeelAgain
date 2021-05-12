@@ -8,6 +8,9 @@ query GetSingleShoes($shoesId: ObjectId!) {
     variants {
       ...VariantFragment
     }
+    comments {
+      ...CommentsFragment
+    }
     relatives {
       _id
       title

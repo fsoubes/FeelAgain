@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "../../src/components/Layout";
-import { useGetClosestShoesQuery, Shoes } from "../../src/generated/graphql";
+import {
+  useGetClosestShoesQuery,
+  Shoes,
+  Comments,
+} from "../../src/generated/graphql";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import styles from "../../src/styles/Product.module.scss";
@@ -22,12 +26,31 @@ interface Props {
 interface Info {
   title: string;
   product: string;
+  comments: Comments[] | [];
+  scored_by: number;
+  score_1: number;
+  score_2: number;
+  score_3: number;
+  score_4: number;
+  score_5: number;
+  score: number;
 }
 
 const Article: NextPage<Props> = ({ id }) => {
   const router = useRouter();
   const [openCard, setOpenCard] = useState<Boolean>(false);
-  const [info, setInfo] = useState<Info>({ title: "", product: "" });
+  const [info, setInfo] = useState<Info>({
+    title: "",
+    product: "",
+    comments: [],
+    scored_by: 0,
+    score_1: 0,
+    score_2: 0,
+    score_3: 0,
+    score_4: 0,
+    score_5: 0,
+    score: 0,
+  });
   const [productId, setProductId] = useState("");
 
   const { data: dataClosest } = useGetClosestShoesQuery({
@@ -46,6 +69,7 @@ const Article: NextPage<Props> = ({ id }) => {
     }
   }, [id]);
 
+  const comments = new Array(5).fill("") as any;
   return (
     <Layout>
       {openCard && <BackDropShadow></BackDropShadow>}
@@ -78,8 +102,22 @@ const Article: NextPage<Props> = ({ id }) => {
         <div className={styles.comments}>
           <h1>Commentaires client</h1>
           <div className={styles.comments__container}>
-            <ScoreShoes></ScoreShoes>
-            <CommentsList comments={["", ""]}></CommentsList>
+            {comments && comments.length > 0 ? (
+              <>
+                <ScoreShoes
+                  score_5={`${(info.score_5 / info.scored_by) * 100}%`}
+                  score_4={`${(info.score_4 / info.scored_by) * 100}%`}
+                  score_3={`${(info.score_3 / info.scored_by) * 100}%`}
+                  score_2={`${(info.score_2 / info.scored_by) * 100}%`}
+                  score_1={`${(info.score_1 / info.scored_by) * 100}%`}
+                  score={info.score}
+                  scored_by={info.scored_by}
+                ></ScoreShoes>
+                <CommentsList comments={info.comments}></CommentsList>
+              </>
+            ) : (
+              <h3>Pas de commentaires actuellement</h3>
+            )}
           </div>
         </div>
       </div>

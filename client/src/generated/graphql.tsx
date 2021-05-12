@@ -87,11 +87,15 @@ export type QueryGetArticlesArgs = {
 export type Comments = {
   __typename?: 'Comments';
   _id: Scalars['ObjectId'];
-  comment?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+  comment?: Maybe<Scalars['String']>;
   score?: Maybe<Scalars['Float']>;
   product?: Maybe<Shoes>;
-  author?: Maybe<User>;
+  createdAt: Scalars['DateTime'];
+  recommanded_by?: Maybe<Scalars['Float']>;
+  recommanded: Array<User>;
+  is_recommanding?: Maybe<Scalars['Boolean']>;
+  author: User;
 };
 
 
@@ -103,6 +107,11 @@ export type Shoes = {
   title: Scalars['String'];
   score: Scalars['Float'];
   scored_by: Scalars['Float'];
+  score_1: Scalars['Float'];
+  score_2: Scalars['Float'];
+  score_3: Scalars['Float'];
+  score_4: Scalars['Float'];
+  score_5: Scalars['Float'];
   visited_by: Scalars['Float'];
   bought_by: Scalars['Float'];
   handle: Scalars['String'];
@@ -285,6 +294,7 @@ export type PaginationInfo = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addRecommendation: Scalars['String'];
   refundOrder: Scalars['String'];
   addReview: Scalars['String'];
   addShoe: Scalars['ObjectId'];
@@ -309,6 +319,11 @@ export type Mutation = {
   updateCartItem: Scalars['String'];
   removeCartItem: Scalars['String'];
   addPayment: Scalars['String'];
+};
+
+
+export type MutationAddRecommendationArgs = {
+  commentId: Scalars['String'];
 };
 
 
@@ -527,6 +542,15 @@ export type ArticleFragmentFragment = (
   ) }
 );
 
+export type CommentsFragmentFragment = (
+  { __typename?: 'Comments' }
+  & Pick<Comments, '_id' | 'title' | 'comment' | 'score' | 'is_recommanding' | 'recommanded_by'>
+  & { author: (
+    { __typename?: 'User' }
+    & Pick<User, '_id' | 'nickname'>
+  ) }
+);
+
 export type ImageFragmentFragment = (
   { __typename?: 'Images' }
   & Pick<Images, '_id' | 'position' | 'src' | 'product_id' | 'width' | 'height'>
@@ -539,7 +563,7 @@ export type ShoesBrowseFragmentFragment = (
 
 export type ShoesArticleFragmentFragment = (
   { __typename?: 'Shoes' }
-  & Pick<Shoes, 'body_html' | 'visited_by' | 'switchTitle' | 'createdAt'>
+  & Pick<Shoes, 'body_html' | 'visited_by' | 'switchTitle' | 'createdAt' | 'score' | 'scored_by' | 'score_1' | 'score_2' | 'score_3' | 'score_4' | 'score_5'>
 );
 
 export type UserFragmentFragment = (
@@ -651,6 +675,16 @@ export type AddPaymentMutationVariables = Exact<{
 export type AddPaymentMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'addPayment'>
+);
+
+export type AddRecommendationMutationVariables = Exact<{
+  commentId: Scalars['String'];
+}>;
+
+
+export type AddRecommendationMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addRecommendation'>
 );
 
 export type AddReviewMutationVariables = Exact<{
@@ -1184,6 +1218,9 @@ export type GetSingleShoesQuery = (
     )>, variants: Array<(
       { __typename?: 'Variants' }
       & VariantFragmentFragment
+    )>, comments: Array<(
+      { __typename?: 'Comments' }
+      & CommentsFragmentFragment
     )>, relatives: Array<(
       { __typename?: 'Shoes' }
       & Pick<Shoes, '_id' | 'title'>
@@ -1234,6 +1271,20 @@ export const ArticleFragmentFragmentDoc = gql`
   }
 }
     `;
+export const CommentsFragmentFragmentDoc = gql`
+    fragment CommentsFragment on Comments {
+  _id
+  title
+  comment
+  score
+  is_recommanding
+  recommanded_by
+  author {
+    _id
+    nickname
+  }
+}
+    `;
 export const ImageFragmentFragmentDoc = gql`
     fragment ImageFragment on Images {
   _id
@@ -1263,6 +1314,13 @@ export const ShoesArticleFragmentFragmentDoc = gql`
   visited_by
   switchTitle
   createdAt
+  score
+  scored_by
+  score_1
+  score_2
+  score_3
+  score_4
+  score_5
 }
     `;
 export const UserFragmentFragmentDoc = gql`
@@ -1484,6 +1542,36 @@ export function useAddPaymentMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddPaymentMutationHookResult = ReturnType<typeof useAddPaymentMutation>;
 export type AddPaymentMutationResult = Apollo.MutationResult<AddPaymentMutation>;
 export type AddPaymentMutationOptions = Apollo.BaseMutationOptions<AddPaymentMutation, AddPaymentMutationVariables>;
+export const AddRecommendationDocument = gql`
+    mutation AddRecommendation($commentId: String!) {
+  addRecommendation(commentId: $commentId)
+}
+    `;
+export type AddRecommendationMutationFn = Apollo.MutationFunction<AddRecommendationMutation, AddRecommendationMutationVariables>;
+
+/**
+ * __useAddRecommendationMutation__
+ *
+ * To run a mutation, you first call `useAddRecommendationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddRecommendationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addRecommendationMutation, { data, loading, error }] = useAddRecommendationMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *   },
+ * });
+ */
+export function useAddRecommendationMutation(baseOptions?: Apollo.MutationHookOptions<AddRecommendationMutation, AddRecommendationMutationVariables>) {
+        return Apollo.useMutation<AddRecommendationMutation, AddRecommendationMutationVariables>(AddRecommendationDocument, baseOptions);
+      }
+export type AddRecommendationMutationHookResult = ReturnType<typeof useAddRecommendationMutation>;
+export type AddRecommendationMutationResult = Apollo.MutationResult<AddRecommendationMutation>;
+export type AddRecommendationMutationOptions = Apollo.BaseMutationOptions<AddRecommendationMutation, AddRecommendationMutationVariables>;
 export const AddReviewDocument = gql`
     mutation AddReview($shoesId: String!, $itemId: String!, $reviewId: String, $score: Float, $title: String, $comment: String) {
   addReview(
@@ -2643,6 +2731,9 @@ export const GetSingleShoesDocument = gql`
     variants {
       ...VariantFragment
     }
+    comments {
+      ...CommentsFragment
+    }
     relatives {
       _id
       title
@@ -2652,7 +2743,8 @@ export const GetSingleShoesDocument = gql`
     ${ShoesBrowseFragmentFragmentDoc}
 ${ShoesArticleFragmentFragmentDoc}
 ${ImageFragmentFragmentDoc}
-${VariantFragmentFragmentDoc}`;
+${VariantFragmentFragmentDoc}
+${CommentsFragmentFragmentDoc}`;
 
 /**
  * __useGetSingleShoesQuery__

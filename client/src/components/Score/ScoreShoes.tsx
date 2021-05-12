@@ -2,9 +2,25 @@ import React from "react";
 import styles from "../../styles/ScoreShoes.module.scss";
 import RatingRes from "../StarRating/RatingRes";
 
-interface ScoreShoesProps {}
+interface ScoreShoesProps {
+  score_1: string;
+  score_2: string;
+  score_3: string;
+  score_4: string;
+  score_5: string;
+  score: number;
+  scored_by: number;
+}
 
-const ScoreShoes: React.FC<ScoreShoesProps> = ({}) => {
+const ScoreShoes: React.FC<ScoreShoesProps> = ({
+  score_1,
+  score_2,
+  score_3,
+  score_4,
+  score_5,
+  score,
+  scored_by,
+}) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -13,9 +29,9 @@ const ScoreShoes: React.FC<ScoreShoesProps> = ({}) => {
       <div className={styles.score__container}>
         <div className={styles.score__header}>
           <RatingRes rating={5}></RatingRes>
-          <h2>5 sur 5</h2>
+          <h2>{score} sur 5</h2>
         </div>
-        <div className={styles.score__by}>155 évaluations</div>
+        <div className={styles.score__by}>{scored_by} évaluations</div>
         <div className={styles.score__histogram}>
           <table>
             <tbody>
@@ -28,13 +44,13 @@ const ScoreShoes: React.FC<ScoreShoesProps> = ({}) => {
                   <div className={styles.meter}>
                     <div
                       className={styles.meter__bar}
-                      style={{ width: "85%" }}
+                      style={{ width: score_5 }}
                     ></div>
                   </div>
                 </td>
                 <td>
                   <span>&nbsp;&nbsp;</span>
-                  <span>85%</span>
+                  <span>{score_5}</span>
                 </td>
               </tr>
               <tr>
@@ -46,13 +62,13 @@ const ScoreShoes: React.FC<ScoreShoesProps> = ({}) => {
                   <div className={styles.meter}>
                     <div
                       className={styles.meter__bar}
-                      style={{ width: "10%" }}
+                      style={{ width: score_4 }}
                     ></div>
                   </div>
                 </td>
                 <td>
                   <span>&nbsp;&nbsp;</span>
-                  <span>10%</span>
+                  <span>{score_4}</span>
                 </td>
               </tr>
               <tr>
@@ -64,13 +80,13 @@ const ScoreShoes: React.FC<ScoreShoesProps> = ({}) => {
                   <div className={styles.meter}>
                     <div
                       className={styles.meter__bar}
-                      style={{ width: "2%" }}
+                      style={{ width: score_3 }}
                     ></div>
                   </div>
                 </td>
                 <td>
                   <span>&nbsp;&nbsp;</span>
-                  <span>2%</span>
+                  <span>{score_3}</span>
                 </td>
               </tr>
               <tr>
@@ -82,13 +98,13 @@ const ScoreShoes: React.FC<ScoreShoesProps> = ({}) => {
                   <div className={styles.meter}>
                     <div
                       className={styles.meter__bar}
-                      style={{ width: "2%" }}
+                      style={{ width: score_2 }}
                     ></div>
                   </div>
                 </td>
                 <td>
                   <span>&nbsp;&nbsp;</span>
-                  <span>2%</span>
+                  <span>{score_2}</span>
                 </td>
               </tr>
               <tr>
@@ -100,13 +116,13 @@ const ScoreShoes: React.FC<ScoreShoesProps> = ({}) => {
                   <div className={styles.meter}>
                     <div
                       className={styles.meter__bar}
-                      style={{ width: "1%" }}
+                      style={{ width: score_1 }}
                     ></div>
                   </div>
                 </td>
                 <td>
                   <span>&nbsp;&nbsp;</span>
-                  <span>1%</span>
+                  <span>{score_1}</span>
                 </td>
               </tr>
             </tbody>

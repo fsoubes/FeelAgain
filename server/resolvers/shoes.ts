@@ -191,11 +191,16 @@ export class ShoesResolver {
   }
 
   @FieldResolver()
-  async comments(@Root() item: Shoes, @Ctx() { commentLoader }: MyContext) {
+  async comments(
+    @Root() item: Shoes,
+    @Ctx() { commentLoader, req }: MyContext
+  ) {
     if (item.comments.length === 0) {
       return [];
     }
-    return commentLoader.loadMany(item.comments as ObjectId[]);
+    return commentLoader(req.session.userId ? req.session.userId : "").loadMany(
+      item.comments as ObjectId[]
+    );
   }
 
   @FieldResolver()

@@ -14,6 +14,6 @@ export const Loader = {
   imageLoader: createImageLoader(),
   itemLoader: (isCart: boolean) => createCartItemLoader(isCart),
   shoesLoader: createShoesLoader(),
-  commentLoader: createCommentLoader(),
+  commentLoader: (currentUser: string) => createCommentLoader(currentUser),
   commentsLoader: createCommentsLoader(),
 } as const;

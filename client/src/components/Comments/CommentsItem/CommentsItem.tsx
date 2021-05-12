@@ -1,11 +1,38 @@
 import { Button } from "@material-ui/core";
 import React from "react";
+import { useAddRecommendationMutation } from "../../../generated/graphql";
 import styles from "../../../styles/Comments.module.scss";
 import RatingRes from "../../StarRating/RatingRes";
 
-interface CommentsItemProps {}
+interface CommentsItemProps {
+  nickname: string;
+  comment: string;
+  title: string;
+  rating: number;
+  id: string;
+  isRecommending: boolean;
+  recommandedBy: number;
+}
 
-const CommentsItem: React.FC<CommentsItemProps> = ({}) => {
+const CommentsItem: React.FC<CommentsItemProps> = ({
+  nickname,
+  comment,
+  title,
+  rating,
+  id,
+  isRecommending,
+  recommandedBy,
+}) => {
+  const [recommendation] = useAddRecommendationMutation();
+
+  const handleClick = async () => {
+    try {
+      await recommendation({ variables: { commentId: id } });
+    } catch (err) {
+      throw err;
+    }
+  };
+
   return (
     <li className={styles.item}>
       <div className={styles.profile}>
@@ -16,28 +43,24 @@ const CommentsItem: React.FC<CommentsItemProps> = ({}) => {
           ></img>
         </div>
         <div className={styles.profile__name}>
-          <span>Bob</span>
+          <span>{nickname}</span>
         </div>
       </div>
       <div className={styles.header}>
-        <RatingRes rating={5}></RatingRes>
-        <span className={styles.header__title}>
-          Attention lors de la réception
-        </span>
+        <RatingRes rating={rating}></RatingRes>
+        <span className={styles.header__title}>{title}</span>
       </div>
       <span className={styles.date}>Commenté le 8 avril 2021</span>
       <div className={styles.comment}>
-        <span>
-          Très déçu de la réception des chaussures.
-          <br />
-          Comme on peut le voir sur les photos, coin haut arrière droit corné
-          plus la couverture pas droite.
-        </span>
+        <span>{comment}</span>
       </div>
       <div className={styles.review}>
-        <div>8 personnes ont trouvé cela utile</div>
         <div>
-          <Button>Utile</Button>
+          {recommandedBy} personne(s) {isRecommending ? "(vous incluant) " : ""}
+          ont trouvé cela utile
+        </div>
+        <div>
+          <Button onClick={handleClick}>Utile</Button>
           <Button>Signaler un abus</Button>
         </div>
       </div>

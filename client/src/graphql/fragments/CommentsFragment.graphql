@@ -1,0 +1,13 @@
+fragment CommentsFragment on Comments {
+  _id
+  title
+  comment
+  score
+  is_recommanding
+  recommanded_by
+  # createdAt
+  author {
+    _id
+    nickname
+  }
+}

@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { useGetSingleShoesQuery } from "../../generated/graphql";
+import { Comments, useGetSingleShoesQuery } from "../../generated/graphql";
 import styles from "../../styles/Product.module.scss";
 import AddToCart from "../Button/AddToCart";
 import SelectRelative from "../Select/SelectRelative";
@@ -9,6 +9,14 @@ import SelectSize from "../Select/SelectSize";
 interface Info {
   title: string;
   product: string;
+  comments: Comments[] | [];
+  scored_by: number;
+  score_1: number;
+  score_2: number;
+  score_3: number;
+  score_4: number;
+  score_5: number;
+  score: number;
 }
 
 interface ProdutDetailProps {
@@ -38,6 +46,14 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
       setInfo({
         title: data?.getSingleShoe.title,
         product: data?.getSingleShoe.product_type,
+        comments: data?.getSingleShoe.comments as Comments[],
+        scored_by: data.getSingleShoe.scored_by,
+        score_1: data.getSingleShoe.score_1,
+        score_2: data.getSingleShoe.score_2,
+        score_3: data.getSingleShoe.score_3,
+        score_4: data.getSingleShoe.score_4,
+        score_5: data.getSingleShoe.score_5,
+        score: data.getSingleShoe.score,
       });
     }
   }, [data]);

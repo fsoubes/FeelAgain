@@ -3,4 +3,11 @@ fragment ShoesArticleFragment on Shoes {
   visited_by
   switchTitle
   createdAt
+  score
+  scored_by
+  score_1
+  score_2
+  score_3
+  score_4
+  score_5
 }
