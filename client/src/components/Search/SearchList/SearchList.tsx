@@ -1,7 +1,9 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useRef } from "react";
-import { Shoes } from "../../../generated/graphql";
-import SearchItem from "./SearchItem/SearchItem";
+import {
+  Shoes,
+  useIncrementCountViewMutation,
+} from "../../../generated/graphql";
 
 interface SearchListProps {
   data: Shoes[];
@@ -12,81 +14,74 @@ interface SearchListProps {
 
 const SearchList: React.FC<SearchListProps> = ({ data, setSelectedId }) => {
   const refs = useRef<Array<HTMLButtonElement | null>>([]);
+  const router = useRouter();
+  const [incrementCount] = useIncrementCountViewMutation();
+
   useEffect(() => {
     refs.current = refs.current.slice(0, data.length);
   }, [data]);
 
-  const handleClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+  const handleClick = async (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    id: string
+  ) => {
     e.preventDefault();
+    try {
+      if (setSelectedId) {
+        const selectedId = e.currentTarget.id;
+        const CurrentselectedRef = refs.current.filter(
+          (item) => item?.id.toString() === selectedId
+        );
 
-    if (setSelectedId) {
-      const selectedId = e.currentTarget.id;
-      const CurrentselectedRef = refs.current.filter(
-        (item) => item?.id.toString() === selectedId
-      );
+        if (CurrentselectedRef[0]?.classList.length !== 1) {
+          CurrentselectedRef[0]?.classList.add("selected");
+        } else {
+          CurrentselectedRef[0].classList.remove("selected");
+        }
 
-      if (CurrentselectedRef[0]?.classList.length !== 1) {
-        CurrentselectedRef[0]?.classList.add("selected");
+        const selected = refs.current
+          .filter((item) => item?.className === "selected")
+          .map((item) => item?.id);
+        setSelectedId(selected as string[]);
       } else {
-        CurrentselectedRef[0].classList.remove("selected");
+        await incrementCount({ variables: { shoeId: id } });
+        router.push(`/products/${id}`);
       }
-
-      const selected = refs.current
-        .filter((item) => item?.className === "selected")
-        .map((item) => item?.id);
-      setSelectedId(selected as string[]);
+    } catch (err) {
+      throw err;
     }
   };
 
   const newSearch = data.map((item, index) => {
     return (
-      <Link href={`/products/${item._id}`} key={item._id}>
-        <li
-          tabIndex={1}
-          id={item._id}
-          ref={(el: any) => {
-            refs.current[index] = el;
-          }}
-          onClick={handleClick}
-        >
-          <div>
-            <img
-              src={
-                item.vendor === "Anaki"
-                  ? item.images[2].src
-                  : item.images[1].src
-              }
-              alt=""
-            ></img>
-          </div>
-          <div>
-            <div>
-              <div>
-                <h5>{item.title}</h5>
-              </div>
-              <div>{item.price}€</div>
-            </div>
-          </div>
-        </li>
-      </Link>
-    );
-  });
-
-  /* const searchList = data.map((item, index) => {
-    return (
-      <SearchItem
+      <li
         key={item._id}
-        title={item.title}
-        image={
-          item.vendor === "Anaki" ? item.images[2].src : item.images[1].src
-        }
+        tabIndex={1}
         id={item._id}
         ref={(el: any) => {
           refs.current[index] = el;
         }}
-      ></SearchItem>
+        onClick={(e) => handleClick(e, item._id)}
+      >
+        <div>
+          <img
+            src={
+              item.vendor === "Anaki" ? item.images[2].src : item.images[1].src
+            }
+            alt=""
+          ></img>
+        </div>
+        <div>
+          <div>
+            <div>
+              <h5>{item.title}</h5>
+            </div>
+            <div>{item.price}€</div>
+          </div>
+        </div>
+      </li>
     );
-  }); */
+  });
 
   return <ul>{newSearch}</ul>;
 };

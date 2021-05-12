@@ -69,7 +69,6 @@ const Article: NextPage<Props> = ({ id }) => {
     }
   }, [id]);
 
-  const comments = new Array(5).fill("") as any;
   return (
     <Layout>
       {openCard && <BackDropShadow></BackDropShadow>}
@@ -102,7 +101,7 @@ const Article: NextPage<Props> = ({ id }) => {
         <div className={styles.comments}>
           <h1>Commentaires client</h1>
           <div className={styles.comments__container}>
-            {comments && comments.length > 0 ? (
+            {info.comments && info.comments.length > 0 ? (
               <>
                 <ScoreShoes
                   score_5={`${(info.score_5 / info.scored_by) * 100}%`}

@@ -5,6 +5,8 @@ import styles from "../../styles/Product.module.scss";
 import AddToCart from "../Button/AddToCart";
 import SelectRelative from "../Select/SelectRelative";
 import SelectSize from "../Select/SelectSize";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 interface Info {
   title: string;
@@ -25,6 +27,11 @@ interface ProdutDetailProps {
   setInfo: React.Dispatch<React.SetStateAction<Info>>;
 }
 
+interface IMage {
+  original: string;
+  thumbnail: string;
+}
+
 const getMarkdown = (innerHtml: any) => {
   return { __html: innerHtml };
 };
@@ -35,6 +42,8 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
   setInfo,
 }) => {
   const [index, setIndex] = useState<number>(0);
+
+  const [img, setImg] = useState<IMage[] | null>(null);
 
   const { data } = useGetSingleShoesQuery({
     variables: { shoesId: id },
@@ -55,13 +64,21 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
         score_5: data.getSingleShoe.score_5,
         score: data.getSingleShoe.score,
       });
+
+      const images = data?.getSingleShoe?.images?.map((item) => ({
+        thumbnail: item.src,
+        original: item.src,
+      }));
+
+      setImg(images as IMage[]);
     }
   }, [data]);
 
   return (
     <div className={styles.main}>
       <div className={styles.images}>
-        <img src={data?.getSingleShoe.images[0].src} alt="product image"></img>
+        {/* <img src={data?.getSingleShoe.images[0].src} alt="product image"></img> */}
+        {img && img.length > 0 && <ImageGallery items={img} />}
       </div>
       <div className={styles.content__container}>
         <div className={styles.content}>

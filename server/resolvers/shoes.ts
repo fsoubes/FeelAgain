@@ -258,6 +258,24 @@ export class ShoesResolver {
     }
   }
 
+  @Mutation(() => Boolean)
+  async incrementCountView(
+    @Arg("shoeId") shoeId: string,
+    @Ctx() {  }: MyContext
+  ): Promise<Boolean> {
+    try {
+      await ShoesModel.findOneAndUpdate(
+        { _id: shoeId },
+        { $inc: { visited_by: 1 } },
+        { new: true, useFindAndModify: false }
+      );
+
+      return true;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Mutation(() => Shoes)
   @UseMiddleware(isAdmin)
   async updateShoe(

@@ -6,6 +6,7 @@ import { Button } from "@material-ui/core";
 import LazyLoadWrapper from "../../../LazyLoad/LazyLoadWrapper";
 import RatingIcon from "../../../StarRating/Rating";
 import RatingRes from "../../../StarRating/RatingRes";
+import { useIncrementCountViewMutation } from "../../../../generated/graphql";
 
 interface ProductItemProps {
   isTilt: Boolean;
@@ -36,10 +37,13 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
   scoredBy,
 }) => {
   const router = useRouter();
+  const [incrementCount] = useIncrementCountViewMutation();
+
   return (
     <div
-      onClick={(event) => {
+      onClick={async (event) => {
         router.push(`/products/${id}`);
+        if (!remove) await incrementCount({ variables: { shoeId: id } });
         event.stopPropagation();
       }}
     >
@@ -54,7 +58,7 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
             </Button>
             <Button
               disableRipple
-              onClick={(event) => {
+              onClick={async (event) => {
                 router.push(path ? `${path}${id}` : `/dashboard/update/${id}`);
                 event.stopPropagation();
               }}

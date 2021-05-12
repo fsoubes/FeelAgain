@@ -1,0 +1,3 @@
+mutation IncrementCountView($shoeId: String!) {
+  incrementCountView(shoeId: $shoeId)
+}

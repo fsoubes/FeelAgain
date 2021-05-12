@@ -299,6 +299,7 @@ export type Mutation = {
   addReview: Scalars['String'];
   addShoe: Scalars['ObjectId'];
   removeShoe: Scalars['String'];
+  incrementCountView: Scalars['Boolean'];
   updateShoe: Shoes;
   addImage: Scalars['String'];
   updateImage: Images;
@@ -348,6 +349,11 @@ export type MutationAddShoeArgs = {
 
 
 export type MutationRemoveShoeArgs = {
+  shoeId: Scalars['String'];
+};
+
+
+export type MutationIncrementCountViewArgs = {
   shoeId: Scalars['String'];
 };
 
@@ -772,6 +778,16 @@ export type ForgotPasswordMutationVariables = Exact<{
 export type ForgotPasswordMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'forgotPassword'>
+);
+
+export type IncrementCountViewMutationVariables = Exact<{
+  shoeId: Scalars['String'];
+}>;
+
+
+export type IncrementCountViewMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'incrementCountView'>
 );
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
@@ -1788,6 +1804,36 @@ export function useForgotPasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ForgotPasswordMutationHookResult = ReturnType<typeof useForgotPasswordMutation>;
 export type ForgotPasswordMutationResult = Apollo.MutationResult<ForgotPasswordMutation>;
 export type ForgotPasswordMutationOptions = Apollo.BaseMutationOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
+export const IncrementCountViewDocument = gql`
+    mutation IncrementCountView($shoeId: String!) {
+  incrementCountView(shoeId: $shoeId)
+}
+    `;
+export type IncrementCountViewMutationFn = Apollo.MutationFunction<IncrementCountViewMutation, IncrementCountViewMutationVariables>;
+
+/**
+ * __useIncrementCountViewMutation__
+ *
+ * To run a mutation, you first call `useIncrementCountViewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useIncrementCountViewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [incrementCountViewMutation, { data, loading, error }] = useIncrementCountViewMutation({
+ *   variables: {
+ *      shoeId: // value for 'shoeId'
+ *   },
+ * });
+ */
+export function useIncrementCountViewMutation(baseOptions?: Apollo.MutationHookOptions<IncrementCountViewMutation, IncrementCountViewMutationVariables>) {
+        return Apollo.useMutation<IncrementCountViewMutation, IncrementCountViewMutationVariables>(IncrementCountViewDocument, baseOptions);
+      }
+export type IncrementCountViewMutationHookResult = ReturnType<typeof useIncrementCountViewMutation>;
+export type IncrementCountViewMutationResult = Apollo.MutationResult<IncrementCountViewMutation>;
+export type IncrementCountViewMutationOptions = Apollo.BaseMutationOptions<IncrementCountViewMutation, IncrementCountViewMutationVariables>;
 export const LogoutDocument = gql`
     mutation Logout {
   logout
