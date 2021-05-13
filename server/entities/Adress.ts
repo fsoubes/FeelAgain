@@ -1,11 +1,12 @@
 import { prop as Property } from "@typegoose/typegoose";
+import { DeliveryType } from "../resolvers/enum/deliveryType";
 import { ObjectType, Field } from "type-graphql";
 
 @ObjectType()
 export class Adress {
   @Field({ nullable: true })
   @Property({ required: true })
-  name: String;
+  name: string;
 
   @Field({ nullable: true })
   @Property({ required: true })
@@ -35,7 +36,7 @@ export class Adress {
   @Property({ required: true })
   phone: string;
 
-  @Field({ nullable: true })
-  @Property({ required: false })
-  delivery: string;
+  @Field((_type) => DeliveryType)
+  @Property({ required: true })
+  delivery: DeliveryType;
 }

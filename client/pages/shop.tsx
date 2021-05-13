@@ -17,14 +17,14 @@ interface ShopProps {
   page?: number;
   search?: string;
 }
-interface sortoptions {
-  id_asc: string;
-  id_desc: string;
-  price_asc: string;
-  price_desc: string;
-  title_asc: string;
-  title_desc: string;
-}
+// interface sortoptions {
+//   id_asc: string;
+//   id_desc: string;
+//   price_asc: string;
+//   price_desc: string;
+//   title_asc: string;
+//   title_desc: string;
+// }
 
 const sortOptions = {
   id_asc: "Meilleures ventes",

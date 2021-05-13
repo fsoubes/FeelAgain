@@ -4,7 +4,6 @@ import Tilt from "../../../Tilt/Tilt";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { Button } from "@material-ui/core";
 import LazyLoadWrapper from "../../../LazyLoad/LazyLoadWrapper";
-import RatingIcon from "../../../StarRating/Rating";
 import RatingRes from "../../../StarRating/RatingRes";
 import { useIncrementCountViewMutation } from "../../../../generated/graphql";
 

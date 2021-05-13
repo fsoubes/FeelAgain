@@ -6,6 +6,7 @@ import { User } from "./User";
 import { CartItem } from "./CartItem";
 import { Adress } from "./Adress";
 import { StatusOrder } from "../resolvers/enum/statusOrder";
+import { PaymentType } from "../resolvers/enum/paymentType";
 
 @ObjectType()
 export class Orders {
@@ -20,6 +21,10 @@ export class Orders {
   @Property({ required: true, default: "UP" })
   test: StatusOrder;
 
+  @Field((_type) => PaymentType)
+  @Property({ required: false })
+  type: PaymentType;
+
   @Field((_type) => String)
   @Property({ required: true, default: "" })
   status: String;
@@ -31,6 +36,10 @@ export class Orders {
   @Field({ nullable: true })
   @Property({ required: true, default: "" })
   tracking: String;
+
+  @Field({ nullable: true })
+  @Property({ required: true, default: "" })
+  last_four: String;
 
   @Field()
   @Property({ required: false })

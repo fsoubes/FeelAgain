@@ -8,8 +8,10 @@ mutation AddPayment(
   $email: String
   $name: String
   $phone: String
-  $delivery: String
+  $delivery: DeliveryType
+  $type: PaymentType
   $amount: String
+  $last_four: String
 ) {
   addPayment(
     stripeId: $stripeId
@@ -24,6 +26,8 @@ mutation AddPayment(
       phone: $phone
       delivery: $delivery
       amount: $amount
+      last_four: $last_four
+      type: $type
     }
   )
 }

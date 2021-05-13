@@ -9,10 +9,12 @@ import {
 } from "@stripe/stripe-js";
 import useResponsiveFontSize from "../../utils/useResponsiveFontSize";
 import {
+  DeliveryType,
   GetBasketDocument,
   GetBasketQuery,
   MeDocument,
   MeQuery,
+  PaymentType,
   useAddPaymentMutation,
 } from "../../generated/graphql";
 import { Button } from "@material-ui/core";
@@ -152,12 +154,14 @@ interface CheckoutClassicProps {
   billingDetails: Info;
   shippingDetails: Shipping;
   total: string;
+  setPaypal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
   billingDetails,
   shippingDetails,
   total,
+  setPaypal,
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -222,12 +226,17 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
       // metadata: { firstname, ...shippingDetails },
     });
 
-    const response = await payment({
+    await payment({
       variables: {
         stripeId: payload.paymentMethod?.id as string,
         ...payload.paymentMethod?.billing_details,
         ...payload.paymentMethod?.billing_details.address,
         amount: total as string,
+        last_four: payload.paymentMethod?.card?.last4,
+        delivery: shippingDetails.free
+          ? ("Pickup" as DeliveryType)
+          : ("Home" as DeliveryType),
+        type: "Stripe" as PaymentType,
       },
       update: (cache) => {
         const basket = client.readQuery<GetBasketQuery>({
@@ -274,6 +283,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
     });
 
     setProcessing(false);
+    setPaypal(true);
 
     if (payload.error) {
       setError(payload?.error);

@@ -1,4 +1,6 @@
+import { DeliveryType } from "../../resolvers/enum/deliveryType";
 import { InputType, Field } from "type-graphql";
+import { PaymentType } from "../../resolvers/enum/paymentType";
 
 @InputType()
 export class DetailsInput {
@@ -27,7 +29,13 @@ export class DetailsInput {
   phone: string;
 
   @Field({ nullable: true })
-  delivery: string;
+  last_four: string;
+
+  @Field((_type) => DeliveryType, { nullable: true })
+  delivery: DeliveryType;
+
+  @Field((_type) => PaymentType, { nullable: true })
+  type: PaymentType;
 
   @Field({ nullable: true })
   amount: string;

@@ -21,8 +21,6 @@ require("dotenv").config();
 
 // Constant
 
-// console.log(Loaders);
-
 const main = async () => {
   try {
     let defaultUser: User;

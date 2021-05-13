@@ -3,15 +3,14 @@ import React, { useState, useEffect } from "react";
 import { Comments, useGetSingleShoesQuery } from "../../generated/graphql";
 import styles from "../../styles/Product.module.scss";
 import AddToCart from "../Button/AddToCart";
+import Gallery from "../ImageGallery/Gallery";
 import SelectRelative from "../Select/SelectRelative";
 import SelectSize from "../Select/SelectSize";
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
 
 interface Info {
+  comments: Comments[] | [];
   title: string;
   product: string;
-  comments: Comments[] | [];
   scored_by: number;
   score_1: number;
   score_2: number;
@@ -42,7 +41,6 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
   setInfo,
 }) => {
   const [index, setIndex] = useState<number>(0);
-
   const [img, setImg] = useState<IMage[] | null>(null);
 
   const { data } = useGetSingleShoesQuery({
@@ -77,8 +75,7 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
   return (
     <div className={styles.main}>
       <div className={styles.images}>
-        {/* <img src={data?.getSingleShoe.images[0].src} alt="product image"></img> */}
-        {img && img.length > 0 && <ImageGallery items={img} />}
+        {img && img.length > 0 && <Gallery img={img}></Gallery>}
       </div>
       <div className={styles.content__container}>
         <div className={styles.content}>

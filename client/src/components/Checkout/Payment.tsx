@@ -1,7 +1,8 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/Stripe.module.scss";
+import Paypall from "../Paypall/Paypall";
 import CheckoutClassic from "../Stripe/CheckoutClassic";
 
 interface Info {
@@ -45,6 +46,9 @@ const Payment: React.FC<PaymentProps> = ({
   shippingDetails,
   total,
 }) => {
+  const [hidePaypal, setPaypal] = useState(false);
+  const [hideStripe, setStripe] = useState(false);
+
   return (
     <div className={styles.container}>
       <h2
@@ -57,10 +61,18 @@ const Payment: React.FC<PaymentProps> = ({
       >
         Paiement
       </h2>
+
       <div className={styles.card}>
         <div className={styles.AppWrapper}>
+          {!hidePaypal && (
+            <div className={styles.PaypallWrapper}>
+              <Paypall setStripe={setStripe} paymount={total} />
+            </div>
+          )}
+          {!hidePaypal && !hideStripe && <h1>Ou via Stripe</h1>}
           <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
             <CheckoutClassic
+              setPaypal={setPaypal}
               total={total}
               billingDetails={billingDetails}
               shippingDetails={shippingDetails}

@@ -201,9 +201,11 @@ export type Orders = {
   _id: Scalars['ObjectId'];
   products: Array<CartItem>;
   test: StatusOrder;
+  type: PaymentType;
   status: Scalars['String'];
   payment_intent: Scalars['String'];
   tracking?: Maybe<Scalars['String']>;
+  last_four?: Maybe<Scalars['String']>;
   timeline: Scalars['Float'];
   total: Scalars['Float'];
   adress: Adress;
@@ -219,6 +221,12 @@ export enum StatusOrder {
   Annule = 'Annule'
 }
 
+/** type of payment */
+export enum PaymentType {
+  PayPal = 'PayPal',
+  Stripe = 'Stripe'
+}
+
 export type Adress = {
   __typename?: 'Adress';
   name?: Maybe<Scalars['String']>;
@@ -229,8 +237,14 @@ export type Adress = {
   city?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
-  delivery?: Maybe<Scalars['String']>;
+  delivery: DeliveryType;
 };
+
+/** type of payment */
+export enum DeliveryType {
+  Pickup = 'Pickup',
+  Home = 'Home'
+}
 
 export type PaginationShoes = {
   __typename?: 'PaginationShoes';
@@ -535,7 +549,9 @@ export type DetailsInput = {
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
-  delivery?: Maybe<Scalars['String']>;
+  last_four?: Maybe<Scalars['String']>;
+  delivery?: Maybe<DeliveryType>;
+  type?: Maybe<PaymentType>;
   amount?: Maybe<Scalars['String']>;
 };
 
@@ -673,8 +689,10 @@ export type AddPaymentMutationVariables = Exact<{
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
-  delivery?: Maybe<Scalars['String']>;
+  delivery?: Maybe<DeliveryType>;
+  type?: Maybe<PaymentType>;
   amount?: Maybe<Scalars['String']>;
+  last_four?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -1516,10 +1534,10 @@ export type AddImageMutationHookResult = ReturnType<typeof useAddImageMutation>;
 export type AddImageMutationResult = Apollo.MutationResult<AddImageMutation>;
 export type AddImageMutationOptions = Apollo.BaseMutationOptions<AddImageMutation, AddImageMutationVariables>;
 export const AddPaymentDocument = gql`
-    mutation AddPayment($stripeId: String!, $line1: String, $line2: String, $postal_code: String, $country: String, $city: String, $email: String, $name: String, $phone: String, $delivery: String, $amount: String) {
+    mutation AddPayment($stripeId: String!, $line1: String, $line2: String, $postal_code: String, $country: String, $city: String, $email: String, $name: String, $phone: String, $delivery: DeliveryType, $type: PaymentType, $amount: String, $last_four: String) {
   addPayment(
     stripeId: $stripeId
-    details: {line1: $line1, line2: $line2, postal_code: $postal_code, country: $country, city: $city, email: $email, name: $name, phone: $phone, delivery: $delivery, amount: $amount}
+    details: {line1: $line1, line2: $line2, postal_code: $postal_code, country: $country, city: $city, email: $email, name: $name, phone: $phone, delivery: $delivery, amount: $amount, last_four: $last_four, type: $type}
   )
 }
     `;
@@ -1548,7 +1566,9 @@ export type AddPaymentMutationFn = Apollo.MutationFunction<AddPaymentMutation, A
  *      name: // value for 'name'
  *      phone: // value for 'phone'
  *      delivery: // value for 'delivery'
+ *      type: // value for 'type'
  *      amount: // value for 'amount'
+ *      last_four: // value for 'last_four'
  *   },
  * });
  */

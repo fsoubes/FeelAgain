@@ -284,6 +284,7 @@ export class BasketResolver {
             total: amount,
             user: req.session.userId,
             adress: adress,
+            last_four: adress.last_four,
             status: "waiting",
             tracking: dataset[randomIntFromInterval(0, 3)],
             payment_intent: paymentIntent.id,
