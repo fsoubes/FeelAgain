@@ -1,5 +1,6 @@
 import React from "react";
 import { PayPalButton } from "react-paypal-button-v2";
+import { useAlert } from "react-alert";
 
 interface PaypallProps {
   paymount: string;
@@ -7,24 +8,54 @@ interface PaypallProps {
 }
 
 const Paypall: React.FC<PaypallProps> = ({ paymount, setStripe }) => {
+  const alert = useAlert();
+
   const paymentHandler = (details: any, data: any) => {
     console.log(details, data);
     // Api CALL
     setStripe(true);
-    alert("Transaction completed by " + details.payer.name.given_name);
   };
 
-  const onError = (err: Function | undefined) => {
-    // The main Paypal's script cannot be loaded or somethings block the loading of that script!
+  const onError = async (err: Function | undefined) => {
     console.log("Error!", err);
-    // Because the Paypal's main script is loaded asynchronously from "https://www.paypalobjects.com/api/checkout.js"
-    // => sometimes it may take about 0.5 second for everything to get set, or for the button to appear
   };
 
   return (
     <PayPalButton
+      createOrder={(data: any, actions: any) => {
+        return actions.order.create({
+          description: "Achat de chaussures FeelAgain",
+          purchase_units: [
+            {
+              amount: {
+                currency_code: "EUR",
+                value: paymount,
+              },
+            },
+          ],
+        });
+      }}
+      onApprove={(data: any, actions: any) => {
+        // Capture the funds from the transaction
+        return actions.order.capture().then(function(details: any) {
+          // Show a success message to your buyer
+
+          alert.show(`Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
+          commande aura été expédié. Vous pouvez suivre l'état de votre commande
+          ou l'annuler (48h) en cliquant sur le boutton ci-dessous.`);
+          console.log(details);
+          // OPTIONAL: Call your server to save the transaction
+          setStripe(true);
+          return fetch("/paypal-transaction-complete", {
+            method: "post",
+            body: JSON.stringify({
+              orderID: data.orderID,
+            }),
+          });
+        });
+      }}
+      //   onSuccess={paymentHandler}
       amount={paymount}
-      onSuccess={paymentHandler}
       onError={onError}
       currency="EUR"
       options={{
@@ -36,5 +67,3 @@ const Paypall: React.FC<PaypallProps> = ({ paymount, setStripe }) => {
   );
 };
 export default Paypall;
-
-// sb-zhhwg6209401@business.example.com

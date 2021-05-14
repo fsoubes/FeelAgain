@@ -1,5 +1,5 @@
-mutation AddPayment(
-  $stripeId: String!
+mutation AddPayPalPayment(
+  $paypalId: String!
   $line1: String
   $line2: String
   $postal_code: String
@@ -11,10 +11,9 @@ mutation AddPayment(
   $delivery: DeliveryType
   $payment_method: PaymentType
   $amount: String
-  $last_four: String
 ) {
-  addPayment(
-    stripeId: $stripeId
+  addPayPalPayment(
+    paypalId: $paypalId
     details: {
       line1: $line1
       line2: $line2
@@ -26,7 +25,6 @@ mutation AddPayment(
       phone: $phone
       delivery: $delivery
       amount: $amount
-      last_four: $last_four
       payment_method: $payment_method
     }
   )

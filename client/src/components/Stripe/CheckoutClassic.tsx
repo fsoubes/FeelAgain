@@ -236,7 +236,7 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
         delivery: shippingDetails.free
           ? ("Pickup" as DeliveryType)
           : ("Home" as DeliveryType),
-        type: "Stripe" as PaymentType,
+        payment_method: "Stripe" as PaymentType,
       },
       update: (cache) => {
         const basket = client.readQuery<GetBasketQuery>({

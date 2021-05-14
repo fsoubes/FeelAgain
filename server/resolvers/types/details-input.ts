@@ -35,7 +35,7 @@ export class DetailsInput {
   delivery: DeliveryType;
 
   @Field((_type) => PaymentType, { nullable: true })
-  type: PaymentType;
+  payment_method: PaymentType;
 
   @Field({ nullable: true })
   amount: string;

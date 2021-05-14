@@ -6,6 +6,8 @@ query GetOrder($orderId: String!) {
     createdAt
     timeline
     status
+    last_four
+    payment_method
     adress {
       name
       line1
@@ -15,6 +17,7 @@ query GetOrder($orderId: String!) {
       city
       postal_code
       country
+      delivery
     }
     user {
       email

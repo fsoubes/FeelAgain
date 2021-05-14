@@ -1,8 +1,8 @@
 import { registerEnumType } from "type-graphql";
 
 export enum DeliveryType {
-  Pickup,
-  Home,
+  Pickup = "Pickup",
+  Home = "Home",
 }
 
 registerEnumType(DeliveryType, {

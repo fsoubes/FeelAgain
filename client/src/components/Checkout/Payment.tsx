@@ -69,15 +69,17 @@ const Payment: React.FC<PaymentProps> = ({
               <Paypall setStripe={setStripe} paymount={total} />
             </div>
           )}
-          {!hidePaypal && !hideStripe && <h1>Ou via Stripe</h1>}
-          <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
-            <CheckoutClassic
-              setPaypal={setPaypal}
-              total={total}
-              billingDetails={billingDetails}
-              shippingDetails={shippingDetails}
-            ></CheckoutClassic>
-          </Elements>
+          {!hidePaypal && !hideStripe && <h1>Ou avec Stripe</h1>}
+          {!hideStripe && (
+            <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
+              <CheckoutClassic
+                setPaypal={setPaypal}
+                total={total}
+                billingDetails={billingDetails}
+                shippingDetails={shippingDetails}
+              ></CheckoutClassic>
+            </Elements>
+          )}
         </div>
       </div>
     </div>

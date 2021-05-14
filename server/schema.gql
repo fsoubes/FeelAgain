@@ -6,7 +6,7 @@
 type Adress {
   city: String
   country: String
-  delivery: String
+  delivery: DeliveryType!
   email: String
   line1: String
   line2: String
@@ -56,14 +56,30 @@ input BlogInput {
 
 type CartItem {
   _id: ObjectId!
+  comments: Comments
+  order: Boolean
   quantity: Float
+  user: String!
   variant: Variants!
+}
+
+input CommentInput {
+  comment: String
+  score: Float
+  title: String
 }
 
 type Comments {
   _id: ObjectId!
   author: User!
-  message: String!
+  comment: String
+  createdAt: DateTime!
+  is_recommanding: Boolean
+  product: Shoes
+  recommanded: [User!]!
+  recommanded_by: Float
+  score: Float
+  title: String
 }
 
 """
@@ -71,15 +87,23 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+"""type of payment"""
+enum DeliveryType {
+  Home
+  Pickup
+}
+
 input DetailsInput {
   amount: String
   city: String
   country: String
-  delivery: String
+  delivery: DeliveryType
   email: String
+  last_four: String
   line1: String
   line2: String
   name: String
+  payment_method: PaymentType
   phone: String
   postal_code: String
 }
@@ -112,16 +136,20 @@ type Mutation {
   addGuestCart(isArg: Boolean!): Boolean!
   addImage(image: ImageInput!, parentId: String!): String!
   addPayment(details: DetailsInput!, stripeId: String!): String!
+  addRecommendation(commentId: String!): String!
   addRelation: Boolean!
+  addReview(comments: CommentInput!, itemId: String!, reviewId: String, shoesId: String!): String!
   addShoe(shoes: ShoesInput!): ObjectId!
   addShoes: Boolean!
   addVariant(parentId: String!, variant: VariantInput!): String!
   changePassword(newPassword: String!, token: String!): UserResponse!
   forgotPassword(email: String!): Boolean!
+  incrementCountView(shoeId: String!): Boolean!
   login(user: UserLogin!): UserResponse!
   logout: Boolean!
   mergeGuestCart(isArg: Boolean!): Boolean!
   ratingReview(articleId: String!, rating: String!): Boolean!
+  refundOrder(orderId: String!, total: Float!, updated: [String!]!): String!
   register(user: UserRegister!): UserResponse!
   removeCartItem(basketId: String!, itemId: String!, quantity: Float!): String!
   removeShoe(shoeId: String!): String!
@@ -143,10 +171,14 @@ type OptionShoes {
 type Orders {
   _id: ObjectId!
   adress: Adress!
-  comments: Comments!
   createdAt: DateTime!
+  last_four: String
+  payment_intent: String!
+  payment_method: PaymentType!
   products: [CartItem!]!
   status: String!
+  test: StatusOrder!
+  timeline: Float!
   total: Float!
   tracking: String
   user: User!
@@ -173,15 +205,24 @@ type PaginationShoes {
   pageInfo: PaginationPage!
 }
 
+"""type of payment"""
+enum PaymentType {
+  PayPal
+  Stripe
+}
+
 type Query {
   getAllBasket: [Basket!]!
+  getAllOrderProducts: [CartItem!]!
   getAllOrders: [Orders!]!
   getArticles(cursor: String, limit: Float!): PaginationResponse!
   getBasket: Basket!
+  getCartItems: [CartItem!]!
   getClosestShoes(product: String!, title: String!): [Shoes!]!
   getFilterShoes(filter: ShoesInputFilter, is_published: Boolean = true, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
   getOrder(orderId: String!): Orders!
   getOrders: [Orders!]!
+  getReview(shoesId: String!): Comments!
   getShoesByName(search: String!): SearchResults!
   getSingleArticle(articleId: ObjectId!): Blog!
   getSingleShoe(shoesId: ObjectId!): Shoes!
@@ -198,6 +239,7 @@ type Shoes {
   _id: ObjectId!
   body_html: String!
   bought_by: Float!
+  comments: [Comments!]!
   createdAt: DateTime!
   handle: String!
   images: [Images!]!
@@ -207,6 +249,11 @@ type Shoes {
   product_type: String!
   relatives: [Shoes!]!
   score: Float!
+  score_1: Float!
+  score_2: Float!
+  score_3: Float!
+  score_4: Float!
+  score_5: Float!
   scored_by: Float!
   size: [Float!]!
   switchTitle: [String!]!
@@ -238,10 +285,19 @@ input ShoesInputFilter {
   tags: [String!]
 }
 
+"""status of order"""
+enum StatusOrder {
+  Annule
+  Attente
+  Envoye
+  Livre
+}
+
 type User {
   _id: ObjectId!
   basket: Basket!
   createdAt: DateTime!
+  customer_id: String!
   email: String!
   items: Float
   nickname: String!

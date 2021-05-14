@@ -183,18 +183,61 @@ export class BasketResolver {
     }
   }
 
-  /*  @Mutation(() => String)
+  @Mutation(() => String)
   @UseMiddleware(isAuth)
-  async refundPayment():   @Arg("stripeId") stripeId: string,
+  async addPayPalPayment(
+    @Arg("paypalId") paypalId: String,
     @Arg("details") details: DetailsInput,
-    @Ctx() { req }: MyContext 
-  Promise<String> {
+    @Ctx() { req }: MyContext
+  ): Promise<String> {
     try {
-      return "Refund!";
+      // const user = await UserModel.findById(req.session.userId);
+
+      const basket = await BasketModel.findOne({ user: req.session.userId });
+      const adress = {
+        ...details,
+      };
+
+      if (basket) {
+        for (const prod of basket.products) {
+          const product = await CartItemModel.findByIdAndUpdate(
+            {
+              _id: prod,
+            },
+            { order: true },
+            { useFindAndModify: false, upsert: true }
+          );
+          if (product) {
+            const variant = await VariantsModel.findById(product.variant);
+            if (variant) {
+              variant.quantity =
+                (variant.quantity as number) - product.quantity;
+              await variant.save();
+            }
+          }
+        }
+
+        const command = new OrdersModel({
+          products: basket.products,
+          total: details.amount,
+          user: req.session.userId,
+          adress: adress,
+          status: "waiting",
+          payment_method: details.payment_method,
+          tracking: dataset[randomIntFromInterval(0, 3)],
+          payment_intent: paypalId,
+        });
+        basket.products = [];
+        basket.total = 0;
+        await basket.save();
+        await command.save();
+      }
+
+      return "Thanks for the payment!";
     } catch (err) {
       throw err;
     }
-  } */
+  }
 
   @Mutation(() => String)
   @UseMiddleware(isAuth)
@@ -260,7 +303,6 @@ export class BasketResolver {
         };
 
         if (basket) {
-          // remove quantity TODO
           for (const prod of basket.products) {
             const product = await CartItemModel.findByIdAndUpdate(
               {
@@ -286,6 +328,7 @@ export class BasketResolver {
             adress: adress,
             last_four: adress.last_four,
             status: "waiting",
+            payment_method: details.payment_method,
             tracking: dataset[randomIntFromInterval(0, 3)],
             payment_intent: paymentIntent.id,
           });

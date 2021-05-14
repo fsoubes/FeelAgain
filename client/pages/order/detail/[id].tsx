@@ -104,12 +104,21 @@ const DetailOrder: NextPage<Props> = ({ id }) => {
                       width="28"
                       src="https://www.amazon.fr/images/G/08/checkout/payselect/card-logos-small/visa._CB658924195_.gif"
                     ></img>
-                    <span>**** 1011</span>
+                    <span>
+                      {data?.getOrder.payment_method === "Stripe"
+                        ? `**** ${data?.getOrder.last_four}`
+                        : "Paypal"}
+                    </span>
                   </div>
                 </div>
                 <div className={styles.header__content}>
                   <span style={{ fontWeight: "bold" }}>Mode de livraison</span>
-                  <span>Colissimo/Point relais</span>
+                  <span>
+                    Colissimo/
+                    {data?.getOrder.adress.delivery === "Pickup"
+                      ? "Point relais"
+                      : "Livraison avec signature"}
+                  </span>
                 </div>
               </div>
               <div className={styles.header__command_recap}>

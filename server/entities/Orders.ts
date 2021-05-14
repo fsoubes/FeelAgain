@@ -22,8 +22,8 @@ export class Orders {
   test: StatusOrder;
 
   @Field((_type) => PaymentType)
-  @Property({ required: false })
-  type: PaymentType;
+  @Property({ required: true })
+  payment_method: PaymentType;
 
   @Field((_type) => String)
   @Property({ required: true, default: "" })

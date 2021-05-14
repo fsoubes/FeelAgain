@@ -26,6 +26,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,500,700&display=swap"
           />
+          {/* <script src="https://www.paypal.com/sdk/js?client-id=AS9TRywOaV8Ap8n06RkvKFrJX37SVDQPBkI0vv7da79OKfjrEkTx7WQe8nXLSTK2BXKoQSHgkQupdety,currency=EUR" /> */}
         </Head>
         <body>
           <Main />

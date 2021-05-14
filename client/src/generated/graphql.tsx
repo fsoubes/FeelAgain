@@ -201,7 +201,7 @@ export type Orders = {
   _id: Scalars['ObjectId'];
   products: Array<CartItem>;
   test: StatusOrder;
-  type: PaymentType;
+  payment_method: PaymentType;
   status: Scalars['String'];
   payment_intent: Scalars['String'];
   tracking?: Maybe<Scalars['String']>;
@@ -551,7 +551,7 @@ export type DetailsInput = {
   phone?: Maybe<Scalars['String']>;
   last_four?: Maybe<Scalars['String']>;
   delivery?: Maybe<DeliveryType>;
-  type?: Maybe<PaymentType>;
+  payment_method?: Maybe<PaymentType>;
   amount?: Maybe<Scalars['String']>;
 };
 
@@ -690,7 +690,7 @@ export type AddPaymentMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   delivery?: Maybe<DeliveryType>;
-  type?: Maybe<PaymentType>;
+  payment_method?: Maybe<PaymentType>;
   amount?: Maybe<Scalars['String']>;
   last_four?: Maybe<Scalars['String']>;
 }>;
@@ -1074,10 +1074,10 @@ export type GetOrderQuery = (
   { __typename?: 'Query' }
   & { getOrder: (
     { __typename?: 'Orders' }
-    & Pick<Orders, '_id' | 'total' | 'tracking' | 'createdAt' | 'timeline' | 'status'>
+    & Pick<Orders, '_id' | 'total' | 'tracking' | 'createdAt' | 'timeline' | 'status' | 'last_four' | 'payment_method'>
     & { adress: (
       { __typename?: 'Adress' }
-      & Pick<Adress, 'name' | 'line1' | 'line2' | 'phone' | 'email' | 'city' | 'postal_code' | 'country'>
+      & Pick<Adress, 'name' | 'line1' | 'line2' | 'phone' | 'email' | 'city' | 'postal_code' | 'country' | 'delivery'>
     ), user: (
       { __typename?: 'User' }
       & Pick<User, 'email'>
@@ -1534,10 +1534,10 @@ export type AddImageMutationHookResult = ReturnType<typeof useAddImageMutation>;
 export type AddImageMutationResult = Apollo.MutationResult<AddImageMutation>;
 export type AddImageMutationOptions = Apollo.BaseMutationOptions<AddImageMutation, AddImageMutationVariables>;
 export const AddPaymentDocument = gql`
-    mutation AddPayment($stripeId: String!, $line1: String, $line2: String, $postal_code: String, $country: String, $city: String, $email: String, $name: String, $phone: String, $delivery: DeliveryType, $type: PaymentType, $amount: String, $last_four: String) {
+    mutation AddPayment($stripeId: String!, $line1: String, $line2: String, $postal_code: String, $country: String, $city: String, $email: String, $name: String, $phone: String, $delivery: DeliveryType, $payment_method: PaymentType, $amount: String, $last_four: String) {
   addPayment(
     stripeId: $stripeId
-    details: {line1: $line1, line2: $line2, postal_code: $postal_code, country: $country, city: $city, email: $email, name: $name, phone: $phone, delivery: $delivery, amount: $amount, last_four: $last_four, type: $type}
+    details: {line1: $line1, line2: $line2, postal_code: $postal_code, country: $country, city: $city, email: $email, name: $name, phone: $phone, delivery: $delivery, amount: $amount, last_four: $last_four, payment_method: $payment_method}
   )
 }
     `;
@@ -1566,7 +1566,7 @@ export type AddPaymentMutationFn = Apollo.MutationFunction<AddPaymentMutation, A
  *      name: // value for 'name'
  *      phone: // value for 'phone'
  *      delivery: // value for 'delivery'
- *      type: // value for 'type'
+ *      payment_method: // value for 'payment_method'
  *      amount: // value for 'amount'
  *      last_four: // value for 'last_four'
  *   },
@@ -2437,6 +2437,8 @@ export const GetOrderDocument = gql`
     createdAt
     timeline
     status
+    last_four
+    payment_method
     adress {
       name
       line1
@@ -2446,6 +2448,7 @@ export const GetOrderDocument = gql`
       city
       postal_code
       country
+      delivery
     }
     user {
       email
