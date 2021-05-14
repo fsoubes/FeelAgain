@@ -70,9 +70,10 @@ const Summary: React.FC<SummaryProps> = ({ setMail, delivery, setTotal }) => {
             {delivery
               ? (
                   (total as number) +
+                  6 +
                   ((total as number) * 1.4) / 100 +
                   0.25
-                ).toFixed(2) + 6
+                ).toFixed(2)
               : (
                   (total as number) +
                   ((total as number) * 1.4) / 100 +

@@ -191,8 +191,6 @@ export class BasketResolver {
     @Ctx() { req }: MyContext
   ): Promise<String> {
     try {
-      // const user = await UserModel.findById(req.session.userId);
-
       const basket = await BasketModel.findOne({ user: req.session.userId });
       const adress = {
         ...details,
@@ -269,11 +267,8 @@ export class BasketResolver {
             default_payment_method: stripeId,
           },
         });
-
         user.customer_id = customer.id;
-
         await user.save();
-
         customerId = customer.id;
       } else {
         customerId = isPresent.data[0].id;

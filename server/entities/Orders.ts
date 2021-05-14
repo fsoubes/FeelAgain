@@ -38,7 +38,7 @@ export class Orders {
   tracking: String;
 
   @Field({ nullable: true })
-  @Property({ required: true, default: "" })
+  @Property({ required: false, default: "" })
   last_four: String;
 
   @Field()

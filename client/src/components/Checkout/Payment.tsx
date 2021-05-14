@@ -66,7 +66,11 @@ const Payment: React.FC<PaymentProps> = ({
         <div className={styles.AppWrapper}>
           {!hidePaypal && (
             <div className={styles.PaypallWrapper}>
-              <Paypall setStripe={setStripe} paymount={total} />
+              <Paypall
+                shippingDetails={shippingDetails}
+                setStripe={setStripe}
+                paymount={total}
+              />
             </div>
           )}
           {!hidePaypal && !hideStripe && <h1>Ou avec Stripe</h1>}

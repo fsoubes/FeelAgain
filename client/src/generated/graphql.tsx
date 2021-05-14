@@ -333,6 +333,7 @@ export type Mutation = {
   addCartItem: CartItem;
   updateCartItem: Scalars['String'];
   removeCartItem: Scalars['String'];
+  addPayPalPayment: Scalars['String'];
   addPayment: Scalars['String'];
 };
 
@@ -459,6 +460,12 @@ export type MutationRemoveCartItemArgs = {
   quantity: Scalars['Float'];
   basketId: Scalars['String'];
   itemId: Scalars['String'];
+};
+
+
+export type MutationAddPayPalPaymentArgs = {
+  details: DetailsInput;
+  paypalId: Scalars['String'];
 };
 
 
@@ -677,6 +684,27 @@ export type AddImageMutationVariables = Exact<{
 export type AddImageMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'addImage'>
+);
+
+export type AddPayPalPaymentMutationVariables = Exact<{
+  paypalId: Scalars['String'];
+  line1?: Maybe<Scalars['String']>;
+  line2?: Maybe<Scalars['String']>;
+  postal_code?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  delivery?: Maybe<DeliveryType>;
+  payment_method?: Maybe<PaymentType>;
+  amount?: Maybe<Scalars['String']>;
+}>;
+
+
+export type AddPayPalPaymentMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addPayPalPayment'>
 );
 
 export type AddPaymentMutationVariables = Exact<{
@@ -1533,6 +1561,50 @@ export function useAddImageMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddImageMutationHookResult = ReturnType<typeof useAddImageMutation>;
 export type AddImageMutationResult = Apollo.MutationResult<AddImageMutation>;
 export type AddImageMutationOptions = Apollo.BaseMutationOptions<AddImageMutation, AddImageMutationVariables>;
+export const AddPayPalPaymentDocument = gql`
+    mutation AddPayPalPayment($paypalId: String!, $line1: String, $line2: String, $postal_code: String, $country: String, $city: String, $email: String, $name: String, $phone: String, $delivery: DeliveryType, $payment_method: PaymentType, $amount: String) {
+  addPayPalPayment(
+    paypalId: $paypalId
+    details: {line1: $line1, line2: $line2, postal_code: $postal_code, country: $country, city: $city, email: $email, name: $name, phone: $phone, delivery: $delivery, amount: $amount, payment_method: $payment_method}
+  )
+}
+    `;
+export type AddPayPalPaymentMutationFn = Apollo.MutationFunction<AddPayPalPaymentMutation, AddPayPalPaymentMutationVariables>;
+
+/**
+ * __useAddPayPalPaymentMutation__
+ *
+ * To run a mutation, you first call `useAddPayPalPaymentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPayPalPaymentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPayPalPaymentMutation, { data, loading, error }] = useAddPayPalPaymentMutation({
+ *   variables: {
+ *      paypalId: // value for 'paypalId'
+ *      line1: // value for 'line1'
+ *      line2: // value for 'line2'
+ *      postal_code: // value for 'postal_code'
+ *      country: // value for 'country'
+ *      city: // value for 'city'
+ *      email: // value for 'email'
+ *      name: // value for 'name'
+ *      phone: // value for 'phone'
+ *      delivery: // value for 'delivery'
+ *      payment_method: // value for 'payment_method'
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useAddPayPalPaymentMutation(baseOptions?: Apollo.MutationHookOptions<AddPayPalPaymentMutation, AddPayPalPaymentMutationVariables>) {
+        return Apollo.useMutation<AddPayPalPaymentMutation, AddPayPalPaymentMutationVariables>(AddPayPalPaymentDocument, baseOptions);
+      }
+export type AddPayPalPaymentMutationHookResult = ReturnType<typeof useAddPayPalPaymentMutation>;
+export type AddPayPalPaymentMutationResult = Apollo.MutationResult<AddPayPalPaymentMutation>;
+export type AddPayPalPaymentMutationOptions = Apollo.BaseMutationOptions<AddPayPalPaymentMutation, AddPayPalPaymentMutationVariables>;
 export const AddPaymentDocument = gql`
     mutation AddPayment($stripeId: String!, $line1: String, $line2: String, $postal_code: String, $country: String, $city: String, $email: String, $name: String, $phone: String, $delivery: DeliveryType, $payment_method: PaymentType, $amount: String, $last_four: String) {
   addPayment(

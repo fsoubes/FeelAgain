@@ -1,24 +1,41 @@
 import React from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useAlert } from "react-alert";
+import {
+  DeliveryType,
+  GetBasketDocument,
+  GetBasketQuery,
+  MeDocument,
+  MeQuery,
+  PaymentType,
+  useAddPayPalPaymentMutation,
+} from "../../generated/graphql";
+import { useApolloClient } from "@apollo/client";
 
 interface PaypallProps {
   paymount: string;
   setStripe: React.Dispatch<React.SetStateAction<boolean>>;
+  shippingDetails: Shipping;
 }
 
-const Paypall: React.FC<PaypallProps> = ({ paymount, setStripe }) => {
-  const alert = useAlert();
+interface Shipping {
+  free: boolean;
+  paid: boolean;
+}
 
-  const paymentHandler = (details: any, data: any) => {
-    console.log(details, data);
-    // Api CALL
-    setStripe(true);
-  };
+const Paypall: React.FC<PaypallProps> = ({
+  paymount,
+  setStripe,
+  shippingDetails,
+}) => {
+  const alert = useAlert();
+  const client = useApolloClient();
 
   const onError = async (err: Function | undefined) => {
     console.log("Error!", err);
   };
+
+  const [payment] = useAddPayPalPaymentMutation();
 
   return (
     <PayPalButton
@@ -30,22 +47,88 @@ const Paypall: React.FC<PaypallProps> = ({ paymount, setStripe }) => {
               amount: {
                 currency_code: "EUR",
                 value: paymount,
+                // value: "0.01",
               },
             },
           ],
         });
       }}
-      onApprove={(data: any, actions: any) => {
+      onApprove={async (data: any, actions: any) => {
         // Capture the funds from the transaction
-        return actions.order.capture().then(function(details: any) {
+        return actions.order.capture().then(async function(details: any) {
           // Show a success message to your buyer
 
-          alert.show(`Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
+          alert.success(`Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
           commande aura été expédié. Vous pouvez suivre l'état de votre commande
           ou l'annuler (48h) en cliquant sur le boutton ci-dessous.`);
           console.log(details);
           // OPTIONAL: Call your server to save the transaction
+
           setStripe(true);
+
+          const paymentInfo = details.purchase_units[0];
+
+          console.log(paymentInfo);
+
+          await payment({
+            variables: {
+              paypalId: details.id as string,
+              name: paymentInfo.shipping.name.full_name,
+              line1: paymentInfo.shipping.address.address_line_1,
+              city: paymentInfo.shipping.address.admin_area_1,
+              country: paymentInfo.shipping.address.admin_area_2,
+              postal_code: paymentInfo.shipping.address.postal_code,
+              email: paymentInfo.payee.email_address,
+              amount: paymount as string,
+              delivery: shippingDetails.free
+                ? ("Pickup" as DeliveryType)
+                : ("Home" as DeliveryType),
+              payment_method: "PayPal" as PaymentType,
+            },
+            update: (cache) => {
+              const basket = client.readQuery<GetBasketQuery>({
+                query: GetBasketDocument,
+              });
+
+              const currentUser = client.readQuery<MeQuery>({
+                query: MeDocument,
+              });
+
+              cache.evict({
+                // Often cache.evict will take an options.id property, but that's not necessary
+                // when evicting from the ROOT_QUERY object, as we're doing here.
+                fieldName: "products",
+                // No need to trigger a broadcast here, since writeQuery will take care of that.
+                broadcast: false,
+              });
+
+              if (basket?.getBasket && currentUser && currentUser.me) {
+                cache.writeQuery<GetBasketQuery>({
+                  query: GetBasketDocument,
+                  data: {
+                    __typename: "Query",
+                    ...basket,
+                    getBasket: {
+                      ...basket.getBasket,
+                      products: [],
+                    },
+                  },
+                });
+
+                cache.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: "Query",
+                    me: {
+                      ...currentUser?.me,
+                      items: 0,
+                    },
+                  },
+                });
+              }
+            },
+          });
+
           return fetch("/paypal-transaction-complete", {
             method: "post",
             body: JSON.stringify({
@@ -54,10 +137,7 @@ const Paypall: React.FC<PaypallProps> = ({ paymount, setStripe }) => {
           });
         });
       }}
-      //   onSuccess={paymentHandler}
-      amount={paymount}
       onError={onError}
-      currency="EUR"
       options={{
         clientId:
           "AS9TRywOaV8Ap8n06RkvKFrJX37SVDQPBkI0vv7da79OKfjrEkTx7WQe8nXLSTK2BXKoQSHgkQupdety",

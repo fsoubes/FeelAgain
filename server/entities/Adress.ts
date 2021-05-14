@@ -13,7 +13,7 @@ export class Adress {
   line1: string;
 
   @Field({ nullable: true })
-  @Property({ required: true })
+  @Property({ required: false })
   line2?: string;
 
   @Field({ nullable: true })
@@ -33,7 +33,7 @@ export class Adress {
   email: string;
 
   @Field({ nullable: true })
-  @Property({ required: true })
+  @Property({ required: false })
   phone: string;
 
   @Field((_type) => DeliveryType)
