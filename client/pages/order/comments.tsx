@@ -33,7 +33,7 @@ const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
             </div>
           </div>
         )}
-        <h1>Évaluez vos achats</h1>
+        <h1>Évaluez vos achatss</h1>
         <div>
           {data && (
             <ul className={styles.purchases__list}>
