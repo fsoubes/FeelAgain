@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { ThemeProvider } from "../src/theme";
 import "../src/styles/global.scss";
 import Head from "next/head";
-import { Footer } from "../src/components/Footer";
+import Footer from "../src/components/Footer";
 import { useRouter } from "next/router";
 import Dashboard from "./dashboard";
 import UpwardScroll from "../src/components/ScrollUp/UpwardScroll";
@@ -35,8 +35,8 @@ function MyApp({ Component, pageProps }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container">
-        <AlertProvider template={AlertTemplate} {...options}>
-          <ThemeProvider>
+        <ThemeProvider>
+          <AlertProvider template={AlertTemplate} {...options}>
             <UpwardScroll />
             {router.pathname.startsWith("/dashboard/") ? (
               <Dashboard>
@@ -46,8 +46,8 @@ function MyApp({ Component, pageProps }: any) {
               <Component {...pageProps} />
             )}
             <Footer></Footer>
-          </ThemeProvider>
-        </AlertProvider>
+          </AlertProvider>
+        </ThemeProvider>
       </div>
     </Fragment>
   );

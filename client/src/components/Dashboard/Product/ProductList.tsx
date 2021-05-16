@@ -43,6 +43,7 @@ const ProductListDash: React.FC<ProductListProps> = ({
         remove={remove}
         score={item.score}
         scoredBy={item.scored_by}
+        contain={item.vendor === "Anaki"}
       />
     );
   });

@@ -16,6 +16,7 @@ interface ProductItemProps {
   id: string;
   score?: number;
   scoredBy?: number;
+  contain?: boolean;
   remove?:
     | ((
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -34,6 +35,7 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
   isTilt,
   score,
   scoredBy,
+  contain,
 }) => {
   const router = useRouter();
   const [incrementCount] = useIncrementCountViewMutation();
@@ -48,7 +50,12 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
     >
       <Tilt style={{ cursor: "pointer" }} isTilt={isTilt}>
         <LazyLoadWrapper>
-          <div style={{ backgroundImage: `url( ${src} )` }}>
+          <div
+            style={{
+              backgroundImage: `url( ${src} )`,
+              backgroundSize: contain ? "contain" : "cover",
+            }}
+          >
             <Button
               disableRipple
               onClick={(event) => (remove ? remove(event, id) : null)}
