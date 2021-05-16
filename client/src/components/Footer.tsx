@@ -8,6 +8,9 @@ import styles from "../styles/Footer.module.scss";
 import Logo from "../svg/feelagain";
 import Link from "next/link";
 import Image from "next/image";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import InstagramIcon from "@material-ui/icons/Instagram";
 
 interface FooterProps {}
 
@@ -26,8 +29,12 @@ const Footer: React.FC<FooterProps> = () => {
                 height="48"
                 alt="picture"
               />
-              <span>LIVRAISON À DOMICILE</span>
-              <span>OU POINT RELAIS</span>
+              <span>
+                LIVRAISON À <strong>DOMICILE</strong>
+              </span>
+              <span>
+                OU <strong>POINT RELAIS</strong>
+              </span>
             </a>
           </li>
           <li>
@@ -40,7 +47,9 @@ const Footer: React.FC<FooterProps> = () => {
                 alt="picture"
               />
               <span>PAIEMENT</span>
-              <span>SÉCURISÉ</span>
+              <span>
+                <strong>SÉCURISÉ</strong>
+              </span>
             </a>
           </li>
           <li>
@@ -53,26 +62,21 @@ const Footer: React.FC<FooterProps> = () => {
                 quality="100"
               />
               <span>RETOUR & ÉCHANGE</span>
-              <span>GRATUIT</span>
+              <span>
+                <strong>GRATUIT</strong>
+              </span>
             </a>
           </li>
         </ul>
       </div>
       <div className={styles.feelagain__accept}>
-        <div>
+        <div className={styles.feelagain__accept_images}>
           <span>Moyens de paiement acceptés</span>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+          <img src="/accepted.png" width="256" height="28" alt="picture" />
         </div>
-        <div>
+        <div className={styles.feelagain__accept_images}>
           <span>Nos transporteurs</span>
-          <div>
-            <div></div>
-            <div></div>
-          </div>
+          <img src="/carrier.png" width="256" height="28" alt="picture" />
         </div>
       </div>
       <div className={styles.footer}>
@@ -151,11 +155,22 @@ const Footer: React.FC<FooterProps> = () => {
 
           <div>
             <h2>NEWSLETTER</h2>
-            <div className={styles.newsletter}>
-              <input></input>
-              <button>Ok</button>
+            <form>
+              <input type="email" placeholder="Your email address" />
+              <input type="submit" value="Subscribe" />
+            </form>
+            <span>Rester informé de notre actualité</span>
+            <div className={styles.social}>
+              <a href="https://www.facebook.com/" target="_blank">
+                <FacebookIcon />
+              </a>
+              <a href="https://twitter.com/">
+                <TwitterIcon />
+              </a>
+              <a href="https://www.instagram.com/">
+                <InstagramIcon />
+              </a>
             </div>
-            <span>Rester informer des actualités</span>
           </div>
         </div>
 
