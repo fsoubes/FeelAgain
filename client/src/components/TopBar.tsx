@@ -1,5 +1,11 @@
 import { useApolloClient } from "@apollo/client";
-import React, { ReactElement, Fragment, useState, useEffect } from "react";
+import React, {
+  ReactElement,
+  Fragment,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -15,6 +21,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchShoes from "./Search/Search";
 import Basket from "../svg/basket";
 import SearchIcon from "@material-ui/icons/Search";
+import SubMenu from "./SubMenu/SubMenu";
+import { debounce } from "@material-ui/core";
 
 const useStyles = makeStyles({
   show: {
@@ -27,7 +35,11 @@ const useStyles = makeStyles({
   },
 });
 
-export const TopBar = (): ReactElement => {
+interface TopBarProps {
+  isBasket?: boolean;
+}
+
+const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
   const trigger = useScrollTrigger();
   const classes = useStyles();
   const { isTabletorMobile } = useResponsive();
@@ -35,6 +47,41 @@ export const TopBar = (): ReactElement => {
   const [logout] = useLogoutMutation();
   const { data } = useMeQuery({
     skip: isServer(),
+  });
+
+  const handleLogout = async () => {
+    await logout();
+    await client.resetStore();
+  };
+
+  const [triggerSubMenu, setTrigger] = useState<boolean>(false);
+  const subMenuRef = useRef<HTMLDivElement>(null);
+
+  const subMenu = {
+    commandes: "/order",
+    panier: "/panier",
+    evaluer: "/order/comments",
+    deconnexion: "",
+  };
+
+  useEffect(() => {
+    subMenuRef?.current?.addEventListener(
+      "mouseenter",
+      debounce(() => setTrigger(true), 200)
+    );
+    subMenuRef?.current?.addEventListener(
+      "mouseleave",
+      debounce(() => setTrigger(false), 200)
+    );
+
+    return () => {
+      subMenuRef?.current?.removeEventListener("mouseenter", () =>
+        debounce(() => setTrigger(true), 200)
+      );
+      subMenuRef?.current?.removeEventListener("mouseleave", () =>
+        debounce(() => setTrigger(false), 200)
+      );
+    };
   });
 
   const [open, setOpen] = useState(false);
@@ -83,7 +130,8 @@ export const TopBar = (): ReactElement => {
   const unloged = (
     <Fragment>
       {!isTabletorMobile && (
-        <Link href={`/profile/${data?.me?.nickname}`}>
+        // <Link href={`/profile/${data?.me?.nickname}`}>
+        <div ref={subMenuRef}>
           <Button
             variant="text"
             color="inherit"
@@ -96,7 +144,11 @@ export const TopBar = (): ReactElement => {
             <br />
             Mon Compte
           </Button>
-        </Link>
+          {triggerSubMenu && (
+            <SubMenu options={subMenu} logout={handleLogout} />
+          )}
+        </div>
+        // </Link>
       )}
       {isTabletorMobile && (
         <Link href={`/profile/${data?.me?.nickname}`}>
@@ -105,7 +157,7 @@ export const TopBar = (): ReactElement => {
           </Button>
         </Link>
       )}
-      <Button
+      {/* <Button
         className={styles.navbar__auth_logout}
         onClick={async () => {
           await logout();
@@ -116,29 +168,34 @@ export const TopBar = (): ReactElement => {
         style={menuStyling.log}
       >
         Deconnexion
-      </Button>
+      </Button> */}
     </Fragment>
   );
 
   return (
-    <AppBar className={trigger ? classes.hide : classes.show} position="sticky">
+    <AppBar
+      className={trigger && !isBasket ? classes.hide : classes.show}
+      position={isBasket ? "fixed" : "sticky"}
+    >
       <Toolbar className={styles.navbar__content}>
-        <div className={styles.navbar__left}>
+        <div className={styles.navbar__logo}>
           <Link href="/">
             <div
               style={{
                 height: "100%",
-                width: "30px",
+                width: "40px",
                 display: "flex",
                 alignItems: "center",
                 position: "relative",
                 cursor: "pointer",
+                margin: "15px",
               }}
             >
               <Logo />
             </div>
           </Link>
-
+        </div>
+        <div className={styles.navbar__left}>
           <div className={styles.hamburger}>
             <SearchShoes>
               <SearchIcon />
@@ -164,19 +221,19 @@ export const TopBar = (): ReactElement => {
             }
           >
             <Link href="/shop">
-              <Button variant="text" color="inherit">
+              <Button variant="text" color="inherit" disableRipple>
                 &nbsp;Shop
               </Button>
             </Link>
 
             <Link href="/blog">
-              <Button variant="text" color="inherit">
+              <Button variant="text" color="inherit" disableRipple>
                 &nbsp;Blog
               </Button>
             </Link>
 
             <Link href="/topics">
-              <Button variant="text" color="inherit">
+              <Button variant="text" color="inherit" disableRipple>
                 &nbsp;CONTACT
               </Button>
             </Link>
@@ -210,3 +267,5 @@ export const TopBar = (): ReactElement => {
     </AppBar>
   );
 };
+
+export default TopBar;

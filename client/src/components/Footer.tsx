@@ -182,8 +182,13 @@ const Footer: React.FC<FooterProps> = () => {
           >
             @FeelAgain - 2021
           </a>
-          <Tooltip title="Toggle Theme">
-            <Button variant="text" color="inherit" onClick={toggleTheme}>
+          <Tooltip title="Modifier le thème">
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={toggleTheme}
+              disableRipple
+            >
               {isDark ? <SunIcon /> : <MoonIcon />}
             </Button>
           </Tooltip>

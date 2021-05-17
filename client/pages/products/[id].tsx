@@ -70,7 +70,7 @@ const Article: NextPage<Props> = ({ id }) => {
   }, [id]);
 
   return (
-    <Layout>
+    <Layout isBasket={openCard as boolean}>
       {openCard && <BackDropShadow></BackDropShadow>}
       <Outside open={openCard} setOpen={setOpenCard}>
         <CartSideBar isOpen={openCard}>

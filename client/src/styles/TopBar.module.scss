@@ -14,7 +14,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     @include startToBetween() {
+      justify-content: flex-end;
+    }
+
+    button:last-child {
+      margin: 0 !important;
     }
   }
 
@@ -33,7 +39,8 @@
       flex-direction: column;
       top: 0;
       right: 0;
-      background: rgba(5, 30, 57, 0.85);
+
+      background: rgba(13, 17, 23, 0.85);
       text-align: center;
       align-items: center;
       justify-content: center;
@@ -55,8 +62,17 @@
       }
     }
     display: flex;
+
     button {
-      margin-left: 3rem;
+      margin-right: 3rem;
+      &:hover {
+        background: none;
+      }
+      span {
+        letter-spacing: 2px;
+        font-family: Oswald, sans-serif;
+        font-size: 1.1rem;
+      }
     }
   }
 
@@ -65,12 +81,15 @@
     align-items: center;
     .search {
       margin-right: calc(var(--space));
-      border-right: 1px solid white;
       padding-right: 3px;
       display: flex;
-      svg {
-        width: 28px;
-        height: 28px;
+
+      button {
+        min-width: 40px !important;
+        svg {
+          width: 28px;
+          height: 28px;
+        }
       }
     }
     .navbar__auth {
@@ -81,8 +100,27 @@
       a {
         color: #fff;
       }
+      button::after {
+        content: "\f107";
+        right: 1px;
+        font-size: 12px;
+        font-weight: bold;
+        position: absolute;
+        top: 50%;
+        margin-top: 00;
+        font-family: FontAwesome;
+        line-height: 14px;
+      }
     }
   }
+}
+
+.navbar__content::before {
+  content: "";
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  position: absolute;
 }
 
 .hide {

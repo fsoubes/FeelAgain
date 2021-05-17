@@ -18,13 +18,17 @@ interface SortProps {
 }
 
 const Sort: React.FC<SortProps> = ({ options, setSort, closing, isSort }) => {
-  const handleClick = (item: any) => {
+  const handleClick = (item: keyof sortoptions) => {
     setSort(item);
     closing(false);
   };
 
   const listOptions = Object.keys(options).map((item, index) => (
-    <li className={styles.item} key={index} onClick={() => handleClick(item)}>
+    <li
+      className={styles.item}
+      key={index}
+      onClick={() => handleClick(item as keyof sortoptions)}
+    >
       {(options as any)[item]}
       {item === isSort ? ` ✓` : ""}
     </li>

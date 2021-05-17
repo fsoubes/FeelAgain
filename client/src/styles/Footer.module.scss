@@ -184,6 +184,11 @@
 
   .copyright {
     display: flex;
+    button {
+      &:hover {
+        background: none;
+      }
+    }
   }
 
   img {

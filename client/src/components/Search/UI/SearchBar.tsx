@@ -12,7 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchConfim, urlSearch }) => {
 
   return (
     <div className={styles.search__container}>
-      <p className={styles.search__title}>Recherche un produit</p>
+      <p className={styles.search__title}>Rechercher un produit</p>
       <input
         ref={searchValue}
         onKeyDown={searchConfim}

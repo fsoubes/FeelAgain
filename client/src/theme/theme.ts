@@ -1,7 +1,7 @@
 import { createMuiTheme, ThemeOptions } from "@material-ui/core";
 
 export const paletteColorsDark = {
-  primary: "#24292e",
+  primary: "rgba(13,17,23,0.85)",
   secondary: "#3282b8",
   error: "#E44C65",
   background: "#0d1117",
@@ -13,7 +13,7 @@ export const paletteColorsDark = {
 };
 
 export const paletteColorsLight = {
-  primary: "#24292e",
+  primary: "rgba(236,240,245,0.85)",
   secondary: "#ffe0ac",
   error: "#E44C65",
   background: "#ECF0F5",
@@ -142,13 +142,28 @@ const options = (dark: boolean): ThemeOptions => {
           ".Footer_footer__9WsPL::before": {
             background: paletteColors.text,
           },
-
+          ".TopBar_navbar__content__1oFdZ::before": {
+            background: paletteColors.logo,
+          },
+          ".TopBar_navbar__auth__3H0RW button::after": {
+            color: paletteColors.logo,
+          },
+          ".TopBar_navbar__links__1g4N8 > button > span:hover": {
+            borderBottom: `1px solid ${paletteColors.logo}`,
+          },
+          ".TopBar_search__1abMT": {
+            borderRight: `1px solid ${paletteColors.logo}`,
+          },
           ".DashboardMenu_sidebar__container__20Y3N": {
             background: paletteColors.primary,
           },
-          /* ".cls-1, .cls-2, .cls-3": {
+          ".cls-1, .cls-2, .cls-3": {
             stroke: paletteColors.logo,
-          }, */
+          },
+
+          "#basket .cls-1, #basket .cls-2": {
+            stroke: paletteColors.logo,
+          },
           "html body div#__next div.container footer div.Footer_footer__9WsPL div.Footer_logo__2n8aq svg#Calque_1 path.cls-1": {
             stroke: `${paletteColors.logo} !important`,
           },
