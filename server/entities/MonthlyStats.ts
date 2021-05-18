@@ -6,7 +6,7 @@ import { User } from "./User";
 import { CartItem } from "./CartItem";
 
 @ObjectType()
-export class Basket {
+export class MonthlyStats {
   @Field()
   readonly _id: ObjectId;
 
@@ -14,13 +14,15 @@ export class Basket {
   @Property({ ref: CartItem, default: [], nullable: true })
   products: Ref<CartItem>[];
 
-  @Field({ nullable: true })
-  @Property({ default: 0, min: 0 })
-  total: number;
+  @Field()
+  @Property()
+  month: String;
 
   @Field((_type) => User)
   @Property({ ref: "User", nullable: true })
   user?: Ref<User>;
 }
 
-export const BasketModel = getModelForClass(Basket);
+export const MonthlyStatsModel = getModelForClass(MonthlyStats, {
+  schemaOptions: { timestamps: true },
+});

@@ -1,7 +1,10 @@
 import { NextPage } from "next";
 import React from "react";
 import { Layout } from "../../src/components/Layout";
-import { useGetCartItemsQuery } from "../../src/generated/graphql";
+import {
+  useGetCartItemsQuery,
+  useGetPurchasesQuery,
+} from "../../src/generated/graphql";
 import { withApollo } from "../../src/utils/withApollo";
 import styles from "../../src/styles/CommentPurchases.module.scss";
 import PurchasesItem from "../../src/components/Purchases/PurchasesItem";
@@ -13,9 +16,8 @@ interface ProductsToCommentProps {
 }
 
 const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
-  console.log(thanks);
-
-  const { data } = useGetCartItemsQuery();
+  // const { data } = useGetCartItemsQuery();
+  const { data } = useGetPurchasesQuery();
 
   return (
     <Layout>
@@ -37,23 +39,21 @@ const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
         <div>
           {data && (
             <ul className={styles.purchases__list}>
-              {data.getCartItems.map((item) => {
+              {data.getPurchases.map((item) => {
                 return (
                   <PurchasesItem
-                    key={item.variant.shoes._id}
-                    title={item.variant.shoes.title}
+                    key={item.product.shoes._id}
+                    title={item.product.shoes.title}
                     itemId={item._id}
-                    shoesId={item.variant.shoes._id}
-                    reviewId={item.comments?._id}
+                    shoesId={item.product.shoes._id}
+                    reviewId={item.comment?._id}
                     src={
-                      item.variant.shoes.vendor === "Anaki"
-                        ? item.variant.shoes.images[1].src
-                        : item.variant.shoes.images[0].src
+                      item.product.shoes.vendor === "Anaki"
+                        ? item.product.shoes.images[1].src
+                        : item.product.shoes.images[0].src
                     }
-                    currentRating={
-                      item.comments?.score ? item.comments.score : 0
-                    }
-                    contains={item.variant.shoes.vendor === "Anaki"}
+                    currentRating={item.comment?.score ? item.comment.score : 0}
+                    contains={item.product.shoes.vendor === "Anaki"}
                   />
                 );
               })}

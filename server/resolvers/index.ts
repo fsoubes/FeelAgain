@@ -7,6 +7,8 @@ import { AddResolver } from "./add";
 import { BasketResolver } from "./basket";
 import { CartItemResolver } from "./cartitem";
 import { VariantResolver } from "./variant";
+import { NewsletterResolver } from "./newsletter";
+import { PurchasesResolver } from "./purchases";
 
 export const Resolvers = [
   UserResolver,
@@ -18,4 +20,6 @@ export const Resolvers = [
   VariantResolver,
   OrderResolver,
   CommentResolver,
+  NewsletterResolver,
+  PurchasesResolver,
 ] as const;

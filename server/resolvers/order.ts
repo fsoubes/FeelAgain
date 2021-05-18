@@ -18,6 +18,7 @@ import { Variants } from "../entities/Variants";
 import { isAuth } from "../middlewares/isAuth";
 import { CommentInput } from "./types/comment-input";
 import { ShoesModel } from "../entities/Shoes";
+import { PurchasesModel } from "../entities/Purchases";
 const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const Stripe = require("stripe");
@@ -121,9 +122,15 @@ export class OrderResolver {
       );
 
       if (review) {
-        await CartItemModel.findOneAndUpdate(
+        /* await CartItemModel.findOneAndUpdate(
           { _id: ObjectId(itemId) },
           { comments: review._id },
+          { useFindAndModify: false, new: true }
+        ); */
+
+        await PurchasesModel.findOneAndUpdate(
+          { _id: ObjectId(itemId) },
+          { comment: review._id },
           { useFindAndModify: false, new: true }
         );
 

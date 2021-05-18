@@ -11,11 +11,12 @@ export const createCommentLoader = (currentUser: string) =>
           $in: commentIds as ObjectId[],
         },
       }).lean();
-
       if (currentUser)
         comment = comment.map((item) => ({
           ...item,
-          is_recommanding: mapToString(item.recommanded).includes(currentUser),
+          is_recommanding: item.recommanded
+            ? mapToString(item.recommanded).includes(currentUser)
+            : false,
         }));
 
       const commentIdToComments: Record<string, Comments> = {};

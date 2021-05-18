@@ -35,6 +35,8 @@ export type Query = {
   getBasket: Basket;
   getAllBasket: Array<Basket>;
   getCartItems: Array<CartItem>;
+  getNewsletter: Newsletter;
+  getPurchases: Array<Purchases>;
 };
 
 
@@ -200,9 +202,8 @@ export type Orders = {
   __typename?: 'Orders';
   _id: Scalars['ObjectId'];
   products: Array<CartItem>;
-  test: StatusOrder;
+  status: StatusOrder;
   payment_method: PaymentType;
-  status: Scalars['String'];
   payment_intent: Scalars['String'];
   tracking?: Maybe<Scalars['String']>;
   last_four?: Maybe<Scalars['String']>;
@@ -306,6 +307,22 @@ export type PaginationInfo = {
   endCursor?: Maybe<Scalars['String']>;
 };
 
+export type Newsletter = {
+  __typename?: 'Newsletter';
+  _id: Scalars['ObjectId'];
+  type: Scalars['String'];
+  email: Array<Scalars['String']>;
+  users: Array<User>;
+};
+
+export type Purchases = {
+  __typename?: 'Purchases';
+  _id: Scalars['ObjectId'];
+  product: Array<Variants>;
+  comment?: Maybe<Comments>;
+  owner: User;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addRecommendation: Scalars['String'];
@@ -335,6 +352,7 @@ export type Mutation = {
   removeCartItem: Scalars['String'];
   addPayPalPayment: Scalars['String'];
   addPayment: Scalars['String'];
+  addToNewsletter: Scalars['Boolean'];
 };
 
 
@@ -472,6 +490,11 @@ export type MutationAddPayPalPaymentArgs = {
 export type MutationAddPaymentArgs = {
   details: DetailsInput;
   stripeId: Scalars['String'];
+};
+
+
+export type MutationAddToNewsletterArgs = {
+  email: Scalars['String'];
 };
 
 export type CommentInput = {
@@ -771,6 +794,16 @@ export type AddShoeMutationVariables = Exact<{
 export type AddShoeMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'addShoe'>
+);
+
+export type AddToNewsletterMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type AddToNewsletterMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addToNewsletter'>
 );
 
 export type AddVariantMutationVariables = Exact<{
@@ -1156,6 +1189,32 @@ export type GetOrdersQuery = (
             & Pick<Images, 'src'>
           )> }
         ) }
+      ) }
+    )> }
+  )> }
+);
+
+export type GetPurchasesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPurchasesQuery = (
+  { __typename?: 'Query' }
+  & { getPurchases: Array<(
+    { __typename?: 'Purchases' }
+    & Pick<Purchases, '_id'>
+    & { comment?: Maybe<(
+      { __typename?: 'Comments' }
+      & Pick<Comments, '_id' | 'score' | 'comment' | 'title'>
+    )>, product: Array<(
+      { __typename?: 'Variants' }
+      & Pick<Variants, '_id' | 'title'>
+      & { shoes: (
+        { __typename?: 'Shoes' }
+        & Pick<Shoes, '_id' | 'title' | 'vendor'>
+        & { images: Array<(
+          { __typename?: 'Images' }
+          & Pick<Images, 'src'>
+        )> }
       ) }
     )> }
   )> }
@@ -1761,6 +1820,36 @@ export function useAddShoeMutation(baseOptions?: Apollo.MutationHookOptions<AddS
 export type AddShoeMutationHookResult = ReturnType<typeof useAddShoeMutation>;
 export type AddShoeMutationResult = Apollo.MutationResult<AddShoeMutation>;
 export type AddShoeMutationOptions = Apollo.BaseMutationOptions<AddShoeMutation, AddShoeMutationVariables>;
+export const AddToNewsletterDocument = gql`
+    mutation AddToNewsletter($email: String!) {
+  addToNewsletter(email: $email)
+}
+    `;
+export type AddToNewsletterMutationFn = Apollo.MutationFunction<AddToNewsletterMutation, AddToNewsletterMutationVariables>;
+
+/**
+ * __useAddToNewsletterMutation__
+ *
+ * To run a mutation, you first call `useAddToNewsletterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddToNewsletterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addToNewsletterMutation, { data, loading, error }] = useAddToNewsletterMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useAddToNewsletterMutation(baseOptions?: Apollo.MutationHookOptions<AddToNewsletterMutation, AddToNewsletterMutationVariables>) {
+        return Apollo.useMutation<AddToNewsletterMutation, AddToNewsletterMutationVariables>(AddToNewsletterDocument, baseOptions);
+      }
+export type AddToNewsletterMutationHookResult = ReturnType<typeof useAddToNewsletterMutation>;
+export type AddToNewsletterMutationResult = Apollo.MutationResult<AddToNewsletterMutation>;
+export type AddToNewsletterMutationOptions = Apollo.BaseMutationOptions<AddToNewsletterMutation, AddToNewsletterMutationVariables>;
 export const AddVariantDocument = gql`
     mutation AddVariant($title: String, $product_id: String, $sku: String, $featured_image: String, $available: Boolean, $grams: Float, $quantity: Float, $price: Float, $compare_at_price: Float, $parentId: String!) {
   addVariant(
@@ -2635,6 +2724,56 @@ export function useGetOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
 export type GetOrdersLazyQueryHookResult = ReturnType<typeof useGetOrdersLazyQuery>;
 export type GetOrdersQueryResult = Apollo.QueryResult<GetOrdersQuery, GetOrdersQueryVariables>;
+export const GetPurchasesDocument = gql`
+    query GetPurchases {
+  getPurchases {
+    _id
+    comment {
+      _id
+      score
+      comment
+      title
+    }
+    product {
+      _id
+      title
+      shoes {
+        _id
+        title
+        vendor
+        images {
+          src
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPurchasesQuery__
+ *
+ * To run a query within a React component, call `useGetPurchasesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPurchasesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPurchasesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPurchasesQuery(baseOptions?: Apollo.QueryHookOptions<GetPurchasesQuery, GetPurchasesQueryVariables>) {
+        return Apollo.useQuery<GetPurchasesQuery, GetPurchasesQueryVariables>(GetPurchasesDocument, baseOptions);
+      }
+export function useGetPurchasesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPurchasesQuery, GetPurchasesQueryVariables>) {
+          return Apollo.useLazyQuery<GetPurchasesQuery, GetPurchasesQueryVariables>(GetPurchasesDocument, baseOptions);
+        }
+export type GetPurchasesQueryHookResult = ReturnType<typeof useGetPurchasesQuery>;
+export type GetPurchasesLazyQueryHookResult = ReturnType<typeof useGetPurchasesLazyQuery>;
+export type GetPurchasesQueryResult = Apollo.QueryResult<GetPurchasesQuery, GetPurchasesQueryVariables>;
 export const GetReviewDocument = gql`
     query GetReview($shoesId: String!) {
   getReview(shoesId: $shoesId) {

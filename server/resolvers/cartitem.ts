@@ -16,16 +16,11 @@ export class CartItemResolver {
   }
 
   @FieldResolver(() => Comments)
-  async comments(
-    @Root() item: CartItem,
-    @Ctx() { commentLoader, req }: MyContext
-  ) {
+  async comments(@Root() item: CartItem, @Ctx() { commentLoader }: MyContext) {
     if (!item.comments) {
       return null;
     }
-    return commentLoader(req.session.userId ? req.session.userId : "").load(
-      item.comments as typeof ObjectId
-    );
+    return commentLoader("").load(item.comments as typeof ObjectId);
   }
 
   @Query(() => [CartItem])

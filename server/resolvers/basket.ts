@@ -13,11 +13,14 @@ import {
 import { Basket, BasketModel } from "../entities/Basket";
 import { isAuth } from "../middlewares/isAuth";
 import { CartItemModel, CartItem } from "../entities/CartItem";
+
 import { User, UserModel } from "../entities/User";
 const Stripe = require("stripe");
 import { DetailsInput } from "./types/details-input";
 import { VariantsModel } from "../entities/Variants";
 import { randomIntFromInterval } from "../helpers/randomNumber";
+import { PurchasesModel } from "../entities/Purchases";
+import { ShoesModel } from "../entities/Shoes";
 const ObjectId = require("mongodb").ObjectID;
 
 const dataset = [
@@ -303,6 +306,7 @@ export class BasketResolver {
               {
                 _id: prod,
               },
+
               { order: true },
               { useFindAndModify: false, upsert: true }
             );
@@ -311,7 +315,23 @@ export class BasketResolver {
               if (variant) {
                 variant.quantity =
                   (variant.quantity as number) - product.quantity;
+                await ShoesModel.findByIdAndUpdate(
+                  variant.shoes,
+                  {
+                    $inc: { bought_by: 1 },
+                  },
+                  { useFindAndModify: false }
+                );
                 await variant.save();
+
+                await PurchasesModel.findOneAndUpdate(
+                  {
+                    owner: req.session.userId,
+                    product: product.variant,
+                  },
+                  { products: product.variant, owner: req.session.userId },
+                  { useFindAndModify: false, new: true, upsert: true }
+                );
               }
             }
           }
@@ -322,13 +342,15 @@ export class BasketResolver {
             user: req.session.userId,
             adress: adress,
             last_four: adress.last_four,
-            status: "waiting",
+            status: "Attente",
             payment_method: details.payment_method,
             tracking: dataset[randomIntFromInterval(0, 3)],
             payment_intent: paymentIntent.id,
           });
+
           basket.products = [];
           basket.total = 0;
+
           await basket.save();
           await command.save();
         }

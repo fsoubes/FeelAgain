@@ -1,10 +1,10 @@
 import { registerEnumType } from "type-graphql";
 
 export enum StatusOrder {
-  Attente = "En attente",
-  Envoye = "Envoyé",
-  Livre = "Livré",
-  Annule = "Annulé",
+  Attente = "Attente",
+  Envoye = "Envoye",
+  Livre = "Livre",
+  Annule = "Annule",
 }
 
 registerEnumType(StatusOrder, {

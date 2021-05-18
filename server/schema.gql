@@ -136,11 +136,13 @@ type Mutation {
   addGuestCart(isArg: Boolean!): Boolean!
   addImage(image: ImageInput!, parentId: String!): String!
   addPayment(details: DetailsInput!, stripeId: String!): String!
+  addPayPalPayment(details: DetailsInput!, paypalId: String!): String!
   addRecommendation(commentId: String!): String!
   addRelation: Boolean!
   addReview(comments: CommentInput!, itemId: String!, reviewId: String, shoesId: String!): String!
   addShoe(shoes: ShoesInput!): ObjectId!
   addShoes: Boolean!
+  addToNewsletter(email: String!): Boolean!
   addVariant(parentId: String!, variant: VariantInput!): String!
   changePassword(newPassword: String!, token: String!): UserResponse!
   forgotPassword(email: String!): Boolean!
@@ -157,6 +159,13 @@ type Mutation {
   updateImage(image: ImageInput!, imageId: String!): Images!
   updateShoe(shoeId: String!, shoes: ShoesInput!): Shoes!
   updateVariant(variant: VariantInput!, variantId: String!): Variants!
+}
+
+type Newsletter {
+  _id: ObjectId!
+  email: [String!]!
+  type: String!
+  users: [User!]!
 }
 
 """Mongo object id scalar type"""
@@ -220,6 +229,7 @@ type Query {
   getCartItems: [CartItem!]!
   getClosestShoes(product: String!, title: String!): [Shoes!]!
   getFilterShoes(filter: ShoesInputFilter, is_published: Boolean = true, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
+  getNewsletter: Newsletter!
   getOrder(orderId: String!): Orders!
   getOrders: [Orders!]!
   getReview(shoesId: String!): Comments!

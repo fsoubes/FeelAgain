@@ -1,8 +1,19 @@
+import { ImagesModel } from "./../entities/Images";
+import { VariantsModel } from "./../entities/Variants";
+// import { OrdersModel } from "./../entities/Orders";
 import { User, UserModel } from "../entities/User";
 import { Blog, BlogModel } from "../entities/Blog";
 import { BasketModel } from "../entities/Basket";
+import { NewsletterModel } from "../entities/Newsletter";
+import { ShoesModel } from "./../entities/Shoes";
 
 export async function seedDataBase() {
+  const newsletter = new NewsletterModel({
+    type: "newsletter",
+    email: [],
+    user: [],
+  });
+
   const defaultBasket = new BasketModel({});
   const secondBasket = new BasketModel({});
   const thirdBasket = new BasketModel({});
@@ -49,6 +60,67 @@ export async function seedDataBase() {
 
   fourthBasket.user = fourthUser._id;
 
+  const name = ["Hokuto Naturel", "Hokuto Cuisine", "Hokuto Salleamanger"];
+
+  const variantsSize = new Array(6).fill(null).map((__, index) => 35 + index);
+  const images = [
+    "https://cdn.shopify.com/s/files/1/0826/9387/products/JasminNaturel_aceb6192-8485-4209-a16f-b90799c66f8b.png?v=1614176209",
+    "https://cdn.shopify.com/s/files/1/0826/9387/products/JASMINRAPHIANATUREL_c5b50c33-659d-4a49-8ccb-db44aabe9c36.jpg?v=1614249098",
+    "https://cdn.shopify.com/s/files/1/0826/9387/products/jasmin-raphianaturel-2.jpg?v=1614249098",
+    "https://cdn.shopify.com/s/files/1/0826/9387/products/JasminNaturel.png?v=1614249098",
+  ];
+
+  let counterImg = 1;
+  const shoesIds = [];
+  const variantIds = [];
+  for (const title of name) {
+    const shoes = new ShoesModel({
+      title: title,
+      vendor: "Anaki",
+      product_type: "sandales",
+      body_html: "Chaussures au top",
+      price: 500,
+      size: [35, 36, 37, 38, 39, 40],
+      tags: ["pas de talon", "Noir", "Cuir"],
+      handle: `${title}-noir-cuir-sandales`,
+      is_published: false,
+    });
+
+    for (const variant of variantsSize) {
+      const currentVar = new VariantsModel({
+        title: variant.toString(),
+        quantity: 25,
+        price: 500,
+        shoes: shoes._id,
+        available: true,
+      });
+
+      shoes.variants.push(currentVar._id);
+      variantIds.push(currentVar._id);
+      await currentVar.save();
+    }
+
+    for (const img of images) {
+      const currentImg = new ImagesModel({
+        position: counterImg,
+        src: img,
+        product_id: shoes._id,
+        width: 1500,
+        height: 1500,
+      });
+      counterImg++;
+      shoes.images.push(currentImg._id);
+      await currentImg.save();
+    }
+    shoesIds.push(shoes._id);
+    await shoes.save();
+  }
+
+  // const order_1 = new OrdersModel({});
+  // const order_2 = new OrdersModel({});
+  // const order_3 = new OrdersModel({});
+  // const order_4 = new OrdersModel({});
+
   await Promise.all([
     defaultUser.save(),
     defaultBasket.save(),
@@ -58,6 +130,11 @@ export async function seedDataBase() {
     thirdBasket.save(),
     fourthUser.save(),
     fourthBasket.save(),
+    newsletter.save(),
+    /*    order_1.save(),
+    order_2.save(),
+    order_3.save(),
+    order_4.save(), */
   ]);
 
   await BlogModel.create(([

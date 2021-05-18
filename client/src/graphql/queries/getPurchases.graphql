@@ -1,0 +1,23 @@
+query GetPurchases {
+  getPurchases {
+    _id
+    comment {
+      _id
+      score
+      comment
+      title
+    }
+    product {
+      _id
+      title
+      shoes {
+        _id
+        title
+        vendor
+        images {
+          src
+        }
+      }
+    }
+  }
+}

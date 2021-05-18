@@ -17,9 +17,9 @@ export class Orders {
   @Property({ ref: CartItem, default: [], nullable: true })
   products: Ref<CartItem>[];
 
-  @Field((_type) => StatusOrder)
-  @Property({ required: true, default: "UP" })
-  test: StatusOrder;
+  /* @Field((_type) => StatusOrder)
+  @Property({ required: true })
+  status: StatusOrder; */
 
   @Field((_type) => PaymentType)
   @Property({ required: true })

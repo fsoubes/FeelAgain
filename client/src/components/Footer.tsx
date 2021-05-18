@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Button } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
 import { ToggleThemeContext } from "../theme";
@@ -11,10 +11,29 @@ import Image from "next/image";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@material-ui/icons/Instagram";
+import { useAddToNewsletterMutation } from "../generated/graphql";
+import { withApollo } from "../utils/withApollo";
 
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
+  const [newsletter] = useAddToNewsletterMutation();
+  const newsletterRef = useRef<HTMLInputElement>(null);
+  const [isSubmit, setSubmit] = useState(false);
+  const handleClick = async (e: any) => {
+    try {
+      e.preventDefault();
+      await newsletter({
+        variables: { email: newsletterRef?.current?.value as string },
+      });
+      e.target.reset();
+      setSubmit(true);
+      setTimeout(() => setSubmit(false), 5000);
+    } catch (err) {
+      throw err;
+    }
+  };
+
   const { toggleTheme, isDark } = useContext(ToggleThemeContext);
   return (
     <footer>
@@ -155,11 +174,23 @@ const Footer: React.FC<FooterProps> = () => {
 
           <div>
             <h2>NEWSLETTER</h2>
-            <form>
-              <input type="email" placeholder="Your email address" />
+            <form onSubmit={handleClick}>
+              <input
+                type="email"
+                ref={newsletterRef}
+                placeholder="Your email address"
+              />
               <input type="submit" value="Subscribe" />
             </form>
             <span>Rester informé de notre actualité</span>
+            <br />
+            {isSubmit && (
+              <span style={{ color: "green", fontWeight: "bold" }}>
+                Nous avons bien reçu votre email.
+                <br />
+                Vous serez notifié par email de nos nouveautées.
+              </span>
+            )}
             <div className={styles.social}>
               <a href="https://www.facebook.com/" target="_blank">
                 <FacebookIcon />
@@ -198,4 +229,4 @@ const Footer: React.FC<FooterProps> = () => {
   );
 };
 
-export default React.memo(Footer);
+export default React.memo(withApollo({ ssr: false })(Footer));
