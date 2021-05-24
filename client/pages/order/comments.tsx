@@ -1,10 +1,7 @@
 import { NextPage } from "next";
 import React from "react";
 import { Layout } from "../../src/components/Layout";
-import {
-  useGetCartItemsQuery,
-  useGetPurchasesQuery,
-} from "../../src/generated/graphql";
+import { useGetPurchasesQuery } from "../../src/generated/graphql";
 import { withApollo } from "../../src/utils/withApollo";
 import styles from "../../src/styles/CommentPurchases.module.scss";
 import PurchasesItem from "../../src/components/Purchases/PurchasesItem";
@@ -16,7 +13,6 @@ interface ProductsToCommentProps {
 }
 
 const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
-  // const { data } = useGetCartItemsQuery();
   const { data } = useGetPurchasesQuery();
 
   return (
@@ -44,8 +40,8 @@ const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
                   <PurchasesItem
                     key={item.product.shoes._id}
                     title={item.product.shoes.title}
-                    itemId={item._id}
                     shoesId={item.product.shoes._id}
+                    itemId={item._id}
                     reviewId={item.comment?._id}
                     src={
                       item.product.shoes.vendor === "Anaki"

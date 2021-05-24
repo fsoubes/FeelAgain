@@ -1,6 +1,7 @@
 .feelagain__methods {
   width: 100%;
-  background: rgb(19, 19, 19);
+  // background: rgb(19, 19, 19);
+  background: black;
   border-top: 2px solid darkorange;
 
   span {
@@ -33,7 +34,8 @@
 }
 
 .feelagain__accept {
-  background: rgb(43, 43, 43);
+  // background: rgb(43, 43, 43);
+  background: #363636;
   min-height: 50px;
   color: white;
   display: flex;

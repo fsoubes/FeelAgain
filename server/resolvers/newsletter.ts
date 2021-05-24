@@ -11,13 +11,24 @@ export class NewsletterResolver {
     try {
       const newsletter = await NewsletterModel.findOne({
         type: "newsletter",
-      }).lean();
+      })
+        .lean()
+        .limit(10);
 
       return newsletter;
     } catch (err) {
       throw err;
     }
   }
+
+  @Mutation(() => Boolean)
+  async sendNewsletter(@Ctx() {  }: MyContext) {
+    try {
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Mutation(() => Boolean)
   async addToNewsletter(
     @Arg("email") email: string,
@@ -25,7 +36,6 @@ export class NewsletterResolver {
   ) {
     try {
       if (!validateEmail(email)) {
-        // throw new Error("Not Valid Email!");
         return false;
       }
 

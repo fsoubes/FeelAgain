@@ -1,0 +1,173 @@
+.container {
+  h2 {
+    font-family: "Alex Brush";
+    font-weight: 400;
+    line-height: 1.1;
+    font-size: 6rem;
+    margin: 50px auto 0 0;
+  }
+
+  button {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 10px 30px;
+    border-radius: 50px;
+    margin: 38px auto 0 0;
+    &:hover {
+      background: black;
+      color: white;
+    }
+  }
+
+  h4 {
+    font-family: Oswald, sans-serif;
+    letter-spacing: 9px;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin: 0 auto 0 266px;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .presentation__line {
+    width: 240px;
+    height: 3px;
+    transform-origin: left center;
+    margin: 20px auto 0 0;
+    border-color: black;
+    border-width: 7px;
+    border-style: solid;
+    margin-left: -10px;
+  }
+
+  .presentation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 100%;
+    max-width: 100%;
+    background: wheat;
+    // min-height: 631px;
+    .presentation__left {
+      padding: 10px;
+
+      p {
+        line-height: 1.7;
+        margin: 38px 0 0;
+        font-size: 1.475rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .presentation__col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .presentation_20 {
+    flex: 36 0 50.333333%;
+  }
+
+  .presentation_24 {
+    flex: 0 0 30%;
+    max-width: 30%;
+    background-image: none;
+  }
+
+  .presentation_36 {
+    flex: 0 0 70%;
+    max-width: 70%;
+    min-height: 296px;
+    background-image: url("/pexelsphoto3782786.jpeg");
+    background-position: 50% 50%;
+    background-size: cover;
+    border: 1px solid black;
+  }
+
+  .presentation_40 {
+    min-height: 296px;
+    flex: 40 0 66.66666667%;
+    background-image: url("https://cdn.shopify.com/s/files/1/0422/1127/8998/files/nouvelle-collection-printemps-ete-patricia-blanchet-boot-santiag-petit-talon-daim-camel-angel.jpg?v=1621345685");
+    background-position: 50% 50%;
+    background-size: cover;
+    border: 1px solid black;
+
+    img {
+      height: 369px;
+      object-position: 62.56% 100%;
+      background-position: 62.56% 100%;
+      width: 251px;
+      margin: -188px auto 80px -1px;
+      border: 1px solid black;
+    }
+  }
+
+  .presentation__row {
+    flex: 1 1 100%;
+    display: flex;
+  }
+
+  .collection {
+    background: white;
+    padding: 10px;
+    .collection__grid {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      height: 558px;
+      gap: 10px;
+      margin: 50px 0 60px;
+      .item__1 {
+        position: relative;
+        overflow: hidden;
+        > div {
+          background-position: 50% 50%;
+          background-image: url("/pexelsphoto3782786.jpeg");
+        }
+      }
+      .item__2 {
+        > div {
+          background-position: 50% 50%;
+          background-image: url("/pexelsphoto3782788.jpeg");
+        }
+      }
+      .item__3 {
+        > div {
+          background-position: 50% 50%;
+          background-image: url("/pexelsphoto3782789.jpeg");
+        }
+      }
+
+      .slide {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  .reviews {
+    padding: 10px;
+    min-height: 296px;
+    background: wheat;
+    p {
+      font-size: 1.675rem;
+      font-weight: 400;
+      margin: 0;
+      padding: 10px;
+    }
+  }
+}
+
+.brand {
+  padding: 10px;
+  min-height: 296px;
+  background: white;
+  p {
+    font-size: 1.675rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 10px;
+  }
+}

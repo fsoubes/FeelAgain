@@ -202,8 +202,8 @@ export type Orders = {
   __typename?: 'Orders';
   _id: Scalars['ObjectId'];
   products: Array<CartItem>;
-  status: StatusOrder;
   payment_method: PaymentType;
+  status: Scalars['String'];
   payment_intent: Scalars['String'];
   tracking?: Maybe<Scalars['String']>;
   last_four?: Maybe<Scalars['String']>;
@@ -213,14 +213,6 @@ export type Orders = {
   createdAt: Scalars['DateTime'];
   user: User;
 };
-
-/** status of order */
-export enum StatusOrder {
-  Attente = 'Attente',
-  Envoye = 'Envoye',
-  Livre = 'Livre',
-  Annule = 'Annule'
-}
 
 /** type of payment */
 export enum PaymentType {
@@ -318,7 +310,7 @@ export type Newsletter = {
 export type Purchases = {
   __typename?: 'Purchases';
   _id: Scalars['ObjectId'];
-  product: Array<Variants>;
+  product: Variants;
   comment?: Maybe<Comments>;
   owner: User;
 };
@@ -352,6 +344,7 @@ export type Mutation = {
   removeCartItem: Scalars['String'];
   addPayPalPayment: Scalars['String'];
   addPayment: Scalars['String'];
+  sendNewsletter: Scalars['Boolean'];
   addToNewsletter: Scalars['Boolean'];
 };
 
@@ -1205,7 +1198,7 @@ export type GetPurchasesQuery = (
     & { comment?: Maybe<(
       { __typename?: 'Comments' }
       & Pick<Comments, '_id' | 'score' | 'comment' | 'title'>
-    )>, product: Array<(
+    )>, product: (
       { __typename?: 'Variants' }
       & Pick<Variants, '_id' | 'title'>
       & { shoes: (
@@ -1216,7 +1209,7 @@ export type GetPurchasesQuery = (
           & Pick<Images, 'src'>
         )> }
       ) }
-    )> }
+    ) }
   )> }
 );
 

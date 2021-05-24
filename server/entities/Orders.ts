@@ -5,7 +5,7 @@ import { Ref } from "../constant/types";
 import { User } from "./User";
 import { CartItem } from "./CartItem";
 import { Adress } from "./Adress";
-import { StatusOrder } from "../resolvers/enum/statusOrder";
+// import { StatusOrder } from "../resolvers/enum/statusOrder";
 import { PaymentType } from "../resolvers/enum/paymentType";
 
 @ObjectType()
