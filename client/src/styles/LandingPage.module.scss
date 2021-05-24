@@ -7,15 +7,29 @@
     margin: 50px auto 0 0;
   }
 
-  button {
+  .action {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 15px 60px;
+    border-radius: 50px;
+    margin: 38px auto 0 0;
+    &:hover {
+      background: black;
+      scale: 1.05;
+      color: white;
+    }
+  }
+
+  .small__action {
     background: black;
     color: white;
     text-align: center;
     padding: 10px 30px;
     border-radius: 50px;
-    margin: 38px auto 0 0;
     &:hover {
       background: black;
+      scale: 1.05;
       color: white;
     }
   }
@@ -117,9 +131,8 @@
       height: 558px;
       gap: 10px;
       margin: 50px 0 60px;
+
       .item__1 {
-        position: relative;
-        overflow: hidden;
         > div {
           background-position: 50% 50%;
           background-image: url("/pexelsphoto3782786.jpeg");
@@ -139,23 +152,87 @@
       }
 
       .slide {
+        position: relative;
         width: 100%;
         height: 100%;
         background-size: cover;
         background-position: 50% 50%;
         background-repeat: no-repeat;
+        cursor: pointer;
+        .shading {
+          height: 100%;
+          &:hover {
+            background-image: linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.2),
+              rgba(0, 0, 0, 0.2)
+            );
+          }
+        }
+        &:hover {
+          scale: 1.05;
+        }
       }
     }
   }
   .reviews {
     padding: 10px;
-    min-height: 296px;
     background: wheat;
     p {
-      font-size: 1.675rem;
+      font-size: 1.2rem;
       font-weight: 400;
       margin: 0;
-      padding: 10px;
+      padding: 10px 0;
+    }
+    img {
+      height: 280px;
+      width: 186px;
+    }
+
+    h4 {
+      margin: 0;
+    }
+
+    .reviews__container {
+      min-height: 350px;
+      display: flex;
+      align-items: center;
+
+      > div:first-child {
+        margin-left: 3rem;
+        margin-right: 1rem;
+      }
+
+      > div:last-child {
+        margin-right: 3rem;
+      }
+
+      .reviews__content {
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: white;
+        min-height: 400px;
+      }
+      .reviews__main {
+        display: flex;
+        align-items: center;
+        padding: 20px 10px;
+        margin-bottom: 1rem;
+        .reviews__img {
+          flex: 0 0 40%;
+          justify-content: center;
+          display: flex;
+        }
+        .reviews__info {
+          flex: 0 0 60%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+        }
+      }
     }
   }
 }
@@ -165,7 +242,7 @@
   min-height: 296px;
   background: white;
   p {
-    font-size: 1.675rem;
+    font-size: 1.275rem;
     font-weight: 400;
     margin: 0;
     padding: 10px;

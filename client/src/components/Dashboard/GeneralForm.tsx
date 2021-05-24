@@ -13,7 +13,6 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
   tags,
   colors,
   size,
-  relatives,
   variants,
   setRelation,
   children,
