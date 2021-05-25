@@ -128,26 +128,6 @@ const Footer: React.FC<FooterProps> = () => {
           </div>
         </div>
         <div className={styles.columns}>
-          <div className={styles.column__newsletter}>
-            <h2>NEWSLETTER</h2>
-            <form onSubmit={handleClick}>
-              <input
-                type="email"
-                ref={newsletterRef}
-                placeholder="Your email address"
-              />
-              <input type="submit" value="Subscribe" />
-            </form>
-            <span>Rester informé de notre actualité</span>
-            <br />
-            {isSubmit && (
-              <span style={{ color: "green", fontWeight: "bold" }}>
-                Nous avons bien reçu votre email.
-                <br />
-                Vous serez notifié par email de nos nouveautées.
-              </span>
-            )}
-          </div>
           <div className={styles.column__contact}>
             <h2>CONTACT</h2>
             <ul>
@@ -201,6 +181,26 @@ const Footer: React.FC<FooterProps> = () => {
                 <li>Sandales</li>
               </Link>
             </ul>
+          </div>
+          <div className={styles.column__newsletter}>
+            <h2>NEWSLETTER</h2>
+            <form onSubmit={handleClick}>
+              <input
+                type="email"
+                ref={newsletterRef}
+                placeholder="Your email address"
+              />
+              <input type="submit" value="Subscribe" />
+            </form>
+            <span>Rester informé de notre actualité</span>
+            <br />
+            {isSubmit && (
+              <span style={{ color: "green", fontWeight: "bold" }}>
+                Nous avons bien reçu votre email.
+                <br />
+                Vous serez notifié par email de nos nouveautées.
+              </span>
+            )}
           </div>
         </div>
 

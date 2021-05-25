@@ -142,11 +142,17 @@ const options = (dark: boolean): ThemeOptions => {
           ".Footer_footer__9WsPL::before": {
             background: paletteColors.text,
           },
+          ".TopBar_hamburger__2Eu_G": {
+            color: paletteColors.text,
+          },
           ".TopBar_navbar__content__1oFdZ::before": {
             background: paletteColors.logo,
           },
           ".TopBar_navbar__auth__3H0RW button::after": {
             color: paletteColors.logo,
+          },
+          ".TopBar_navbar__links__1g4N8": {
+            background: `${paletteColors.primary} !important`,
           },
           ".TopBar_navbar__links__1g4N8 > button > span:hover": {
             borderBottom: `1px solid ${paletteColors.logo}`,

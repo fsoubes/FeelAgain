@@ -209,7 +209,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 )}
               </Button>
             </Link>
-            <Button style={{ color: "white" }} onClick={() => setOpen(!open)}>
+            <Button onClick={() => setOpen(!open)}>
               <MenuIcon />
             </Button>
           </div>
