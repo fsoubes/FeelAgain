@@ -115,9 +115,40 @@ const Footer: React.FC<FooterProps> = () => {
               <Logo />
             </div>
           </Link>
+          <div className={styles.social}>
+            <a href="https://www.facebook.com/" target="_blank">
+              <FacebookIcon />
+            </a>
+            <a href="https://twitter.com/">
+              <TwitterIcon />
+            </a>
+            <a href="https://www.instagram.com/">
+              <InstagramIcon />
+            </a>
+          </div>
         </div>
         <div className={styles.columns}>
-          <div>
+          <div className={styles.column__newsletter}>
+            <h2>NEWSLETTER</h2>
+            <form onSubmit={handleClick}>
+              <input
+                type="email"
+                ref={newsletterRef}
+                placeholder="Your email address"
+              />
+              <input type="submit" value="Subscribe" />
+            </form>
+            <span>Rester informé de notre actualité</span>
+            <br />
+            {isSubmit && (
+              <span style={{ color: "green", fontWeight: "bold" }}>
+                Nous avons bien reçu votre email.
+                <br />
+                Vous serez notifié par email de nos nouveautées.
+              </span>
+            )}
+          </div>
+          <div className={styles.column__contact}>
             <h2>CONTACT</h2>
             <ul>
               <li>55 rue feelagain</li>
@@ -142,7 +173,7 @@ const Footer: React.FC<FooterProps> = () => {
               </Link>
             </ul>
           </div>
-          <div>
+          <div className={styles.column__collection}>
             <h2>COLLECTIONS</h2>
             <ul className={styles.column__events}>
               <Link href="/shop/?type=ballerines">
@@ -170,38 +201,6 @@ const Footer: React.FC<FooterProps> = () => {
                 <li>Sandales</li>
               </Link>
             </ul>
-          </div>
-
-          <div>
-            <h2>NEWSLETTER</h2>
-            <form onSubmit={handleClick}>
-              <input
-                type="email"
-                ref={newsletterRef}
-                placeholder="Your email address"
-              />
-              <input type="submit" value="Subscribe" />
-            </form>
-            <span>Rester informé de notre actualité</span>
-            <br />
-            {isSubmit && (
-              <span style={{ color: "green", fontWeight: "bold" }}>
-                Nous avons bien reçu votre email.
-                <br />
-                Vous serez notifié par email de nos nouveautées.
-              </span>
-            )}
-            <div className={styles.social}>
-              <a href="https://www.facebook.com/" target="_blank">
-                <FacebookIcon />
-              </a>
-              <a href="https://twitter.com/">
-                <TwitterIcon />
-              </a>
-              <a href="https://www.instagram.com/">
-                <InstagramIcon />
-              </a>
-            </div>
           </div>
         </div>
 

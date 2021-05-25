@@ -1,6 +1,5 @@
 .feelagain__methods {
   width: 100%;
-  // background: rgb(19, 19, 19);
   background: black;
   border-top: 2px solid darkorange;
 
@@ -88,10 +87,10 @@
     width: 100% !important;
     display: flex;
     margin-bottom: 1rem;
-    flex-direction: column;
+    flex-direction: column-reverse;
     > div {
       display: flex;
-      flex-direction: column;
+
       align-items: center;
       margin-top: 1rem;
       svg {
@@ -103,8 +102,9 @@
   .columns {
     margin: 1rem 0 2rem 0;
     display: grid;
+    grid-template-columns: 500fr 300fr 380fr 300fr;
     justify-content: space-between;
-    grid-template-columns: 300fr 380fr 300fr 500fr;
+    width: 100%;
     // grid-template-columns: repeat(3,1fr);
     column-gap: 3rem;
     span {
@@ -197,24 +197,68 @@
         }
       }
     }
-  }
+    @media only screen and (max-width: 1400px) {
+      column-gap: 1rem;
+    }
 
-  .copyright {
-    display: flex;
-    button {
-      &:hover {
-        background: none;
+    @media only screen and (max-width: 1199px) {
+      grid-template-columns: 600fr 300fr 380fr 300fr;
+    }
+
+    @media only screen and (max-width: 991px) {
+      .column__newsletter {
+        grid-column: 1/5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        form {
+          input:first-child {
+            width: 60%;
+          }
+          input:last-child {
+            width: 40%;
+          }
+        }
+      }
+
+      .column__contact {
+        grid-column: 1/2;
+      }
+
+      .column__events {
+        grid-column: 2/3;
+      }
+
+      .column__collection {
+        grid-column: 4/5;
       }
     }
-  }
 
-  img {
-    margin-left: 0.5rem;
-  }
+    @media only screen and (max-width: 767px) {
+    }
 
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @media only screen and (max-width: 575px) {
+    }
+
+    .copyright {
+      display: flex;
+      button {
+        &:hover {
+          background: none;
+        }
+      }
+    }
+
+    img {
+      margin-left: 0.5rem;
+    }
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
