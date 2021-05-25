@@ -11,6 +11,7 @@ interface Review {
 interface CarouselProps {
   data?: Review[];
   options?: any;
+  isTabletorMobile?: boolean;
 }
 
 interface SlideProps {
@@ -18,17 +19,15 @@ interface SlideProps {
 }
 
 export const Carousel: React.FC<CarouselProps> = forwardRef(
-  ({ options, children }, ref) => {
+  ({ options, children, isTabletorMobile }, ref) => {
     const sliderRef = useRef<any>(null);
 
     useImperativeHandle(ref, () => sliderRef.current);
 
     useEffect(() => {
-      const slider = new Glide(sliderRef.current, options);
+      const slider = new Glide(sliderRef.current, options).mount();
 
-      slider.mount();
-
-      //   return () => slider.destroy();
+      return () => slider.destroy();
     }, [options]);
 
     return (
@@ -36,36 +35,45 @@ export const Carousel: React.FC<CarouselProps> = forwardRef(
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">{children}</ul>
         </div>
-        <div className="glide__arrows" data-glide-el="controls">
-          <button
-            style={{
-              left: "0",
-              boxShadow: "none",
-              padding: "0",
-              color: "black",
-              border: "none",
-            }}
-            className="glide__arrow glide__arrow--left"
-            data-glide-dir="<"
-          >
-            <DoubleArrowIcon
-              style={{ fontSize: "2.5rem", transform: "rotateY(3.142rad)" }}
-            />
-          </button>
-          <button
-            style={{
-              right: "0",
-              boxShadow: "none",
-              padding: "0",
-              color: "black",
-              border: "none",
-            }}
-            className="glide__arrow glide__arrow--right"
-            data-glide-dir=">"
-          >
-            <DoubleArrowIcon style={{ fontSize: "2.5rem" }} />
-          </button>
-        </div>
+        {!isTabletorMobile && (
+          <div className="glide__arrows" data-glide-el="controls">
+            <button
+              style={{
+                left: "-5px",
+                boxShadow: "none",
+                padding: "0",
+                color: "black",
+                border: "none",
+              }}
+              className="glide__arrow glide__arrow--left"
+              data-glide-dir="<"
+            >
+              <DoubleArrowIcon
+                style={{
+                  fontSize: "1.5rem",
+                  transform: "rotateY(3.142rad)",
+                  width: "unset",
+                  height: "50px",
+                }}
+              />
+            </button>
+            <button
+              style={{
+                right: "-5px",
+                boxShadow: "none",
+                padding: "0",
+                color: "black",
+                border: "none",
+              }}
+              className="glide__arrow glide__arrow--right"
+              data-glide-dir=">"
+            >
+              <DoubleArrowIcon
+                style={{ fontSize: "1.5rem", width: "unset", height: "50px" }}
+              />
+            </button>
+          </div>
+        )}
       </div>
     );
   }

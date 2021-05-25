@@ -86,16 +86,18 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
 
   const [open, setOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (open) {
-  //     document.documentElement.style.overflow = "hidden";
-  //     document.body.style.overflow = "hidden";
-  //   }
-  //   return () => {
-  //     document.documentElement.style.overflow = "scroll";
-  //     document.body.style.overflow = "unset";
-  //   };
-  // }, [open]);
+  /*  useEffect(() => {
+    if (open && isTabletorMobile) {
+      document.documentElement.style.overflowY = "hidden";
+      document.body.style.overflowY = "hidden";
+    }
+    return () => {
+      document.documentElement.style.overflowY = "scroll";
+      document.body.style.overflowY = "unset";
+      document.documentElement.style.overflowX = "hidden";
+      document.body.style.overflowX = "hidden";
+    };
+  }, [open, isTabletorMobile]); */
 
   const menuStyling = !isTabletorMobile
     ? {
@@ -130,7 +132,6 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
   const unloged = (
     <Fragment>
       {!isTabletorMobile && (
-        // <Link href={`/profile/${data?.me?.nickname}`}>
         <div ref={subMenuRef}>
           <Button
             variant="text"
@@ -148,7 +149,6 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
             <SubMenu options={subMenu} logout={handleLogout} />
           )}
         </div>
-        // </Link>
       )}
       {isTabletorMobile && (
         <Link href={`/profile/${data?.me?.nickname}`}>

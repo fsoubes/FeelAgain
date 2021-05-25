@@ -4,6 +4,7 @@ import StarHalfIcon from "@material-ui/icons/StarHalf";
 
 interface RatingResProps {
   rating: number;
+  isLanding?: boolean;
 }
 
 const roundHalf = (num: number) => Math.round(num * 2) / 2;
@@ -19,7 +20,7 @@ const StarHalf: React.FC = ({}) => {
   );
 };
 
-const RatingRes: React.FC<RatingResProps> = ({ rating }) => {
+const RatingRes: React.FC<RatingResProps> = ({ rating, isLanding = false }) => {
   return (
     <div style={{ display: "flex" }}>
       {[0, 1, 2, 3, 4].map((item) => {
@@ -29,6 +30,7 @@ const RatingRes: React.FC<RatingResProps> = ({ rating }) => {
           <StarIcon
             key={item}
             fill={item < roundHalf(rating) ? "orange" : "none"}
+            isLanding={isLanding}
           ></StarIcon>
         );
       })}

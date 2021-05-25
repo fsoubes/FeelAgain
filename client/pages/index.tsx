@@ -3,83 +3,141 @@ import { withApollo } from "../src/utils/withApollo";
 import { Layout } from "../src/components/Layout";
 import styles from "../src/styles/LandingPage.module.scss";
 import Button from "@material-ui/core/Button";
-// import Carousel from "../src/components/Carousel/Carousel";
 import * as Carousel from "../src/components/Carousel/index";
+import RatingRes from "../src/components/StarRating/RatingRes";
+import useResponsive from "../src/utils/useResponsive";
 
 type Review = {
   src: string;
   review: string;
+  title: string;
+  score: number;
+  who: string;
 };
 
 const carouselReviews: Review[] = [
   {
+    title: "Une chaussure faite pour nous.",
+    score: 5,
+    who: "Emilie Alexandria, Bordeaux",
     src:
       "https://cdn.shopify.com/s/files/1/0826/9387/products/JasminNaturel_aceb6192-8485-4209-a16f-b90799c66f8b.png?v=1614176209",
     review:
       "“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel aliquam dolorum quam iste, est dicta cum hic harum veritatis adipisci a ipsum ipsam voluptatem corrupti iusto explicabo molestiae illum labore.”",
   },
   {
+    title: "Une chaussure passe partout.",
+    who: "Joseline Sandro, Anger",
+    score: 4,
     src:
       "https://cdn.shopify.com/s/files/1/0826/9387/products/LilyNoir.png?v=1614174044",
     review:
       "“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel aliquam dolorum quam iste, est dicta cum hic harum veritatis adipisci a ipsum ipsam voluptatem corrupti iusto explicabo molestiae illum labore.”",
   },
   {
+    title: "Classique!",
+    who: "Sarah Venon, Paris",
+    score: 4,
     src:
       "https://cdn.shopify.com/s/files/1/0826/9387/products/MargotCiel_dd31ea56-68ac-4e66-9545-ae1503e4bf4e.png?v=1614248524",
     review:
       "“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel aliquam dolorum quam iste, est dicta cum hic harum veritatis adipisci a ipsum ipsam voluptatem corrupti iusto explicabo molestiae illum labore.”",
   },
   {
+    title: "Se sentir Cendrillon !",
+    who: "Victoria London, Paris",
+    score: 5,
     src:
       "https://cdn.shopify.com/s/files/1/0826/9387/products/AmaroCorail_a65c715f-2705-4a93-9722-41cee2fba4ba.png?v=1614177675",
     review:
-      "“SLorem ipsum dolor sit amet, consectetur adipisicing elit. Vel aliquam dolorum quam iste, est dicta cum hic harum veritatis adipisci a ipsum ipsam voluptatem corrupti iusto explicabo molestiae illum labore.”",
+      "“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel aliquam dolorum quam iste, est dicta cum hic harum veritatis adipisci a ipsum ipsam voluptatem corrupti iusto explicabo molestiae illum labore.”",
   },
 ];
 
-const test = ["", ""];
-
 const Home: React.FC = ({}) => {
-  const carousel = test.map((item, index) => {
-    return (
-      <Carousel.Slide key={index}>
-        <div className={styles.reviews__container}>
-          <div className={styles.reviews__content}>
-            <div className={styles.reviews__main}>
-              <div className={styles.reviews__img}>
-                <img src={carouselReviews[index + 1 * index].src} alt=""></img>
+  const { isTabletorMobile } = useResponsive();
+  const carousel = Array(isTabletorMobile ? 4 : 2)
+    .fill(null)
+    .map((__, index) => {
+      return (
+        <Carousel.Slide key={index}>
+          <div className={styles.reviews__container}>
+            <div className={styles.reviews__content}>
+              <div className={styles.reviews__main}>
+                <div className={styles.reviews__img}>
+                  <img
+                    src={
+                      carouselReviews[
+                        isTabletorMobile ? index : index + 1 * index
+                      ].src
+                    }
+                    alt=""
+                  ></img>
+                </div>
+                <div className={styles.reviews__info}>
+                  <h4>
+                    {
+                      carouselReviews[
+                        isTabletorMobile ? index : index + 1 * index
+                      ].title
+                    }
+                  </h4>
+                  <RatingRes
+                    isLanding={true}
+                    rating={
+                      carouselReviews[
+                        isTabletorMobile ? index : index + 1 * index
+                      ].score
+                    }
+                  />
+                  <p>
+                    {
+                      carouselReviews[
+                        isTabletorMobile ? index : index + 1 * index
+                      ].review
+                    }
+                  </p>
+                  <h5>
+                    {
+                      carouselReviews[
+                        isTabletorMobile ? index : index + 1 * index
+                      ].who
+                    }
+                  </h5>
+                </div>
               </div>
-              <div className={styles.reviews__info}>
-                <h4>Hello</h4>
-                <p>{carouselReviews[index + 1 * index].review}</p>
+              <div style={{ padding: "10px" }}>
+                <Button className={styles.small__action}>PARCOURIR</Button>
               </div>
             </div>
-            <div>
-              <Button className={styles.small__action}>PARCOURIR</Button>
-            </div>
+            {!isTabletorMobile && (
+              <div className={styles.reviews__content}>
+                <div className={styles.reviews__main}>
+                  <div className={styles.reviews__img}>
+                    <img
+                      src={carouselReviews[index + 1 * (index + 1)].src}
+                      alt=""
+                    ></img>
+                  </div>
+                  <div className={styles.reviews__info}>
+                    <h4>{carouselReviews[index + 1 * (index + 1)].title}</h4>
+                    <RatingRes
+                      isLanding={true}
+                      rating={carouselReviews[index + 1 * (index + 1)].score}
+                    />
+                    <p>{carouselReviews[index + 1 * (index + 1)].review}</p>
+                    <h5>{carouselReviews[index + 1 * (index + 1)].who}</h5>
+                  </div>
+                </div>
+                <div style={{ padding: "10px" }}>
+                  <Button className={styles.small__action}>PARCOURIR</Button>
+                </div>
+              </div>
+            )}
           </div>
-          <div className={styles.reviews__content}>
-            <div className={styles.reviews__main}>
-              <div className={styles.reviews__img}>
-                <img
-                  src={carouselReviews[index + 1 * (index + 1)].src}
-                  alt=""
-                ></img>
-              </div>
-              <div className={styles.reviews__info}>
-                <h4>Hello</h4>
-                <p>{carouselReviews[index + 1 * (index + 1)].review}</p>
-              </div>
-            </div>
-            <div>
-              <Button className={styles.small__action}>PARCOURIR</Button>
-            </div>
-          </div>
-        </div>
-      </Carousel.Slide>
-    );
-  });
+        </Carousel.Slide>
+      );
+    });
 
   return (
     <Layout>
@@ -98,7 +156,7 @@ const Home: React.FC = ({}) => {
                 expedita velit omnis sequi fugiat a eligendi nemo!
               </p>
               <Button className={styles.action} disableRipple>
-                SHOP
+                LA BOUTIQUE
               </Button>
             </div>
             <div className={styles.presentation__col}>
@@ -110,9 +168,7 @@ const Home: React.FC = ({}) => {
               </div>
               <div className={styles.presentation_40}>
                 <div>
-                  <div>
-                    <img src="/shoes_landing.jpeg"></img>
-                  </div>
+                  <img src="/shoes_landing.jpeg"></img>
                 </div>
               </div>
             </div>
@@ -142,10 +198,13 @@ const Home: React.FC = ({}) => {
             <h2>Le choix des clients</h2>
             <div className={styles.presentation__line}></div>
             <Carousel.Component
+              isTabletorMobile={isTabletorMobile}
               options={{
                 perView: 1,
                 focusAt: "center",
                 type: "carousel",
+                swipeThreshold: isTabletorMobile,
+                dragThreshold: isTabletorMobile,
               }}
             >
               {carousel}

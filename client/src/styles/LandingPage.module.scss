@@ -7,6 +7,12 @@
     margin: 50px auto 0 0;
   }
 
+  @media (max-width: 767px) {
+    h2 {
+      font-size: 4rem;
+    }
+  }
+
   .action {
     background: black;
     color: white;
@@ -77,16 +83,47 @@
   .presentation__col {
     flex: 0 0 50%;
     max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 768px) and (max-width: 991px) {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 767px) {
+      min-width: 100%;
+      margin-bottom: 1rem;
+    }
   }
 
   .presentation_20 {
-    flex: 36 0 50.333333%;
+    max-width: 100%;
+    flex: 20 0 33.33333333%;
   }
 
   .presentation_24 {
     flex: 0 0 30%;
     max-width: 30%;
     background-image: none;
+
+    @media only screen and (max-width: 1199px) {
+      min-height: 244px;
+    }
+
+    @media only screen and (max-width: 991px) {
+      min-height: 374px;
+    }
+
+    @media only screen and (max-width: 767px) {
+      min-height: 151px;
+      order: 1;
+    }
+
+    @media only screen and (max-width: 575px) {
+      min-height: 95px;
+      display: none !important;
+    }
   }
 
   .presentation_36 {
@@ -97,10 +134,29 @@
     background-position: 50% 50%;
     background-size: cover;
     border: 1px solid black;
+    border-bottom: none;
+
+    @media only screen and (max-width: 1199px) {
+      min-height: 244px;
+    }
+
+    @media only screen and (max-width: 991px) {
+      min-height: 374px;
+    }
+
+    @media only screen and (max-width: 767px) {
+      min-height: 468px;
+      order: 0;
+    }
+
+    @media only screen and (max-width: 575px) {
+      min-height: 295px;
+      min-width: 100%;
+    }
   }
 
   .presentation_40 {
-    min-height: 296px;
+    min-height: 335px;
     flex: 40 0 66.66666667%;
     background-image: url("https://cdn.shopify.com/s/files/1/0422/1127/8998/files/nouvelle-collection-printemps-ete-patricia-blanchet-boot-santiag-petit-talon-daim-camel-angel.jpg?v=1621345685");
     background-position: 50% 50%;
@@ -115,23 +171,61 @@
       margin: -188px auto 80px -1px;
       border: 1px solid black;
     }
+
+    @media only screen and (max-width: 1199px) {
+      min-height: 276px;
+      img {
+        height: 326px;
+        width: 222px;
+        margin-bottom: 0;
+      }
+    }
+
+    @media only screen and (max-width: 991px) {
+      min-height: 423px;
+      img {
+        height: 479px;
+        width: 344px;
+        margin-top: -301px;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      min-height: 317px;
+      img {
+        height: 375px;
+        width: 269px;
+        margin-top: -170px;
+      }
+    }
+
+    @media only screen and (max-width: 575px) {
+      min-height: 283px;
+      img {
+        height: 273px;
+        width: 196px;
+        margin-top: -118px;
+      }
+    }
   }
 
   .presentation__row {
-    flex: 1 1 100%;
     display: flex;
   }
 
   .collection {
     background: white;
     padding: 10px;
+
     .collection__grid {
       display: grid;
       grid-template-columns: repeat(3, auto);
       height: 558px;
       gap: 10px;
       margin: 50px 0 60px;
-
+      width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
       .item__1 {
         > div {
           background-position: 50% 50%;
@@ -174,6 +268,53 @@
         }
       }
     }
+
+    @media only screen and (max-width: 1199px) {
+      h4 {
+        width: auto;
+      }
+      .collection__grid {
+        height: 460px;
+        grid-template-columns: repeat(3, auto);
+        margin-right: initial;
+        margin-left: initial;
+      }
+    }
+
+    @media only screen and (max-width: 991px) {
+      h4 {
+        margin-right: 195px;
+        margin-left: auto;
+      }
+      .collection__grid {
+        height: 1057px;
+        grid-template-columns: repeat(2, auto);
+        margin-right: initial;
+        margin-left: initial;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      h4 {
+        margin-right: 15px;
+      }
+      .collection__grid {
+        height: 2379px;
+        grid-template-columns: repeat(1, auto);
+        margin: 0;
+      }
+    }
+
+    @media only screen and (max-width: 575px) {
+      h4 {
+        margin-right: 10px;
+      }
+      .collection__grid {
+        height: 1498px;
+        margin-right: initial;
+        margin-left: initial;
+      }
+    }
   }
   .reviews {
     padding: 10px;
@@ -185,8 +326,8 @@
       padding: 10px 0;
     }
     img {
-      height: 280px;
-      width: 186px;
+      height: 310px;
+      width: 201px;
     }
 
     h4 {
@@ -214,23 +355,80 @@
         align-items: center;
         background: white;
         min-height: 400px;
+        border: 1px solid black;
       }
       .reviews__main {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         padding: 20px 10px;
         margin-bottom: 1rem;
         .reviews__img {
-          flex: 0 0 40%;
+          flex: 0 0 35%;
           justify-content: center;
           display: flex;
         }
         .reviews__info {
-          flex: 0 0 60%;
+          flex: 0 0 55%;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           justify-content: flex-start;
+          height: 100%;
+          max-height: 310px;
+          min-height: 310px;
+          justify-content: space-around;
+          margin-left: 10px;
+          h4 {
+            letter-spacing: 2px;
+          }
+        }
+      }
+      @media only screen and (max-width: 1200px) {
+        .reviews__content {
+          margin: 0 !important;
+        }
+        p {
+          font-size: 1rem;
+        }
+        h4 {
+          font-size: 1.2rem;
+        }
+      }
+
+      @media only screen and (max-width: 1024px) {
+        justify-content: center;
+        .reviews__content {
+          max-width: 40rem;
+        }
+      }
+
+      @media only screen and (max-width: 767px) {
+        .reviews__content {
+          max-width: 38rem;
+        }
+      }
+
+      @media only screen and (max-width: 575px) {
+        img {
+          height: 270px;
+          width: 161px;
+        }
+
+        .reviews__content {
+          max-width: 100%;
+          .reviews__main {
+            padding: 0px 10px;
+            margin-bottom: 1rem;
+            flex-direction: column;
+            align-items: center;
+            .reviews__info {
+              margin-top: 1rem;
+              margin-left: 0 !important;
+              justify-content: flex-start;
+              min-height: unset;
+              align-items: center;
+            }
+          }
         }
       }
     }

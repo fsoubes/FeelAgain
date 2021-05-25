@@ -4,6 +4,7 @@ import styles from "../../styles/Rating.module.scss";
 
 interface StarIconProps {
   fill: string;
+  isLanding?: boolean;
 }
 interface RatingIconProps {
   index: number;
@@ -14,13 +15,19 @@ interface RatingIconProps {
   onSaveRating: (index: number) => void;
 }
 
-export const StarIcon: React.FC<StarIconProps> = ({ fill }) => {
+export const StarIcon: React.FC<StarIconProps> = ({
+  fill,
+  isLanding = false,
+}) => {
   return (
     <Star
       className={styles.icon}
       style={{
         fill: fill,
         stroke: "orange",
+        ...(isLanding && {
+          marginRight: "1rem",
+        }),
       }}
     />
   );

@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useRef } from "react";
-import styles from "../../styles/Sort.module.scss";
+import React from "react";
+import styles from "../../styles/SubMenu.module.scss";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import GradeIcon from "@material-ui/icons/Grade";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 
 interface submenu {
   commandes: string;
@@ -13,6 +17,13 @@ interface SubMenuProps {
   options: submenu;
   logout: () => Promise<void>;
 }
+
+const icons = [
+  <LocalShippingIcon style={{ marginRight: "1rem" }} />,
+  <ShoppingBasketIcon style={{ marginRight: "1rem" }} />,
+  <GradeIcon style={{ marginRight: "1rem" }} />,
+  <ExitToAppIcon style={{ marginRight: "1rem" }} />,
+];
 
 const SubMenu: React.FC<SubMenuProps> = ({ options, logout }) => {
   const router = useRouter();
@@ -30,7 +41,8 @@ const SubMenu: React.FC<SubMenuProps> = ({ options, logout }) => {
       key={index}
       onClick={() => handleClick(item as keyof submenu)}
     >
-      {item}
+      {icons[index]}
+      <div>{item}</div>
     </li>
   ));
 
