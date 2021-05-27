@@ -12,6 +12,7 @@ import CustomAccordion from "../src/components/Accordion/Accordion";
 import ProductListDash from "../src/components/Dashboard/Product/ProductList";
 import Sort from "../src/components/Sort/Sort";
 import Outside from "../src/components/OutsideEvent/Outside";
+import styles from "../src/styles/Shop.module.scss";
 
 interface ShopProps {
   page?: number;
@@ -104,7 +105,7 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
               </Outside>
             </div>
           </div>
-          <div style={{ display: "flex", position: "relative" }}>
+          <div className={styles.container}>
             <CustomAccordion
               setSort={setSort}
               refetch={refetch}

@@ -49,7 +49,9 @@ const ProductListDash: React.FC<ProductListProps> = ({
   });
 
   return (
-    <div className={isProduct ? styles.container__product : styles.container}>
+    <div
+      className={isProduct ? styles.container__product : styles.product__list}
+    >
       {products}
     </div>
   );

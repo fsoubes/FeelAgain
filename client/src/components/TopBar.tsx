@@ -177,7 +177,13 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
       className={trigger && !isBasket ? classes.hide : classes.show}
       position={isBasket ? "fixed" : "sticky"}
     >
-      <Toolbar className={styles.navbar__content}>
+      <Toolbar
+        className={
+          isBasket
+            ? `${styles.navbar__content} ${styles.navbar__basket}`
+            : styles.navbar__content
+        }
+      >
         <div className={styles.navbar__logo}>
           <Link href="/">
             <div

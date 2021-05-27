@@ -182,6 +182,7 @@ const Footer: React.FC<FooterProps> = () => {
               </Link>
             </ul>
           </div>
+
           <div className={styles.column__newsletter}>
             <h2>NEWSLETTER</h2>
             <form onSubmit={handleClick}>

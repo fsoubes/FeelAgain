@@ -106,7 +106,7 @@
         font-weight: bold;
         position: absolute;
         top: 50%;
-        margin-top: 00;
+        margin-top: 0;
         font-family: FontAwesome;
         line-height: 14px;
       }
@@ -120,6 +120,21 @@
   height: 1px;
   width: 100%;
   position: absolute;
+}
+
+.navbar__basket {
+  padding-right: 350px !important;
+
+  @media only screen and (max-width: 575px) {
+    padding: unset;
+  }
+}
+
+.navbar__shop {
+  padding-left: 350px !important;
+  @media only screen and (max-width: 575px) {
+    padding: unset;
+  }
 }
 
 .hide {
