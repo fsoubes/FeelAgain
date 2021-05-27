@@ -5,18 +5,6 @@
   flex-wrap: wrap-reverse;
   width: 100%;
 
-  @media only screen and (max-width: 1199px) {
-  }
-
-  @media only screen and (max-width: 991px) {
-  }
-
-  @media only screen and (max-width: 767px) {
-  }
-
-  @media only screen and (max-width: 575px) {
-  }
-
   .content__container {
     width: 50%;
     .content {
@@ -45,7 +33,7 @@
         align-items: center;
         margin-bottom: 2rem;
         .price {
-          margin-bottom: 2rem;
+          margin-bottom: 1rem;
         }
 
         .size {
@@ -146,6 +134,52 @@
       cursor: pointer;
     }
   }
+
+  @media only screen and (max-width: 1199px) {
+    margin-top: 1rem;
+
+    .content__container {
+      .content {
+        max-width: 90%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 991px) {
+    flex-direction: column-reverse;
+    margin-bottom: 0 !important;
+    .content__container {
+      width: 100%;
+    }
+
+    .images {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      > div {
+        width: 75%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 575px) {
+    .content__container {
+      .content {
+        max-width: 100%;
+        .size,
+        .card {
+          width: 85% !important;
+        }
+      }
+    }
+
+    .images {
+      > div {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .neighbours,
@@ -179,4 +213,16 @@
 .comments__container {
   display: grid;
   grid-template-columns: 300px 1fr;
+
+  @media only screen and (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    > div:first-child {
+      background: white;
+      padding: 15px;
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
 }

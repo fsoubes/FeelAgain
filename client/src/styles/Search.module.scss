@@ -1,7 +1,6 @@
 .content {
   overflow-y: auto;
   overflow-x: hidden;
-  // grid-template-columns: repeat(2, 1fr);
   max-height: calc(100vh - 325px);
   ul {
     margin-bottom: 1rem;
@@ -16,17 +15,8 @@
       cursor: pointer;
       display: inline-grid;
       grid-template-columns: 150px minmax(auto, 150px);
-      /*   margin-left: 5px;
-      margin-top: 5px;
-      border: 1px solid black; */
+
       padding: 5px;
-      /*   &:active,
-      :focus {
-        background: red;
-      }
-      &:focus {
-        background: red;
-      } */
 
       div:nth-child(1) {
         img {
@@ -79,7 +69,7 @@
   a {
     font-size: 1.5rem;
     margin-top: 1rem;
-    // color: #ff8b88;
+
     color: black;
     font-style: italic;
     text-decoration: underline;
@@ -88,5 +78,54 @@
 @media screen and (max-width: 900px) and (orientation: landscape) {
   .content {
     max-height: calc(100vh - 200px);
+    ul {
+      li {
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .content {
+    max-height: calc(100vh - 230px);
+    ul {
+      li {
+        padding: 0;
+        div:nth-child(1) {
+          img {
+            height: 200px;
+            width: 150px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .content {
+    max-height: calc(100vh - 162px);
+    ul {
+      li {
+        padding: 0;
+        div:nth-child(1) {
+          img {
+            height: 200px;
+            width: 150px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .content {
+    ul {
+      li {
+        padding: 0;
+      }
+    }
   }
 }

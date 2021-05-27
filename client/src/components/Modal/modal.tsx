@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button } from "@material-ui/core";
 import { SearchResults } from "../../generated/graphql";
 import { useRouter } from "next/router";
+import styles from "../../styles/Modal.module.scss";
 
 interface ModalProps {
   modalTitle?: string;
@@ -13,29 +13,6 @@ interface ModalProps {
   icon: JSX.Element;
 }
 
-const getModalStyle = () => {
-  const top = 10;
-
-  return {
-    top: `${top}%`,
-    margin: "auto",
-  };
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-      position: "absolute",
-      width: "60%",
-      backgroundColor: "#fff",
-      border: "2px solid #000",
-      boxShadow: theme.shadows[10],
-      padding: theme.spacing(2, 4, 3),
-      borderRadius: "3px",
-    },
-  })
-);
-
 const PopUp: React.FC<ModalProps> = ({
   children,
   modalTitle,
@@ -43,7 +20,6 @@ const PopUp: React.FC<ModalProps> = ({
   reset,
   icon,
 }) => {
-  const classes = useStyles();
   const router = useRouter();
 
   useEffect(() => {
@@ -56,7 +32,6 @@ const PopUp: React.FC<ModalProps> = ({
   }, [router]);
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -75,17 +50,13 @@ const PopUp: React.FC<ModalProps> = ({
       </Button>
 
       <Modal
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        className={styles.container}
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div style={modalStyle} className={classes.paper}>
+        <div className={styles.content}>
           {!isSearch && <h2 id="simple-modal-title">{modalTitle}</h2>}
           {children}
         </div>

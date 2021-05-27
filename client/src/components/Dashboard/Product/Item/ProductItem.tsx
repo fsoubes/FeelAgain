@@ -54,6 +54,7 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
             style={{
               backgroundImage: `url( ${src} )`,
               backgroundSize: contain ? "contain" : "cover",
+              ...(isTilt === false && { boxShadow: "none" }),
             }}
           >
             <Button

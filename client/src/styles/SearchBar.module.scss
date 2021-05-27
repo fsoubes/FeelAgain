@@ -49,4 +49,9 @@
       background-position: 100% center;
     }
   }
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    &__container {
+      padding-bottom: 1rem;
+    }
+  }
 }
