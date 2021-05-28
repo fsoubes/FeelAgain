@@ -17,6 +17,10 @@ import styles from "../src/styles/Shop.module.scss";
 interface ShopProps {
   page?: number;
   search?: string;
+  size?: string | string[];
+  tags?: string | string[];
+  sort?: string;
+  product?: string;
 }
 // interface sortoptions {
 //   id_asc: string;
@@ -95,6 +99,7 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
                   </Button>
                   {isSorting && (
                     <Sort
+                      router={router}
                       isSort={sortingBy}
                       options={sortOptions}
                       setSort={setSort}
@@ -131,8 +136,17 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
   );
 };
 
-Shop.getInitialProps = async ({ query: { page, search } }) => {
-  return { page: parseInt(page as string), search: search as string };
+Shop.getInitialProps = async ({
+  query: { page, search, size, tags, sort, product },
+}) => {
+  return {
+    page: parseInt(page as string),
+    search: search as string,
+    size: size as string | string[],
+    tags: tags as string | string[],
+    sort: sort as string,
+    product: product as string,
+  };
 };
 
 export default withApollo({ ssr: true })(Shop);

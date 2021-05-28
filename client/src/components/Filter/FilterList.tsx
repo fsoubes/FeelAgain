@@ -2,27 +2,32 @@ import React from "react";
 import FilterItem from "./FilterItem/FilterItem";
 import styles from "../../styles/Filter.module.scss";
 import { UpdateFilterAction } from "../../types/filter";
+import { NextRouter } from "next/router";
 
 interface FilterListProps {
   data: any;
-  color?: boolean;
+  isColor?: boolean;
   update: React.Dispatch<UpdateFilterAction>;
+  router: NextRouter;
 }
 
 const FilterList: React.FC<FilterListProps> = ({
   data,
-  color = false,
+  isColor = false,
   update,
+  router,
 }) => {
   const filterOptions = data.map((item: any, index: number) => {
     return (
       <FilterItem
+        router={router}
         key={index}
         size={item.size}
         hex={item.hex}
-        color={color as boolean}
+        isColor={isColor as boolean}
         update={update}
         check={item.checked}
+        color={item.color}
       />
     );
   });

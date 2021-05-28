@@ -5,6 +5,9 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { UpdateFilterAction } from "../../types/filter";
+import { NextRouter } from "next/router";
+import { Irouter } from "../../types/routing";
+import { getUrl } from "../../utils/getUrl";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,12 +48,14 @@ interface CheckboxFormProps {
   update: React.Dispatch<UpdateFilterAction>;
   state: ValueProps;
   field: string;
+  router: NextRouter;
 }
 
 const CheckboxForm: React.FC<CheckboxFormProps> = ({
   update,
   state,
   field,
+  router,
 }) => {
   const classes = useStyles();
 
@@ -63,14 +68,35 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
         control={
           <Checkbox
             checked={state[item]}
-            onChange={(event) =>
+            onChange={(event) => {
               update({
                 type: "updateBox",
                 field: field,
                 key: event.target.name,
                 checked: event.target.checked as boolean,
-              })
-            }
+              });
+
+              console.log(event.target.checked, event.target.name);
+
+              const currentRouter: Irouter = {
+                ...router.query,
+                ...(field === "categories" && {
+                  ["product"]: !event.target.checked ? "" : event.target.name,
+                }),
+                ...(field !== "categories" && {
+                  ["tags"]: state[item],
+                }),
+              };
+
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: { ...currentRouter },
+                },
+                `/shop${getUrl(currentRouter)}`,
+                { shallow: true }
+              );
+            }}
             name={item}
             className={classes.checkBox}
           />

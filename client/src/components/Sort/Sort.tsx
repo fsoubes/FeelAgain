@@ -1,5 +1,8 @@
+import { NextRouter } from "next/router";
 import React from "react";
 import styles from "../../styles/Sort.module.scss";
+import { Irouter } from "../../types/routing";
+import { getUrl } from "../../utils/getUrl";
 
 interface sortoptions {
   id_asc: string;
@@ -15,10 +18,31 @@ interface SortProps {
   options: sortoptions;
   setSort: React.Dispatch<React.SetStateAction<String | null>>;
   closing: React.Dispatch<React.SetStateAction<Boolean>>;
+  router: NextRouter;
 }
 
-const Sort: React.FC<SortProps> = ({ options, setSort, closing, isSort }) => {
+const Sort: React.FC<SortProps> = ({
+  options,
+  setSort,
+  closing,
+  isSort,
+  router,
+}) => {
   const handleClick = (item: keyof sortoptions) => {
+    const currentRouter: Irouter = {
+      ...router.query,
+      sort: `${item}`,
+    };
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...currentRouter },
+      },
+      `/shop${getUrl(currentRouter)}`,
+      { shallow: true }
+    );
+
     setSort(item);
     closing(false);
   };

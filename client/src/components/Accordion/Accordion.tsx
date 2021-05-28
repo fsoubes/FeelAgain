@@ -11,6 +11,7 @@ import { initialValues } from "../../constants/filter";
 import { filterReducer } from "../../utils/updateFilter";
 import FilterList from "../Filter/FilterList";
 import styles from "../../styles/Accordion.module.scss";
+import { useRouter } from "next/router";
 
 interface CustomAccordionProps {
   isFiltering?: Boolean;
@@ -81,6 +82,25 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
+  const router = useRouter();
+
+  /* const handleRoute = (param: string, value: string) => {
+    const { page, search, type, size, filter, sort } = router.query;
+    Object.keys(router.query).map((item) => console.log(item));
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          page: page,
+          search,
+        },
+      },
+      search ? `/shop?page=${page}&search=${search}` : `/shop?page=${page}`,
+      { shallow: true }
+    );
+  }; */
+
   const firstUpdate = useRef(true);
 
   const handleChange = (panel: string) => (
@@ -149,6 +169,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         <AccordionDetails className={classes.details}>
           {filter.categories && (
             <CheckboxForm
+              router={router}
               state={filter.categories}
               update={dispatch}
               field={"categories"}
@@ -169,7 +190,12 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
           <Typography className={classes.filter_title}>PAR COULEUR</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
-          <FilterList data={filter?.colors} color={true} update={dispatch} />
+          <FilterList
+            router={router}
+            data={filter?.colors}
+            isColor={true}
+            update={dispatch}
+          />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -187,6 +213,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         <AccordionDetails className={classes.details}>
           {filter.materials && (
             <CheckboxForm
+              router={router}
               state={filter.materials}
               update={dispatch}
               field={"materials"}
@@ -209,6 +236,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         <AccordionDetails className={classes.details}>
           {filter.heels && (
             <CheckboxForm
+              router={router}
               state={filter.heels}
               update={dispatch}
               field={"heels"}
@@ -229,7 +257,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
           <Typography className={classes.filter_title}>PAR POINTURE</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
-          <FilterList data={filter?.sizes} update={dispatch} />
+          <FilterList router={router} data={filter?.sizes} update={dispatch} />
         </AccordionDetails>
       </Accordion>
     </div>

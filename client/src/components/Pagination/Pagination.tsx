@@ -4,6 +4,8 @@ import ReactPaginate from "react-paginate";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import useResponsive from "../../utils/useResponsive";
+import { getUrl } from "../../utils/getUrl";
+import { Irouter } from "../../types/routing";
 
 interface PaginationProps {
   refetch: any;
@@ -42,17 +44,17 @@ const Pagination: React.FC<PaginationProps> = ({
     });
     console.log(data); */
 
+      const currentRouter: Irouter = {
+        ...router.query,
+        page: `${updated}`,
+      };
+
       router.push(
         {
           pathname: router.pathname,
-          query: {
-            page: updated,
-            search,
-          },
+          query: { ...currentRouter },
         },
-        search
-          ? `${path}?page=${updated}&search=${search}`
-          : `${path}?page=${updated}`,
+        `/shop?${getUrl(currentRouter)}`,
         { shallow: true }
       );
 
