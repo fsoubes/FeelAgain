@@ -25,16 +25,20 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
     <div>
       <div className={styles.header}>
         <h1>Panier</h1>
-        <div className={styles.close}>
-          Fermer
-          <Button
-            onClick={() =>
-              (setOpen as React.Dispatch<React.SetStateAction<Boolean>>)(false)
-            }
-          >
-            X
-          </Button>
-        </div>
+        {setOpen && (
+          <div className={styles.close}>
+            Fermer
+            <Button
+              onClick={() =>
+                (setOpen as React.Dispatch<React.SetStateAction<Boolean>>)(
+                  false
+                )
+              }
+            >
+              X
+            </Button>
+          </div>
+        )}
       </div>
       <div className={styles.content}>
         {data && (
@@ -70,11 +74,13 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
           </span>
         </p>
         <div className={styles.routing}>
-          <Link href={"/panier"}>
-            <Button className={styles.action__cart} disableRipple>
-              VOIR LE PANIER
-            </Button>
-          </Link>
+          {setOpen && (
+            <Link href={"/panier"}>
+              <Button className={styles.action__cart} disableRipple>
+                VOIR LE PANIER
+              </Button>
+            </Link>
+          )}
           <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
             <Button className={styles.action__payment} disableRipple>
               PAIEMENT

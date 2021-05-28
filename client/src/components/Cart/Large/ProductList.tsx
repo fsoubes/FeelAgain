@@ -2,8 +2,6 @@ import React from "react";
 import ProductLargeItem from "./Item/ProductLargeItem";
 import { GetBasketQuery } from "../../../generated/graphql";
 import styles from "../../../styles/LargeProduct.module.scss";
-import useResponsive from "../../../utils/useResponsive";
-import SmallCartProduct from "../SmallCartProduct";
 
 interface ProductListProps {
   data: GetBasketQuery;
@@ -12,26 +10,6 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ data, remove, update }) => {
-  const { isTabletorMobile } = useResponsive();
-
-  if (isTabletorMobile) {
-    return (
-      <SmallCartProduct
-        data={data}
-        handleUpdate={
-          update as (itemId: string, quantity: number) => Promise<void>
-        }
-        handleRemove={
-          remove as (
-            itemId: string,
-            BasketId: string,
-            quantity: number
-          ) => Promise<void>
-        }
-      ></SmallCartProduct>
-    );
-  }
-
   const largeItem = data.getBasket.products.map((item) => {
     return (
       <ProductLargeItem

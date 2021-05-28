@@ -1,8 +1,9 @@
 .AppWrapper {
   width: 70%;
-  // height: 500px;
+
   position: relative;
   margin: 2rem auto;
+  min-width: 300px;
 
   @keyframes fade {
     from {
@@ -15,7 +16,8 @@
     }
   }
 
-  h1 {
+  h1,
+  h2 {
     text-align: center;
     margin: 2rem;
   }
@@ -199,6 +201,28 @@
     border: 0;
     cursor: pointer;
     background: transparent;
+  }
+
+  @media only screen and (max-width: 767px) {
+    width: 85%;
+    h2 {
+      margin: 1rem;
+    }
+    .PaypallWrapper {
+      margin: 0;
+    }
+
+    .FormGroup {
+      margin: 0;
+    }
+    .SubmitButton {
+      margin: 1rem 0 0 0;
+      width: 100%;
+    }
+  }
+
+  @media only screen and (max-width: 575px) {
+    width: 96%;
   }
 }
 

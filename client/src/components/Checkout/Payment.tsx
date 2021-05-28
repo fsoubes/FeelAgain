@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styles from "../../styles/Stripe.module.scss";
 import Paypall from "../Paypall/Paypall";
 import CheckoutClassic from "../Stripe/CheckoutClassic";
+import Validation from "./Validation";
 
 interface Info {
   firstname: string;
@@ -64,7 +65,7 @@ const Payment: React.FC<PaymentProps> = ({
 
       <div className={styles.card}>
         <div className={styles.AppWrapper}>
-          {!hidePaypal && (
+          {!hidePaypal && !hideStripe && (
             <div className={styles.PaypallWrapper}>
               <Paypall
                 shippingDetails={shippingDetails}
@@ -73,7 +74,8 @@ const Payment: React.FC<PaymentProps> = ({
               />
             </div>
           )}
-          {!hidePaypal && !hideStripe && <h1>Ou avec Stripe</h1>}
+          {hideStripe && !hidePaypal && <Validation></Validation>}
+          {!hidePaypal && !hideStripe && <h2>Ou avec Stripe</h2>}
           {!hideStripe && (
             <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
               <CheckoutClassic

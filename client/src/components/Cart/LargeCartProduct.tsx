@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import { ArrowRightAlt } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
 import { GetBasketQuery } from "../../generated/graphql";
@@ -51,7 +50,6 @@ const LargeCartProduct: React.FC<LargeCartProductProps> = ({
         <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
           <Button>PROCEDER AU PAIEMENT</Button>
         </Link>
-        {/* <ArrowRightAlt /> */}
       </div>
     </div>
   );

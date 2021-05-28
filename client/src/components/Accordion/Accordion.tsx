@@ -93,6 +93,9 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   const [filter, dispatch] = useReducer(filterReducer, initialValues);
 
   useEffect(() => {
+    // Check w router if params
+    // setParams
+
     if (firstUpdate.current) {
       firstUpdate.current = false;
       return;

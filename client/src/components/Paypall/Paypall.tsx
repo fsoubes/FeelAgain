@@ -47,7 +47,6 @@ const Paypall: React.FC<PaypallProps> = ({
               amount: {
                 currency_code: "EUR",
                 value: paymount,
-                // value: "0.01",
               },
             },
           ],
@@ -61,14 +60,10 @@ const Paypall: React.FC<PaypallProps> = ({
           alert.success(`Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
           commande aura été expédié. Vous pouvez suivre l'état de votre commande
           ou l'annuler (48h) en cliquant sur le boutton ci-dessous.`);
-          console.log(details);
+
           // OPTIONAL: Call your server to save the transaction
 
-          setStripe(true);
-
           const paymentInfo = details.purchase_units[0];
-
-          console.log(paymentInfo);
 
           await payment({
             variables: {
@@ -129,6 +124,8 @@ const Paypall: React.FC<PaypallProps> = ({
             },
           });
 
+          setStripe(true);
+
           return fetch("/paypal-transaction-complete", {
             method: "post",
             body: JSON.stringify({
@@ -142,6 +139,7 @@ const Paypall: React.FC<PaypallProps> = ({
         clientId:
           "AS9TRywOaV8Ap8n06RkvKFrJX37SVDQPBkI0vv7da79OKfjrEkTx7WQe8nXLSTK2BXKoQSHgkQupdety",
         currency: "EUR",
+        disableFunding: "card", // credit
       }}
     />
   );

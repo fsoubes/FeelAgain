@@ -1,6 +1,7 @@
 .header {
   margin-bottom: 1rem;
   text-align: center;
+  min-width: 300px;
   h1 {
     font-weight: bold;
   }
@@ -8,4 +9,5 @@
 .content {
   display: flex;
   flex-wrap: wrap;
+  min-width: 300px;
 }

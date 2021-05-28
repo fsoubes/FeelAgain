@@ -20,6 +20,7 @@ import {
 import { Button } from "@material-ui/core";
 import Link from "next/link";
 import { useApolloClient } from "@apollo/client";
+import Validation from "../Checkout/Validation";
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -299,32 +300,9 @@ const CheckoutClassic: React.FC<CheckoutClassicProps> = ({
   };
 
   return paymentMethod ? (
-    <div className={styles.Result}>
-      <div className={styles.ResultTitle} role="alert">
-        Paiement réussi
-      </div>
-      <div
-        className={styles.ResultMessage}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        Nous vous remercions de votre commande. Un e-mail sera envoyé lorsque la
-        commande aura été expédié. Vous pouvez suivre l'état de votre commande
-        ou l'annuler (48h) en cliquant sur le boutton ci-dessous.
-        <Link href="/order">
-          <Button
-            style={{
-              background: "black",
-              color: "white",
-              padding: "5px",
-              marginTop: "1rem",
-            }}
-          >
-            Voir commande
-          </Button>
-        </Link>
-      </div>
+    <Validation>
       <ResetButton onClick={reset} />
-    </div>
+    </Validation>
   ) : (
     <form className={styles.Form} onSubmit={handleSubmit}>
       <fieldset className={styles.FormGroup}>

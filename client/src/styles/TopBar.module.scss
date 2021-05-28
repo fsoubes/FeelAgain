@@ -10,6 +10,7 @@
   padding-right: calc(50% - var(--container-width) / 2) !important;
   width: 100%;
   justify-content: space-between;
+  min-width: 280px;
   .navbar__left {
     display: flex;
     justify-content: center;
