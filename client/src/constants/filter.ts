@@ -77,25 +77,6 @@ const heel = [
   "9 cm",
 ];
 
-const list = [
-  "Blanc",
-  "Bronze",
-  "Champagne",
-  "Or",
-  "Argenté",
-  "Beige",
-  "Bleu",
-  "Bordeaux",
-  "Camel",
-  "Jaune",
-  "Marron",
-  "Noir",
-  "Orange",
-  "Rose",
-  "Rouge",
-  "Vert",
-];
-
 interface Color {
   checked: boolean;
   hex: string;

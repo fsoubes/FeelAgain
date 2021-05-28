@@ -14,15 +14,6 @@ interface FilterItemProps {
   color: string;
 }
 
-interface Irouter {
-  page?: string;
-  search?: string;
-  type?: string;
-  tags?: string[];
-  sort?: string;
-  size?: string | string[];
-}
-
 const FilterItem: React.FC<FilterItemProps> = ({
   size,
   color,

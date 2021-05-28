@@ -27,6 +27,7 @@ export type UpdateFilterAction = {
   values?: FilterList;
   value?: string | number;
   checked?: boolean;
+  tags?: string;
 };
 
 export interface FilterList {

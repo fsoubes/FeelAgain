@@ -40,7 +40,14 @@ const sortOptions = {
   title_desc: "Alphabétiques Z-A",
 };
 
-const Shop: NextPage<ShopProps> = ({ page, search }) => {
+const Shop: NextPage<ShopProps> = ({
+  page,
+  search,
+  size,
+  tags,
+  product,
+  sort,
+}) => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(page as number);
   const [isFilter, setFilter] = useState<Boolean>(false);
@@ -116,6 +123,10 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
               refetch={refetch}
               sortingBy={sortingBy}
               isOpen={isFilter}
+              size={size}
+              tags={tags}
+              product={product}
+              sort={sort}
             />
 
             <ProductListDash
@@ -139,6 +150,8 @@ const Shop: NextPage<ShopProps> = ({ page, search }) => {
 Shop.getInitialProps = async ({
   query: { page, search, size, tags, sort, product },
 }) => {
+  console.log(page, search, size, tags, sort, product);
+
   return {
     page: parseInt(page as string),
     search: search as string,

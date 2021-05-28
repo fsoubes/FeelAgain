@@ -1,4 +1,6 @@
+import { Color } from "./../types/filter";
 import { UpdateFilterAction, FilterList, ValueProps } from "../types/filter";
+import { paletteShoes } from "../constants/constants";
 
 export const filterReducer = (
   initialValues: FilterList,
@@ -8,6 +10,7 @@ export const filterReducer = (
     case "updateBox": {
       const state = (initialValues as any)[action.field as string];
       let variables = initialValues["variables"];
+
       const newState = Object.keys(state).reduce((acc, item) => {
         if (action.key === item) {
           if (action.field === "categories") {
@@ -38,6 +41,45 @@ export const filterReducer = (
         variables: variables,
       };
     }
+    case "addTags": {
+      const stateHeel = (initialValues as any)["heels" as string];
+      const stateColor = (initialValues as any)["colors" as string];
+      let stateMaterial = (initialValues as any)["materials" as string];
+
+      const regex = /.cm$/g;
+      const tag = (action.tags as string).split(",");
+      const heel = parseFloat(
+        (tag as string[]).filter((item) => regex.test(item))[0]
+      );
+      const colors = (tag as string[]).filter(
+        (item) => paletteShoes.indexOf(item) !== -1
+      );
+      const material = (tag as string[]).filter(
+        (item) => !regex.test(item) && paletteShoes.indexOf(item) === -1
+      );
+
+      const updateColors = stateColor.map((item: Color) => {
+        return {
+          ...item,
+          checked: colors.indexOf(item.color) !== -1 ? true : false,
+        };
+      });
+
+      stateHeel[heel ? `${heel} cm` : "pas de talon"] = true;
+      stateMaterial[material[0]] = true;
+
+      return {
+        ...initialValues,
+        ["colors"]: updateColors,
+        ["materials"]: stateMaterial,
+        ["heels"]: stateHeel,
+        variables: {
+          ...initialValues["variables"],
+          tags: tag,
+        },
+      };
+    }
+
     case "updateList":
       const state = (initialValues as any)[action.field as string];
       const variables = initialValues["variables"];

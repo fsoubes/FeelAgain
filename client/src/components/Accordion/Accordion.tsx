@@ -19,6 +19,10 @@ interface CustomAccordionProps {
   sortingBy: String | null;
   isOpen: Boolean;
   setSort: React.Dispatch<React.SetStateAction<String | null>>;
+  size?: string | string[];
+  tags?: string | string[];
+  sort?: string;
+  product?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -78,28 +82,15 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   sortingBy = null,
   isOpen = false,
   setSort,
+  product,
+  size,
+  tags,
+  sort,
 }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const router = useRouter();
-
-  /* const handleRoute = (param: string, value: string) => {
-    const { page, search, type, size, filter, sort } = router.query;
-    Object.keys(router.query).map((item) => console.log(item));
-
-    router.push(
-      {
-        pathname: router.pathname,
-        query: {
-          page: page,
-          search,
-        },
-      },
-      search ? `/shop?page=${page}&search=${search}` : `/shop?page=${page}`,
-      { shallow: true }
-    );
-  }; */
 
   const firstUpdate = useRef(true);
 
@@ -111,6 +102,32 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   };
 
   const [filter, dispatch] = useReducer(filterReducer, initialValues);
+
+  useEffect(() => {
+    if (product)
+      dispatch({
+        type: "updateBox",
+        field: "categories",
+        key: product,
+        checked: true,
+      });
+
+    if (tags && tags.length > 0)
+      dispatch({
+        type: "addTags",
+        field: "tags",
+        tags: tags as string,
+      });
+
+    if (size)
+      (size as string).split(",").forEach((item) => {
+        dispatch({
+          type: "updateList",
+          field: "sizes",
+          value: parseInt(item),
+        });
+      });
+  }, []);
 
   useEffect(() => {
     // Check w router if params
