@@ -7,7 +7,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { UpdateFilterAction } from "../../types/filter";
 import { NextRouter } from "next/router";
 import { Irouter } from "../../types/routing";
-import { getUrl } from "../../utils/getUrl";
+import { cleanRoute, getUrl } from "../../utils/getUrl";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -76,7 +76,21 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
                 checked: event.target.checked as boolean,
               });
 
-              console.log(event.target.checked, event.target.name);
+              const prevName = Object.keys(state).filter(
+                (key) => state[key]
+              )[0];
+
+              const updateTags =
+                typeof router.query.tags === "object"
+                  ? [...(router.query.tags as string[]), event.target.name]
+                  : router.query.tags
+                  ? [router.query.tags, event.target.name]
+                  : [event.target.name];
+
+              const currentSegment =
+                updateTags.length > 0
+                  ? (updateTags as string[]).filter((item) => item !== prevName)
+                  : event.target.name;
 
               const currentRouter: Irouter = {
                 ...router.query,
@@ -84,7 +98,7 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
                   ["product"]: !event.target.checked ? "" : event.target.name,
                 }),
                 ...(field !== "categories" && {
-                  ["tags"]: state[item],
+                  ["tags"]: currentSegment,
                 }),
               };
 

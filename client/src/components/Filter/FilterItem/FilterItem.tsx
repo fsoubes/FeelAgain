@@ -44,8 +44,8 @@ const FilterItem: React.FC<FilterItemProps> = ({
         return cleanRoute(
           isColor ? router.query.tags : router.query.size,
           isColor ? color : (size as number).toString(),
-          isColor,
-          router
+          router,
+          isColor ? "tags" : "size"
         );
       }}
       className={check ? `${styles.checked}` : ""}

@@ -21,8 +21,8 @@ export const getUrl = (currentRouter: any) => {
 export const cleanRoute = (
   currentParams: string | string[] | undefined,
   inputValue: string,
-  isColor: boolean,
-  router: NextRouter
+  router: NextRouter,
+  segment: string
 ) => {
   let params: string[] = [];
   let cleanParams: string[] = [];
@@ -43,14 +43,8 @@ export const cleanRoute = (
 
   const currentRouter: Irouter = {
     ...router.query,
-    ...(isColor && {
-      ["tags"]:
-        (cleanParams as string[]).length === params.length
-          ? [...cleanParams, inputValue]
-          : cleanParams,
-    }),
-    ...(!isColor && {
-      ["size"]:
+    ...(segment && {
+      [segment]:
         (cleanParams as string[]).length === params.length
           ? [...cleanParams, inputValue]
           : cleanParams,

@@ -150,6 +150,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         onClick={() => {
           setSort(null);
           dispatch({ type: "reset", values: initialValues });
+          router.push("/shop", undefined, { shallow: true });
         }}
       >
         Réinitialiser
