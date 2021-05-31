@@ -110,7 +110,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
       }
     : {};
 
-  const logged = (
+  const unlogged = (
     <Fragment>
       <Link href="/connexion">
         <Button
@@ -129,7 +129,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
     </Fragment>
   );
 
-  const unloged = (
+  const logged = (
     <Fragment>
       {!isTabletorMobile && (
         <div ref={subMenuRef}>
@@ -157,18 +157,6 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
           </Button>
         </Link>
       )}
-      {/* <Button
-        className={styles.navbar__auth_logout}
-        onClick={async () => {
-          await logout();
-          await client.resetStore();
-        }}
-        variant="text"
-        color="inherit"
-        style={menuStyling.log}
-      >
-        Deconnexion
-      </Button> */}
     </Fragment>
   );
 
@@ -244,7 +232,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
               </Button>
             </Link>
             {isTabletorMobile && (
-              <Fragment>{!data?.me ? logged : unloged}</Fragment>
+              <Fragment>{!data?.me ? unlogged : logged}</Fragment>
             )}
           </div>
         </div>
@@ -264,8 +252,12 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 </Button>
               </Link>
             </div>
-            <div className={styles.navbar__auth}>
-              <Fragment>{!data?.me ? logged : unloged}</Fragment>
+            <div
+              className={
+                !data?.me ? styles.navbar__unlogged : styles.navbar__auth
+              }
+            >
+              <Fragment>{!data?.me ? unlogged : logged}</Fragment>
             </div>
           </div>
         )}

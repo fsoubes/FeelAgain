@@ -7,6 +7,7 @@
   h3 {
     color: rgb(243, 70, 70);
   }
+  min-width: 300px;
 }
 
 .header {
@@ -18,9 +19,11 @@
   justify-content: space-between;
   padding: 5px;
   font-weight: bolder;
+  min-width: 300px;
 }
 
 .content {
+  min-width: 300px;
   display: flex;
   justify-content: space-between;
   > div {
@@ -37,10 +40,12 @@
 }
 
 .reason {
+  min-width: 300px;
   margin-top: 2rem;
 }
 
 .action {
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -64,6 +69,36 @@
     &:hover {
       background: black;
       color: white;
+    }
+  }
+}
+
+@media only screen and (max-width: 1083px) {
+  .action {
+    margin-top: 1rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .action {
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    .confirm {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+    .return {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .action {
+    .confirm,
+    .return {
+      padding: 0;
     }
   }
 }

@@ -156,28 +156,34 @@ const Footer: React.FC<FooterProps> = () => {
           <div className={styles.column__collection}>
             <h2>COLLECTIONS</h2>
             <ul className={styles.column__events}>
-              <Link href="/shop/?type=ballerines">
+              <Link
+                href={{
+                  pathname: "/shop",
+                  query: { product: "Ballerines" },
+                }}
+                shallow={false}
+              >
                 <li>Ballerines</li>
               </Link>
-              <Link href="/shop/?type=boots">
+              <Link href="/shop/?product=boots">
                 <li>Boots</li>
               </Link>
-              <Link href="/shop/?type=bottes">
+              <Link href="/shop/?product=bottes">
                 <li>Bottes</li>
               </Link>
-              <Link href="/shop/?type=derbies">
+              <Link href="/shop/?product=derbies">
                 <li>Debies</li>
               </Link>
-              <Link href="/shop/?type=escarpins">
+              <Link href="/shop/?product=escarpins">
                 <li>Escarpins</li>
               </Link>
-              <Link href="/shop/?type=mules">
+              <Link href="/shop/?product=mules">
                 <li>Mules</li>
               </Link>
-              <Link href="/shop/?type=mocassins">
+              <Link href="/shop/?product=mocassins">
                 <li>Mocassins</li>
               </Link>
-              <Link href="/shop/?type=sandales">
+              <Link href="/shop/?product=sandales">
                 <li>Sandales</li>
               </Link>
             </ul>

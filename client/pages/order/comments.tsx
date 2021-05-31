@@ -32,7 +32,7 @@ const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
           </div>
         )}
         <h1>Évaluez vos achats</h1>
-        <div>
+        <div style={{ width: "100%" }}>
           {data && (
             <ul className={styles.purchases__list}>
               {data.getPurchases.map((item) => {

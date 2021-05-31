@@ -180,4 +180,17 @@
       }
     }
   }
+
+  @media only screen and (max-width: 700px) {
+    .trackfield:last-child {
+      .trackfield__inner {
+        .trackfield__left {
+          min-height: 1rem;
+        }
+        .trackfield__right {
+          min-height: 1rem;
+        }
+      }
+    }
+  }
 }

@@ -22,14 +22,6 @@ interface ShopProps {
   sort?: string;
   product?: string;
 }
-// interface sortoptions {
-//   id_asc: string;
-//   id_desc: string;
-//   price_asc: string;
-//   price_desc: string;
-//   title_asc: string;
-//   title_desc: string;
-// }
 
 const sortOptions = {
   id_asc: "Meilleures ventes",
@@ -53,6 +45,7 @@ const Shop: NextPage<ShopProps> = ({
   const [isFilter, setFilter] = useState<Boolean>(false);
   const [isSorting, setSorting] = useState<Boolean>(false);
   const [sortingBy, setSort] = useState<String | null>(null);
+  const [currentSearch, setSearch] = useState<String | null>(search as string);
 
   let { data, refetch } = useGetShoesQuery({
     variables: {
@@ -61,12 +54,26 @@ const Shop: NextPage<ShopProps> = ({
       ...(search && {
         search: search,
       }),
+      ...((tags as string[]) &&
+        (tags as string[]).length > 0 && {
+          tags: tags,
+        }),
+      ...((size as string[]) &&
+        (size as string[]).length > 0 && {
+          size: (size as string[]).map((item) => parseFloat(item)),
+        }),
+      ...(product && {
+        product: product,
+      }),
+      ...(sort && {
+        sort: sort,
+      }),
     },
   });
 
   useEffect(() => {
-    console.log(tags, size, search, product);
-    console.log(router.query);
+    if (sort) setSort(sort as string);
+    if (search) setSearch(search);
     setCurrentPage(parseInt(router.query.page as string));
   }, []);
 
@@ -80,8 +87,8 @@ const Shop: NextPage<ShopProps> = ({
           >
             <h2>FeelAgain/Shop</h2>
             <h2>
-              {search
-                ? `${data?.getFilterShoes.pageInfo.totalItem} résultats pour “${search}”`
+              {currentSearch
+                ? `${data?.getFilterShoes.pageInfo.totalItem} résultats pour “${currentSearch}”`
                 : `${data?.getFilterShoes.pageInfo.totalItem} articles`}
             </h2>
           </div>
@@ -121,6 +128,9 @@ const Shop: NextPage<ShopProps> = ({
           </div>
           <div className={styles.container}>
             <CustomAccordion
+              setCurrentPage={setCurrentPage}
+              currentSearch={currentSearch as string}
+              setSearch={setSearch}
               setSort={setSort}
               refetch={refetch}
               sortingBy={sortingBy}
@@ -128,7 +138,6 @@ const Shop: NextPage<ShopProps> = ({
               size={size}
               tags={tags}
               product={product}
-              sort={sort}
             />
 
             <ProductListDash
@@ -139,9 +148,7 @@ const Shop: NextPage<ShopProps> = ({
           <Pagination
             refetch={refetch}
             page={currentPage}
-            path={"/shop"}
             total={data?.getFilterShoes?.pageInfo.total as number}
-            search={search}
           />
         </div>
       )}

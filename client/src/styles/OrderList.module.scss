@@ -2,6 +2,8 @@
   background: white;
   margin-bottom: 1rem;
   border: 1px solid darkgrey;
+  min-width: 300px;
+
   .header {
     background: #f6f6f6;
     border-radius: 4px;
@@ -40,7 +42,7 @@
       }
 
       .header__command_recap {
-        width: 300px;
+        min-width: 300px;
       }
 
       .header__command,
@@ -88,6 +90,60 @@
         &:hover {
           background: linear-gradient(to bottom, #f2e0b7, #f0cf7c);
           color: black;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 991px) {
+    .header {
+      padding: 10px;
+    }
+    .content {
+      padding: 10px;
+      .left__content {
+        max-width: 55%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .header {
+      .header__container {
+        width: 100%;
+        flex-direction: column;
+        .header__info {
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    .content {
+      width: 100%;
+      align-items: flex-start;
+      flex-direction: column;
+      .left__content {
+        max-width: 100%;
+        width: 100%;
+      }
+      .action {
+        width: 100%;
+        button:nth-child(1) {
+          margin: 10px 0;
+        }
+        button {
+          padding: 5px 5px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .header {
+      .header__container {
+        .header__info {
+          flex-direction: column;
         }
       }
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import ReactPaginate from "react-paginate";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -11,39 +11,22 @@ interface PaginationProps {
   refetch: any;
   total: number;
   page?: number;
-  search?: string;
-  path: string;
 }
 
 interface selectedItem {
   selected: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
-  refetch,
-  total,
-  page,
-  search,
-  path,
-}) => {
+const Pagination: React.FC<PaginationProps> = ({ refetch, total, page }) => {
   const { isMobile } = useResponsive();
   const router = useRouter();
 
-  const handleClick = ({ selected }: selectedItem) => {
+  const handleClick = async ({ selected }: selectedItem) => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 
     const updated = selected + 1;
 
-    setTimeout(() => {
-      /*  const data = client.readQuery({
-      query: GetShoesDocument,
-      variables: {
-        limit: 16,
-        page: selected + 1,
-      },
-    });
-    console.log(data); */
-
+    setTimeout(async () => {
       const currentRouter: Irouter = {
         ...router.query,
         page: `${updated}`,
@@ -54,11 +37,11 @@ const Pagination: React.FC<PaginationProps> = ({
           pathname: router.pathname,
           query: { ...currentRouter },
         },
-        `/shop?${getUrl(currentRouter)}`,
+        `/shop${getUrl(currentRouter)}`,
         { shallow: true }
       );
 
-      refetch({ page: updated });
+      await refetch({ page: updated });
     }, 500);
   };
 
@@ -81,4 +64,5 @@ const Pagination: React.FC<PaginationProps> = ({
     </div>
   );
 };
+
 export default React.memo(Pagination);

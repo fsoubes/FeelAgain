@@ -9,12 +9,11 @@ export const filterReducer = (
   switch (action.type) {
     case "updateBox": {
       const state = (initialValues as any)[action.field as string];
-      let variables = initialValues["variables"];
-
+      let variables = { ...initialValues["variables"] };
       const newState = Object.keys(state).reduce((acc, item) => {
         if (action.key === item) {
           if (action.field === "categories") {
-            const prod = variables?.product === item ? "" : item;
+            const prod = variables?.product === item ? undefined : item;
             variables = { ...variables, product: prod };
           } else {
             const index = variables?.tags?.indexOf(item);
@@ -29,16 +28,14 @@ export const filterReducer = (
               : variables?.tags?.splice(index as number, 1);
           }
         }
-
         acc[item] = action.key === item && !state[action.key] ? true : false;
-
         return acc;
       }, {} as Record<keyof ValueProps, boolean>);
 
       return {
         ...initialValues,
         [action.field as string]: newState,
-        variables: variables,
+        variables: { ...variables },
       };
     }
     case "addTags": {
@@ -70,8 +67,14 @@ export const filterReducer = (
       return {
         ...initialValues,
         ["colors"]: updateColors,
-        ["materials"]: { ...stateMaterial, [material[0]]: true },
-        ["heels"]: { ...stateHeel, [`${heel}`]: true },
+        ["materials"]: {
+          ...stateMaterial,
+          ...(material.length > 0 && { [material[0]]: true }),
+        },
+        ["heels"]: {
+          ...stateHeel,
+          ...(heel.length > 0 && { [`${heel}`]: true }),
+        },
         variables: {
           ...initialValues["variables"],
           tags: tag,
@@ -81,7 +84,7 @@ export const filterReducer = (
 
     case "updateList":
       const state = (initialValues as any)[action.field as string];
-      const variables = initialValues["variables"];
+      const variables = { ...initialValues["variables"] };
       const newState = state.map((item: any, index: number) => {
         const isUpdate =
           action.value === item.size || action.value === item.hex;
@@ -105,7 +108,6 @@ export const filterReducer = (
               : variables?.tags?.splice(index as number, 1);
           }
         }
-
         return {
           ...item,
           checked: isChecked,
@@ -116,13 +118,15 @@ export const filterReducer = (
       return {
         ...initialValues,
         [action.field as string]: newState,
-        variables: newState[newState.length - 1].variables,
+        variables: {
+          ...newState[newState.length - 1].variables,
+        },
       };
     case "reset":
       return {
         ...action.values,
         variables: {
-          product: "",
+          product: undefined,
           size: [],
           tags: [],
         },

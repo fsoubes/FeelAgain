@@ -19,9 +19,11 @@ interface CustomAccordionProps {
   sortingBy: String | null;
   isOpen: Boolean;
   setSort: React.Dispatch<React.SetStateAction<String | null>>;
+  setSearch: React.Dispatch<React.SetStateAction<String | null>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   size?: string | string[];
   tags?: string | string[];
-  sort?: string;
+  currentSearch?: string;
   product?: string;
 }
 
@@ -85,7 +87,9 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   product,
   size,
   tags,
-  sort,
+  setSearch,
+  currentSearch,
+  setCurrentPage,
 }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -130,9 +134,6 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   }, []);
 
   useEffect(() => {
-    // Check w router if params
-    // setParams
-
     if (firstUpdate.current) {
       firstUpdate.current = false;
       return;
@@ -146,17 +147,29 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
       ...((filter?.variables?.tags?.length as number) > 0 && {
         tags: filter.variables?.tags,
       }),
-      ...(sortingBy && {
-        sort: sortingBy,
-      }),
     };
 
     if (filter && Object.keys(variables as Request).length > 0) {
       refetch({
-        ...variables,
+        ...filter.variables,
+        ...(sortingBy && {
+          sort: sortingBy,
+        }),
+        ...(sortingBy && {
+          sort: sortingBy,
+        }),
+        ...(currentSearch && {
+          search: currentSearch,
+        }),
       });
     } else {
-      refetch({ product: null, tags: null, size: null, sort: "id_asc" });
+      refetch({
+        product: null,
+        tags: null,
+        size: null,
+        sort: "id_asc",
+        search: null,
+      });
     }
   }, [filter, sortingBy, firstUpdate]);
 
@@ -165,9 +178,10 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
       <Button
         className={classes.reset}
         onClick={() => {
-          console.log(initialValues);
-          setSort(null);
           dispatch({ type: "reset", values: initialValues });
+          setSort(null);
+          setSearch(null);
+          setCurrentPage(1);
           router.push("/shop", undefined, { shallow: true });
         }}
       >

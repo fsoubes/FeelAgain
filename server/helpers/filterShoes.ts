@@ -14,9 +14,10 @@ interface cursorOption {
 
 function getFilterOptions<T extends object>(filterOptions: filterType): T {
   let sizeFilter = {
-    ...((filterOptions.size as number[]) && {
-      $all: filterOptions.size,
-    }),
+    ...((filterOptions.size as number[]) &&
+      (filterOptions.size as number[]).length > 0 && {
+        $all: filterOptions.size,
+      }),
   };
 
   let shoesFilter = {

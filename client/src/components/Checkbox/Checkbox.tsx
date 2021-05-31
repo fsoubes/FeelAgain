@@ -84,8 +84,7 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
                 typeof router.query.tags === "object"
                   ? [...(router.query.tags as string[]), event.target.name]
                   : router.query.tags
-                  ? /* ? [router.query.tags, event.target.name] */
-                    [
+                  ? [
                       ...(router.query.tags as string).split(","),
                       event.target.name,
                     ]
@@ -97,8 +96,6 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
                   : item
               );
 
-              console.log(router.query.tags, updateTags);
-
               const currentSegment =
                 updateTags.length > 0
                   ? (updateTags as string[]).filter(
@@ -109,14 +106,15 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
               const currentRouter: Irouter = {
                 ...router.query,
                 ...(field === "categories" && {
-                  ["product"]: !event.target.checked ? "" : event.target.name,
+                  ["product"]: !event.target.checked
+                    ? undefined
+                    : event.target.name,
                 }),
+
                 ...(field !== "categories" && {
                   ["tags"]: currentSegment,
                 }),
               };
-
-              console.log(currentRouter);
 
               router.push(
                 {

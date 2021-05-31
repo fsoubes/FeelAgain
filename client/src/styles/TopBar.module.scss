@@ -92,6 +92,7 @@
         }
       }
     }
+    .navbar__unlogged,
     .navbar__auth {
       .navbar__auth_logout {
         @include hide() {
@@ -100,6 +101,8 @@
       a {
         color: #fff;
       }
+    }
+    .navbar__auth {
       button::after {
         content: "\f107";
         right: 1px;

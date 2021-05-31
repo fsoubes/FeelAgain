@@ -2,7 +2,6 @@ import React from "react";
 import { Layout } from "../../../src/components/Layout";
 import { withApollo } from "../../../src/utils/withApollo";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import Timeline from "../../../src/components/Timeline/Timeline";
 import { useGetOrderQuery } from "../../../src/generated/graphql";
 import styles from "../../../src/styles/Order.module.scss";
@@ -14,8 +13,6 @@ interface Props {
 }
 
 const DetailOrder: NextPage<Props> = ({ id }) => {
-  const router = useRouter();
-
   const { data, loading } = useGetOrderQuery({
     variables: { orderId: id as string },
   });
@@ -28,9 +25,12 @@ const DetailOrder: NextPage<Props> = ({ id }) => {
           {data && (
             <div className={styles.order__images}>
               {loading && <Spinner></Spinner>}
-              {data.getOrder.products.map((item) => {
+              {data.getOrder.products.map((item, index) => {
                 return (
-                  <Link href={`/products/${item.variant.shoes._id}`}>
+                  <Link
+                    href={`/products/${item.variant.shoes._id}`}
+                    key={index}
+                  >
                     <div
                       className={styles.order__image}
                       style={{

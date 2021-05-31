@@ -3,7 +3,9 @@ import { Irouter } from "../types/routing";
 
 export const getUrl = (currentRouter: any) => {
   return Object.keys(currentRouter).reduce((acc, current, index) => {
-    if (currentRouter[current].length === 0) return acc;
+    if (!currentRouter[current] || currentRouter[current].length === 0)
+      return acc;
+
     const routeValue =
       typeof currentRouter[current as keyof typeof currentRouter] === "object"
         ? (currentRouter[
@@ -43,13 +45,42 @@ export const cleanRoute = (
 
   const currentRouter: Irouter = {
     ...router.query,
+    ...(router.query.tags && {
+      tags:
+        typeof (router.query.tags as string) === "object"
+          ? (router.query.tags as string[]).map((item) =>
+              item === decodeURIComponent(item)
+                ? encodeURIComponent(item)
+                : item
+            )
+          : (router.query.tags as string)
+              .split(",")
+              .map((item) =>
+                item === decodeURIComponent(item)
+                  ? encodeURIComponent(item)
+                  : item
+              ),
+    }),
     ...(segment && {
       [segment]:
         (cleanParams as string[]).length === params.length
-          ? [...cleanParams, inputValue]
-          : cleanParams,
+          ? [
+              ...cleanParams.map((item) =>
+                item === decodeURIComponent(item)
+                  ? encodeURIComponent(item)
+                  : item
+              ),
+              inputValue,
+            ]
+          : cleanParams.map((item) =>
+              item === decodeURIComponent(item)
+                ? encodeURIComponent(item)
+                : item
+            ),
     }),
   };
+
+  console.log(currentRouter);
 
   router.push(
     {
