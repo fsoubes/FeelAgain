@@ -165,6 +165,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
       <Button
         className={classes.reset}
         onClick={() => {
+          console.log(initialValues);
           setSort(null);
           dispatch({ type: "reset", values: initialValues });
           router.push("/shop", undefined, { shallow: true });

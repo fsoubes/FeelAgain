@@ -1,6 +1,6 @@
 import { Color } from "./../types/filter";
 import { UpdateFilterAction, FilterList, ValueProps } from "../types/filter";
-import { paletteShoes } from "../constants/constants";
+import { heelsShoes, matShoes, paletteShoes } from "../constants/constants";
 
 export const filterReducer = (
   initialValues: FilterList,
@@ -46,16 +46,18 @@ export const filterReducer = (
       const stateColor = (initialValues as any)["colors" as string];
       let stateMaterial = (initialValues as any)["materials" as string];
 
-      const regex = /.cm$/g;
-      const tag = (action.tags as string).split(",");
-      const heel = parseFloat(
-        (tag as string[]).filter((item) => regex.test(item))[0]
+      const tag = decodeURIComponent(action.tags as string).split(",");
+
+      const heel = (tag as string[]).filter(
+        (item) => heelsShoes.indexOf(item) !== -1
       );
+
       const colors = (tag as string[]).filter(
         (item) => paletteShoes.indexOf(item) !== -1
       );
+
       const material = (tag as string[]).filter(
-        (item) => !regex.test(item) && paletteShoes.indexOf(item) === -1
+        (item) => matShoes.indexOf(item) !== -1
       );
 
       const updateColors = stateColor.map((item: Color) => {
@@ -65,14 +67,11 @@ export const filterReducer = (
         };
       });
 
-      stateHeel[heel ? `${heel} cm` : "pas de talon"] = true;
-      stateMaterial[material[0]] = true;
-
       return {
         ...initialValues,
         ["colors"]: updateColors,
-        ["materials"]: stateMaterial,
-        ["heels"]: stateHeel,
+        ["materials"]: { ...stateMaterial, [material[0]]: true },
+        ["heels"]: { ...stateHeel, [`${heel}`]: true },
         variables: {
           ...initialValues["variables"],
           tags: tag,

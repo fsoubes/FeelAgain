@@ -65,6 +65,8 @@ const Shop: NextPage<ShopProps> = ({
   });
 
   useEffect(() => {
+    console.log(tags, size, search, product);
+    console.log(router.query);
     setCurrentPage(parseInt(router.query.page as string));
   }, []);
 
@@ -150,13 +152,11 @@ const Shop: NextPage<ShopProps> = ({
 Shop.getInitialProps = async ({
   query: { page, search, size, tags, sort, product },
 }) => {
-  console.log(page, search, size, tags, sort, product);
-
   return {
     page: parseInt(page as string),
     search: search as string,
     size: size as string | string[],
-    tags: tags as string | string[],
+    tags: tags ? encodeURIComponent(tags as string) : undefined,
     sort: sort as string,
     product: product as string,
   };

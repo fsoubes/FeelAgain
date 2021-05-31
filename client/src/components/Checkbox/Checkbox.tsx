@@ -7,7 +7,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { UpdateFilterAction } from "../../types/filter";
 import { NextRouter } from "next/router";
 import { Irouter } from "../../types/routing";
-import { cleanRoute, getUrl } from "../../utils/getUrl";
+import { getUrl } from "../../utils/getUrl";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,17 +80,31 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
                 (key) => state[key]
               )[0];
 
-              const updateTags =
+              let updateTags =
                 typeof router.query.tags === "object"
                   ? [...(router.query.tags as string[]), event.target.name]
                   : router.query.tags
-                  ? [router.query.tags, event.target.name]
+                  ? /* ? [router.query.tags, event.target.name] */
+                    [
+                      ...(router.query.tags as string).split(","),
+                      event.target.name,
+                    ]
                   : [event.target.name];
+
+              updateTags = updateTags.map((item) =>
+                item === decodeURIComponent(item)
+                  ? encodeURIComponent(item)
+                  : item
+              );
+
+              console.log(router.query.tags, updateTags);
 
               const currentSegment =
                 updateTags.length > 0
-                  ? (updateTags as string[]).filter((item) => item !== prevName)
-                  : event.target.name;
+                  ? (updateTags as string[]).filter(
+                      (item) => item !== encodeURIComponent(prevName)
+                    )
+                  : encodeURIComponent(event.target.name);
 
               const currentRouter: Irouter = {
                 ...router.query,
@@ -101,6 +115,8 @@ const CheckboxForm: React.FC<CheckboxFormProps> = ({
                   ["tags"]: currentSegment,
                 }),
               };
+
+              console.log(currentRouter);
 
               router.push(
                 {
