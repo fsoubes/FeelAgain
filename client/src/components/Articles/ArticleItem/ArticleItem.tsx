@@ -14,7 +14,7 @@ interface ArticleItemProps {
   visual?: String;
 }
 
-const themes = [
+export const themes = [
   "Sport",
   "Voyage",
   "Animaux",

@@ -97,8 +97,9 @@
       }
       .info__fame::before {
         -webkit-font-smoothing: antialiased;
-        content: "\ ";
+        content: "\f06d";
         font-family: FontAwesome;
+        color: darkorange;
       }
       .info__read::before {
         -webkit-font-smoothing: antialiased;
@@ -178,6 +179,14 @@
         word-wrap: break-word;
         white-space: break-spaces;
       }
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    padding: 0;
+    width: 100%;
+    .content {
+      padding: 0;
     }
   }
 }

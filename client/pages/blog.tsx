@@ -7,6 +7,7 @@ import * as Carousel from "../src/components/Carousel/index";
 import { withApollo } from "../src/utils/withApollo";
 import React from "react";
 import Link from "next/link";
+import { themes } from "../src/components/Articles/ArticleItem/ArticleItem";
 
 const Blog: React.FC = ({}) => {
   const { data, loading, variables, fetchMore } = useGetArticlesQuery({
@@ -30,7 +31,24 @@ const Blog: React.FC = ({}) => {
                       style={{
                         backgroundImage: `url(${item.image_url as string})`,
                       }}
-                    ></div>
+                    >
+                      <div className={styles.thumb__overlay}>
+                        <span className={styles.thumb__categories}>
+                          <div className={styles.post__cat}>
+                            {
+                              themes[
+                                Math.floor(
+                                  Math.random() * (themes as string[]).length
+                                )
+                              ]
+                            }
+                          </div>
+                        </span>
+                        <div className={styles.thumb__content}>
+                          <h2>{item.title}</h2>
+                        </div>
+                      </div>
+                    </div>
                   </Link>
                 );
               })}
