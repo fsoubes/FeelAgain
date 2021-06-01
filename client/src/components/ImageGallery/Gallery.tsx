@@ -65,7 +65,7 @@ const Gallery: React.FC<GalleryProps> = ({ img }) => {
     <ImageGallery
       thumbnailPosition={"right"}
       ref={ref}
-      showFullscreenButton={false}
+      showFullscreenButton={true}
       showPlayButton={false}
       showBullets={false}
       showNav={false}

@@ -6,7 +6,7 @@ export const useIsAdmin = () => {
   const { data, loading } = useUserRoleQuery();
   const router = useRouter();
   useEffect(() => {
-    if (!loading && !data?.userRole) {
+    if (!data?.userRole) {
       router.push("/404");
     }
   }, [loading, data, router]);

@@ -6,6 +6,31 @@ import { Blog, BlogModel } from "../entities/Blog";
 import { BasketModel } from "../entities/Basket";
 import { NewsletterModel } from "../entities/Newsletter";
 import { ShoesModel } from "./../entities/Shoes";
+import { loremIpsum } from "lorem-ipsum";
+
+const photos = [
+  "/blog/photo-1556638608-8c4f8d1023ea.jpg",
+  "/blog/photo-1451755032734-ada8d61ecf2f.jpg",
+  "/blog/photo-1458560871784-56d23406c091.jpg",
+  "/blog/photo-1501183007986-d0d080b147f9.jpg",
+  "/blog/photo-1501612780327-45045538702b.jpg",
+  "/blog/photo-1518112390430-f4ab02e9c2c8.jpg",
+  "/blog/photo-1519638399535-1b036603ac77.jpg",
+  "/blog/photo-1524779709304-40b5a3560c60.jpg",
+  "/blog/photo-1526336024174-e58f5cdd8e13.jpg",
+  "/blog/photo-1527603815363-e79385e0747e.jpg",
+  "/blog/photo-1568639869881-a60b8da490b2.jpg",
+  "/blog/photo-1569591159212-b02ea8a9f239.jpg",
+  "/blog/photo-1581833971358-2c8b550f87b3.jpg",
+  "/blog/photo-1582148405586-fb5af4396bda.jpg",
+  "/blog/photo-1585664811087-47f65abbad64.jpg",
+  "/blog/photo-1588351829783-6edb9bd6af6a.jpg",
+  "/blog/photo-1589131489228-8cf7c794dcd3.jpg",
+  "/blog/photo-1601231249063-4590d27e9eba.jpg",
+  "/blog/photo-1603217192634-61068e4d4bf9.jpg",
+  "/blog/photo-1622121568068-03295de7438a.jpg",
+  "/blog/photo-1622182295588-ae59b9427560.jpg",
+];
 
 export async function seedDataBase() {
   const newsletter = new NewsletterModel({
@@ -139,469 +164,1061 @@ export async function seedDataBase() {
 
   await BlogModel.create(([
     {
-      title: "DYSPEPSIA HEADACHE",
-      description: "Restrict L Ext Iliac Vein w Intralum Dev, Perc",
-      image_url: "http://dummyimage.com/138x214.png/ff4444/ffffff",
-      article: "Lipidoses",
+      pouet: "DYSPEPSIA HEADACHE",
+      title: "Restrict L Ext Iliac Vein w Intralum Dev, Perc",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/138x214.png/ff4444/ffffff",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Lipidoses",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Treatment Set TS350394",
-      description: "Drainage of Left Lacrimal Bone, Perc Endo Approach, Diagn",
-      image_url: "http://dummyimage.com/188x190.png/cc0000/ffffff",
-      article: "Peripheral T cell lymphoma, spleen",
+      pouet: "Treatment Set TS350394",
+      title: "Drainage of Left Lacrimal Bone, Perc Endo Approach, Diagn",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/188x190.png/cc0000/ffffff",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Peripheral T cell lymphoma, spleen",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Healing",
-      description:
-        "Insert of Intralum Dev into R Innom Vein, Perc Endo Approach",
-      image_url: "http://dummyimage.com/189x221.bmp/dddddd/000000",
-      article: "Mixed hearing loss, unilateral",
+      pouet: "Healing",
+      title: "Insert of Intralum Dev into R Innom Vein, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/189x221.bmp/dddddd/000000",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Mixed hearing loss, unilateral",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Trout",
-      description: "Supplement R Verteb Vein with Nonaut Sub, Open Approach",
-      image_url: "http://dummyimage.com/180x149.bmp/5fa2dd/ffffff",
-
-      article: "Abscess of salivary gland",
+      pouet: "Trout",
+      title: "Supplement R Verteb Vein with Nonaut Sub, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/180x149.bmp/5fa2dd/ffffff",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Abscess of salivary gland",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Naltrexone Hydrochloride",
-      description: "Change Packing Material on Left Hand",
-      image_url: "http://dummyimage.com/127x172.png/ff4444/ffffff",
+      pouet: "Naltrexone Hydrochloride",
+      title: "Change Packing Material on Left Hand",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/127x172.png/ff4444/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Need for prophylactic vaccination and inoculation against tuberculosis [BCG]",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Bisoprolol Fumarate",
-      description: "Bypass Gastric Vein to Low Vein w Synth Sub, Open",
-      image_url: "http://dummyimage.com/186x136.jpg/ff4444/ffffff",
+      pouet: "Bisoprolol Fumarate",
+      title: "Bypass Gastric Vein to Low Vein w Synth Sub, Open",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/186x136.jpg/ff4444/ffffff",
 
-      article: "Open fracture of surgical neck of humerus",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Open fracture of surgical neck of humerus",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "CataractClear",
-      description: "Insertion of Ext Fix into L Humeral Head, Open Approach",
-      image_url: "http://dummyimage.com/113x143.jpg/cc0000/ffffff",
+      pouet: "CataractClear",
+      title: "Insertion of Ext Fix into L Humeral Head, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/113x143.jpg/cc0000/ffffff",
 
-      article: "Other degenerative disorders of globe",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Other degenerative disorders of globe",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Health Mart Pharmacy Hydrocortisone",
-      description: "Supplement Right Axilla with Synth Sub, Open Approach",
-      image_url: "http://dummyimage.com/240x111.bmp/cc0000/ffffff",
+      pouet: "Health Mart Pharmacy Hydrocortisone",
+      title: "Supplement Right Axilla with Synth Sub, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/240x111.bmp/cc0000/ffffff",
 
-      article: "Pulp degeneration",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Pulp degeneration",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Alcohol Prep Pads",
-      description: "Drainage of Jejunum, Open Approach, Diagnostic",
-      image_url: "http://dummyimage.com/181x110.png/ff4444/ffffff",
+      pouet: "Alcohol Prep Pads",
+      title: "Drainage of Jejunum, Open Approach, Diagnostic",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/181x110.png/ff4444/ffffff",
 
-      article: "Benign neoplasm of lymph nodes",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Benign neoplasm of lymph nodes",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "equate daytime nitetime",
-      description:
-        "Dilate of R Ant Tib Art with 4+ Intralum Dev, Open Approach",
-      image_url: "http://dummyimage.com/131x242.png/dddddd/000000",
+      pouet: "equate daytime nitetime",
+      title: "Dilate of R Ant Tib Art with 4+ Intralum Dev, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/131x242.png/dddddd/000000",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Deep necrosis of underlying tissues [deep third degree] with loss of a body part, of chin",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "PREVNAR 13",
-      description: "Drainage of Right Choroid with Drain Dev, Perc Approach",
-      image_url: "http://dummyimage.com/248x211.bmp/dddddd/000000",
+      pouet: "PREVNAR 13",
+      title: "Drainage of Right Choroid with Drain Dev, Perc Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/248x211.bmp/dddddd/000000",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Mechanical failure of instrument or apparatus during unspecified procedure",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Venlafaxine Hydrochloride",
-      description: "Control Bleeding in Right Upper Arm, Perc Endo Approach",
-      image_url: "http://dummyimage.com/117x176.bmp/dddddd/000000",
+      pouet: "Venlafaxine Hydrochloride",
+      title: "Control Bleeding in Right Upper Arm, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/117x176.bmp/dddddd/000000",
 
-      article: "Mild nonproliferative diabetic retinopathy",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Mild nonproliferative diabetic retinopathy",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Fresh Baby Scent Soothing Jelly",
-      description:
-        "Supplement R Foot Muscle with Autol Sub, Perc Endo Approach",
-      image_url: "http://dummyimage.com/144x187.png/dddddd/000000",
+      pouet: "Fresh Baby Scent Soothing Jelly",
+      title: "Supplement R Foot Muscle with Autol Sub, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/144x187.png/dddddd/000000",
 
-      article: "Oligohydramnios, antepartum condition or complication",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Oligohydramnios, antepartum condition or complication",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "ShopRite Pain Relief PM",
-      description:
-        "Supplement L Glenoid Cav with Autol Sub, Perc Endo Approach",
-      image_url: "http://dummyimage.com/242x138.png/cc0000/ffffff",
+      pouet: "ShopRite Pain Relief PM",
+      title: "Supplement L Glenoid Cav with Autol Sub, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/242x138.png/cc0000/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Spontaneous abortion, complicated by metabolic disorder, complete",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Degree Girl Just Dance",
-      description: "Occlusion R Ext Jugular Vein w Extralum Dev, Perc Endo",
-      image_url: "http://dummyimage.com/239x164.bmp/cc0000/ffffff",
+      pouet: "Degree Girl Just Dance",
+      title: "Occlusion R Ext Jugular Vein w Extralum Dev, Perc Endo",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/239x164.bmp/cc0000/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Infections of nipple associated with childbirth, postpartum condition or complication",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Zarontin",
-      description: "Dilation of L Axilla Art with Intralum Dev, Perc Approach",
-      image_url: "http://dummyimage.com/141x236.png/cc0000/ffffff",
+      pouet: "Zarontin",
+      title: "Dilation of L Axilla Art with Intralum Dev, Perc Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/141x236.png/cc0000/ffffff",
 
-      article: "Injury to trigeminal nerve",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Injury to trigeminal nerve",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "VUMON",
-      description: "Bypass R Axilla Art to L Extracran Art w Autol Art, Open",
-      image_url: "http://dummyimage.com/150x115.bmp/5fa2dd/ffffff",
+      pouet: "VUMON",
+      title: "Bypass R Axilla Art to L Extracran Art w Autol Art, Open",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/150x115.bmp/5fa2dd/ffffff",
 
-      article: "Benign neoplasm of rectum and anal canal",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Benign neoplasm of rectum and anal canal",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "TOMMY GIRL ANTIPERSPIRANT",
-      description: "Revision of Nonaut Sub in T-lum Jt, Perc Endo Approach",
-      image_url: "http://dummyimage.com/219x236.bmp/cc0000/ffffff",
+      pouet: "TOMMY GIRL ANTIPERSPIRANT",
+      title: "Revision of Nonaut Sub in T-lum Jt, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/219x236.bmp/cc0000/ffffff",
 
-      article: "Closed dislocation of finger, unspecified part",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Closed dislocation of finger, unspecified part",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "ciprofloxacin",
-      description: "Release Right Kidney, Percutaneous Approach",
-      image_url: "http://dummyimage.com/218x134.jpg/dddddd/000000",
+      pouet: "ciprofloxacin",
+      title: "Release Right Kidney, Percutaneous Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/218x134.jpg/dddddd/000000",
 
-      article: "Infection of tracheostomy",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Infection of tracheostomy",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Doxazosin",
-      description: "Removal of Synth Sub from C-thor Jt, Open Approach",
-      image_url: "http://dummyimage.com/201x168.jpg/ff4444/ffffff",
+      pouet: "Doxazosin",
+      title: "Removal of Synth Sub from C-thor Jt, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/201x168.jpg/ff4444/ffffff",
 
-      article: "Chronic total occlusion of coronary artery",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Chronic total occlusion of coronary artery",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Metoprolol Tartrate",
-      description: "Excision of Lower Back, Open Approach, Diagnostic",
-      image_url: "http://dummyimage.com/230x181.png/ff4444/ffffff",
+      pouet: "Metoprolol Tartrate",
+      title: "Excision of Lower Back, Open Approach, Diagnostic",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/230x181.png/ff4444/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Combinations of opioid type drug with any other drug dependence, episodic",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "good sense antacid",
-      description: "Extirpation of Matter from Nasal Septum, Perc Approach",
-      image_url: "http://dummyimage.com/234x168.jpg/cc0000/ffffff",
+      pouet: "good sense antacid",
+      title: "Extirpation of Matter from Nasal Septum, Perc Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/234x168.jpg/cc0000/ffffff",
 
-      article: "Myogenic ptosis",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Myogenic ptosis",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Kids Crest",
-      description: "Drainage of Cul-de-sac with Drainage Device, Open Approach",
-      image_url: "http://dummyimage.com/100x231.png/5fa2dd/ffffff",
+      pouet: "Kids Crest",
+      title: "Drainage of Cul-de-sac with Drainage Device, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/100x231.png/5fa2dd/ffffff",
 
-      article: "Wrist drop (acquired)",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Wrist drop (acquired)",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Egg Yolk",
-      description: "Replace of Nasal Septum with Synth Sub, Perc Endo Approach",
-      image_url: "http://dummyimage.com/103x250.jpg/cc0000/ffffff",
+      pouet: "Egg Yolk",
+      title: "Replace of Nasal Septum with Synth Sub, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/103x250.jpg/cc0000/ffffff",
 
-      article: "Other specified arthropod-borne viral diseases",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Other specified arthropod-borne viral diseases",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Cover Fx Blemish Treatment Concealer N Deep",
-      description: "Dilate Mid Colic Art, Bifurc, w 3 Drug-elut, Open",
-      image_url: "http://dummyimage.com/139x102.jpg/cc0000/ffffff",
+      pouet: "Cover Fx Blemish Treatment Concealer N Deep",
+      title: "Dilate Mid Colic Art, Bifurc, w 3 Drug-elut, Open",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/139x102.jpg/cc0000/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Tuberculosis of intrathoracic lymph nodes, bacteriological or histological examination not done",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "SHISEIDO THE SKINCARE TINTED MOISTURE PROTECTION",
-      description:
-        "Extirpation of Matter from Left Renal Artery, Open Approach",
-      image_url: "http://dummyimage.com/215x108.bmp/dddddd/000000",
+      pouet: "SHISEIDO THE SKINCARE TINTED MOISTURE PROTECTION",
+      title: "Extirpation of Matter from Left Renal Artery, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/215x108.bmp/dddddd/000000",
 
-      article: "Dermatitis due to unspecified substance taken internally",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Dermatitis due to unspecified substance taken internally",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Cultivated Oat",
-      description: "Excision of Right Ventricle, Percutaneous Approach",
-      image_url: "http://dummyimage.com/130x134.png/ff4444/ffffff",
+      pouet: "Cultivated Oat",
+      title: "Excision of Right Ventricle, Percutaneous Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/130x134.png/ff4444/ffffff",
 
-      article: "Open fracture of C1-C4 level with anterior cord syndrome",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Open fracture of C1-C4 level with anterior cord syndrome",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "SEROQUEL",
-      description: "Occlusion R Up Lobe Bronc w Intralum Dev, Perc Endo",
-      image_url: "http://dummyimage.com/153x215.jpg/cc0000/ffffff",
+      pouet: "SEROQUEL",
+      title: "Occlusion R Up Lobe Bronc w Intralum Dev, Perc Endo",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/153x215.jpg/cc0000/ffffff",
 
-      article: "Tuberculosis of thyroid gland, unspecified",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Tuberculosis of thyroid gland, unspecified",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Alprazolam",
-      description: "Supplement L Temporal Bone w Autol Sub, Perc Endo",
-      image_url: "http://dummyimage.com/130x171.bmp/ff4444/ffffff",
+      pouet: "Alprazolam",
+      title: "Supplement L Temporal Bone w Autol Sub, Perc Endo",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/130x171.bmp/ff4444/ffffff",
 
-      article: "Personal history of poisoning, presenting hazards to health",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Personal history of poisoning, presenting hazards to health",
       isPublished: false,
       author: defaultUser._id,
     },
 
     {
-      title: "Isosorbide Dinitrate",
-      description: "Release Right Upper Arm Tendon, Percutaneous Approach",
-      image_url: "http://dummyimage.com/117x193.bmp/cc0000/ffffff",
+      pouet: "Isosorbide Dinitrate",
+      title: "Release Right Upper Arm Tendon, Percutaneous Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/117x193.bmp/cc0000/ffffff",
 
-      article: "Burkitt's tumor or lymphoma, spleen",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Burkitt's tumor or lymphoma, spleen",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title:
+      pouet:
         "TERRACOTTA JOLI TEINT BEAUTIFYING FOUNDATION WITH SUNSCREEN SUN-KISSED, HEALTHY GLOW BROAD SPECTRUM SPF 20 NATURAL",
-      description: "Fluoroscopy of Ileal Diversion Loop using L Osm Contrast",
-      image_url: "http://dummyimage.com/203x157.png/cc0000/ffffff",
+      title: "Fluoroscopy of Ileal Diversion Loop using L Osm Contrast",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/203x157.png/cc0000/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Tuberculosis of lung with cavitation, tubercle bacilli found (in sputum) by microscopy",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Nighttime Sleep Aid",
-      description: "Remove Tissue Expander from Up Extrem Subcu/Fascia, Perc",
-      image_url: "http://dummyimage.com/108x248.jpg/ff4444/ffffff",
+      pouet: "Nighttime Sleep Aid",
+      title: "Remove Tissue Expander from Up Extrem Subcu/Fascia, Perc",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/108x248.jpg/ff4444/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         '"Light-for-dates"without mention of fetal malnutrition, 1,250- 1,499 grams',
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Gianvi",
-      description: "Change Other Device in Brain, External Approach",
-      image_url: "http://dummyimage.com/189x163.png/ff4444/ffffff",
+      pouet: "Gianvi",
+      title: "Change Other Device in Brain, External Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/189x163.png/ff4444/ffffff",
 
-      article: "Illegally induced abortion, complicated by embolism, complete",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Illegally induced abortion, complicated by embolism, complete",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "PURIFIED WATER",
-      description: "Removal of Drain Dev from Tracheobronc Tree, Via Opening",
-      image_url: "http://dummyimage.com/139x181.png/cc0000/ffffff",
+      pouet: "PURIFIED WATER",
+      title: "Removal of Drain Dev from Tracheobronc Tree, Via Opening",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/139x181.png/cc0000/ffffff",
 
-      article: "Nervous system complications from surgically implanted device",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Nervous system complications from surgically implanted device",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Losartan Potassium",
-      description: "Excision of Esophagus, Via Opening, Diagn",
-      image_url: "http://dummyimage.com/101x123.png/5fa2dd/ffffff",
+      pouet: "Losartan Potassium",
+      title: "Excision of Esophagus, Via Opening, Diagn",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/101x123.png/5fa2dd/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Unspecified adverse effect of other drug, medicinal and biological substance",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Banana Boat Deep Tanning Dry SPF 8",
-      description: "Replace R Thumb Phalanx w Autol Sub, Perc Endo",
-      image_url: "http://dummyimage.com/145x196.jpg/5fa2dd/ffffff",
+      pouet: "Banana Boat Deep Tanning Dry SPF 8",
+      title: "Replace R Thumb Phalanx w Autol Sub, Perc Endo",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/145x196.jpg/5fa2dd/ffffff",
 
-      article: "Open wound of nose, unspecified site, complicated",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Open wound of nose, unspecified site, complicated",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Daysee",
-      description: "Dilation of Right Hand Artery, Bifurcation, Open Approach",
-      image_url: "http://dummyimage.com/189x209.bmp/ff4444/ffffff",
+      pouet: "Daysee",
+      title: "Dilation of Right Hand Artery, Bifurcation, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/189x209.bmp/ff4444/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Nonspecific (abnormal) findings on radiological and other examination of abdominal area, including retroperitoneum",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Cyanocobalamin",
-      description: "Removal of Autol Sub from Lum Disc, Perc Endo Approach",
-      image_url: "http://dummyimage.com/140x222.png/5fa2dd/ffffff",
+      pouet: "Cyanocobalamin",
+      title: "Removal of Autol Sub from Lum Disc, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/140x222.png/5fa2dd/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Nephritis and nephropathy, not specified as acute or chronic, with lesion of rapidly progressive glomerulonephritis",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Vineyard Antibacterial Foaming Hand Wash",
-      description:
-        "Drainage of Upper Artery, Percutaneous Approach, Diagnostic",
-      image_url: "http://dummyimage.com/226x248.bmp/dddddd/000000",
+      pouet: "Vineyard Antibacterial Foaming Hand Wash",
+      title: "Drainage of Upper Artery, Percutaneous Approach, Diagnostic",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/226x248.bmp/dddddd/000000",
 
-      article: "Toxoplasmosis of other specified sites",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Toxoplasmosis of other specified sites",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Coppertone ultraGUARD Sunscreen",
-      description: "Removal of Synthetic Substitute from Vas Deferens, Endo",
-      image_url: "http://dummyimage.com/146x212.jpg/dddddd/000000",
+      pouet: "Coppertone ultraGUARD Sunscreen",
+      title: "Removal of Synthetic Substitute from Vas Deferens, Endo",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/146x212.jpg/dddddd/000000",
 
-      article: "Open wound of wrist, complicated",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Open wound of wrist, complicated",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Ciprofloxacin",
-      description: "Restrict Esophagast Junct w Extralum Dev, Perc Endo",
-      image_url: "http://dummyimage.com/155x185.bmp/ff4444/ffffff",
+      pouet: "Ciprofloxacin",
+      title: "Restrict Esophagast Junct w Extralum Dev, Perc Endo",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/155x185.bmp/ff4444/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Amniotic fluid embolism, delivered, with mention of postpartum complication",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Duet DHA",
-      description: "Revision of Synth Sub in L Pelvic Bone, Extern Approach",
-      image_url: "http://dummyimage.com/193x103.jpg/5fa2dd/ffffff",
+      pouet: "Duet DHA",
+      title: "Revision of Synth Sub in L Pelvic Bone, Extern Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/193x103.jpg/5fa2dd/ffffff",
 
-      article: "Hypertrophy of tongue papillae",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Hypertrophy of tongue papillae",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "Amoxicillin and Clavulanate Potassium",
-      description: "Supplement Upper Artery with Synth Sub, Perc Endo Approach",
-      image_url: "http://dummyimage.com/203x190.bmp/dddddd/000000",
+      pouet: "Amoxicillin and Clavulanate Potassium",
+      title: "Supplement Upper Artery with Synth Sub, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/203x190.bmp/dddddd/000000",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Injury to other intra-abdominal organs with open wound into cavity, unspecified intra-abdominal organ",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Bethanechol Chloride",
-      description: "Removal of Int Fix from L Low Femur, Extern Approach",
-      image_url: "http://dummyimage.com/185x116.jpg/ff4444/ffffff",
+      pouet: "Bethanechol Chloride",
+      title: "Removal of Int Fix from L Low Femur, Extern Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/185x116.jpg/ff4444/ffffff",
 
-      article:
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Other noncollision motor vehicle traffic accident injuring unspecified person",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Health Mart fexofenadine hydrochloride",
-      description: "Detachment at Right Thumb, High, Open Approach",
-      image_url: "http://dummyimage.com/163x165.bmp/dddddd/000000",
-      article: "Mechanical loosening of prosthetic joint",
+      pouet: "Health Mart fexofenadine hydrochloride",
+      title: "Detachment at Right Thumb, High, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/163x165.bmp/dddddd/000000",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Mechanical loosening of prosthetic joint",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "POA ANNUA POLLEN",
-      description:
-        "Replacement of R Com Iliac Art with Synth Sub, Open Approach",
-      image_url: "http://dummyimage.com/154x136.png/dddddd/000000",
-      article:
+      pouet: "POA ANNUA POLLEN",
+      title: "Replacement of R Com Iliac Art with Synth Sub, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/154x136.png/dddddd/000000",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Spontaneous abortion, complicated by genital tract and pelvic infection, unspecified",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title:
+      pouet:
         "LOreal Paris Men Expert Vita Lift Daily Moisturizer Sunscreen Broad Spectrum SPF 15",
-      description: "Supplement R Low Leg Muscle w Nonaut Sub, Perc Endo",
-      image_url: "http://dummyimage.com/103x242.bmp/cc0000/ffffff",
-      article: "Pulmonary alveolar proteinosis",
+      title: "Supplement R Low Leg Muscle w Nonaut Sub, Perc Endo",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/103x242.bmp/cc0000/ffffff",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Pulmonary alveolar proteinosis",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Phenobarbital",
-      description: "Revise Infusion Dev in R Metacarpocarp Jt, Extern",
-      image_url: "http://dummyimage.com/160x122.jpg/ff4444/ffffff",
-      article: "Open fracture of first cervical vertebra",
+      pouet: "Phenobarbital",
+      title: "Revise Infusion Dev in R Metacarpocarp Jt, Extern",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/160x122.jpg/ff4444/ffffff",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Open fracture of first cervical vertebra",
       isPublished: true,
       author: defaultUser._id,
     },
     {
-      title: "California Mugwort",
-      description: "Replace of R Mandible with Nonaut Sub, Perc Endo Approach",
-      image_url: "http://dummyimage.com/183x196.bmp/5fa2dd/ffffff",
-      article: "Closed fracture of six ribs",
+      pouet: "California Mugwort",
+      title: "Replace of R Mandible with Nonaut Sub, Perc Endo Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/183x196.bmp/5fa2dd/ffffff",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2: "Closed fracture of six ribs",
       isPublished: false,
       author: defaultUser._id,
     },
     {
-      title: "Proactiv",
-      description: "Bypass L Atrium to R Pulm Art with Autol Vn, Open Approach",
-      image_url: "http://dummyimage.com/153x199.jpg/5fa2dd/ffffff",
-      article:
+      pouet: "Proactiv",
+      title: "Bypass L Atrium to R Pulm Art with Autol Vn, Open Approach",
+      image_url: photos[Math.floor(Math.random() * photos.length)],
+      test: "http://dummyimage.com/153x199.jpg/5fa2dd/ffffff",
+      article: loremIpsum({
+        count: 6, // Number of "words", "sentences", or "paragraphs"
+        format: "plain", // "plain" or "html"
+        paragraphLowerBound: 3, // Min. number of sentences per paragraph.
+        paragraphUpperBound: 7, // Max. number of sentences per paragarph.
+        random: Math.random, // A PRNG function
+        sentenceLowerBound: 5, // Min. number of words per sentence.
+        sentenceUpperBound: 15, // Max. number of words per sentence.
+        suffix: "\n", // Line ending, defaults to "\n" or "\r\n" (win32)
+        units: "paragraphs", // paragraph(s), "sentence(s)", or "word(s)"
+      }),
+      test2:
         "Cardiac catheterization as the cause of abnormal reaction of patient, or of later complication, without mention of misadventure at time of procedure",
       isPublished: true,
       author: defaultUser._id,

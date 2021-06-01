@@ -17,8 +17,8 @@ const Custom404: React.FC = ({}) => {
         <div className={styles.denied__wrapper}>
           <h1>404</h1>
           <h3>
-            LOST IN <span>SPACE</span> FSoWeb Hmm, looks like that page doesn't
-            exist.
+            LOST IN <span>SPACE</span> FeelAgain Hmm, looks like that page
+            doesn't exist.
           </h3>
           <svg
             id={styles.astronaut}

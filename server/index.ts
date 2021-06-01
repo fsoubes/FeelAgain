@@ -16,7 +16,6 @@ import cors from "cors";
 import { Loader } from "./loaders/index";
 // import { seedDataBase } from "./helpers/seedDatabase";
 import { User } from "entities/User";
-import { express as voyagerMiddleware } from "graphql-voyager/middleware";
 require("dotenv").config();
 
 // Constant
@@ -44,7 +43,7 @@ const main = async () => {
         email: "bob@bob.fr",
       });
     } else {
-      /*  await mongoose.connection.db.dropDatabase();
+      /* await mongoose.connection.db.dropDatabase();
       defaultUser = await seedDataBase(); */
       // await mongoose.get("autoIndex");
       console.log("started! ");
@@ -63,8 +62,6 @@ const main = async () => {
         credentials: true,
       })
     );
-
-    app.use("/voyager", voyagerMiddleware({ endpointUrl: "/graphql" }));
 
     app.use(
       session({

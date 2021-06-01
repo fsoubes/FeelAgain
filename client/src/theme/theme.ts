@@ -130,6 +130,11 @@ const options = (dark: boolean): ThemeOptions => {
             height: "100%",
             background: paletteColors.background_secondary,
           },
+
+          ".TopBar_navbar__content__1oFdZ .TopBar_inscription__2NQX8": {
+            borderColor: paletteColors.logo,
+          },
+
           ".Home_articles__container_item__3OBYe": {
             background: paletteColors.background_secondary,
           },

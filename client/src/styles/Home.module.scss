@@ -14,6 +14,10 @@
 }
 
 .home__container {
+  h1 {
+    font-size: 2rem;
+  }
+
   @include tablet() {
     max-width: 90%;
     margin-left: 5%;
@@ -26,10 +30,10 @@
     margin-right: 2%;
   }
 
-  max-width: 60%;
-  margin-left: 20%;
-  margin-right: 20%;
+  padding-left: calc(50% - var(--container-width) / 2) !important;
+  padding-right: calc(50% - var(--container-width) / 2) !important;
   width: 100%;
+
   .home__title {
     margin-bottom: 2rem;
   }
@@ -50,22 +54,33 @@
       margin-bottom: 1rem;
       border-radius: 7px;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       &:hover {
-        -webkit-transform: scale(1.05);
-        -moz-transform: scale(1.05);
-        -o-transform: scale(1.05);
-        -ms-transform: scale(1.05);
-        transform: scale(1.05);
+        -webkit-transform: scale(1.03);
+        -moz-transform: scale(1.03);
+        -o-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+        transform: scale(1.03);
       }
       .articles__container_title {
         display: flex;
         flex-wrap: nowrap;
         flex-direction: column;
         .articles__author {
+          display: flex;
+          justify-content: space-between;
           font-size: 12px;
+          .tag {
+            background-color: #9b59b6 !important;
+            color: #ffffff !important;
+            margin-bottom: 10px;
+            padding: 0 6px;
+            border-radius: 2px;
+          }
         }
-        h3 {
+        h2 {
+          cursor: pointer;
           margin: 0rem;
         }
       }
@@ -81,6 +96,99 @@
           font-weight: bold;
         }
       }
+
+      .articles__image {
+        cursor: pointer;
+        img {
+          width: 100%;
+          display: block;
+          max-width: 100%;
+          max-height: 450px;
+          height: auto;
+          aspect-ratio: auto 1920 / 1080;
+        }
+      }
+
+      .articles__description {
+        display: block;
+
+        p {
+          line-height: 21px;
+          margin: 0 0 10px;
+        }
+        button {
+          padding: 7px 15px;
+          background: black !important;
+          color: white !important;
+          font-size: 12px;
+          display: inline-block;
+          text-align: center;
+          line-height: 21px;
+          border: none;
+          cursor: pointer;
+        }
+      }
     }
+  }
+}
+
+.my__masonry_grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.my__masonry_grid_column {
+  padding-left: 15px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div {
+  /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  margin-bottom: 30px;
+}
+
+.grid__carousel {
+  max-width: 94%;
+  width: 94%;
+  background: white;
+  margin: auto;
+  height: 500px;
+
+  .grid__item {
+    position: relative;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  .grid__item:first-child {
+    float: left;
+    height: 100%;
+    width: 50%;
+  }
+
+  .grid__item:nth-child(2) {
+    width: 50%;
+    float: right;
+    height: calc(50%);
+    margin-right: 0;
+  }
+
+  .grid__item:nth-child(3) {
+    width: calc(25%);
+    float: left;
+    height: calc(50%);
+  }
+
+  .grid__item:nth-child(4) {
+    width: calc(25%);
+    float: left;
+    height: calc(50%);
   }
 }

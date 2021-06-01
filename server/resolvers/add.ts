@@ -27,7 +27,7 @@ export class AddResolver {
             product_id: shoes._id,
             price: parseInt(variants[j].price),
             compare_at: parseInt(variants[j].compare_at_price),
-            quantity: Math.floor(Math.random() * 50) + 1,
+            quantity: Math.floor(Math.random() * 50),
             shoes:shoes._id
           });
           await addVariants.save();

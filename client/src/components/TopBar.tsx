@@ -99,17 +99,6 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
     };
   }, [open, isTabletorMobile]); */
 
-  const menuStyling = !isTabletorMobile
-    ? {
-        notlog: { border: "1px solid white ", borderRadius: "6px" },
-        log: {
-          marginLeft: "1rem",
-          border: "1px solid white ",
-          borderRadius: "6px",
-        },
-      }
-    : {};
-
   const unlogged = (
     <Fragment>
       <Link href="/connexion">
@@ -117,12 +106,26 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
           variant="text"
           color="inherit"
           style={{ marginRight: "0.5rem" }}
+          disableRipple
         >
           Connexion
         </Button>
       </Link>
       <Link href="/inscription">
-        <Button variant="text" color="inherit" style={menuStyling.notlog}>
+        <Button
+          variant="text"
+          color="inherit"
+          className={styles.inscription}
+          style={
+            isTabletorMobile
+              ? {
+                  marginLeft: "1rem",
+                  borderRadius: "6px",
+                }
+              : { display: "inline-block" }
+          }
+          disableRipple
+        >
           Inscription
         </Button>
       </Link>

@@ -169,7 +169,6 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1rem;
   }
 }
 
@@ -356,4 +355,35 @@ header {
 
 .image-gallery-slide-wrapper {
   min-height: 600px;
+}
+
+.image-gallery-slide.center {
+  height: 100vh;
+}
+
+.image-gallery-content {
+  .image-gallery-fullscreen-button {
+    display: none;
+  }
+}
+
+.image-gallery-content.fullscreen {
+  .image-gallery-fullscreen-button {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .image-gallery-content.fullscreen {
+    .image-gallery-slide-wrapper {
+      width: 100%;
+    }
+
+    .image-gallery-image {
+      height: 100vh !important;
+    }
+    .image-gallery-thumbnails {
+      display: none;
+    }
+  }
 }

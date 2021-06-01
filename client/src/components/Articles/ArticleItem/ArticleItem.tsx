@@ -1,6 +1,6 @@
 import React from "react";
-import { useRouter } from "next/router";
-import VoteRating from "../../Votes/VoteRating";
+import Link from "next/link";
+import { Button } from "@material-ui/core";
 
 interface ArticleItemProps {
   title: String;
@@ -9,11 +9,20 @@ interface ArticleItemProps {
   };
   description: String | undefined | null;
   author: String;
-  id: string;
+  id: String;
   ago?: String;
-  totalVoting: number;
-  authRating: String | undefined | null;
+  visual?: String;
 }
+
+const themes = [
+  "Sport",
+  "Voyage",
+  "Animaux",
+  "Mode",
+  "Musique",
+  "Technologie",
+  "Lecture",
+];
 
 const ArticleItem: React.FC<ArticleItemProps> = ({
   title,
@@ -22,27 +31,46 @@ const ArticleItem: React.FC<ArticleItemProps> = ({
   author,
   id,
   ago,
-  totalVoting,
-  authRating,
+  visual,
 }) => {
-  const router = useRouter();
-
   return (
-    <div className={styles.articles__container_item}>
-      <div
-        onClick={() => router.push(`article/${id}`)}
-        style={{ cursor: "pointer", width: "100%" }}
-      >
-        <div className={styles.articles__container_title}>
-          <h3>{title}</h3>
-          <div className={styles.articles__author}>
-            Posted by {author} - {ago}
+    <section
+      className={styles.articles__container_item}
+      style={{ width: "100%" }}
+    >
+      <div className={styles.articles__container_title}>
+        <Link href={`article/${id}`}>
+          <h2>{title}</h2>
+        </Link>
+        <div className={styles.articles__author}>
+          <span>
+            Posté par {author} - {ago}
+          </span>
+          <div className={styles.tag}>
+            {themes[Math.floor(Math.random() * (themes as string[]).length)]}
           </div>
         </div>
-        <div>{description}</div>
       </div>
-      <VoteRating total={totalVoting} authRating={authRating} articleId={id} />
-    </div>
+
+      <div className={styles.articles__image}>
+        <Link href={`article/${id}`}>
+          <img
+            loading="lazy"
+            src={visual as string}
+            width="374"
+            height="211"
+            alt="visual__article"
+          ></img>
+        </Link>
+      </div>
+
+      <div className={styles.articles__description}>
+        <p>{description}</p>
+        <Link href={`article/${id}`}>
+          <Button disableRipple>Lire la suite »</Button>
+        </Link>
+      </div>
+    </section>
   );
 };
 export default ArticleItem;
