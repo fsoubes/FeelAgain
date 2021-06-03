@@ -1,9 +1,9 @@
 export const name = "FeelAgain";
 
 export const sideBarMenu = [
-  { title: "Ajouter", path: "/dashboard/add", icon: "null", sub: [] },
+  { title: "Ajouter Chaussure", path: "/dashboard/add", icon: "null", sub: [] },
   {
-    title: "Modifier",
+    title: "Modifier Chaussure",
     path: "/dashboard/update",
     icon: "null",
     sub: [
@@ -11,6 +11,29 @@ export const sideBarMenu = [
       {
         title: "Dernier ajouts",
         path: "/dashboard/update/latest",
+        icon: "null",
+      },
+    ],
+  },
+  {
+    title: "Ajouter Article",
+    path: "/dashboard/blog/add",
+    icon: "null",
+    sub: [],
+  },
+  {
+    title: "Modifier Article",
+    path: "/dashboard/blog/update",
+    icon: "null",
+    sub: [
+      {
+        title: "Recherche",
+        path: "/dashboard/update/blog/search",
+        icon: "null",
+      },
+      {
+        title: "Dernier ajouts",
+        path: "/dashboard/update/blog/latest",
         icon: "null",
       },
     ],

@@ -2,6 +2,7 @@ import { createMuiTheme, ThemeOptions } from "@material-ui/core";
 
 export const paletteColorsDark = {
   primary: "rgba(13,17,23,0.85)",
+  header: "rgba(13,17,23,0.85)",
   secondary: "#3282b8",
   error: "#E44C65",
   background: "#0d1117",
@@ -14,6 +15,7 @@ export const paletteColorsDark = {
 
 export const paletteColorsLight = {
   primary: "rgba(236,240,245,0.85)",
+  header: "rgba(236,240,245,0.85)",
   secondary: "#ffe0ac",
   error: "#E44C65",
   background: "#ECF0F5",
@@ -126,6 +128,10 @@ const options = (dark: boolean): ThemeOptions => {
     overrides: {
       MuiCssBaseline: {
         "@global": {
+          ".topbar__nav": {
+            background: ` ${paletteColors.header} !important`,
+          },
+
           ".Article_container__article__2aXmw": {
             height: "100%",
             background: paletteColors.background_secondary,

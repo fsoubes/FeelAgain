@@ -165,7 +165,11 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
 
   return (
     <AppBar
-      className={trigger && !isBasket ? classes.hide : classes.show}
+      className={
+        trigger && !isBasket
+          ? `${classes.hide} topbar__nav`
+          : `${classes.show} topbar__nav`
+      }
       position={isBasket ? "fixed" : "sticky"}
     >
       <Toolbar

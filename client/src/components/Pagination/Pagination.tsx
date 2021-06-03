@@ -11,13 +11,19 @@ interface PaginationProps {
   refetch: any;
   total: number;
   page?: number;
+  path?: string;
 }
 
 interface selectedItem {
   selected: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ refetch, total, page }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  refetch,
+  total,
+  page,
+  path,
+}) => {
   const { isMobile } = useResponsive();
   const router = useRouter();
 
@@ -37,7 +43,7 @@ const Pagination: React.FC<PaginationProps> = ({ refetch, total, page }) => {
           pathname: router.pathname,
           query: { ...currentRouter },
         },
-        `/shop${getUrl(currentRouter)}`,
+        `${path}${getUrl(currentRouter)}`,
         { shallow: true }
       );
 
