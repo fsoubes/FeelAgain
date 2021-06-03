@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withApollo } from "../../../utils/withApollo";
 import { useAddArticleMutation } from "../../../generated/graphql";
 import { Box } from "@material-ui/core";
@@ -6,10 +6,15 @@ import { Field, Formik, Form } from "formik";
 import styles from "../../../styles/Dashboard.module.scss";
 import { Button } from "@material-ui/core/";
 import { useRouter } from "next/router";
+import Markdown from "../../../components/Markdown/Markdown";
+import EditAndPreview from "../../../components/Markdown/EditAndPreview";
 
 const Dashboard: React.FC<{}> = ({}) => {
   const router = useRouter();
   const [addArticle] = useAddArticleMutation();
+
+  const [description, setDescription] = useState<string>("");
+
   return (
     <div className={styles.dashboard__container}>
       <div className={styles.dashboard__header}>
@@ -119,6 +124,15 @@ const Dashboard: React.FC<{}> = ({}) => {
                   autoCorrect="off"
                   className={styles.form__register_input}
                 ></Field>
+              </Box>
+              <Box
+                marginBottom={2}
+                marginTop={2}
+                display="flex"
+                flexDirection="column"
+              >
+                <label className={styles.form__register_label}>Article</label>
+                <EditAndPreview />
               </Box>
             </section>
             <Button type="submit" fullWidth variant="contained" color="primary">
