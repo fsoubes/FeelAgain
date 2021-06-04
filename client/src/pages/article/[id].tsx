@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import dynamic from "next/dynamic";
 import { Layout } from "../../components/Layout";
 import { useGetSingleArticleQuery } from "../../generated/graphql";
 import { withApollo } from "../../utils/withApollo";
@@ -8,6 +9,13 @@ import VoteRating from "../../components/Votes/VoteRating";
 import styles from "../../styles/Article.module.scss";
 import { isServer } from "../../utils/isServer";
 import { Link } from "@material-ui/core";
+
+const MarkdownSanitize = dynamic(
+  () => import("../../components/Markdown/MarkdownSanitize"),
+  {
+    ssr: false,
+  }
+);
 
 interface Props {
   id?: string;
@@ -33,8 +41,9 @@ const Article: NextPage<Props> = ({ id }) => {
       <div
         className={styles.container}
         style={{
-          // backgroundImage: `url( ${data?.getSingleArticle.image_url} )`,
-          backgroundImage: "url(https://i.imgur.com/O3IUbtb.png)",
+          backgroundImage: data?.getSingleArticle.image_back
+            ? `url(${data?.getSingleArticle.image_back})`
+            : "url(https://i.imgur.com/O3IUbtb.png)",
         }}
       >
         <div className={styles.tie__wrapper}>
@@ -101,7 +110,10 @@ const Article: NextPage<Props> = ({ id }) => {
                     ></img>
                   </figure>
                 </div>
-                <p>{data?.getSingleArticle.article}</p>
+                <MarkdownSanitize
+                  isPreview={false}
+                  source={data?.getSingleArticle.article}
+                />
               </article>
             </div>
           </div>

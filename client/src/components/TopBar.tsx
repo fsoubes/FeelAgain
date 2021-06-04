@@ -233,7 +233,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
               </Button>
             </Link>
 
-            <Link href="/topics">
+            <Link href="/marque">
               <Button variant="text" color="inherit" disableRipple>
                 &nbsp;MARQUE
               </Button>

@@ -21,6 +21,8 @@ import { dateToString } from "../helpers/dateToString";
 import { getIntervalBetweenDates } from "../helpers/dateFormater";
 import { voteRating } from "./enum/voteRating";
 import { isUpdoot, votingRes } from "../helpers/updoot";
+import { isAdmin } from "../middlewares/isAdmin";
+import { toDot } from "../helpers/toDot";
 
 @ObjectType()
 class PaginationResponse {
@@ -52,17 +54,17 @@ export class BlogResolver {
   async getArticles(
     @Arg("limit") limit: number,
     @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
-    @Ctx() {  }: MyContext
+    @Ctx() { req }: MyContext
   ): Promise<PaginationResponse | []> {
     try {
       limit = limit ? limit : 10;
-
       let match = {
         ...(cursor && {
           title: {
             $gt: cursor,
           },
         }),
+        ...(!req.session.isAdmin && { is_published: true }),
       };
 
       const cursorOptions = cursor
@@ -102,18 +104,45 @@ export class BlogResolver {
   }
 
   @Mutation(() => Blog)
-  @UseMiddleware(isAuth)
+  @UseMiddleware(isAdmin)
   async addArticle(
     @Arg("blog") blogInput: BlogInput,
     @Ctx() { req }: MyContext
   ): Promise<Blog> {
     try {
-      const article = new BlogModel(({
+      const article = new BlogModel({
         ...blogInput,
         author: req.session.userId,
-      } as unknown) as Blog);
+      });
       await article.save();
+
       return article;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Mutation(() => Blog)
+  @UseMiddleware(isAdmin)
+  async updateArticle(
+    @Arg("blog") blogInput: BlogInput,
+    @Arg("blogId") blogId: string
+  ): Promise<Blog | null> {
+    try {
+      let dotData = toDot(blogInput);
+
+      const updateBlog = await BlogModel.findOneAndUpdate(
+        {
+          _id: blogId,
+        },
+        dotData,
+        {
+          new: true,
+          useFindAndModify: false,
+        }
+      );
+
+      return updateBlog;
     } catch (err) {
       throw err;
     }

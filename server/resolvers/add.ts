@@ -19,7 +19,9 @@ export class AddResolver {
         }
 
         let { images, variants, ...partialObject } = data[i];
-        const shoes = new ShoesModel({ ...partialObject,price: parseInt(partialObject.price,) , is_published:true});
+        const shoes = new ShoesModel({ ...partialObject,price: parseInt(partialObject.price,) ,
+           is_published:true, 
+           tags:partialObject.tags.map((item:any) => item.replace("+", " "))});
 
         for (let j = 0; j < variants.length; j++) {
           const addVariants = new VariantsModel({

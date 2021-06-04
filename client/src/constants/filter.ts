@@ -43,9 +43,9 @@ const mat = [
   "Cuir Imprimé Python",
   "Cuir Métallisé",
   "Cuir Verni",
-  "Cuir+Glitter",
-  "Cuir+Métal",
-  "Cuir+Nubuck",
+  "Cuir Glitter",
+  "Cuir Métal",
+  "Cuir Nubuck",
   "Glitter",
   "Glitter Fin",
   "Nubuck",
@@ -53,11 +53,11 @@ const mat = [
   "Nubuck Façon Python",
   "Nubuck Imprimé",
   "Nubuck Métallisé",
-  "Nubuck Métallisé+Glitter",
-  "Nubuck Python+Glitter",
-  "Nubuck+Glitter",
+  "Nubuck Métallisé Glitter",
+  "Nubuck Python Glitter",
+  "Nubuck Glitter",
   "Suède",
-  "Suède+Glitter",
+  "Suède Glitter",
 ];
 
 const heel = [

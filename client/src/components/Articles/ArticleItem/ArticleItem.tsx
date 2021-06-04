@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@material-ui/core";
+import { themes } from "../../../constants/constants";
 
 interface ArticleItemProps {
   title: String;
@@ -12,17 +13,8 @@ interface ArticleItemProps {
   id: String;
   ago?: String;
   visual?: String;
+  isBlog: Boolean;
 }
-
-export const themes = [
-  "Sport",
-  "Voyage",
-  "Animaux",
-  "Mode",
-  "Musique",
-  "Technologie",
-  "Lecture",
-];
 
 const ArticleItem: React.FC<ArticleItemProps> = ({
   title,
@@ -32,6 +24,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({
   id,
   ago,
   visual,
+  isBlog,
 }) => {
   return (
     <section
@@ -39,7 +32,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({
       style={{ width: "100%" }}
     >
       <div className={styles.articles__container_title}>
-        <Link href={`article/${id}`}>
+        <Link href={isBlog ? `/article/${id}` : `/dashboard/update/blog/${id}`}>
           <h2>{title}</h2>
         </Link>
         <div className={styles.articles__author}>
@@ -53,7 +46,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({
       </div>
 
       <div className={styles.articles__image}>
-        <Link href={`article/${id}`}>
+        <Link href={isBlog ? `/article/${id}` : `/dashboard/update/blog/${id}`}>
           <img
             loading="lazy"
             src={visual as string}
@@ -63,10 +56,9 @@ const ArticleItem: React.FC<ArticleItemProps> = ({
           ></img>
         </Link>
       </div>
-
       <div className={styles.articles__description}>
         <p>{description}</p>
-        <Link href={`article/${id}`}>
+        <Link href={isBlog ? `/article/${id}` : `/dashboard/update/blog/${id}`}>
           <Button disableRipple>Lire la suite »</Button>
         </Link>
       </div>

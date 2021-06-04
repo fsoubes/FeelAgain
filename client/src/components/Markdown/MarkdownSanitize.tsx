@@ -13,17 +13,23 @@ import styles from "../../styles/MarkdownRender.module.scss";
 
 interface RenderSanitizeProps {
   source: any;
+  isPreview: boolean;
 }
 
-const RenderSanitize: React.FC<RenderSanitizeProps> = ({ source }) => {
+const RenderSanitize: React.FC<RenderSanitizeProps> = ({
+  source,
+  isPreview,
+}) => {
   const clickHandler = (e: any) => {
     let el = e.target;
     if (el.parentNode.className === "youtube") {
       let newiframe = document.createElement("iframe");
-      newiframe.src = `https://www.youtube.com/embed/${el.parentNode.id}`;
-      newiframe.width = "420";
-      newiframe.height = "315";
-      newiframe.frameBorder = "0";
+      newiframe.src = `https://www.youtube.com/embed/${el.parentNode.id}?feature=oembed`;
+      newiframe.width = "1120";
+      newiframe.height = "686";
+      newiframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      newiframe.allowFullscreen = true;
       let parentDiv = el.parentNode;
       let childDiv = parentDiv.firstChild;
       parentDiv.replaceChild(newiframe, childDiv);
@@ -130,9 +136,7 @@ const RenderSanitize: React.FC<RenderSanitizeProps> = ({ source }) => {
         background: "white",
         overflowWrap: "break-word",
         wordBreak: "break-word",
-        padding: "20px",
-        /* maxHeight: isPreview ? "350px" : "",
-        overflow: isPreview ? "auto" : "", */
+        padding: isPreview ? "20px" : "",
         fontFamily: "Roboto",
       }}
     >
@@ -141,4 +145,4 @@ const RenderSanitize: React.FC<RenderSanitizeProps> = ({ source }) => {
   );
 };
 
-export default RenderSanitize;
+export default React.memo(RenderSanitize);

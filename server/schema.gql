@@ -36,7 +36,7 @@ type Blog {
   positiveRating: Float!
   social: [String!]!
   source: [String!]!
-  tags: [String!]!
+  tags: String
   title: String!
   totalVoting: Float!
   updatedAt: DateTime!
@@ -50,7 +50,7 @@ input BlogInput {
   isPublished: Boolean
   social: [String!]
   source: [String!]
-  tags: [String!]
+  tags: String
   title: String!
 }
 
@@ -155,6 +155,7 @@ type Mutation {
   register(user: UserRegister!): UserResponse!
   removeCartItem(basketId: String!, itemId: String!, quantity: Float!): String!
   removeShoe(shoeId: String!): String!
+  sendNewsletter: Boolean!
   updateCartItem(itemId: String!, quantity: Float!): String!
   updateImage(image: ImageInput!, imageId: String!): Images!
   updateShoe(shoeId: String!, shoes: ShoesInput!): Shoes!
@@ -186,7 +187,6 @@ type Orders {
   payment_method: PaymentType!
   products: [CartItem!]!
   status: String!
-  test: StatusOrder!
   timeline: Float!
   total: Float!
   tracking: String
@@ -220,6 +220,13 @@ enum PaymentType {
   Stripe
 }
 
+type Purchases {
+  _id: ObjectId!
+  comment: Comments
+  owner: User!
+  product: Variants!
+}
+
 type Query {
   getAllBasket: [Basket!]!
   getAllOrderProducts: [CartItem!]!
@@ -232,6 +239,7 @@ type Query {
   getNewsletter: Newsletter!
   getOrder(orderId: String!): Orders!
   getOrders: [Orders!]!
+  getPurchases: [Purchases!]!
   getReview(shoesId: String!): Comments!
   getShoesByName(search: String!): SearchResults!
   getSingleArticle(articleId: ObjectId!): Blog!
@@ -293,14 +301,6 @@ input ShoesInputFilter {
   product: String
   size: [Float!]
   tags: [String!]
-}
-
-"""status of order"""
-enum StatusOrder {
-  Annule
-  Attente
-  Envoye
-  Livre
 }
 
 type User {

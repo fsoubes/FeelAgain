@@ -31,9 +31,11 @@ export const Carousel: React.FC<CarouselProps> = forwardRef(
     }, [options]);
 
     return (
-      <div className="glide" ref={sliderRef}>
+      <div className="glide" style={{ marginTop: "2rem" }} ref={sliderRef}>
         <div className="glide__track" data-glide-el="track">
-          <ul className="glide__slides">{children}</ul>
+          <ul style={{ margin: "0" }} className="glide__slides">
+            {children}
+          </ul>
         </div>
         {!isTabletorMobile && (
           <div className="glide__arrows" data-glide-el="controls">

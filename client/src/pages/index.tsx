@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import * as Carousel from "../components/Carousel/index";
 import RatingRes from "../components/StarRating/RatingRes";
 import useResponsive from "../utils/useResponsive";
+import { useRouter } from "next/router";
 
 type Review = {
   src: string;
@@ -55,6 +56,7 @@ const carouselReviews: Review[] = [
 ];
 
 const Home: React.FC = ({}) => {
+  const router = useRouter();
   const { isTabletorMobile } = useResponsive();
   const carousel = Array(isTabletorMobile ? 4 : 2)
     .fill(null)
@@ -150,12 +152,19 @@ const Home: React.FC = ({}) => {
               <h2>FeelAgain</h2>
               <div className={styles.presentation__line}></div>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Obcaecati commodi dolore amet odio possimus necessitatibus
-                excepturi laudantium voluptatibus sunt nam aliquid, alias
-                expedita velit omnis sequi fugiat a eligendi nemo!
+                Nous proposons des chaussures en éditions limitées.
+                <strong>&nbsp;Ressentez&nbsp;</strong> différement chaque saison
+                avec
+                <strong>&nbsp;FeelAgain</strong>
               </p>
-              <Button className={styles.action} disableRipple>
+              <p>
+                Découvrez nos <strong>chaussures</strong>.
+              </p>
+              <Button
+                className={styles.action}
+                disableRipple
+                onClick={() => router.push("/shop")}
+              >
                 LA BOUTIQUE
               </Button>
             </div>
@@ -174,8 +183,8 @@ const Home: React.FC = ({}) => {
             </div>
           </div>
           <div className={styles.collection}>
-            <h2>Shoes Collection</h2>
-            <h4>Summer 2021</h4>
+            <h2>Nouvelle Collection</h2>
+            <h4>Été 2021</h4>
             <div className={styles.collection__grid}>
               <div className={styles.item__1}>
                 <div className={styles.slide}>
@@ -216,12 +225,13 @@ const Home: React.FC = ({}) => {
               <p>
                 La marque propose une gamme de chaussures. Ils vous garantissent
                 protection, résistance et confort. Cette nouvelle marque devient
-                LA référence auprès des professionnels.
+                <strong>&nbsp;LA</strong> référence auprès des professionnels.
               </p>
             </div>
             <Button
               className={styles.action}
-              style={{ margin: "5px", padding: "10px 15px" }}
+              style={{ marginBottom: "1rem" }}
+              onClick={() => router.push("/marque")}
             >
               Lire La Suite
             </Button>

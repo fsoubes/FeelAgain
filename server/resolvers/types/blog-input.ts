@@ -11,8 +11,11 @@ export class BlogInput {
   @Field({ nullable: true })
   image_url?: string;
 
-  @Field(() => [String], { nullable: true })
-  tags: [string];
+  @Field({ nullable: true })
+  image_back?: string;
+
+  @Field({ nullable: true })
+  tags: string;
 
   @Field(() => [String], { nullable: true })
   source?: string[];
@@ -24,5 +27,5 @@ export class BlogInput {
   article?: string;
 
   @Field({ nullable: true })
-  isPublished?: boolean;
+  is_published?: boolean;
 }

@@ -1,4 +1,4 @@
-import { Initializer } from "../types/dashboard";
+import { IBlog, Initializer } from "../types/dashboard";
 
 const size = [35, 36, 37, 38, 39, 40, 41, 42];
 
@@ -27,4 +27,14 @@ export const intialValues: Initializer = {
     };
   }),
   is_published: false,
+};
+
+export const initialValuesBlog: IBlog = {
+  title: "",
+  image_url: "",
+  image_back: "",
+  tags: "",
+  source: [],
+  social: [],
+  isPublished: false,
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { NextPage } from "next";
 import ShoesForm from "../../../components/Dashboard/ShoesForm";
 import SubTabs from "../../../components/SubTabs/SubTabs";
-import { Shoes, useGetDashboardShoesQuery } from "../../../generated/graphql";
+import { useGetDashboardShoesQuery } from "../../../generated/graphql";
 import styles from "../../../styles/Dashboard.module.scss";
 import { paletteShoes } from "../../../constants/constants";
 

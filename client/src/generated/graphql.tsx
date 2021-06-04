@@ -273,11 +273,12 @@ export type Blog = {
   updatedAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   image_url?: Maybe<Scalars['String']>;
-  tags: Array<Scalars['String']>;
+  image_back?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   source: Array<Scalars['String']>;
   social: Array<Scalars['String']>;
   article?: Maybe<Scalars['String']>;
-  isPublished?: Maybe<Scalars['Boolean']>;
+  is_published?: Maybe<Scalars['Boolean']>;
   positiveRating: Scalars['Float'];
   totalVoting: Scalars['Float'];
   authRating?: Maybe<Scalars['String']>;
@@ -334,6 +335,7 @@ export type Mutation = {
   login: UserResponse;
   logout: Scalars['Boolean'];
   addArticle: Blog;
+  updateArticle: Blog;
   ratingReview: Scalars['Boolean'];
   addShoes: Scalars['Boolean'];
   addRelation: Scalars['Boolean'];
@@ -436,6 +438,12 @@ export type MutationLoginArgs = {
 
 
 export type MutationAddArticleArgs = {
+  blog: BlogInput;
+};
+
+
+export type MutationUpdateArticleArgs = {
+  blogId: Scalars['String'];
   blog: BlogInput;
 };
 
@@ -556,11 +564,12 @@ export type BlogInput = {
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   image_url?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Scalars['String']>>;
+  image_back?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   source?: Maybe<Array<Scalars['String']>>;
   social?: Maybe<Array<Scalars['String']>>;
   article?: Maybe<Scalars['String']>;
-  isPublished?: Maybe<Scalars['Boolean']>;
+  is_published?: Maybe<Scalars['Boolean']>;
 };
 
 export type DetailsInput = {
@@ -580,7 +589,7 @@ export type DetailsInput = {
 
 export type ArticleFragmentFragment = (
   { __typename?: 'Blog' }
-  & Pick<Blog, '_id' | 'title' | 'description' | 'image_url' | 'tags' | 'source' | 'social' | 'article' | 'isPublished' | 'createdAt' | 'updatedAt' | 'totalVoting' | 'authRating'>
+  & Pick<Blog, '_id' | 'title' | 'description' | 'image_url' | 'image_back' | 'tags' | 'source' | 'social' | 'article' | 'is_published' | 'createdAt' | 'updatedAt' | 'totalVoting' | 'authRating'>
   & { author: (
     { __typename?: 'User' }
     & Pick<User, '_id' | 'nickname' | 'email'>
@@ -646,11 +655,12 @@ export type AddArticleMutationVariables = Exact<{
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   image_url?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  tags: Scalars['String'];
   source?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   social?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   article?: Maybe<Scalars['String']>;
-  isPublished?: Maybe<Scalars['Boolean']>;
+  is_published?: Maybe<Scalars['Boolean']>;
+  image_back?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -932,6 +942,28 @@ export type RemoveCartItemMutationVariables = Exact<{
 export type RemoveCartItemMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'removeCartItem'>
+);
+
+export type UpdateArticleMutationVariables = Exact<{
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  image_url?: Maybe<Scalars['String']>;
+  tags: Scalars['String'];
+  source?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  social?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  article?: Maybe<Scalars['String']>;
+  is_published?: Maybe<Scalars['Boolean']>;
+  image_back?: Maybe<Scalars['String']>;
+  blogId: Scalars['String'];
+}>;
+
+
+export type UpdateArticleMutation = (
+  { __typename?: 'Mutation' }
+  & { updateArticle: (
+    { __typename?: 'Blog' }
+    & ArticleFragmentFragment
+  ) }
 );
 
 export type UpdateCartItemMutationVariables = Exact<{
@@ -1369,11 +1401,12 @@ export const ArticleFragmentFragmentDoc = gql`
   title
   description
   image_url
+  image_back
   tags
   source
   social
   article
-  isPublished
+  is_published
   createdAt
   updatedAt
   totalVoting
@@ -1486,9 +1519,9 @@ export const VariantFragmentFragmentDoc = gql`
 }
     `;
 export const AddArticleDocument = gql`
-    mutation AddArticle($title: String!, $description: String, $image_url: String, $tags: [String!], $source: [String!], $social: [String!], $article: String, $isPublished: Boolean) {
+    mutation AddArticle($title: String!, $description: String, $image_url: String, $tags: String!, $source: [String!], $social: [String!], $article: String, $is_published: Boolean, $image_back: String) {
   addArticle(
-    blog: {title: $title, description: $description, image_url: $image_url, tags: $tags, source: $source, social: $social, article: $article, isPublished: $isPublished}
+    blog: {title: $title, description: $description, image_url: $image_url, tags: $tags, source: $source, social: $social, article: $article, is_published: $is_published, image_back: $image_back}
   ) {
     ...ArticleFragment
   }
@@ -1516,7 +1549,8 @@ export type AddArticleMutationFn = Apollo.MutationFunction<AddArticleMutation, A
  *      source: // value for 'source'
  *      social: // value for 'social'
  *      article: // value for 'article'
- *      isPublished: // value for 'isPublished'
+ *      is_published: // value for 'is_published'
+ *      image_back: // value for 'image_back'
  *   },
  * });
  */
@@ -2199,6 +2233,50 @@ export function useRemoveCartItemMutation(baseOptions?: Apollo.MutationHookOptio
 export type RemoveCartItemMutationHookResult = ReturnType<typeof useRemoveCartItemMutation>;
 export type RemoveCartItemMutationResult = Apollo.MutationResult<RemoveCartItemMutation>;
 export type RemoveCartItemMutationOptions = Apollo.BaseMutationOptions<RemoveCartItemMutation, RemoveCartItemMutationVariables>;
+export const UpdateArticleDocument = gql`
+    mutation UpdateArticle($title: String!, $description: String, $image_url: String, $tags: String!, $source: [String!], $social: [String!], $article: String, $is_published: Boolean, $image_back: String, $blogId: String!) {
+  updateArticle(
+    blogId: $blogId
+    blog: {title: $title, description: $description, image_url: $image_url, tags: $tags, source: $source, social: $social, article: $article, is_published: $is_published, image_back: $image_back}
+  ) {
+    ...ArticleFragment
+  }
+}
+    ${ArticleFragmentFragmentDoc}`;
+export type UpdateArticleMutationFn = Apollo.MutationFunction<UpdateArticleMutation, UpdateArticleMutationVariables>;
+
+/**
+ * __useUpdateArticleMutation__
+ *
+ * To run a mutation, you first call `useUpdateArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateArticleMutation, { data, loading, error }] = useUpdateArticleMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *      image_url: // value for 'image_url'
+ *      tags: // value for 'tags'
+ *      source: // value for 'source'
+ *      social: // value for 'social'
+ *      article: // value for 'article'
+ *      is_published: // value for 'is_published'
+ *      image_back: // value for 'image_back'
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useUpdateArticleMutation(baseOptions?: Apollo.MutationHookOptions<UpdateArticleMutation, UpdateArticleMutationVariables>) {
+        return Apollo.useMutation<UpdateArticleMutation, UpdateArticleMutationVariables>(UpdateArticleDocument, baseOptions);
+      }
+export type UpdateArticleMutationHookResult = ReturnType<typeof useUpdateArticleMutation>;
+export type UpdateArticleMutationResult = Apollo.MutationResult<UpdateArticleMutation>;
+export type UpdateArticleMutationOptions = Apollo.BaseMutationOptions<UpdateArticleMutation, UpdateArticleMutationVariables>;
 export const UpdateCartItemDocument = gql`
     mutation UpdateCartItem($itemId: String!, $quantity: Float!) {
   updateCartItem(itemId: $itemId, quantity: $quantity)

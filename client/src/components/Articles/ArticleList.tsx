@@ -8,6 +8,7 @@ interface ArticleListProps {
   styles: {
     readonly [key: string]: string;
   };
+  isBlog?: Boolean;
 }
 
 const breakpointColumnsObj = {
@@ -16,7 +17,11 @@ const breakpointColumnsObj = {
   500: 1,
 };
 
-const ArticleList: React.FC<ArticleListProps> = ({ articles, styles }) => {
+const ArticleList: React.FC<ArticleListProps> = ({
+  articles,
+  styles,
+  isBlog = true,
+}) => {
   const article = articles.map((item) => {
     const startArticle = (item.article as string)
       .split(" ")
@@ -33,6 +38,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles, styles }) => {
         author={item.author.nickname}
         id={item._id}
         ago={item.createdAt}
+        isBlog={isBlog}
       />
     );
   });

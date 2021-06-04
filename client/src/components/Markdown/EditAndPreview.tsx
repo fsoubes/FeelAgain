@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import Markdown from "./Markdown";
 import dynamic from "next/dynamic";
 
@@ -9,14 +9,23 @@ import styles from "../../styles/EditAndPreview.module.scss";
 
 interface EditAndPreviewProps {
   data?: string | undefined;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  article?: string;
+  isPreview?: boolean;
 }
 
-const EditAndPreview: React.FC<EditAndPreviewProps> = ({ data }) => {
-  const [value, setValue] = useState("");
-
+const EditAndPreview: React.FC<EditAndPreviewProps> = ({
+  data,
+  setValue,
+  article,
+  isPreview = false,
+}) => {
   return (
     <Fragment>
-      <Markdown data={data} setValue={setValue} />
+      <Markdown
+        data={data ? data : article ? article : undefined}
+        setValue={setValue}
+      />
       <div className={styles.preview__container}>
         <label>Preview:</label>
         <div className={styles.preview__header}>
@@ -25,7 +34,7 @@ const EditAndPreview: React.FC<EditAndPreviewProps> = ({ data }) => {
           </div>
           <div>FeelAgain</div>
         </div>
-        <MarkdownSanitize source={value} />
+        <MarkdownSanitize isPreview={isPreview} source={article} />
       </div>
     </Fragment>
   );

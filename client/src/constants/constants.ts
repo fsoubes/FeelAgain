@@ -53,6 +53,16 @@ export const productType = [
   "Sandales",
 ];
 
+export const themes = [
+  "Sport",
+  "Voyage",
+  "Animaux",
+  "Mode",
+  "Musique",
+  "Technologie",
+  "Lecture",
+];
+
 export const paletteShoes = [
   "Blanc",
   "Bronze",
@@ -77,9 +87,9 @@ export const matShoes = [
   "Cuir Imprimé Python",
   "Cuir Métallisé",
   "Cuir Verni",
-  "Cuir+Glitter",
-  "Cuir+Métal",
-  "Cuir+Nubuck",
+  "Cuir Glitter",
+  "Cuir Métal",
+  "Cuir Nubuck",
   "Glitter",
   "Glitter Fin",
   "Nubuck",
@@ -87,11 +97,11 @@ export const matShoes = [
   "Nubuck Façon Python",
   "Nubuck Imprimé",
   "Nubuck Métallisé",
-  "Nubuck Métallisé+Glitter",
-  "Nubuck Python+Glitter",
-  "Nubuck+Glitter",
+  "Nubuck Métallisé Glitter",
+  "Nubuck Python Glitter",
+  "Nubuck Glitter",
   "Suède",
-  "Suède+Glitter",
+  "Suède Glitter",
 ];
 
 export const heelsShoes = [

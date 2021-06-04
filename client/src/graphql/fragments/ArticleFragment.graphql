@@ -3,11 +3,12 @@ fragment ArticleFragment on Blog {
   title
   description
   image_url
+  image_back
   tags
   source
   social
   article
-  isPublished
+  is_published
   createdAt
   updatedAt
   totalVoting

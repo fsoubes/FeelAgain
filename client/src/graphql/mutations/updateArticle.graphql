@@ -1,0 +1,29 @@
+mutation UpdateArticle(
+  $title: String!
+  $description: String
+  $image_url: String
+  $tags: String!
+  $source: [String!]
+  $social: [String!]
+  $article: String
+  $is_published: Boolean
+  $image_back: String
+  $blogId: String!
+) {
+  updateArticle(
+    blogId: $blogId
+    blog: {
+      title: $title
+      description: $description
+      image_url: $image_url
+      tags: $tags
+      source: $source
+      social: $social
+      article: $article
+      is_published: $is_published
+      image_back: $image_back
+    }
+  ) {
+    ...ArticleFragment
+  }
+}

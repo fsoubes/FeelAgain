@@ -1,5 +1,5 @@
 // React
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 
 // Markdown
@@ -91,17 +91,21 @@ const Markdown: React.FC<MarkdownProps> = ({ data = null, setValue }) => {
     instance.createToolbar();
   }, []);
 
+  const autofocusNoSpellcheckerOptions = useMemo(() => {
+    return {
+      autofocus: false,
+      spellChecker: false,
+      minHeight: "60px",
+    };
+  }, []);
+
   return (
     <SimpleMDE
       // extraKeys={extraKeys}
       onChange={handleChange}
       getMdeInstance={addToolBar}
       value={data ? data : undefined}
-      options={{
-        autofocus: true,
-        spellChecker: false,
-        minHeight: "60px",
-      }}
+      options={autofocusNoSpellcheckerOptions}
     />
   );
 };

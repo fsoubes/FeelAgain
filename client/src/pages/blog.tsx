@@ -7,7 +7,7 @@ import * as Carousel from "../components/Carousel/index";
 import { withApollo } from "../utils/withApollo";
 import React from "react";
 import Link from "next/link";
-import { themes } from "../components/Articles/ArticleItem/ArticleItem";
+import { themes } from "../constants/constants";
 
 const Blog: React.FC = ({}) => {
   const { data, loading, variables, fetchMore } = useGetArticlesQuery({
@@ -65,9 +65,6 @@ const Blog: React.FC = ({}) => {
         ) : (
           <>
             <section>
-              <h1 style={{ textAlign: "center", marginTop: "2rem" }}>
-                Dernier articles
-              </h1>
               <Carousel.Component
                 options={{
                   perView: 1,

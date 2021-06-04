@@ -28,9 +28,13 @@ export class Blog {
   @Property()
   image_url?: string;
 
-  @Field(() => [String])
-  @Property({ type: () => [String], default: [] })
-  tags?: string[];
+  @Field({ nullable: true })
+  @Property()
+  image_back?: string;
+
+  @Field({ nullable: true })
+  @Property()
+  tags: string;
 
   @Field(() => [String])
   @Property({ type: () => [String], default: [] })
@@ -46,7 +50,7 @@ export class Blog {
 
   @Field({ nullable: true })
   @Property()
-  isPublished?: boolean;
+  is_published?: boolean;
 
   @Field((_type) => Number)
   @Property({ default: 0 })

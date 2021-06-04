@@ -11,6 +11,18 @@ export interface Variants {
   price: number;
 }
 
+export interface IBlog {
+  _id: string;
+  title: string;
+  image_url: string;
+  image_back: string;
+  tags: string;
+  source: string[];
+  social: string[];
+  isPublished: boolean;
+  article: string;
+}
+
 export interface Initializer {
   _id: string;
   title: string;
@@ -44,6 +56,11 @@ export interface GeneralFormProps {
 export interface ShoesFormProps {
   current: number;
   fetchValues?: Initializer;
+}
+
+export interface BlogFormProps {
+  title: string;
+  fetchValues?: IBlog;
 }
 
 export interface Relation {
