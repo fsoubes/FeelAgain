@@ -80,8 +80,6 @@ export const cleanRoute = (
     }),
   };
 
-
-
   router.push(
     {
       pathname: router.pathname,

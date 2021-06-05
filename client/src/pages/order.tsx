@@ -15,6 +15,11 @@ const Order: React.FC<OrderProps> = ({}) => {
         {data?.getOrders.map((item, index) => {
           return <OrderList key={index} data={item as Orders} />;
         })}
+        {data?.getOrders.length === 0 && (
+          <h2 style={{ marginBottom: "2rem", marginTop: "1rem" }}>
+            Vous n'avez passé aucune commande
+          </h2>
+        )}
       </div>
     </Layout>
   );

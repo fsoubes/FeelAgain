@@ -617,7 +617,7 @@ export type ShoesBrowseFragmentFragment = (
 
 export type ShoesArticleFragmentFragment = (
   { __typename?: 'Shoes' }
-  & Pick<Shoes, 'body_html' | 'visited_by' | 'switchTitle' | 'createdAt' | 'score' | 'scored_by' | 'score_1' | 'score_2' | 'score_3' | 'score_4' | 'score_5'>
+  & Pick<Shoes, 'body_html' | 'visited_by' | 'switchTitle' | 'createdAt' | 'handle' | 'score' | 'scored_by' | 'score_1' | 'score_2' | 'score_3' | 'score_4' | 'score_5'>
 );
 
 export type UserFragmentFragment = (
@@ -1461,6 +1461,7 @@ export const ShoesArticleFragmentFragmentDoc = gql`
   visited_by
   switchTitle
   createdAt
+  handle
   score
   scored_by
   score_1

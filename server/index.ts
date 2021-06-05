@@ -74,7 +74,7 @@ const main = async () => {
           secure: __prod__, // cookie only works in https
           domain: __prod__ ? ".fsoweb.dev" : undefined,
         },
-        saveUninitialized: false,
+        saveUninitialized: true, // Try set cookie to session
         secret: process.env.SESSION_SECRET as string,
         resave: false,
       })

@@ -10,6 +10,7 @@ import {
 } from "../../generated/graphql";
 import { useApolloClient } from "@apollo/client";
 import Spinner from "../Spinner/Spinner";
+import { useIsVisitor } from "../../utils/useIsVisitor";
 
 interface CartProductProps {
   isOpen: Boolean;
@@ -23,6 +24,7 @@ const CartProduct: React.FC<CartProductProps> = ({
   setOpen,
 }) => {
   const client = useApolloClient();
+  const isVisitor = useIsVisitor();
   const { data, loading } = useGetBasketQuery({
     skip: !isOpen,
   });

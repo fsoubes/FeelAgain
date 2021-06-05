@@ -45,6 +45,7 @@ const LargeCartProduct: React.FC<LargeCartProductProps> = ({
           }
         />
       )}
+      {!data && <h4>Votre panier est vide actuellement</h4>}
       <div className={styles.payment}>
         <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
           <Button>PROCEDER AU PAIEMENT</Button>

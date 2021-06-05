@@ -9,6 +9,8 @@ import {
   useGetBasketQuery,
 } from "../../generated/graphql";
 import { useApolloClient } from "@apollo/client";
+import { useIsVisitor } from "../../utils/useIsVisitor";
+import { useRouter } from "next/router";
 
 interface AddToCartProps {
   setOpenCard: any;
@@ -16,13 +18,19 @@ interface AddToCartProps {
 }
 
 const AddToCart: React.FC<AddToCartProps> = ({ setOpenCard, id }) => {
+  const router = useRouter();
   const client = useApolloClient();
   const [addToCart] = useAddCartItemMutation();
+  const isVisitor = useIsVisitor();
+  useGetBasketQuery();
 
-  const { data } = useGetBasketQuery();
-
-  const handleClick = async () => {
+  const handleClick = async (): Promise<void> => {
     try {
+      if (isVisitor) {
+        router.replace("/connexion?next=" + `/products/${router.query.id}`);
+        return;
+      }
+
       await addToCart({
         variables: {
           variantId: id,

@@ -3,6 +3,7 @@ fragment ShoesArticleFragment on Shoes {
   visited_by
   switchTitle
   createdAt
+  handle
   score
   scored_by
   score_1

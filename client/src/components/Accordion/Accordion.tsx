@@ -157,6 +157,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
     if (filter && Object.keys(variables as Request).length > 0) {
       refetch({
         ...filter.variables,
+        page: 1,
         ...(sortingBy && {
           sort: sortingBy,
         }),
@@ -167,8 +168,8 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
           search: currentSearch,
         }),
       });
+      setCurrentPage(1);
     } else {
-      console.log(search);
       refetch({
         product: null,
         tags: null,

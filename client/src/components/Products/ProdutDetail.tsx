@@ -1,4 +1,5 @@
 import { Button } from "@material-ui/core";
+import { NextRouter } from "next/router";
 import { useState, useEffect, memo } from "react";
 import { Comments, useGetSingleShoesQuery } from "../../generated/graphql";
 import styles from "../../styles/Product.module.scss";
@@ -119,6 +120,26 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
                 id={data?.getSingleShoe?.variants[index]._id}
                 setOpenCard={setOpenCard}
               ></AddToCart>
+            )}
+
+            {data?.getSingleShoe.variants && (
+              <a
+                target="_blank"
+                href={
+                  data?.getSingleShoe.vendor === "Anaki"
+                    ? `https://www.anakiparis.fr/products/${data?.getSingleShoe.handle}`
+                    : `https://patriciablanchet.com/collections/shop/products/${data?.getSingleShoe.handle}`
+                }
+                className={styles.nocard}
+                style={{
+                  background: "black",
+                  marginTop: "1rem",
+                  color: "white",
+                  textAlign: "center",
+                }}
+              >
+                {"Intéresser par le produit".toUpperCase()}
+              </a>
             )}
           </div>
           <div
