@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useRef } from "react";
+import { useState, useReducer, useEffect, useRef, memo } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import Typography from "@material-ui/core/Typography";
@@ -25,6 +25,7 @@ interface CustomAccordionProps {
   tags?: string | string[];
   currentSearch?: string;
   product?: string;
+  search?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -90,9 +91,10 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   setSearch,
   currentSearch,
   setCurrentPage,
+  search,
 }) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [expanded, setExpanded] = useState<string | false>(false);
 
   const router = useRouter();
 
@@ -108,21 +110,24 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
   const [filter, dispatch] = useReducer(filterReducer, initialValues);
 
   useEffect(() => {
-    if (product)
-      dispatch({
-        type: "updateBox",
-        field: "categories",
-        key: product,
-        checked: true,
-      });
+    dispatch({
+      type: "updateBox",
+      field: "categories",
+      key: product,
+      checked: true,
+    });
+  }, [product]);
 
+  useEffect(() => {
     if (tags && tags.length > 0)
       dispatch({
         type: "addTags",
         field: "tags",
         tags: tags as string,
       });
+  }, [tags]);
 
+  useEffect(() => {
     if (size)
       (size as string).split(",").forEach((item) => {
         dispatch({
@@ -131,10 +136,10 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
           value: parseInt(item),
         });
       });
-  }, []);
+  }, [size]);
 
   useEffect(() => {
-    if (firstUpdate.current) {
+    if (firstUpdate.current || !filter.trigger) {
       firstUpdate.current = false;
       return;
     }
@@ -163,12 +168,13 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         }),
       });
     } else {
+      console.log(search);
       refetch({
         product: null,
         tags: null,
         size: null,
         sort: "id_asc",
-        search: null,
+        search: search ? search : null,
       });
     }
   }, [filter, sortingBy, firstUpdate]);
@@ -177,11 +183,18 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
     <div className={isOpen ? `${styles.container}` : `${styles.hide}`}>
       <Button
         className={classes.reset}
-        onClick={() => {
+        onClick={async () => {
           dispatch({ type: "reset", values: initialValues });
-          setSort(null);
           setSearch(null);
+          setSort(null);
           setCurrentPage(1);
+          refetch({
+            product: null,
+            tags: null,
+            size: null,
+            sort: "id_asc",
+            search: null,
+          });
           router.push("/shop", undefined, { shallow: true });
         }}
       >
@@ -296,4 +309,4 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
     </div>
   );
 };
-export default React.memo(CustomAccordion);
+export default memo(CustomAccordion);

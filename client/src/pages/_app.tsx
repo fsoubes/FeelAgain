@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { ThemeProvider } from "../theme";
 import "../styles/global.scss";
 import Head from "next/head";

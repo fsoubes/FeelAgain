@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Layout } from "../../components/Layout";
 import { useGetSingleArticleQuery } from "../../generated/graphql";

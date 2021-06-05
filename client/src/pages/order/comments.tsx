@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import React from "react";
 import { Layout } from "../../components/Layout";
 import { useGetPurchasesQuery } from "../../generated/graphql";
 import { withApollo } from "../../utils/withApollo";

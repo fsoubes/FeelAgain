@@ -1,4 +1,3 @@
-import React from "react";
 import CommentsItem from "./CommentsItem/CommentsItem";
 import styles from "../../styles/Comments.module.scss";
 import { Comments } from "../../generated/graphql";

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import SearchBar from "../../../components/Search/UI/SearchBar";
 import { useGetShoesQuery } from "../../../generated/graphql";
 import styleDash from "../../../styles/DashBoardSearch.module.scss";

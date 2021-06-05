@@ -1,5 +1,4 @@
 import { Tab, TabProps, Tabs, withStyles } from "@material-ui/core";
-import React from "react";
 
 interface StyledTabsProps {
   value: number;

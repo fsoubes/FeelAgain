@@ -1,4 +1,4 @@
-import React, { memo, useState, Fragment, useEffect } from "react";
+import { memo, useState, Fragment, useEffect } from "react";
 import PopUp from "../Modal/modal";
 import { useApolloClient } from "@apollo/client";
 import SearchBar from "./UI/SearchBar";

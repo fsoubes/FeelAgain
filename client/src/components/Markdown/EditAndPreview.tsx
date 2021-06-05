@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import Markdown from "./Markdown";
 import dynamic from "next/dynamic";
 

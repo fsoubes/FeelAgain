@@ -1,6 +1,7 @@
 import { Box } from "@material-ui/core";
 import { Field, FieldArray } from "formik";
-import React from "react";
+import { memo } from "react";
+
 import styles from "../../styles/Dashboard.module.scss";
 
 interface Image {
@@ -64,4 +65,4 @@ const ImageForm: React.FC<ImageFormProps> = ({ images }) => {
   );
 };
 
-export default React.memo(ImageForm);
+export default memo(ImageForm);

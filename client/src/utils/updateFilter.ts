@@ -34,6 +34,7 @@ export const filterReducer = (
 
       return {
         ...initialValues,
+        trigger: action.key ? true : false,
         [action.field as string]: newState,
         variables: { ...variables },
       };
@@ -117,6 +118,7 @@ export const filterReducer = (
 
       return {
         ...initialValues,
+        trigger: true,
         [action.field as string]: newState,
         variables: {
           ...newState[newState.length - 1].variables,
@@ -125,6 +127,7 @@ export const filterReducer = (
     case "reset":
       return {
         ...action.values,
+        trigger: false,
         variables: {
           product: undefined,
           size: [],

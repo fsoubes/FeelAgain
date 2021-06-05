@@ -1,4 +1,3 @@
-import React from "react";
 import SmallProductItem from "./Item/SmallProductItem";
 import { GetBasketQuery } from "../../generated/graphql";
 

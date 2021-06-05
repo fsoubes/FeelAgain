@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import { GetBasketQuery } from "../../../generated/graphql";
 import SummaryItem from "./SummaryItem/SummaryItem";
 
@@ -27,4 +27,4 @@ const SummaryList: React.FC<SummaryListProps> = ({ data }) => {
 
   return <ul>{item}</ul>;
 };
-export default React.memo(SummaryList);
+export default memo(SummaryList);

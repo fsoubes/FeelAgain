@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import { lightTheme, darkTheme } from "./theme";
 import { Theme } from "@material-ui/core";
@@ -7,7 +7,7 @@ interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const ToggleThemeContext = React.createContext({
+export const ToggleThemeContext = createContext({
   toggleTheme: () => {
     console.log();
   },

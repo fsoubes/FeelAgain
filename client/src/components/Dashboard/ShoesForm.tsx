@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useCallback } from "react";
+import { useState, Fragment, useEffect, useCallback, memo } from "react";
 import { Button } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import {
@@ -283,4 +283,4 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     </Formik>
   );
 };
-export default React.memo(ShoesForm);
+export default memo(ShoesForm);

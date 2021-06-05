@@ -5,7 +5,6 @@ import styles from "../styles/Home.module.scss";
 import { Button } from "@material-ui/core";
 import * as Carousel from "../components/Carousel/index";
 import { withApollo } from "../utils/withApollo";
-import React from "react";
 import Link from "next/link";
 import { themes } from "../constants/constants";
 

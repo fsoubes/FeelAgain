@@ -1,5 +1,4 @@
-import update from "material-ui/svg-icons/action/update";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface InputBasketProps {
   update: (itemId: string, quantity: number) => void;

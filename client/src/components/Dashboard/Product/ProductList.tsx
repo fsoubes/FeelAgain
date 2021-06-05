@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import {
   ImageFragmentFragment,
   ShoesBrowseFragmentFragment,
@@ -56,4 +56,4 @@ const ProductListDash: React.FC<ProductListProps> = ({
     </div>
   );
 };
-export default React.memo(ProductListDash);
+export default memo(ProductListDash);

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { useState, Fragment } from "react";
+import { useState, Fragment } from "react";
 import ShoesForm from "../../components/Dashboard/ShoesForm";
 import SubTabs from "../../components/SubTabs/SubTabs";
 import styles from "../../styles/Dashboard.module.scss";

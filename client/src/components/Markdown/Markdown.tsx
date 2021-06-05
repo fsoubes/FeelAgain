@@ -1,5 +1,5 @@
 // React
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo, memo } from "react";
 import dynamic from "next/dynamic";
 
 // Markdown
@@ -109,4 +109,4 @@ const Markdown: React.FC<MarkdownProps> = ({ data = null, setValue }) => {
     />
   );
 };
-export default React.memo(Markdown);
+export default memo(Markdown);

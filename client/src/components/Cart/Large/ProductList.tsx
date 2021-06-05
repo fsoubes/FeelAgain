@@ -1,4 +1,3 @@
-import React from "react";
 import ProductLargeItem from "./Item/ProductLargeItem";
 import { GetBasketQuery } from "../../../generated/graphql";
 import styles from "../../../styles/LargeProduct.module.scss";

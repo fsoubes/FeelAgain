@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
 import Link from "next/link";
-import React from "react";
 import { GetBasketQuery } from "../../generated/graphql";
 import styles from "../../styles/LargeProduct.module.scss";
 import ProductList from "./Large/ProductList";

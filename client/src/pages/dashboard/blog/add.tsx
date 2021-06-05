@@ -1,4 +1,3 @@
-import React from "react";
 import { withApollo } from "../../../utils/withApollo";
 
 import Add from "../../../components/Dashboard/Blog/BlogForm";

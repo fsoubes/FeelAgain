@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Outside from "../OutsideEvent/Outside";
 import styles from "../../styles/Product.module.scss";
 

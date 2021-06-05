@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ProductsList from "../../../components/Dashboard/Product/ProductList";
 import {
   useGetShoesQuery,

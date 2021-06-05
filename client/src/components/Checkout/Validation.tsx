@@ -1,5 +1,4 @@
 import { Link, Button } from "@material-ui/core";
-import React from "react";
 import styles from "../../styles/Stripe.module.scss";
 
 interface ValidationProps {

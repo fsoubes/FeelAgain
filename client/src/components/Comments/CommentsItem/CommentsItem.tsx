@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import React from "react";
 import { useAddRecommendationMutation } from "../../../generated/graphql";
 import styles from "../../../styles/Comments.module.scss";
 import RatingRes from "../../StarRating/RatingRes";

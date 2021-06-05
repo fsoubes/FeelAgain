@@ -1,6 +1,6 @@
 import { Box } from "@material-ui/core";
 import { Field, FieldArray } from "formik";
-import React, { Fragment } from "react";
+import { memo } from "react";
 import styles from "../../styles/Dashboard.module.scss";
 
 interface FormArraySelectProps {
@@ -93,4 +93,4 @@ const FormArraySelect: React.FC<FormArraySelectProps> = ({
     />
   );
 };
-export default React.memo(FormArraySelect);
+export default memo(FormArraySelect);

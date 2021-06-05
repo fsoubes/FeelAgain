@@ -130,6 +130,7 @@ const categories = {
 const variables = { size: [], tags: [] };
 
 export const initialValues = {
+  trigger: false,
   sizes,
   categories,
   heels,

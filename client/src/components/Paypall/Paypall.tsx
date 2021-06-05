@@ -1,4 +1,3 @@
-import React from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useAlert } from "react-alert";
 import {

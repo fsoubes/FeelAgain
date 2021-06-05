@@ -1,5 +1,4 @@
 import { NextRouter } from "next/router";
-import React from "react";
 import styles from "../../styles/Sort.module.scss";
 import { Irouter } from "../../types/routing";
 import { getUrl } from "../../utils/getUrl";

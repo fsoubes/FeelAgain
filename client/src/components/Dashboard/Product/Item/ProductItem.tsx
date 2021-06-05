@@ -1,4 +1,3 @@
-import React from "react";
 import { useRouter } from "next/router";
 import Tilt from "../../../Tilt/Tilt";
 import CancelIcon from "@material-ui/icons/Cancel";

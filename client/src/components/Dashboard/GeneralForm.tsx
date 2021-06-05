@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Box, Button } from "@material-ui/core";
+import { Fragment, memo } from "react";
+import { Box } from "@material-ui/core";
 import { Field } from "formik";
 import { productType, paletteShoes } from "../../constants/constants";
 import FormArray from "../Form/FormArray";
@@ -229,4 +229,4 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
     </Fragment>
   );
 };
-export default React.memo(GeneralForm);
+export default memo(GeneralForm);

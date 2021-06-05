@@ -1,5 +1,5 @@
 import { Star } from "@material-ui/icons";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import styles from "../../styles/Rating.module.scss";
 
 interface StarIconProps {

@@ -1,4 +1,3 @@
-import React from "react";
 import { withApollo } from "../utils/withApollo";
 import { Layout } from "../components/Layout";
 import styles from "../styles/LandingPage.module.scss";

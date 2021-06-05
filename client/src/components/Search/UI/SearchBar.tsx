@@ -1,5 +1,5 @@
 // React
-import React, { useRef } from "react";
+import { useRef } from "react";
 import styles from "../../../styles/SearchBar.module.scss";
 
 interface SearchBarProps {

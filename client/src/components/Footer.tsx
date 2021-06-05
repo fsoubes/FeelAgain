@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Button } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
 import { ToggleThemeContext } from "../theme";
@@ -165,25 +165,25 @@ const Footer: React.FC<FooterProps> = () => {
               >
                 <li>Ballerines</li>
               </Link>
-              <Link href="/shop/?product=boots">
+              <Link href="/shop/?product=Boots">
                 <li>Boots</li>
               </Link>
-              <Link href="/shop/?product=bottes">
+              <Link href="/shop/?product=Bottes">
                 <li>Bottes</li>
               </Link>
-              <Link href="/shop/?product=derbies">
+              <Link href="/shop/?product=Derbies">
                 <li>Debies</li>
               </Link>
-              <Link href="/shop/?product=escarpins">
+              <Link href="/shop/?product=Escarpins">
                 <li>Escarpins</li>
               </Link>
-              <Link href="/shop/?product=mules">
+              <Link href="/shop/?product=Mules">
                 <li>Mules</li>
               </Link>
-              <Link href="/shop/?product=mocassins">
+              <Link href="/shop/?product=Mocassins">
                 <li>Mocassins</li>
               </Link>
-              <Link href="/shop/?product=sandales">
+              <Link href="/shop/?product=Sandales">
                 <li>Sandales</li>
               </Link>
             </ul>
@@ -235,4 +235,4 @@ const Footer: React.FC<FooterProps> = () => {
   );
 };
 
-export default React.memo(withApollo({ ssr: false })(Footer));
+export default withApollo({ ssr: false })(Footer);

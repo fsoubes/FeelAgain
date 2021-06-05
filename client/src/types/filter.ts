@@ -37,4 +37,5 @@ export interface FilterList {
   colors?: Color[];
   sizes?: Size[];
   variables?: Request;
+  trigger?: boolean;
 }

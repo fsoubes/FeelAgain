@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout } from "../components/Layout";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Box from "@material-ui/core/Box";

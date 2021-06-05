@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import styles from "../../styles/Checkout.module.scss";

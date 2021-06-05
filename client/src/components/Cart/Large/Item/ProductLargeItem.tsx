@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../../../../styles/LargeProduct.module.scss";
 import InputBasket from "../../../Input/InputBasket";
 

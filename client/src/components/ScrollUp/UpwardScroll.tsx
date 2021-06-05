@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { debounce } from "@material-ui/core";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import styles from "../../styles/UpwardScroll.module.scss";

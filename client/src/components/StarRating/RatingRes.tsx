@@ -1,4 +1,3 @@
-import React from "react";
 import { StarIcon } from "./Rating";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 

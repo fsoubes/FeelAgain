@@ -1,4 +1,3 @@
-import React from "react";
 import { ArticleFragmentFragment } from "../../generated/graphql";
 import ArticleItem from "./ArticleItem/ArticleItem";
 import Masonry from "react-masonry-css";

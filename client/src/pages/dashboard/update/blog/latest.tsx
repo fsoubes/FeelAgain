@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import React from "react";
 import ArticleList from "../../../../components/Articles/ArticleList";
 import Spinner from "../../../../components/Spinner/Spinner";
 import { useGetArticlesQuery } from "../../../../generated/graphql";

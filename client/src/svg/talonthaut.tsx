@@ -1,5 +1,3 @@
-import React from "react";
-
 interface TalonthautProps {}
 
 const TalontHaut: React.FC<TalonthautProps> = ({}) => {

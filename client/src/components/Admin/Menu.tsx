@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import { memo } from "react";
 import { sideBarMenu } from "../../constants/constants";
 import styles from "../../styles/DashboardMenu.module.scss";
 
@@ -40,4 +40,4 @@ const Menu: React.FC<MenuProps> = ({ title }) => {
     </div>
   );
 };
-export default React.memo(Menu);
+export default memo(Menu);

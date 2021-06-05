@@ -1,10 +1,11 @@
 import { useApolloClient } from "@apollo/client";
-import React, {
+import {
   ReactElement,
   Fragment,
   useState,
   useEffect,
   useRef,
+  memo,
 } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
@@ -273,4 +274,4 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
   );
 };
 
-export default TopBar;
+export default memo(TopBar);

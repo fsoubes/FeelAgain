@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Modal from "@material-ui/core/Modal";
 import { Button } from "@material-ui/core";
 import { SearchResults } from "../../generated/graphql";

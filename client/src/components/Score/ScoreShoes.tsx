@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../../styles/ScoreShoes.module.scss";
 import RatingRes from "../StarRating/RatingRes";
 

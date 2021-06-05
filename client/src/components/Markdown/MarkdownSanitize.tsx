@@ -1,6 +1,5 @@
 // React
-import React from "react";
-import dynamic from "next/dynamic";
+import { memo } from "react";
 
 // libs
 import createDOMPurify from "dompurify";
@@ -145,4 +144,4 @@ const RenderSanitize: React.FC<RenderSanitizeProps> = ({
   );
 };
 
-export default React.memo(RenderSanitize);
+export default memo(RenderSanitize);

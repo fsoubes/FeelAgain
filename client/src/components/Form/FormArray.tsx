@@ -1,6 +1,7 @@
 import { Box } from "@material-ui/core";
 import { Field, FieldArray } from "formik";
-import React from "react";
+import { memo } from "react";
+
 import styles from "../../styles/Dashboard.module.scss";
 
 interface Variant {
@@ -115,4 +116,4 @@ const FormArray: React.FC<FormArrayProps> = ({
     />
   );
 };
-export default React.memo(FormArray);
+export default memo(FormArray);

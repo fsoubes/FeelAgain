@@ -1,5 +1,4 @@
 import { NextRouter } from "next/router";
-import React from "react";
 import styles from "../../../styles/Filter.module.scss";
 import { UpdateFilterAction } from "../../../types/filter";
 import { cleanRoute } from "../../../utils/getUrl";

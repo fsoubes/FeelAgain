@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { Layout } from "../components/Layout";
 import { useGetShoesQuery } from "../generated/graphql";
 import { withApollo } from "../utils/withApollo";
@@ -58,10 +58,9 @@ const Shop: NextPage<ShopProps> = ({
         (tags as string[]).length > 0 && {
           tags: tags,
         }),
-      ...((size as string[]) &&
-        (size as string[]).length > 0 && {
-          size: (size as string[]).map((item) => parseFloat(item)),
-        }),
+      ...((size as string) && {
+        size: (size as string).split(",").map((item) => parseFloat(item)),
+      }),
       ...(product && {
         product: product,
       }),
@@ -138,6 +137,7 @@ const Shop: NextPage<ShopProps> = ({
               size={size}
               tags={tags}
               product={product}
+              search={search}
             />
 
             <ProductListDash

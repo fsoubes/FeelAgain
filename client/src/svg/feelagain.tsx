@@ -1,5 +1,3 @@
-import React from "react";
-
 interface FeelagainProps {}
 
 const Feelagain: React.FC<FeelagainProps> = ({}) => {

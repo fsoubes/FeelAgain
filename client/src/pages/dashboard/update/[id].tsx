@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { NextPage } from "next";
 import ShoesForm from "../../../components/Dashboard/ShoesForm";
 import SubTabs from "../../../components/SubTabs/SubTabs";

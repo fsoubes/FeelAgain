@@ -1,4 +1,3 @@
-import React from "react";
 import { Orders } from "../../generated/graphql";
 import OrderItem from "./OrderItem/OrderItem";
 import styles from "../../styles/OrderList.module.scss";

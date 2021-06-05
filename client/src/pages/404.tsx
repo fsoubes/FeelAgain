@@ -1,4 +1,3 @@
-import React from "react";
 import NextLink from "next/link";
 import { withApollo } from "../utils/withApollo";
 import { Layout } from "../components/Layout";

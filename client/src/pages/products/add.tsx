@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout } from "../../components/Layout";
 import { useIsAdmin } from "../../utils/useIsAdmin";
 import { withApollo } from "../../utils/withApollo";

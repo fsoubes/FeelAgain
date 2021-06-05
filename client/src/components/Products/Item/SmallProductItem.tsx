@@ -1,4 +1,3 @@
-import React from "react";
 import InputBasket from "../../Input/InputBasket";
 
 interface SmallProductItemProps {

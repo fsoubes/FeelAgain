@@ -1,7 +1,6 @@
-import React, { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { NextPage } from "next";
 import { useGetSingleArticleQuery } from "../../../../generated/graphql";
-import styles from "../../../../styles/Dashboard.module.scss";
 import { isServer } from "../../../../utils/isServer";
 import Modify from "../../../../components/Dashboard/Blog/BlogForm";
 

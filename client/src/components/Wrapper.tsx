@@ -1,5 +1,3 @@
-import React from "react";
-
 export type WrapperVariant = "main-center" | "main";
 
 interface WrapperProps {

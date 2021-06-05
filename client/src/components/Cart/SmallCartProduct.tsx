@@ -1,5 +1,5 @@
 import { Button, Link } from "@material-ui/core";
-import React from "react";
+
 import { GetBasketQuery } from "../../generated/graphql";
 import styles from "../../styles/CartProduct.module.scss";
 import SmallProductList from "../Products/SmallProductList";

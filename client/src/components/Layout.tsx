@@ -1,4 +1,3 @@
-import React from "react";
 import { Wrapper, WrapperVariant } from "./Wrapper";
 import TopBar from "./TopBar";
 

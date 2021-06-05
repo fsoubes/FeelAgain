@@ -80,7 +80,7 @@ export const cleanRoute = (
     }),
   };
 
-  console.log(currentRouter);
+
 
   router.push(
     {

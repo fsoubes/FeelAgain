@@ -1,6 +1,6 @@
 import { Box } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Layout } from "../components/Layout";
 import styles from "../styles/Register.module.scss";
 import Button from "@material-ui/core/Button";

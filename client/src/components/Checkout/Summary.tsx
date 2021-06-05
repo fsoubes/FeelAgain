@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useGetBasketQuery } from "../../generated/graphql";
 import SummaryList from "./SummaryList/SummaryList";
 import styles from "../../styles/Summary.module.scss";

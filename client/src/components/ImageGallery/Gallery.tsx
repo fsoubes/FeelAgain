@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, RefObject } from "react";
+import { useRef, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import useResponsive from "../../utils/useResponsive";
 import "react-image-gallery/styles/css/image-gallery.css";

@@ -1,6 +1,7 @@
 import { Box } from "@material-ui/core";
 import { FieldArray, Field } from "formik";
-import React, { Fragment } from "react";
+import { memo } from "react";
+
 import styles from "../../styles/Dashboard.module.scss";
 
 interface Variant {
@@ -123,4 +124,4 @@ const VariantForm: React.FC<VariantFormProps> = ({ size, variants }) => {
     />
   );
 };
-export default React.memo(VariantForm);
+export default memo(VariantForm);

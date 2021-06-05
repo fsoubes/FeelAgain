@@ -1,4 +1,4 @@
-import React, { useCallback, Fragment } from "react";
+import { useCallback, Fragment, cloneElement } from "react";
 import {
   GetBasketDocument,
   GetBasketQuery,
@@ -182,6 +182,6 @@ const CartProduct: React.FC<CartProductProps> = ({
     );
   }
 
-  return <Fragment>{React.cloneElement(children, { ...params })}</Fragment>;
+  return <Fragment>{cloneElement(children, { ...params })}</Fragment>;
 };
 export default CartProduct;

@@ -1,4 +1,3 @@
-import React from "react";
 import FilterItem from "./FilterItem/FilterItem";
 import styles from "../../styles/Filter.module.scss";
 import { UpdateFilterAction } from "../../types/filter";

@@ -1,5 +1,5 @@
 import { Link, Button } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddReviewMutation } from "../../generated/graphql";
 import styles from "../../styles/CommentPurchases.module.scss";
 import RatingIcon from "../StarRating/Rating";

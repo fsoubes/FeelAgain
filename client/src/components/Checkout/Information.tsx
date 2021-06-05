@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "../../styles/InfoCart.module.scss";
 import { Box, Button } from "@material-ui/core";

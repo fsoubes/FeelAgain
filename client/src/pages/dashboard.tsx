@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Layout } from "../components/Layout";
+import { useEffect } from "react";
 import { withApollo } from "../utils/withApollo";
 import Menu from "../components/Admin/Menu";
 import { useIsAdmin } from "../utils/useIsAdmin";

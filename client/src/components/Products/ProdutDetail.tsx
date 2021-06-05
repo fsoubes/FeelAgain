@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Comments, useGetSingleShoesQuery } from "../../generated/graphql";
 import styles from "../../styles/Product.module.scss";
 import AddToCart from "../Button/AddToCart";
@@ -130,4 +130,4 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
     </div>
   );
 };
-export default React.memo(ProdutDetail);
+export default memo(ProdutDetail);

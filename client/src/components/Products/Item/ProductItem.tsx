@@ -1,4 +1,3 @@
-import React from "react";
 import Tilt from "../../Tilt/Tilt";
 import { useRouter } from "next/router";
 

@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import React from "react";
 import styles from "../../styles/SubMenu.module.scss";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import GradeIcon from "@material-ui/icons/Grade";

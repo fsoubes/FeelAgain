@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { memo } from "react";
 import { useRouter } from "next/router";
 import ReactPaginate from "react-paginate";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -71,4 +71,4 @@ const Pagination: React.FC<PaginationProps> = ({
   );
 };
 
-export default React.memo(Pagination);
+export default memo(Pagination);
