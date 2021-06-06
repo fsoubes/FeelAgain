@@ -151,16 +151,14 @@
     margin-left: auto;
     max-width: 780px;
     width: 100%;
-    padding: 5px;
+    padding: 30px;
+    background: #ffffff;
     article {
       border-width: 0;
       padding: 0;
       background-color: transparent;
       opacity: 0.99;
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 2px;
-      padding: 30px;
       .visual__container {
         position: relative;
         margin-bottom: 30px;
@@ -182,13 +180,86 @@
         white-space: break-spaces;
       }
     }
+    .article__footer {
+      margin: 2rem 0;
+      h3 {
+        margin: 1rem 0;
+        border-bottom: 1px solid lightgrey;
+      }
+
+      .similar__articles {
+        .similar__list {
+          display: flex;
+          overflow: hidden;
+          margin: 0 -15px -15px;
+          .similar__item {
+            position: relative;
+            float: left;
+            width: 33.333%;
+            padding: 0 15px;
+            margin-bottom: 20px;
+            a {
+              height: 140px;
+              width: 230px;
+              transform: rotate(0);
+              transition: opacity 0.2s;
+              &:hover {
+                opacity: 0.8 !important;
+                -webkit-opacity: 0.8 !important;
+              }
+              img {
+                width: 100%;
+                height: 100%;
+                max-height: 140px;
+              }
+            }
+            h4 {
+              padding: 0;
+              margin: 0;
+              font-size: 0.8rem;
+            }
+          }
+        }
+      }
+
+      .form__comment {
+        width: 100%;
+        form {
+          display: flex;
+          flex-direction: column;
+          button {
+            margin-top: 1rem;
+            background: black;
+            color: white;
+          }
+          textarea {
+            vertical-align: top;
+            resize: none;
+            padding: 5px;
+          }
+        }
+      }
+    }
   }
 
   @media only screen and (max-width: 767px) {
     padding: 0;
     width: 100%;
     .content {
-      padding: 0;
+      padding: 10px;
+      .article__footer {
+        .similar__articles {
+          .similar__list {
+            display: grid;
+            grid-template-columns: repeat(auto, 2fr);
+            .similar__item {
+              width: 100%;
+              a {
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -31,8 +31,9 @@ type Blog {
   createdAt: String!
   description: String
   downRating: [User!]!
+  image_back: String
   image_url: String
-  isPublished: Boolean
+  is_published: Boolean
   positiveRating: Float!
   social: [String!]!
   source: [String!]!
@@ -46,8 +47,9 @@ type Blog {
 input BlogInput {
   article: String
   description: String
+  image_back: String
   image_url: String
-  isPublished: Boolean
+  is_published: Boolean
   social: [String!]
   source: [String!]
   tags: String
@@ -156,6 +158,7 @@ type Mutation {
   removeCartItem(basketId: String!, itemId: String!, quantity: Float!): String!
   removeShoe(shoeId: String!): String!
   sendNewsletter: Boolean!
+  updateArticle(blog: BlogInput!, blogId: String!): Blog!
   updateCartItem(itemId: String!, quantity: Float!): String!
   updateImage(image: ImageInput!, imageId: String!): Images!
   updateShoe(shoeId: String!, shoes: ShoesInput!): Shoes!
@@ -234,6 +237,7 @@ type Query {
   getArticles(cursor: String, limit: Float!): PaginationResponse!
   getBasket: Basket!
   getCartItems: [CartItem!]!
+  getClosestArticles(tags: String!, title: String!): [Blog!]!
   getClosestShoes(product: String!, title: String!): [Shoes!]!
   getFilterShoes(filter: ShoesInputFilter, is_published: Boolean = true, limit: Float!, page: Float!, search: String, sort: String): PaginationShoes!
   getNewsletter: Newsletter!

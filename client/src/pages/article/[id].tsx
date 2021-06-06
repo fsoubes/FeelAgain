@@ -1,14 +1,17 @@
 import React, { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { Layout } from "../../components/Layout";
-import { useGetSingleArticleQuery } from "../../generated/graphql";
+import {
+  useGetClosestArticlesQuery,
+  useGetSingleArticleQuery,
+} from "../../generated/graphql";
 import { withApollo } from "../../utils/withApollo";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import VoteRating from "../../components/Votes/VoteRating";
 import styles from "../../styles/Article.module.scss";
 import { isServer } from "../../utils/isServer";
-import { Link } from "@material-ui/core";
+import { Button, Link } from "@material-ui/core";
 import ScrollStatus from "../../components/ScrollStatus/ScrollStatus";
 
 const MarkdownSanitize = dynamic(
@@ -29,7 +32,16 @@ const Article: NextPage<Props> = ({ id }) => {
     skip: isServer(),
   });
 
+  const { data: closest } = useGetClosestArticlesQuery({
+    variables: {
+      title: data?.getSingleArticle.title as string,
+      tags: data?.getSingleArticle.tags as string,
+    },
+    skip: !data?.getSingleArticle,
+  });
+
   const articleRef = useRef<HTMLInputElement>();
+  const commentRef = useRef<HTMLTextAreaElement>();
 
   useEffect(() => {
     if (!id) {
@@ -123,6 +135,50 @@ const Article: NextPage<Props> = ({ id }) => {
                   />
                 </div>
               </article>
+              <div className={styles.article__footer}>
+                <div className={styles.similar__articles}>
+                  <h3 style={{ color: "darkorange" }}>Articles similaires</h3>
+                  <div className={styles.similar__list}>
+                    {closest?.getClosestArticles.map((item) => {
+                      return (
+                        <div className={styles.similar__item} key={item._id}>
+                          <Link href={`/article/${item._id}`}>
+                            <img
+                              loading="lazy"
+                              src={item.image_url as string}
+                              alt="closest"
+                            ></img>
+                          </Link>
+                          <h4>{item.title}</h4>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className={styles.comments}>
+                  <h3>Commentaires</h3>
+                </div>
+                <div className={styles.form__comment}>
+                  <h3>Laisser un avis</h3>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      commentRef.current.value = "";
+                    }}
+                  >
+                    <textarea
+                      ref={commentRef as React.LegacyRef<HTMLTextAreaElement>}
+                      rows={8}
+                      required
+                      cols={45}
+                      maxLength={60000}
+                    />
+                    <Button name="submit" type="submit" disableRipple>
+                      Laisser un avis
+                    </Button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>

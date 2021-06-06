@@ -31,6 +31,7 @@ export type Query = {
   me?: Maybe<User>;
   userRole: Scalars['Boolean'];
   getSingleArticle: Blog;
+  getClosestArticles: Array<Blog>;
   getArticles: PaginationResponse;
   getBasket: Basket;
   getAllBasket: Array<Basket>;
@@ -78,6 +79,12 @@ export type QueryGetShoesByNameArgs = {
 
 export type QueryGetSingleArticleArgs = {
   articleId: Scalars['ObjectId'];
+};
+
+
+export type QueryGetClosestArticlesArgs = {
+  title: Scalars['String'];
+  tags: Scalars['String'];
 };
 
 
@@ -1113,6 +1120,20 @@ export type GetCartItemsQuery = (
         )> }
       ) }
     ) }
+  )> }
+);
+
+export type GetClosestArticlesQueryVariables = Exact<{
+  tags: Scalars['String'];
+  title: Scalars['String'];
+}>;
+
+
+export type GetClosestArticlesQuery = (
+  { __typename?: 'Query' }
+  & { getClosestArticles: Array<(
+    { __typename?: 'Blog' }
+    & Pick<Blog, '_id' | 'title' | 'image_url' | 'createdAt'>
   )> }
 );
 
@@ -2584,6 +2605,43 @@ export function useGetCartItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetCartItemsQueryHookResult = ReturnType<typeof useGetCartItemsQuery>;
 export type GetCartItemsLazyQueryHookResult = ReturnType<typeof useGetCartItemsLazyQuery>;
 export type GetCartItemsQueryResult = Apollo.QueryResult<GetCartItemsQuery, GetCartItemsQueryVariables>;
+export const GetClosestArticlesDocument = gql`
+    query GetClosestArticles($tags: String!, $title: String!) {
+  getClosestArticles(tags: $tags, title: $title) {
+    _id
+    title
+    image_url
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useGetClosestArticlesQuery__
+ *
+ * To run a query within a React component, call `useGetClosestArticlesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetClosestArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetClosestArticlesQuery({
+ *   variables: {
+ *      tags: // value for 'tags'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useGetClosestArticlesQuery(baseOptions: Apollo.QueryHookOptions<GetClosestArticlesQuery, GetClosestArticlesQueryVariables>) {
+        return Apollo.useQuery<GetClosestArticlesQuery, GetClosestArticlesQueryVariables>(GetClosestArticlesDocument, baseOptions);
+      }
+export function useGetClosestArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetClosestArticlesQuery, GetClosestArticlesQueryVariables>) {
+          return Apollo.useLazyQuery<GetClosestArticlesQuery, GetClosestArticlesQueryVariables>(GetClosestArticlesDocument, baseOptions);
+        }
+export type GetClosestArticlesQueryHookResult = ReturnType<typeof useGetClosestArticlesQuery>;
+export type GetClosestArticlesLazyQueryHookResult = ReturnType<typeof useGetClosestArticlesLazyQuery>;
+export type GetClosestArticlesQueryResult = Apollo.QueryResult<GetClosestArticlesQuery, GetClosestArticlesQueryVariables>;
 export const GetClosestShoesDocument = gql`
     query GetClosestShoes($product: String!, $title: String!) {
   getClosestShoes(product: $product, title: $title) {

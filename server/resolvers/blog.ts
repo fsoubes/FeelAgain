@@ -50,6 +50,32 @@ export class BlogResolver {
       throw err;
     }
   }
+
+  @Query(() => [Blog])
+  async getClosestArticles(
+    @Arg("tags") tags: string,
+    @Arg("title") title: string,
+    @Ctx() {  }: MyContext
+  ): Promise<Blog[]> {
+    try {
+      const randomArticles = await BlogModel.aggregate([
+        {
+          $match: {
+            is_published: true,
+            tags: tags,
+            title: { $ne: title },
+          },
+        },
+        { $project: { _id: 1, title: 1, image_url: 1, createdAt: 1 } },
+        { $sample: { size: 4 } },
+      ]);
+
+      return randomArticles as Blog[];
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Query(() => PaginationResponse)
   async getArticles(
     @Arg("limit") limit: number,

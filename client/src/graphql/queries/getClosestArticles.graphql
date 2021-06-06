@@ -1,0 +1,8 @@
+query GetClosestArticles($tags: String!, $title: String!) {
+  getClosestArticles(tags: $tags, title: $title) {
+    _id
+    title
+    image_url
+    createdAt
+  }
+}
