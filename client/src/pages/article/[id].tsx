@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { Layout } from "../../components/Layout";
 import { useGetSingleArticleQuery } from "../../generated/graphql";
@@ -9,6 +9,7 @@ import VoteRating from "../../components/Votes/VoteRating";
 import styles from "../../styles/Article.module.scss";
 import { isServer } from "../../utils/isServer";
 import { Link } from "@material-ui/core";
+import ScrollStatus from "../../components/ScrollStatus/ScrollStatus";
 
 const MarkdownSanitize = dynamic(
   () => import("../../components/Markdown/MarkdownSanitize"),
@@ -21,14 +22,14 @@ interface Props {
   id?: string;
 }
 
-//https://i.imgur.com/O3IUbtb.png
-
 const Article: NextPage<Props> = ({ id }) => {
   const router = useRouter();
   const { data } = useGetSingleArticleQuery({
     variables: { articleId: id },
     skip: isServer(),
   });
+
+  const articleRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
     if (!id) {
@@ -38,6 +39,9 @@ const Article: NextPage<Props> = ({ id }) => {
 
   return (
     <Layout>
+      <ScrollStatus
+        articleRef={articleRef as React.MutableRefObject<HTMLInputElement>}
+      />
       <div
         className={styles.container}
         style={{
@@ -110,10 +114,14 @@ const Article: NextPage<Props> = ({ id }) => {
                     ></img>
                   </figure>
                 </div>
-                <MarkdownSanitize
-                  isPreview={false}
-                  source={data?.getSingleArticle.article}
-                />
+                <div
+                  ref={articleRef as React.MutableRefObject<HTMLInputElement>}
+                >
+                  <MarkdownSanitize
+                    isPreview={false}
+                    source={data?.getSingleArticle.article}
+                  />
+                </div>
               </article>
             </div>
           </div>

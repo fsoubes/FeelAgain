@@ -1,7 +1,15 @@
-import { useImperativeHandle, useEffect, useRef, forwardRef } from "react";
+import {
+  useImperativeHandle,
+  useEffect,
+  useRef,
+  forwardRef,
+  useLayoutEffect,
+  useState,
+} from "react";
 import Glide from "@glidejs/glide";
 import "@glidejs/glide/dist/css/glide.core.min.css";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
+import { debounce } from "@material-ui/core";
 
 interface Review {
   src: string;
@@ -12,6 +20,7 @@ interface CarouselProps {
   data?: Review[];
   options?: any;
   isTabletorMobile?: boolean;
+  isLanding?: boolean;
 }
 
 interface SlideProps {
@@ -19,14 +28,14 @@ interface SlideProps {
 }
 
 export const Carousel: React.FC<CarouselProps> = forwardRef(
-  ({ options, children, isTabletorMobile }, ref) => {
+  ({ options, children, isTabletorMobile, isLanding = true }, ref) => {
     const sliderRef = useRef<any>(null);
+    const [isHover, setHover] = useState(false);
 
     useImperativeHandle(ref, () => sliderRef.current);
 
     useEffect(() => {
       const slider = new Glide(sliderRef.current, options).mount();
-
       return () => slider.destroy();
     }, [options]);
 
@@ -41,11 +50,12 @@ export const Carousel: React.FC<CarouselProps> = forwardRef(
           <div className="glide__arrows" data-glide-el="controls">
             <button
               style={{
-                left: "-5px",
                 boxShadow: "none",
                 padding: "0",
                 color: "black",
                 border: "none",
+                left: isLanding ? "-5px" : "0px",
+                background: isLanding ? "none" : "rgba(255,255,255,0.7)",
               }}
               className="glide__arrow glide__arrow--left"
               data-glide-dir="<"
@@ -61,11 +71,12 @@ export const Carousel: React.FC<CarouselProps> = forwardRef(
             </button>
             <button
               style={{
-                right: "-5px",
                 boxShadow: "none",
                 padding: "0",
                 color: "black",
                 border: "none",
+                right: isLanding ? "-5px" : "0px",
+                background: isLanding ? "none" : "rgba(255,255,255,0.7)",
               }}
               className="glide__arrow glide__arrow--right"
               data-glide-dir=">"

@@ -435,3 +435,18 @@ a {
   width: 100%;
   height: 100%;
 }
+
+// Carousel
+
+.Home_home__container__1DVTf {
+  .glide {
+    .glide__arrows {
+      display: none;
+    }
+    &:hover {
+      .glide__arrows {
+        display: block;
+      }
+    }
+  }
+}

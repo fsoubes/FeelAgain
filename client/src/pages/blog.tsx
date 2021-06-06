@@ -7,12 +7,15 @@ import * as Carousel from "../components/Carousel/index";
 import { withApollo } from "../utils/withApollo";
 import Link from "next/link";
 import { themes } from "../constants/constants";
+import useResponsive from "../utils/useResponsive";
 
 const Blog: React.FC = ({}) => {
   const { data, loading, variables, fetchMore } = useGetArticlesQuery({
     variables: { limit: 9, cursor: null },
     notifyOnNetworkStatusChange: true,
   });
+
+  const { isTabletorMobile } = useResponsive();
 
   const carousel = Array(2)
     .fill(null)
@@ -69,7 +72,10 @@ const Blog: React.FC = ({}) => {
                   perView: 1,
                   focusAt: "center",
                   type: "carousel",
+                  swipeThreshold: isTabletorMobile,
+                  dragThreshold: isTabletorMobile,
                 }}
+                isLanding={false}
               >
                 {carousel}
               </Carousel.Component>

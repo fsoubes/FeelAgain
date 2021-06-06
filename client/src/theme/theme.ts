@@ -131,7 +131,6 @@ const options = (dark: boolean): ThemeOptions => {
           ".topbar__nav": {
             background: ` ${paletteColors.header} !important`,
           },
-
           ".Article_container__article__2aXmw": {
             height: "100%",
             background: paletteColors.background_secondary,
