@@ -151,13 +151,13 @@ const Home: React.FC = ({}) => {
               <h2>FeelAgain</h2>
               <div className={styles.presentation__line}></div>
               <p>
-                Nous proposons des chaussures en éditions limitées.
-                <strong>&nbsp;Ressentez&nbsp;</strong> différement chaque saison
-                avec
-                <strong>&nbsp;FeelAgain</strong>
+                <strong>Découvrez&nbsp;</strong> les 4 saisons avec
+                <strong>&nbsp;FeelAgain</strong>.<br></br>
+                Avec nos <strong>produits</strong> en éditions limitées.
               </p>
               <p>
-                Découvrez nos <strong>chaussures</strong>.
+                Laissez-vous tenter et découvrez nos <strong>chaussures</strong>
+                .
               </p>
               <Button
                 className={styles.action}

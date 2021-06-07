@@ -46,10 +46,11 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
       id: string
-    ): Promise<void> => {
+    ): boolean => {
       try {
         setRelations(relations.filter((item) => item._id !== id));
         e.stopPropagation();
+        return true;
       } catch (err) {
         throw err;
       }

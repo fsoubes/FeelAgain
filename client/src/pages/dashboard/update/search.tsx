@@ -67,7 +67,6 @@ const Search: NextPage<SearchProps> = ({ page, search }) => {
                 page={currentPage}
                 total={data?.getFilterShoes?.pageInfo.total as number}
                 path={"/dashboard/update/search"}
-                search={currentSearch}
               />
             </Fragment>
           ) : (

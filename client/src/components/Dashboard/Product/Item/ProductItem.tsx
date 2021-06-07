@@ -20,7 +20,7 @@ interface ProductItemProps {
     | ((
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         id: string
-      ) => Promise<void>)
+      ) => boolean)
     | undefined;
 }
 

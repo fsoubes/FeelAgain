@@ -1,6 +1,5 @@
 import { ImagesModel } from "./../entities/Images";
 import { VariantsModel } from "./../entities/Variants";
-// import { OrdersModel } from "./../entities/Orders";
 import { User, UserModel } from "../entities/User";
 import { Blog, BlogModel } from "../entities/Blog";
 import { BasketModel } from "../entities/Basket";

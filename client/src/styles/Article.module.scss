@@ -203,6 +203,7 @@
               width: 230px;
               transform: rotate(0);
               transition: opacity 0.2s;
+
               &:hover {
                 opacity: 0.8 !important;
                 -webkit-opacity: 0.8 !important;
@@ -214,7 +215,7 @@
               }
             }
             h4 {
-              padding: 0;
+              line-height: 12px;
               margin: 0;
               font-size: 0.8rem;
             }
@@ -254,8 +255,6 @@
             grid-template-columns: repeat(auto, 2fr);
             .similar__item {
               width: 100%;
-              a {
-              }
             }
           }
         }

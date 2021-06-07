@@ -1,13 +1,16 @@
 import { MyContext } from "./../type";
-import { Resolver, Mutation, Ctx } from "type-graphql";
+import { Resolver, Mutation, Ctx, UseMiddleware } from "type-graphql";
 import { Shoes, ShoesModel } from "../entities/Shoes";
 import { readJSON } from "../helpers/readJson";
 import { VariantsModel } from "../entities/Variants";
 import { ImagesModel } from "../entities/Images";
+import { isAdmin } from "../middlewares/isAdmin";
 
 @Resolver((_of) => Shoes)
 export class AddResolver {
+  
   @Mutation(() => Boolean)
+  @UseMiddleware(isAdmin)
   async addShoes(@Ctx() {  }: MyContext) {
     const filenames=["anakiFiltered","patriciaFiltered"]
     try {
@@ -76,3 +79,4 @@ export class AddResolver {
     }
   }
 }
+

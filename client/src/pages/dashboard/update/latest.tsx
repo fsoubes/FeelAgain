@@ -33,15 +33,16 @@ const Latest: NextPage<LatestProps> = ({ page }) => {
     },
   });
 
-  const handleClick = async (
+  const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string
-  ): Promise<void> => {
+  ): boolean => {
     try {
-      await remove({
+      remove({
         variables: { shoeId: id },
       });
       e?.stopPropagation();
+      return true;
     } catch (err) {
       throw err;
     }

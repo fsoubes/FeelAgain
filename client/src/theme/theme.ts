@@ -161,9 +161,6 @@ const options = (dark: boolean): ThemeOptions => {
           ".TopBar_navbar__auth__3H0RW button::after": {
             color: paletteColors.logo,
           },
-          /*   ".TopBar_navbar__links__1g4N8": {
-            background: `${paletteColors.primary} !important`,
-          }, */
           ".TopBar_navbar__links__1g4N8 > button > span:hover": {
             borderBottom: `1px solid ${paletteColors.logo}`,
           },

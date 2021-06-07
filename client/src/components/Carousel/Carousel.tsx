@@ -3,13 +3,11 @@ import {
   useEffect,
   useRef,
   forwardRef,
-  useLayoutEffect,
   useState,
 } from "react";
 import Glide from "@glidejs/glide";
 import "@glidejs/glide/dist/css/glide.core.min.css";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
-import { debounce } from "@material-ui/core";
 
 interface Review {
   src: string;

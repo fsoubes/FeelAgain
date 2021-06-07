@@ -30,6 +30,8 @@ export const intialValues: Initializer = {
 };
 
 export const initialValuesBlog: IBlog = {
+  _id: "",
+  article: "",
   title: "",
   image_url: "",
   image_back: "",

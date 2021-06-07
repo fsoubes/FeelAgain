@@ -46,18 +46,6 @@ const CheckOut: NextPage<Props> = ({ step, id }) => {
     phone: "0559921201",
   });
 
-  /*  const [values, setValue] = useState<Info>({
-    email: "",
-    firstname: "",
-    name: "",
-    adress: "",
-    more: "",
-    zip: "",
-    city: "",
-    country: "",
-    phone: "",
-  }); */
-
   const [shipping, setShipping] = useState<Shipping>({
     free: true,
     paid: false,

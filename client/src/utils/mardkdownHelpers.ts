@@ -7,8 +7,8 @@ const isYoutube = (getURL: any) => {
   const path = newA.pathname;
   if (host.search(/youtube\.com|youtu\.be/) === -1) return false;
   if (host.search(/youtu\.be/) !== -1) return path.slice(1);
-  if (path && path.search(/embed/) !== -1)
-    return /embed\/([A-z0-9_-]+)(&|$)/.exec(path)[1];
+  /*  if (path && path.search(/embed/) !== -1)
+    return /embed\/([A-z0-9_-]+)(&|$)/.exec(path)[1]; */
   const getId = /v=([A-z0-9_-]+)(&|$)/.exec(srch);
   if (host.search(/youtube\.com/) !== -1) return !getId ? "" : getId[1];
 };

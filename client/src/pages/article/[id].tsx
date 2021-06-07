@@ -163,7 +163,7 @@ const Article: NextPage<Props> = ({ id }) => {
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      commentRef.current.value = "";
+                      (commentRef.current as HTMLTextAreaElement).value = "";
                     }}
                   >
                     <textarea
