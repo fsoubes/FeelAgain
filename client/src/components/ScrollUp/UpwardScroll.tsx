@@ -41,7 +41,7 @@ const UpwardScroll: React.FC<UpwardScrollProps> = ({}) => {
             : `${styles.scroll_top}`
         }
       >
-        <button ref={scrollButton}>
+        <button ref={scrollButton} aria-label="Top page">
           <NavigationIcon></NavigationIcon>
         </button>
       </div>

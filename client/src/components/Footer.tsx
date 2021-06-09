@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Button } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
 import { ToggleThemeContext } from "../theme";
@@ -13,6 +13,8 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import { useAddToNewsletterMutation } from "../generated/graphql";
 import { withApollo } from "../utils/withApollo";
+import { Paypall, Visa, Master } from "../svg/payment";
+import { Chronopost, Colissimo, RelaisColis } from "../svg/transport";
 
 interface FooterProps {}
 
@@ -40,62 +42,97 @@ const Footer: React.FC<FooterProps> = () => {
       <div className={styles.feelagain__methods}>
         <ul>
           <li>
-            <a>
-              <Image
-                src="/delivery.svg"
-                quality="100"
-                width="48"
-                height="48"
-                alt="picture"
-              />
-              <span>
-                LIVRAISON À <strong>DOMICILE</strong>
-              </span>
-              <span>
-                OU <strong>POINT RELAIS</strong>
-              </span>
-            </a>
+            <Image
+              src="/delivery.svg"
+              quality="100"
+              width="48"
+              height="48"
+              alt="picture"
+            />
+            <span>
+              LIVRAISON À <strong>DOMICILE</strong>
+            </span>
+            <span>
+              OU <strong>POINT RELAIS</strong>
+            </span>
           </li>
           <li>
-            <a>
-              <Image
-                src="/cardsafe.svg"
-                quality="100"
-                width="48"
-                height="48"
-                alt="picture"
-              />
-              <span>PAIEMENT</span>
-              <span>
-                <strong>SÉCURISÉ</strong>
-              </span>
-            </a>
+            <Image
+              src="/cardsafe.svg"
+              quality="100"
+              width="48"
+              height="48"
+              alt="picture"
+            />
+            <span>PAIEMENT</span>
+            <span>
+              <strong>SÉCURISÉ</strong>
+            </span>
           </li>
           <li>
-            <a>
-              <Image
-                src="/return.svg"
-                width="48"
-                height="48"
-                alt="picture"
-                quality="100"
-              />
-              <span>RETOUR & ÉCHANGE</span>
-              <span>
-                <strong>GRATUIT</strong>
-              </span>
-            </a>
+            <Image
+              src="/return.svg"
+              width="48"
+              height="48"
+              alt="picture"
+              quality="100"
+            />
+            <span>RETOUR & ÉCHANGE</span>
+            <span>
+              <strong>GRATUIT</strong>
+            </span>
           </li>
         </ul>
       </div>
       <div className={styles.feelagain__accept}>
         <div className={styles.feelagain__accept_images}>
           <span>Moyens de paiement acceptés</span>
-          <img src="/accepted.png" width="256" height="28" alt="picture" />
+          <ul>
+            <li>
+              <Visa />
+            </li>
+            <li>
+              <Master />
+            </li>
+            <li>
+              <Paypall />
+            </li>
+          </ul>
         </div>
         <div className={styles.feelagain__accept_images}>
           <span>Nos transporteurs</span>
-          <img src="/carrier.png" width="256" height="28" alt="picture" />
+          <ul>
+            <li
+              style={{
+                background: "white",
+                display: "flex",
+                padding: "3px",
+                borderRadius: "7px",
+              }}
+            >
+              <Chronopost />
+            </li>
+            <li
+              style={{
+                background: "white",
+                display: "flex",
+                padding: "3px",
+                borderRadius: "7px",
+              }}
+            >
+              <Colissimo />
+            </li>
+            <li
+              style={{
+                background: "white",
+                display: "flex",
+                padding: "3px",
+                borderRadius: "7px",
+              }}
+            >
+              <RelaisColis />
+            </li>
+          </ul>
         </div>
       </div>
       <div className={styles.footer}>
@@ -107,22 +144,34 @@ const Footer: React.FC<FooterProps> = () => {
             display: "flex",
             alignItems: "center",
             position: "relative",
-            cursor: "pointer",
           }}
         >
-          <Link href="/">
+          <Link href="/" aria-label="Home">
             <div>
               <Logo />
             </div>
           </Link>
           <div className={styles.social}>
-            <a href="https://www.facebook.com/" target="_blank">
+            <a
+              href="https://www.facebook.com/"
+              rel="noreferrer"
+              target="_blank"
+              aria-label="Facebook"
+            >
               <FacebookIcon />
             </a>
-            <a href="https://twitter.com/">
+            <a
+              href="https://twitter.com/"
+              aria-label="Twitter"
+              rel="noreferrer"
+            >
               <TwitterIcon />
             </a>
-            <a href="https://www.instagram.com/">
+            <a
+              href="https://www.instagram.com/"
+              aria-label="Instagram"
+              rel="noreferrer"
+            >
               <InstagramIcon />
             </a>
           </div>

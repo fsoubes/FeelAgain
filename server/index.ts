@@ -72,9 +72,9 @@ const main = async () => {
           httpOnly: true,
           sameSite: "lax", // csrf
           secure: __prod__, // cookie only works in https
-          domain: __prod__ ? ".fsoweb.dev" : undefined,
+          domain: __prod__ ? ".feelagain.fr" : undefined,
         },
-        saveUninitialized: true, // Try set cookie to session
+        saveUninitialized: false, // Try set cookie to session
         secret: process.env.SESSION_SECRET as string,
         resave: false,
       })

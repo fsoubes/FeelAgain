@@ -57,9 +57,7 @@ const Article: NextPage<Props> = ({ id }) => {
       <div
         className={styles.container}
         style={{
-          backgroundImage: data?.getSingleArticle.image_back
-            ? `url(${data?.getSingleArticle.image_back})`
-            : "url(https://i.imgur.com/O3IUbtb.png)",
+          backgroundImage: `url(${data?.getSingleArticle.image_back})`,
         }}
       >
         <div className={styles.tie__wrapper}>
@@ -108,7 +106,11 @@ const Article: NextPage<Props> = ({ id }) => {
               </div>
             </div>
 
-            <Link href="#content" className={styles.go__to__content}>
+            <Link
+              aria-label="top document"
+              href="#content"
+              className={styles.go__to__content}
+            >
               <span className={styles.angle__down}></span>
             </Link>
           </div>
@@ -137,7 +139,7 @@ const Article: NextPage<Props> = ({ id }) => {
               </article>
               <div className={styles.article__footer}>
                 <div className={styles.similar__articles}>
-                  <h3 style={{ color: "darkorange" }}>Articles similaires</h3>
+                  <h3 style={{ color: "#ff4500" }}>Articles similaires</h3>
                   <div className={styles.similar__list}>
                     {closest?.getClosestArticles.map((item) => {
                       return (
@@ -149,7 +151,7 @@ const Article: NextPage<Props> = ({ id }) => {
                               alt="closest"
                             ></img>
                           </Link>
-                          <h4>{item.title}</h4>
+                          <h5>{item.title}</h5>
                         </div>
                       );
                     })}
@@ -166,7 +168,12 @@ const Article: NextPage<Props> = ({ id }) => {
                       (commentRef.current as HTMLTextAreaElement).value = "";
                     }}
                   >
+                    <label htmlFor="comment" style={{ display: "none" }}>
+                      Commentaire
+                    </label>
                     <textarea
+                      id="comment"
+                      name="comment"
                       ref={commentRef as React.LegacyRef<HTMLTextAreaElement>}
                       rows={8}
                       required

@@ -1,5 +1,5 @@
-import { memo, useState, Fragment, useEffect } from "react";
-import PopUp from "../Modal/modal";
+import dynamic from "next/dynamic";
+import { memo, useState, Fragment } from "react";
 import { useApolloClient } from "@apollo/client";
 import SearchBar from "./UI/SearchBar";
 import { GetShoesByNameDocument, SearchResults } from "../../generated/graphql";
@@ -8,6 +8,8 @@ import styles from "../../styles/Search.module.scss";
 import Link from "next/link";
 import { Button } from "@material-ui/core";
 import { SearchProps, Relation } from "../../types/dashboard";
+
+const PopUp = dynamic(() => import("../Modal/modal")); // Good for Modal
 
 const SearchShoes: React.FC<SearchProps> = ({
   children,

@@ -1,4 +1,4 @@
-import { ReactElement, Children } from "react";
+import { ReactElement, Children, ReactEventHandler } from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@material-ui/core/styles";
 import { darkTheme as theme } from "../theme";
@@ -17,18 +17,17 @@ export default class MyDocument extends Document {
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            type="text/css"
+            as="style"
+            onLoad={
+              ("this.rel=`stylesheet`" as unknown) as ReactEventHandler<
+                HTMLLinkElement
+              >
+            }
           ></link>
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Lato:300,400,500,700&display=swap"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,500,700&display=swap"
-          />
-          <link
-            href="https://fr.allfont.net/allfont.css?fonts=alex-brush"
-            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Alex+Brush|Roboto+Slab:300,400,500,700&display=swap|family=Lato:300,400,500,700&display=swap"
             type="text/css"
           />
 

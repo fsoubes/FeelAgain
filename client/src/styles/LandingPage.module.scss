@@ -1,5 +1,5 @@
 .container {
-  min-width: 350px;
+  min-width: 300px;
   h2 {
     font-family: "Alex Brush";
     font-weight: 400;
@@ -341,7 +341,7 @@
     }
 
     .reviews__container {
-      min-height: 350px;
+      min-height: 300px;
       display: flex;
       align-items: center;
 
@@ -446,6 +446,7 @@
   padding: 10px;
   min-height: 296px;
   background: white;
+  margin-bottom: 1rem;
   p {
     font-size: 1.275rem;
     font-weight: 400;

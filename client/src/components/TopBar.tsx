@@ -203,7 +203,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
               <SearchIcon />
             </SearchShoes>
             <Link href="/">
-              <Button>
+              <Button aria-label="shopping basket">
                 {data && (
                   <Basket
                     total={data?.me?.items ? (data?.me?.items as number) : 0}
@@ -211,7 +211,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 )}
               </Button>
             </Link>
-            <Button onClick={() => setOpen(!open)}>
+            <Button onClick={() => setOpen(!open)} aria-label="menu">
               <MenuIcon />
             </Button>
           </div>
@@ -222,23 +222,11 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 : `${styles.navbar__links}`
             }
           >
-            <Link href="/shop">
-              <Button variant="text" color="inherit" disableRipple>
-                &nbsp;Shop
-              </Button>
-            </Link>
+            <Link href="/shop">&nbsp;Shop</Link>
 
-            <Link href="/blog">
-              <Button variant="text" color="inherit" disableRipple>
-                &nbsp;Blog
-              </Button>
-            </Link>
+            <Link href="/blog">&nbsp;Blog</Link>
 
-            <Link href="/marque">
-              <Button variant="text" color="inherit" disableRipple>
-                &nbsp;MARQUE
-              </Button>
-            </Link>
+            <Link href="/marque">&nbsp;MARQUE</Link>
             {isTabletorMobile && (
               <Fragment>{!data?.me ? unlogged : logged}</Fragment>
             )}
@@ -251,7 +239,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 <SearchIcon />
               </SearchShoes>
               <Link href="/panier">
-                <Button>
+                <Button aria-label="shopping basket">
                   {data && (
                     <Basket
                       total={data?.me?.items ? (data?.me?.items as number) : 0}

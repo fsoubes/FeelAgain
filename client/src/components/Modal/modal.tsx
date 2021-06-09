@@ -45,7 +45,12 @@ const PopUp: React.FC<ModalProps> = ({
 
   return (
     <Fragment>
-      <Button variant="text" color="inherit" onClick={handleOpen}>
+      <Button
+        variant="text"
+        color="inherit"
+        onClick={handleOpen}
+        aria-label="search"
+      >
         {icon}
       </Button>
 

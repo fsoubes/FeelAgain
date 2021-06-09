@@ -208,6 +208,31 @@ a {
   padding-right: calc(50% - var(--container-width) / 2);
 }
 
+//Logo Panier
+
+#basket {
+  width: 33px;
+  height: 30px;
+
+  .cls-1,
+  .cls-2 {
+    fill: none;
+    stroke: white;
+    stroke-miterlimit: 10;
+  }
+  .cls-1 {
+    stroke-width: 2px;
+  }
+  .cls-3 {
+    font-size: 11.4px;
+    stroke: darkorange;
+    font-family: MyriadPro-Regular, Myriad Pro;
+  }
+  circle {
+    stroke-width: 4px;
+  }
+}
+
 // Footer
 
 .Footer_footer__9WsPL,
@@ -215,6 +240,30 @@ a {
 .Footer_feelagain__accept__2Sir_ {
   padding-left: calc(50% - var(--container-width) / 2);
   padding-right: calc(50% - var(--container-width) / 2);
+}
+
+#relais__colis {
+  .cls-1 {
+    fill: #c0d248 !important;
+    stroke: transparent;
+  }
+  .cls-2 {
+    fill: #fff !important;
+    stroke: transparent;
+  }
+  .cls-3 {
+    fill: #e52a40 !important;
+    stroke: transparent;
+  }
+}
+
+#Chronopost {
+  .cls-1 {
+    fill: url(#Dégradé_sans_nom_3);
+  }
+  .cls-2 {
+    fill: #3c3c3b;
+  }
 }
 
 // Pagination
@@ -303,31 +352,6 @@ a {
   background-color: transparent;
   border-color: #ddd;
   cursor: not-allowed;
-}
-
-//Logo Panier
-
-#basket {
-  width: 33px;
-  height: 30px;
-
-  .cls-1,
-  .cls-2 {
-    fill: none;
-    stroke: white;
-    stroke-miterlimit: 10;
-  }
-  .cls-1 {
-    stroke-width: 2px;
-  }
-  .cls-3 {
-    font-size: 11.4px;
-    stroke: darkorange;
-    font-family: MyriadPro-Regular, Myriad Pro;
-  }
-  circle {
-    stroke-width: 4px;
-  }
 }
 
 // Search ref
