@@ -6,6 +6,7 @@ import * as Carousel from "../components/Carousel/index";
 import RatingRes from "../components/StarRating/RatingRes";
 import useResponsive from "../utils/useResponsive";
 import { useRouter } from "next/router";
+import Head from "../components/SEO/Head";
 
 type Review = {
   src: string;
@@ -142,6 +143,14 @@ const Home: React.FC = ({}) => {
 
   return (
     <Layout>
+      <Head
+        title={
+          "Laissez-vous tenter  avec FeelAgain et découvrez nos chaussures"
+        }
+        description={
+          "Découvrez  les 4 saisons avec FeelAgain.Avec nos produits en éditions limitées. Laissez-vous tenter et découvrez nos chaussures."
+        }
+      />
       <div className="container__shop">
         <div className={styles.container}>
           <div className={`${styles.presentation} ${styles.presentation__row}`}>

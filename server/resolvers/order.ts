@@ -27,6 +27,51 @@ interface ValueProps {
   [key: string]: number;
 }
 
+// const currentTimeline = [
+//   {
+//     id: 1,
+//     shortLabel: "Pris en charge par La Poste",
+//     longLabel: "",
+//     date: "2019-07-17T00:00:00+02:00",
+//     country: "",
+//     status: true,
+//     type: 1,
+//   },
+//   {
+//     id: 2,
+//     shortLabel: "En cours d'acheminement",
+//     longLabel: "",
+//     country: "",
+//     status: true,
+//     type: 1,
+//   },
+//   {
+//     id: 3,
+//     shortLabel: "Arrivé sur le site de distribution",
+//     longLabel: "",
+//     country: "",
+//     status: true,
+//     type: 1,
+//   },
+//   {
+//     id: 4,
+//     shortLabel: "A disposition en point de retrait",
+//     longLabel:
+//       "Votre courrier est disponible en point de retrait. Il y sera conservé pendant 15 jours et sera remis au destinataire sur présentation d'une pièce d'identité.",
+//     country: "",
+//     status: true,
+//     type: 1,
+//   },
+//   {
+//     id: 5,
+//     shortLabel: "Courrier distribué",
+//     longLabel: "",
+//     country: "",
+//     status: false,
+//     type: 1,
+//   },
+// ];
+
 @Resolver((_of) => Orders)
 export class OrderResolver {
   @Mutation(() => String)
@@ -208,21 +253,24 @@ export class OrderResolver {
         .lean();
 
       for (const { tracking } of orders) {
-        const res = await fetch(
-          `https://api.laposte.fr/suivi/v2/idships/${tracking}FR?lang=fr_FR`,
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "X-Okapi-Key": process.env.LAPOSTE_KEY_DEV,
-            },
-          }
-        );
+        try {
+          const res = await fetch(
+            `https://api.laposte.fr/suivi/v2/idships/${tracking}FR?lang=fr_FR`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "X-Okapi-Key": process.env.LAPOSTE_KEY_DEV,
+              },
+            }
+          );
 
-        const resBody = await res.json();
-
-        data.push(resBody);
+          const resBody = await res.json();
+          data.push(resBody);
+        } catch (err) {
+          console.log(err);
+        }
       }
 
       const updateInfo = data.map((item: any, index: number) => {

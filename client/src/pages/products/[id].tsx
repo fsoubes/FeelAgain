@@ -18,6 +18,7 @@ import SmallCartProduct from "../../components/Cart/SmallCartProduct";
 import ProdutDetail from "../../components/Products/ProdutDetail";
 import CommentsList from "../../components/Comments/CommentsList";
 import ScoreShoes from "../../components/Score/ScoreShoes";
+import Head from "../../components/SEO/Head";
 
 interface Props {
   id?: string;
@@ -71,6 +72,9 @@ const Article: NextPage<Props> = ({ id }) => {
 
   return (
     <Layout isBasket={openCard as boolean}>
+      {info.product && info.title && (
+        <Head title={info.title} product={info.product} />
+      )}
       {openCard && <BackDropShadow></BackDropShadow>}
       <Outside open={openCard} setOpen={setOpenCard}>
         <CartSideBar isOpen={openCard}>

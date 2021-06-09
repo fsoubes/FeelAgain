@@ -8,6 +8,7 @@ import { withApollo } from "../utils/withApollo";
 import Link from "next/link";
 import { themes } from "../constants/constants";
 import useResponsive from "../utils/useResponsive";
+import Head from "../components/SEO/Head";
 
 const Blog: React.FC = ({}) => {
   const { data, loading, variables, fetchMore } = useGetArticlesQuery({
@@ -61,6 +62,7 @@ const Blog: React.FC = ({}) => {
 
   return (
     <Layout variant="main">
+      <Head title={"Découvrez l'univers feelagain avec nos articles/blog"} />
       <div className={styles.home__container}>
         {!data && loading ? (
           <div>Loading ...</div>

@@ -13,6 +13,7 @@ import ProductListDash from "../components/Dashboard/Product/ProductList";
 import Sort from "../components/Sort/Sort";
 import Outside from "../components/OutsideEvent/Outside";
 import styles from "../styles/Shop.module.scss";
+import Head from "../components/SEO/Head";
 
 interface ShopProps {
   page?: number;
@@ -78,6 +79,12 @@ const Shop: NextPage<ShopProps> = ({
 
   return (
     <Layout>
+      <Head
+        title={"Shop Feelagain"}
+        description={
+          "Parcourir la boutique/shop pour y découvrir nos produits/chaussures"
+        }
+      />
       {data && (
         <div className="container__shop">
           <div

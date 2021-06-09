@@ -13,6 +13,7 @@ import styles from "../../styles/Article.module.scss";
 import { isServer } from "../../utils/isServer";
 import { Button, Link } from "@material-ui/core";
 import ScrollStatus from "../../components/ScrollStatus/ScrollStatus";
+import Head from "../../components/SEO/Head";
 
 const MarkdownSanitize = dynamic(
   () => import("../../components/Markdown/MarkdownSanitize"),
@@ -51,6 +52,13 @@ const Article: NextPage<Props> = ({ id }) => {
 
   return (
     <Layout>
+      {data && data.getSingleArticle && (
+        <Head
+          title={data.getSingleArticle.title}
+          description={data.getSingleArticle.description as string}
+          tags={data.getSingleArticle.tags as string}
+        />
+      )}
       <ScrollStatus
         articleRef={articleRef as React.MutableRefObject<HTMLInputElement>}
       />
