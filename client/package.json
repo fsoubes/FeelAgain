@@ -16,7 +16,6 @@
     "@material-ui/styles": "^4.11.2",
     "@stripe/react-stripe-js": "^1.4.0",
     "@stripe/stripe-js": "^1.13.2",
-    "body-scroll-lock": "^3.1.5",
     "dompurify": "^2.2.9",
     "easymde": "^2.15.0",
     "formik": "^2.2.6",

@@ -24,7 +24,6 @@ import Basket from "../svg/basket";
 import SearchIcon from "@material-ui/icons/Search";
 import SubMenu from "./SubMenu/SubMenu";
 import { debounce } from "@material-ui/core";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const useStyles = makeStyles({
   show: {
@@ -255,7 +254,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
             )}
           </div>
         </div>
-        {!isTabletorMobile && (
+        {!isTabletorMobile && data && typeof data === "object" && (
           <div className={styles.navbar__right}>
             <div className={styles.search}>
               <SearchShoes>
@@ -274,7 +273,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
 
             <div
               className={
-                data && data?.me ? styles.navbar__unlogged : styles.navbar__auth
+                data && data?.me ? styles.navbar__auth : styles.navbar__unlogged
               }
             >
               {data && typeof data === "object" && (

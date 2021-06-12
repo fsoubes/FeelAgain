@@ -76,9 +76,9 @@ export class Blog {
   @Property({ ref: User, default: [], nullable: false })
   downRating: Ref<User>[];
 
-  @Field((_type) => Comments)
-  @Property({ ref: Comments, required: false })
-  comments?: Ref<Comments>;
+  @Field((_type) => [Comments], { defaultValue: [] })
+  @Property({ ref: "Comments", required: false, default: [] })
+  comments: Ref<Comments>[];
 }
 
 export const BlogModel = getModelForClass(Blog, {

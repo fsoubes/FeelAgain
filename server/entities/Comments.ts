@@ -4,6 +4,7 @@ import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
 import { User } from "./User";
 import { Shoes } from "./Shoes";
+import { Blog } from "./Blog";
 
 @ObjectType()
 export class Comments {
@@ -11,7 +12,7 @@ export class Comments {
   readonly _id: ObjectId;
 
   @Field({ nullable: true })
-  @Property({ required: true })
+  @Property({ required: false })
   title: String;
 
   @Field({ nullable: true })
@@ -23,8 +24,12 @@ export class Comments {
   score: Number;
 
   @Field((_type) => Shoes, { nullable: true })
-  @Property({ ref: Shoes, required: true })
+  @Property({ ref: Shoes, required: false })
   product: Ref<Shoes>;
+
+  @Field((_type) => Blog, { nullable: true })
+  @Property({ ref: Blog, required: false })
+  article: Ref<Blog>;
 
   @Field(() => Date)
   createdAt: Date;

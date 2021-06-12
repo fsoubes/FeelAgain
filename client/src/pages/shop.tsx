@@ -96,6 +96,19 @@ const Shop: NextPage<ShopProps> = ({
       />
 
       <div className="container__shop">
+        {/*      <header>
+              <nav>
+                <Link href="/">
+                  <span className={styles.route__home}>Acceuil</span>
+                </Link>
+                <em className={styles.delimiter}>/</em>
+                <Link href="/blog">
+                  <span>Blog</span>
+                </Link>
+                <em className={styles.delimiter}>/</em>
+                <span> {data?.getSingleArticle.title}</span>
+              </nav>
+            </header> */}
         <div
           className="container__header"
           style={{ backgroundColor: "rgba(215, 215, 221,.5" }}

@@ -1,11 +1,10 @@
 import { User } from "../entities/User";
 import { isAuth } from "../middlewares/isAuth";
-import { ObjectId } from "mongodb";
 import { BlogInput } from "./types/blog-input";
 import { MyContext } from "../type";
 import { ObjectType, Field } from "type-graphql";
 import { PaginationInfo } from "./types/pagination-result";
-
+const toObjectId = require("mongodb").ObjectID;
 import {
   Query,
   Resolver,
@@ -16,6 +15,7 @@ import {
   FieldResolver,
   Root,
 } from "type-graphql";
+import { ObjectId } from "mongodb";
 import { Blog, BlogModel } from "../entities/Blog";
 import { dateToString } from "../helpers/dateToString";
 import { getIntervalBetweenDates } from "../helpers/dateFormater";
@@ -23,6 +23,7 @@ import { voteRating } from "./enum/voteRating";
 import { isUpdoot, votingRes } from "../helpers/updoot";
 import { isAdmin } from "../middlewares/isAdmin";
 import { toDot } from "../helpers/toDot";
+import { Comments, CommentsModel } from "../entities/Comments";
 
 @ObjectType()
 class PaginationResponse {
@@ -41,7 +42,7 @@ export class BlogResolver {
     @Ctx() {  }: MyContext
   ): Promise<Blog> {
     try {
-      const article = await BlogModel.findById(articleId);
+      const article = await BlogModel.findById(articleId).lean();
       if (!article) {
         throw new Error("Invalid recipe ID");
       }
@@ -148,6 +149,43 @@ export class BlogResolver {
     }
   }
 
+  @Mutation(() => String)
+  @UseMiddleware(isAuth)
+  async addComment(
+    @Arg("comment") comment: String,
+    @Arg("articleId") articleId: String,
+
+    @Ctx() { req }: MyContext
+  ): Promise<String> {
+    try {
+      const commentDoc = new CommentsModel({
+        comment: comment,
+        author: req.session.userId,
+        article: articleId as string,
+      });
+
+      await commentDoc.save();
+
+      if (commentDoc) {
+        await BlogModel.findOneAndUpdate(
+          {
+            _id: toObjectId(articleId),
+          },
+          {
+            $push: {
+              comments: commentDoc._id,
+            },
+          },
+          { useFindAndModify: false }
+        );
+      }
+
+      return "Done";
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Mutation(() => Blog)
   @UseMiddleware(isAdmin)
   async updateArticle(
@@ -208,6 +246,14 @@ export class BlogResolver {
     } catch (err) {
       throw err;
     }
+  }
+
+  @FieldResolver(() => Comments)
+  async comments(@Root() item: Blog, @Ctx() { commentsLoader }: MyContext) {
+    if (!item.comments || item.comments.length === 0) {
+      return [];
+    }
+    return commentsLoader.loadMany(item.comments as ObjectId[]);
   }
 
   @FieldResolver(() => User)

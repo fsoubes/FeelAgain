@@ -1,5 +1,8 @@
 query getSingleArticle($articleId: ObjectId!) {
   getSingleArticle(articleId: $articleId) {
     ...ArticleFragment
+    comments {
+      ...CommentsFragment
+    }
   }
 }

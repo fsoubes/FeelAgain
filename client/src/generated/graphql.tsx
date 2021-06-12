@@ -100,6 +100,7 @@ export type Comments = {
   comment?: Maybe<Scalars['String']>;
   score?: Maybe<Scalars['Float']>;
   product?: Maybe<Shoes>;
+  article?: Maybe<Blog>;
   createdAt: Scalars['DateTime'];
   recommanded_by?: Maybe<Scalars['Float']>;
   recommanded: Array<User>;
@@ -173,6 +174,29 @@ export type Images = {
   product_id: Scalars['String'];
   width?: Maybe<Scalars['Float']>;
   height?: Maybe<Scalars['Float']>;
+};
+
+export type Blog = {
+  __typename?: 'Blog';
+  _id: Scalars['ObjectId'];
+  title: Scalars['String'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  image_url?: Maybe<Scalars['String']>;
+  image_back?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
+  source: Array<Scalars['String']>;
+  social: Array<Scalars['String']>;
+  article?: Maybe<Scalars['String']>;
+  is_published?: Maybe<Scalars['Boolean']>;
+  positiveRating: Scalars['Float'];
+  totalVoting: Scalars['Float'];
+  authRating?: Maybe<Scalars['String']>;
+  author: User;
+  upRating: Array<User>;
+  downRating: Array<User>;
+  comments?: Maybe<Array<Comments>>;
 };
 
 export type User = {
@@ -272,29 +296,6 @@ export type SearchResults = {
   edges: Array<Shoes>;
 };
 
-export type Blog = {
-  __typename?: 'Blog';
-  _id: Scalars['ObjectId'];
-  title: Scalars['String'];
-  createdAt: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-  description?: Maybe<Scalars['String']>;
-  image_url?: Maybe<Scalars['String']>;
-  image_back?: Maybe<Scalars['String']>;
-  tags?: Maybe<Scalars['String']>;
-  source: Array<Scalars['String']>;
-  social: Array<Scalars['String']>;
-  article?: Maybe<Scalars['String']>;
-  is_published?: Maybe<Scalars['Boolean']>;
-  positiveRating: Scalars['Float'];
-  totalVoting: Scalars['Float'];
-  authRating?: Maybe<Scalars['String']>;
-  author: User;
-  upRating: Array<User>;
-  downRating: Array<User>;
-  comments: Comments;
-};
-
 export type PaginationResponse = {
   __typename?: 'PaginationResponse';
   pageInfo: PaginationInfo;
@@ -342,6 +343,7 @@ export type Mutation = {
   login: UserResponse;
   logout: Scalars['Boolean'];
   addArticle: Blog;
+  addComment: Scalars['String'];
   updateArticle: Blog;
   ratingReview: Scalars['Boolean'];
   addShoes: Scalars['Boolean'];
@@ -446,6 +448,12 @@ export type MutationLoginArgs = {
 
 export type MutationAddArticleArgs = {
   blog: BlogInput;
+};
+
+
+export type MutationAddCommentArgs = {
+  articleId: Scalars['String'];
+  comment: Scalars['String'];
 };
 
 
@@ -605,7 +613,7 @@ export type ArticleFragmentFragment = (
 
 export type CommentsFragmentFragment = (
   { __typename?: 'Comments' }
-  & Pick<Comments, '_id' | 'title' | 'comment' | 'score' | 'is_recommanding' | 'recommanded_by'>
+  & Pick<Comments, '_id' | 'title' | 'comment' | 'score' | 'is_recommanding' | 'recommanded_by' | 'createdAt'>
   & { author: (
     { __typename?: 'User' }
     & Pick<User, '_id' | 'nickname'>
@@ -702,6 +710,17 @@ export type AddCartItemMutation = (
       ) }
     ) }
   ) }
+);
+
+export type AddCommentMutationVariables = Exact<{
+  articleId: Scalars['String'];
+  comment: Scalars['String'];
+}>;
+
+
+export type AddCommentMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addComment'>
 );
 
 export type AddImageMutationVariables = Exact<{
@@ -1366,6 +1385,10 @@ export type GetSingleArticleQuery = (
   { __typename?: 'Query' }
   & { getSingleArticle: (
     { __typename?: 'Blog' }
+    & { comments?: Maybe<Array<(
+      { __typename?: 'Comments' }
+      & CommentsFragmentFragment
+    )>> }
     & ArticleFragmentFragment
   ) }
 );
@@ -1447,6 +1470,7 @@ export const CommentsFragmentFragmentDoc = gql`
   score
   is_recommanding
   recommanded_by
+  createdAt
   author {
     _id
     nickname
@@ -1631,6 +1655,37 @@ export function useAddCartItemMutation(baseOptions?: Apollo.MutationHookOptions<
 export type AddCartItemMutationHookResult = ReturnType<typeof useAddCartItemMutation>;
 export type AddCartItemMutationResult = Apollo.MutationResult<AddCartItemMutation>;
 export type AddCartItemMutationOptions = Apollo.BaseMutationOptions<AddCartItemMutation, AddCartItemMutationVariables>;
+export const AddCommentDocument = gql`
+    mutation AddComment($articleId: String!, $comment: String!) {
+  addComment(articleId: $articleId, comment: $comment)
+}
+    `;
+export type AddCommentMutationFn = Apollo.MutationFunction<AddCommentMutation, AddCommentMutationVariables>;
+
+/**
+ * __useAddCommentMutation__
+ *
+ * To run a mutation, you first call `useAddCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCommentMutation, { data, loading, error }] = useAddCommentMutation({
+ *   variables: {
+ *      articleId: // value for 'articleId'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useAddCommentMutation(baseOptions?: Apollo.MutationHookOptions<AddCommentMutation, AddCommentMutationVariables>) {
+        return Apollo.useMutation<AddCommentMutation, AddCommentMutationVariables>(AddCommentDocument, baseOptions);
+      }
+export type AddCommentMutationHookResult = ReturnType<typeof useAddCommentMutation>;
+export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
+export type AddCommentMutationOptions = Apollo.BaseMutationOptions<AddCommentMutation, AddCommentMutationVariables>;
 export const AddImageDocument = gql`
     mutation AddImage($parentId: String!, $position: Float, $src: String, $width: Float, $height: Float, $product_id: String) {
   addImage(
@@ -3101,9 +3156,13 @@ export const GetSingleArticleDocument = gql`
     query getSingleArticle($articleId: ObjectId!) {
   getSingleArticle(articleId: $articleId) {
     ...ArticleFragment
+    comments {
+      ...CommentsFragment
+    }
   }
 }
-    ${ArticleFragmentFragmentDoc}`;
+    ${ArticleFragmentFragmentDoc}
+${CommentsFragmentFragmentDoc}`;
 
 /**
  * __useGetSingleArticleQuery__

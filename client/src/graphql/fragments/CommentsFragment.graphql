@@ -5,7 +5,7 @@ fragment CommentsFragment on Comments {
   score
   is_recommanding
   recommanded_by
-  # createdAt
+  createdAt
   author {
     _id
     nickname

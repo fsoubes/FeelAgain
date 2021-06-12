@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { Layout } from "../../components/Layout";
 import {
+  useAddCommentMutation,
   useGetClosestArticlesQuery,
   useGetSingleArticleQuery,
+  Comments,
 } from "../../generated/graphql";
 import VoteRating from "../../components/Votes/VoteRating";
 import { withApollo } from "../../utils/withApollo";
@@ -14,6 +16,7 @@ import { isServer } from "../../utils/isServer";
 import { Button, Link } from "@material-ui/core";
 import ScrollStatus from "../../components/ScrollStatus/ScrollStatus";
 import Head from "../../components/SEO/Head";
+import { useIsVisitor } from "../../utils/useIsVisitor";
 
 const MarkdownSanitize = dynamic(
   () => import("../../components/Markdown/MarkdownSanitize"),
@@ -32,6 +35,10 @@ const Article: NextPage<Props> = ({ id }) => {
     variables: { articleId: id },
     skip: isServer(),
   });
+
+  const isVisitor = useIsVisitor();
+
+  const [addComment] = useAddCommentMutation();
 
   const { data: closest } = useGetClosestArticlesQuery({
     variables: {
@@ -53,7 +60,9 @@ const Article: NextPage<Props> = ({ id }) => {
 
   const handleClick = () => {
     window.scroll({
-      top: startDocument.current?.getBoundingClientRect().top,
+      top:
+        (startDocument.current?.getBoundingClientRect().top as number) +
+        window.scrollY,
       left: 0,
       behavior: "smooth",
     });
@@ -163,33 +172,83 @@ const Article: NextPage<Props> = ({ id }) => {
                 </div>
               </article>
               <div className={styles.article__footer}>
-                <div className={styles.similar__articles}>
-                  <h3 style={{ color: "#ff4500" }}>Articles similaires</h3>
-                  <div className={styles.similar__list}>
-                    {closest?.getClosestArticles.map((item) => {
-                      return (
-                        <div className={styles.similar__item} key={item._id}>
-                          <Link href={`/article/${item._id}`}>
-                            <img
-                              loading="lazy"
-                              src={item.image_url as string}
-                              alt="closest"
-                            ></img>
-                          </Link>
-                          <h5>{item.title}</h5>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className={styles.comments}>
-                  <h3>Commentaires</h3>
-                </div>
+                {closest?.getClosestArticles &&
+                  closest?.getClosestArticles.length > 0 && (
+                    <div className={styles.similar__articles}>
+                      <h3 style={{ color: "#ff4500" }}>Articles similaires</h3>
+                      <div className={styles.similar__list}>
+                        {closest?.getClosestArticles.map((item) => {
+                          return (
+                            <div
+                              className={styles.similar__item}
+                              key={item._id}
+                            >
+                              <Link href={`/article/${item._id}`}>
+                                <img
+                                  loading="lazy"
+                                  src={item.image_url as string}
+                                  alt="closest"
+                                ></img>
+                              </Link>
+                              <h5>{item.title}</h5>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                {(data?.getSingleArticle?.comments as Comments[]) &&
+                  (data?.getSingleArticle?.comments as Comments[]).length >
+                    0 && (
+                    <div className={styles.comments}>
+                      <h3>Commentaires</h3>
+                      <ul
+                        style={{ listStyle: "none", margin: "0" }}
+                        className={styles.comment__list}
+                      >
+                        {(data?.getSingleArticle?.comments as Comments[]).map(
+                          (item) => {
+                            return (
+                              <li className={styles.comment}>
+                                <article>
+                                  <div className={styles.comment__author}>
+                                    <img
+                                      alt="logo_author"
+                                      src={"/feelogo.png"}
+                                      width={60}
+                                      height={60}
+                                    ></img>
+                                    <b>{item.author.nickname}</b>
+                                    <div className={styles.comment__metadata}>
+                                      Il y a 2jours
+                                    </div>
+                                  </div>
+                                  <div className={styles.comment__content}>
+                                    <p>{item.comment}</p>
+                                  </div>
+                                </article>
+                              </li>
+                            );
+                          }
+                        )}
+                      </ul>
+                    </div>
+                  )}
                 <div className={styles.form__comment}>
                   <h3>Laisser un avis</h3>
                   <form
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
                       e.preventDefault();
+                      if (isVisitor) {
+                        router.replace("/connexion?next=" + `/article/${id}`);
+                      } else {
+                        await addComment({
+                          variables: {
+                            articleId: id as string,
+                            comment: commentRef?.current?.value as string,
+                          },
+                        });
+                      }
                       (commentRef.current as HTMLTextAreaElement).value = "";
                     }}
                   >

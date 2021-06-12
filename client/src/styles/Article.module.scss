@@ -220,9 +220,9 @@
                 display: block;
                 max-width: 100%;
                 height: auto;
-                width: 290px;
-                height: 180px;
-                aspect-ratio: auto 290 / 180;
+                width: 225px;
+                height: 150px;
+                aspect-ratio: auto 225 / 150;
               }
             }
             h5 {
@@ -251,6 +251,52 @@
             vertical-align: top;
             resize: none;
             padding: 5px;
+          }
+        }
+      }
+
+      .comments {
+        .comment__list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          .comment {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            article {
+              line-height: 1.8;
+              margin-top: 10px;
+              overflow: hidden;
+              .comment__author {
+                display: block;
+                img {
+                  border-radius: 50%;
+                  box-shadow: 0 0 8px #e0e7f1;
+                  border: 2px solid #ffffff;
+                  margin: 6px 20px 6px 6px;
+                  float: left;
+                }
+                b {
+                  font-size: 15px;
+                  color: rgb(255, 69, 0);
+                }
+              }
+
+              .comment__metadata {
+                font-size: 12px;
+              }
+
+              .comment__content {
+                overflow: hidden;
+                padding-top: 10px;
+                p {
+                  margin: 0 0 7px 0;
+                  line-height: 21px;
+                }
+              }
+            }
           }
         }
       }
