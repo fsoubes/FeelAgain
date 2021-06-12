@@ -1,13 +1,13 @@
 import { useEffect, useState, Fragment } from "react";
-import { Layout } from "../components/Layout";
-import { useGetShoesQuery } from "../generated/graphql";
-import { withApollo } from "../utils/withApollo";
 import { useRouter } from "next/router";
-import { NextPage } from "next";
-import Pagination from "../components/Pagination/Pagination";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { Button } from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
+import { Layout } from "../components/Layout";
+import { useGetShoesQuery } from "../generated/graphql";
+import { withApollo } from "../utils/withApollo";
+import { NextPage } from "next";
+import Pagination from "../components/Pagination/Pagination";
 import CustomAccordion from "../components/Accordion/Accordion";
 import ProductListDash from "../components/Dashboard/Product/ProductList";
 import Sort from "../components/Sort/Sort";
@@ -23,6 +23,15 @@ interface ShopProps {
   sort?: string;
   product?: string;
 }
+
+const fillEmpty = {
+  _id: "",
+  src: "",
+  price: "",
+  title: "",
+  score: "",
+  vendor: "",
+};
 
 const sortOptions = {
   id_asc: "Meilleures ventes",
@@ -85,81 +94,86 @@ const Shop: NextPage<ShopProps> = ({
           "Parcourir la boutique/shop pour y découvrir nos produits/chaussures"
         }
       />
-      {data && (
-        <div className="container__shop">
-          <div
-            className="container__header"
-            style={{ backgroundColor: "rgba(215, 215, 221,.5" }}
-          >
-            <h2>FeelAgain/Shop</h2>
-            <h2>
-              {currentSearch
-                ? `${data?.getFilterShoes.pageInfo.totalItem} résultats pour “${currentSearch}”`
-                : `${data?.getFilterShoes.pageInfo.totalItem} articles`}
-            </h2>
-          </div>
-          <div
-            className="container__header"
-            style={{ backgroundColor: "transparent" }}
-          >
-            <div>
-              <Button onClick={() => setFilter(!isFilter)}>
-                <FilterListIcon />
-                <span>{isFilter ? "Masquer" : "Afficher"} les filtres</span>
-              </Button>
-            </div>
-            <div style={{ position: "relative" }}>
-              <Outside open={isSorting} setOpen={setSorting}>
-                <Fragment>
-                  <Button
-                    onClick={() => {
-                      setSorting(!isSorting);
-                    }}
-                  >
-                    <span>Trier</span>
-                    <SortIcon />
-                  </Button>
-                  {isSorting && (
-                    <Sort
-                      router={router}
-                      isSort={sortingBy}
-                      options={sortOptions}
-                      setSort={setSort}
-                      closing={setSorting}
-                    />
-                  )}
-                </Fragment>
-              </Outside>
-            </div>
-          </div>
-          <div className={styles.container}>
-            <CustomAccordion
-              setCurrentPage={setCurrentPage}
-              currentSearch={currentSearch as string}
-              setSearch={setSearch}
-              setSort={setSort}
-              refetch={refetch}
-              sortingBy={sortingBy}
-              isOpen={isFilter}
-              size={size}
-              tags={tags}
-              product={product}
-              search={search}
-            />
 
+      <div className="container__shop">
+        <div
+          className="container__header"
+          style={{ backgroundColor: "rgba(215, 215, 221,.5" }}
+        >
+          <h2>FeelAgain/Shop</h2>
+          <h2>
+            {currentSearch
+              ? `${data?.getFilterShoes.pageInfo.totalItem} résultats pour “${currentSearch}”`
+              : `${data?.getFilterShoes.pageInfo.totalItem} articles`}
+          </h2>
+        </div>
+        <div
+          className="container__header"
+          style={{ backgroundColor: "transparent" }}
+        >
+          <div>
+            <Button onClick={() => setFilter(!isFilter)}>
+              <FilterListIcon />
+              <span>{isFilter ? "Masquer" : "Afficher"} les filtres</span>
+            </Button>
+          </div>
+          <div style={{ position: "relative" }}>
+            <Outside open={isSorting} setOpen={setSorting}>
+              <Fragment>
+                <Button
+                  onClick={() => {
+                    setSorting(!isSorting);
+                  }}
+                >
+                  <span>Trier</span>
+                  <SortIcon />
+                </Button>
+                {isSorting && (
+                  <Sort
+                    router={router}
+                    isSort={sortingBy}
+                    options={sortOptions}
+                    setSort={setSort}
+                    closing={setSorting}
+                  />
+                )}
+              </Fragment>
+            </Outside>
+          </div>
+        </div>
+        <div className={styles.container}>
+          <CustomAccordion
+            setCurrentPage={setCurrentPage}
+            currentSearch={currentSearch as string}
+            setSearch={setSearch}
+            setSort={setSort}
+            refetch={refetch}
+            sortingBy={sortingBy}
+            isOpen={isFilter}
+            size={size}
+            tags={tags}
+            product={product}
+            search={search}
+          />
+          {!data ? (
+            <ProductListDash
+              path={"/products/"}
+              shoes={Array(15).fill(fillEmpty)}
+            />
+          ) : (
             <ProductListDash
               shoes={data.getFilterShoes?.edges}
               path={"/products/"}
             />
-          </div>
-          <Pagination
-            path={"/shop"}
-            refetch={refetch}
-            page={currentPage}
-            total={data?.getFilterShoes?.pageInfo.total as number}
-          />
+          )}
         </div>
-      )}
+        <Pagination
+          path={"/shop"}
+          refetch={refetch}
+          page={currentPage}
+          total={data?.getFilterShoes?.pageInfo.total as number}
+        />
+      </div>
     </Layout>
   );
 };

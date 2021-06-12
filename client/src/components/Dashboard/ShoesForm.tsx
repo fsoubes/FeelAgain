@@ -35,10 +35,12 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
   const alert = useAlert();
   const router = useRouter();
   const [relations, setRelations] = useState<Relation[]>([]);
+  const [description, setDescription] = useState<string>("");
 
   useEffect(() => {
     if (fetchValues) {
       setRelations(fetchValues.relatives);
+      setDescription(fetchValues.body_html);
     }
   }, [fetchValues]);
 
@@ -57,18 +59,6 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
     },
     []
   );
-
-  /* const handleRemove = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: string
-  ): Promise<void> => {
-    try {
-      setRelations(relations.filter((item) => item._id !== id));
-      e.stopPropagation();
-    } catch (err) {
-      throw err;
-    }
-  }; */
 
   return (
     <Formik
@@ -94,7 +84,6 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
           let {
             variants: initialVariants,
             images: initialImages,
-            // relatives: initialRelatives,
             ...initialShoes
           } = {
             ...(fetchValues as Initializer),
@@ -119,6 +108,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
               ? await eventShoes({
                   variables: {
                     ...(shoesVariable as any),
+                    body_html: description,
                   },
                 })
               : { data: null };
@@ -240,7 +230,12 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
       {({ values }) => (
         <Form>
           {current === 0 && (
-            <GeneralForm {...values} setRelation={setRelations}>
+            <GeneralForm
+              {...values}
+              setRelation={setRelations}
+              description={description}
+              setDescription={setDescription}
+            >
               <Fragment>
                 {fetchValues?.relatives.length === 0 && relations.length === 0 && (
                   <div

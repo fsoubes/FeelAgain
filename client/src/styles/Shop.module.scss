@@ -18,6 +18,16 @@
   grid-auto-flow: dense;
   width: 100%;
   transition: 0.3s ease;
+  @media only screen and(max-width: 1024px) {
+    > div {
+      > div {
+        > div {
+          will-change: unset !important;
+          transform: none !important;
+        }
+      }
+    }
+  }
   @media only screen and(max-width: 991px) {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }

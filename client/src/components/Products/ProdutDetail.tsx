@@ -12,6 +12,8 @@ interface Info {
   comments: Comments[] | [];
   title: string;
   product: string;
+  handle: string;
+
   scored_by: number;
   score_1: number;
   score_2: number;
@@ -62,6 +64,7 @@ const ProdutDetail: React.FC<ProdutDetailProps> = ({
         score_4: data.getSingleShoe.score_4,
         score_5: data.getSingleShoe.score_5,
         score: data.getSingleShoe.score,
+        handle: data.getSingleShoe.handle,
       });
 
       const images = data?.getSingleShoe?.images?.map((item) => ({

@@ -46,6 +46,7 @@ const PopUp: React.FC<ModalProps> = ({
   return (
     <Fragment>
       <Button
+        disableRipple
         variant="text"
         color="inherit"
         onClick={handleOpen}

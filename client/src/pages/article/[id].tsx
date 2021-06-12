@@ -5,10 +5,10 @@ import {
   useGetClosestArticlesQuery,
   useGetSingleArticleQuery,
 } from "../../generated/graphql";
+import VoteRating from "../../components/Votes/VoteRating";
 import { withApollo } from "../../utils/withApollo";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import VoteRating from "../../components/Votes/VoteRating";
 import styles from "../../styles/Article.module.scss";
 import { isServer } from "../../utils/isServer";
 import { Button, Link } from "@material-ui/core";
@@ -43,6 +43,7 @@ const Article: NextPage<Props> = ({ id }) => {
 
   const articleRef = useRef<HTMLInputElement>();
   const commentRef = useRef<HTMLTextAreaElement>();
+  const startDocument = useRef<HTMLDivElement>();
 
   useEffect(() => {
     if (!id) {
@@ -50,12 +51,25 @@ const Article: NextPage<Props> = ({ id }) => {
     }
   }, [id]);
 
+  const handleClick = () => {
+    window.scroll({
+      top: startDocument.current?.getBoundingClientRect().top,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <Layout>
       {data && data.getSingleArticle && (
         <Head
           title={data.getSingleArticle.title}
-          description={data.getSingleArticle.description as string}
+          description={
+            (data.getSingleArticle.article as string)
+              .split(" ")
+              .slice(0, 20)
+              .join(" ") as string
+          }
           tags={data.getSingleArticle.tags as string}
         />
       )}
@@ -92,7 +106,6 @@ const Article: NextPage<Props> = ({ id }) => {
                 authRating={data?.getSingleArticle.authRating}
                 articleId={data?.getSingleArticle._id}
               /> */}
-
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <div
                   className={styles.header_useravatar}
@@ -114,16 +127,20 @@ const Article: NextPage<Props> = ({ id }) => {
               </div>
             </div>
 
-            <Link
-              aria-label="top document"
-              href="#content"
+            <div
               className={styles.go__to__content}
+              style={{ cursor: "pointer" }}
+              onClick={handleClick}
             >
               <span className={styles.angle__down}></span>
-            </Link>
+            </div>
           </div>
           <div className={styles.container__content}>
-            <div id="content" className={styles.content}>
+            <div
+              ref={startDocument as React.MutableRefObject<HTMLDivElement>}
+              id="content"
+              className={styles.content}
+            >
               <article>
                 <div className={styles.visual__container}>
                   <figure className={styles.visual__content}>

@@ -23,7 +23,7 @@ const SearchShoes: React.FC<SearchProps> = ({
   const onEnterSearch = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    if (event.code === "Enter") {
+    if (event.code === "Enter" || event.keyCode === 13) {
       event.preventDefault();
       setCurrentSearch(event.currentTarget.value);
       const { data } = await client.query({
@@ -80,6 +80,8 @@ const SearchShoes: React.FC<SearchProps> = ({
             {isAdding && (
               <div style={{ width: "100%", textAlign: "center" }}>
                 <Button
+                  disableRipple
+                  type="submit"
                   onClick={(event) => handleClick(event)}
                   style={{ backgroundColor: "black", color: "white" }}
                 >

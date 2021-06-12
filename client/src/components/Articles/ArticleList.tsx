@@ -21,15 +21,14 @@ const ArticleList: React.FC<ArticleListProps> = ({
   styles,
   isBlog = true,
 }) => {
-  const article = articles.map((item) => {
+  const article = articles.map((item, index) => {
     const startArticle = (item.article as string)
       .split(" ")
       .slice(0, 20)
       .join(" ");
-
     return (
       <ArticleItem
-        key={item._id}
+        key={`${item._id}_${index}`}
         title={item.title}
         styles={styles}
         visual={item.image_url as string}
@@ -38,6 +37,7 @@ const ArticleList: React.FC<ArticleListProps> = ({
         id={item._id}
         ago={item.createdAt}
         isBlog={isBlog}
+        tags={item.tags as string}
       />
     );
   });

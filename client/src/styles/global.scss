@@ -3,7 +3,8 @@
 
 html,
 body {
-  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  // scroll-behavior: smooth;
   transition: color 0.5s linear;
   padding: 0;
   margin: 0;
@@ -40,7 +41,7 @@ a {
   --header-height: 64px;
   --container-small: calc(100vw - var(--container-padding) * 2);
   scroll-padding-top: var(--header-height);
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
 }
 
 @media only screen and (min-width: 900px) {
@@ -164,7 +165,7 @@ a {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
+  position: relative;
   .main {
     flex: 1;
     display: flex;

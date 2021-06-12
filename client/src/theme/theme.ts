@@ -1,7 +1,7 @@
 import { createMuiTheme, ThemeOptions } from "@material-ui/core";
 
 export const paletteColorsDark = {
-  primary: "rgba(13,17,23,0.85)",
+  primary: "rgba(13,17,23)",
   header: "rgba(13,17,23,0.85)",
   secondary: "#3282b8",
   error: "#E44C65",
@@ -14,7 +14,7 @@ export const paletteColorsDark = {
 };
 
 export const paletteColorsLight = {
-  primary: "rgba(236,240,245,0.85)",
+  primary: "rgba(236,240,245)",
   header: "rgba(236,240,245,0.85)",
   secondary: "#ffe0ac",
   error: "#E44C65",
@@ -126,20 +126,51 @@ const options = (dark: boolean): ThemeOptions => {
     },
 
     overrides: {
+      MuiButton: {
+        containedPrimary: {
+          backgroundColor: paletteColors.logo,
+          color: paletteColors.background,
+          "&:hover": {
+            backgroundColor: "none",
+          },
+        },
+        root: {
+          /* backgroundColor: paletteColors.logo,
+          color: paletteColors.background, */
+          "&:hover": {
+            backgroundColor: "none",
+          },
+        },
+      },
       MuiCssBaseline: {
         "@global": {
           ".topbar__nav": {
             background: ` ${paletteColors.header} !important`,
           },
+
+          ".Blog_load__more__QKcLm button": {
+            color: paletteColors.logo,
+            border: `1px solid ${paletteColors.logo} !important`,
+          },
+
           ".Article_container__article__2aXmw": {
             height: "100%",
             background: paletteColors.background_secondary,
           },
 
+          ".TopBar_navbar__media__3rHEr": {
+            background: `${paletteColors.header} !important`,
+          },
+          ".SubMenu_container__1zZPZ": {
+            background: paletteColors.background,
+          },
+
           ".TopBar_navbar__content__1oFdZ .TopBar_inscription__2NQX8": {
             borderColor: paletteColors.logo,
           },
-
+          ".TopBar_navbar__content__1oFdZ .TopBar_navbar__links__1g4N8 a:before": {
+            backgroundColor: paletteColors.logo,
+          },
           ".Home_articles__container_item__3OBYe": {
             background: paletteColors.background_secondary,
           },

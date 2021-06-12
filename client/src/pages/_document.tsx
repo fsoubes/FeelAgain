@@ -25,13 +25,23 @@ export default class MyDocument extends Document {
               >
             }
           ></link>
+          {/* <link
+            rel="prefetch"
+            as="font"
+            type="font/woff2"
+            href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0"
+            onLoad={
+              ("this.rel=`stylesheet`" as unknown) as ReactEventHandler<
+                HTMLLinkElement
+              >
+            }
+            crossOrigin={"anonymous"}
+          /> */}
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Alex+Brush|Roboto+Slab:300,400,500,700&display=swap|family=Lato:300,400,500,700&display=swap"
+            href="https://fonts.googleapis.com/css?family=Alex+Brush|Roboto+Slab:300,400,500,700&display=swap|Lato:300,400,500,700&display=swap|Spectral&display=swap"
             type="text/css"
           />
-
-          {/* <script src="https://www.paypal.com/sdk/js?client-id=AS9TRywOaV8Ap8n06RkvKFrJX37SVDQPBkI0vv7da79OKfjrEkTx7WQe8nXLSTK2BXKoQSHgkQupdety,currency=EUR" /> */}
         </Head>
         <body>
           <Main />

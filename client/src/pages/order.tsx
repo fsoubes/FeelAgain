@@ -2,6 +2,7 @@ import { Layout } from "../components/Layout";
 import OrderList from "../components/Order/OrderList";
 import { Orders, useGetOrdersQuery } from "../generated/graphql";
 import { withApollo } from "../utils/withApollo";
+import Head from "../components/SEO/Head";
 
 interface OrderProps {}
 
@@ -10,6 +11,7 @@ const Order: React.FC<OrderProps> = ({}) => {
 
   return (
     <Layout>
+      <Head title={"Commandes"}></Head>
       <div className="container__order">
         <h1 style={{ marginBottom: "1rem" }}>Vos Commandes</h1>
         {data?.getOrders.map((item, index) => {

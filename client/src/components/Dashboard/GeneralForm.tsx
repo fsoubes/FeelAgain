@@ -8,6 +8,7 @@ import styles from "../../styles/Dashboard.module.scss";
 import AddIcon from "@material-ui/icons/Add";
 import SearchShoes from "../Search/Search";
 import { GeneralFormProps } from "../../types/dashboard";
+import EditAndPreview from "../Markdown/EditAndPreview";
 
 const GeneralForm: React.FC<GeneralFormProps> = ({
   tags,
@@ -16,6 +17,8 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
   variants,
   setRelation,
   children,
+  description,
+  setDescription,
 }) => {
   return (
     <Fragment>
@@ -205,14 +208,11 @@ const GeneralForm: React.FC<GeneralFormProps> = ({
           display="flex"
           flexDirection="column"
         >
-          <Field
-            style={{ minHeight: "160px" }}
-            as="textarea"
-            name="body_html"
-            autoCapitalize="none"
-            autoCorrect="off"
-            spellCheck="false"
-          ></Field>
+          <EditAndPreview
+            setValue={setDescription}
+            article={description}
+            isPreview={true}
+          />
         </Box>
       </section>
       <section>

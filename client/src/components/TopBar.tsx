@@ -24,6 +24,7 @@ import Basket from "../svg/basket";
 import SearchIcon from "@material-ui/icons/Search";
 import SubMenu from "./SubMenu/SubMenu";
 import { debounce } from "@material-ui/core";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const useStyles = makeStyles({
   show: {
@@ -55,6 +56,8 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
     await client.resetStore();
   };
 
+  const [open, setOpen] = useState(false);
+
   const [triggerSubMenu, setTrigger] = useState<boolean>(false);
   const subMenuRef = useRef<HTMLDivElement>(null);
 
@@ -85,20 +88,24 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
     };
   });
 
-  const [open, setOpen] = useState(false);
-
-  /*  useEffect(() => {
+  useEffect(() => {
+    if (!isTabletorMobile) {
+      return;
+    }
+    // let tmpScrollY = 0;
     if (open && isTabletorMobile) {
+      // tmpScrollY = window.scrollY;
+      // document.documentElement.style.scrollBehavior = "unset";
       document.documentElement.style.overflowY = "hidden";
       document.body.style.overflowY = "hidden";
     }
     return () => {
-      document.documentElement.style.overflowY = "scroll";
-      document.body.style.overflowY = "unset";
-      document.documentElement.style.overflowX = "hidden";
-      document.body.style.overflowX = "hidden";
+      document.documentElement.style.overflowY = "visible";
+      document.body.style.overflowY = "visible";
+      // window.scrollTo(0, tmpScrollY as number);
+      // document.documentElement.style.scrollBehavior = "smooth";
     };
-  }, [open, isTabletorMobile]); */
+  }, [open, isTabletorMobile]);
 
   const unlogged = (
     <Fragment>
@@ -138,6 +145,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
       {!isTabletorMobile && (
         <div ref={subMenuRef}>
           <Button
+            disableRipple
             variant="text"
             color="inherit"
             style={{
@@ -154,13 +162,6 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
           )}
         </div>
       )}
-      {isTabletorMobile && (
-        <Link href={`/profile/${data?.me?.nickname}`}>
-          <Button variant="text" color="inherit">
-            Profile
-          </Button>
-        </Link>
-      )}
     </Fragment>
   );
 
@@ -174,6 +175,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
       position={isBasket ? "fixed" : "sticky"}
     >
       <Toolbar
+        style={{ overflowX: isTabletorMobile ? "hidden" : "inherit" }}
         className={
           isBasket
             ? `${styles.navbar__content} ${styles.navbar__basket}`
@@ -198,35 +200,56 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
           </Link>
         </div>
         <div className={styles.navbar__left}>
-          <div className={styles.hamburger}>
-            <SearchShoes>
-              <SearchIcon />
-            </SearchShoes>
-            <Link href="/">
-              <Button aria-label="shopping basket">
-                {data && (
+          {isTabletorMobile && (
+            <div className={styles.hamburger}>
+              <SearchShoes>
+                <SearchIcon />
+              </SearchShoes>
+              <Link href="/">
+                <Button aria-label="shopping basket" disableRipple>
                   <Basket
                     total={data?.me?.items ? (data?.me?.items as number) : 0}
                   />
-                )}
+                </Button>
+              </Link>
+              <Button
+                disableRipple
+                style={{ zIndex: 1500 }}
+                onClick={() => setOpen(!open)}
+                aria-label="menu"
+              >
+                <MenuIcon />
               </Button>
-            </Link>
-            <Button onClick={() => setOpen(!open)} aria-label="menu">
-              <MenuIcon />
-            </Button>
-          </div>
+            </div>
+          )}
           <div
             className={
-              !open && isTabletorMobile
-                ? `${styles.hide}`
-                : `${styles.navbar__links}`
+              !isTabletorMobile
+                ? `${styles.navbar__links}`
+                : open
+                ? `${styles.navbar__links_small} ${styles.navbar__media}`
+                : `${styles.hide} `
             }
           >
             <Link href="/shop">&nbsp;Shop</Link>
-
             <Link href="/blog">&nbsp;Blog</Link>
-
             <Link href="/marque">&nbsp;MARQUE</Link>
+            {isTabletorMobile && (
+              <>
+                <Link href="/order">&nbsp;Commandes</Link>
+                <Link href="/panier">&nbsp;Panier</Link>
+                <Link href="/comments">&nbsp;Evaluer</Link>
+                <a
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLogout();
+                  }}
+                >
+                  Deconnexion
+                </a>
+              </>
+            )}
             {isTabletorMobile && (
               <Fragment>{!data?.me ? unlogged : logged}</Fragment>
             )}
@@ -239,7 +262,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 <SearchIcon />
               </SearchShoes>
               <Link href="/panier">
-                <Button aria-label="shopping basket">
+                <Button disableRipple aria-label="shopping basket">
                   {data && (
                     <Basket
                       total={data?.me?.items ? (data?.me?.items as number) : 0}
@@ -248,12 +271,15 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 </Button>
               </Link>
             </div>
+
             <div
               className={
-                !data?.me ? styles.navbar__unlogged : styles.navbar__auth
+                data && data?.me ? styles.navbar__unlogged : styles.navbar__auth
               }
             >
-              <Fragment>{!data?.me ? unlogged : logged}</Fragment>
+              {data && typeof data === "object" && (
+                <Fragment>{!data?.me ? unlogged : logged}</Fragment>
+              )}
             </div>
           </div>
         )}

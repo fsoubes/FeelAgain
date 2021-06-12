@@ -11,14 +11,14 @@
 }
 
 @mixin hide() {
-  @media (max-width: 1024px) {
+  @media only screen and (max-width: 1024px) {
     display: none;
     @content;
   }
 }
 
 @mixin show() {
-  @media (min-width: 1025px) {
+  @media only screen and (min-width: 1025px) {
     display: none;
     @content;
   }

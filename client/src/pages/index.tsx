@@ -73,7 +73,11 @@ const Home: React.FC = ({}) => {
                         isTabletorMobile ? index : index + 1 * index
                       ].src
                     }
-                    alt=""
+                    alt={
+                      carouselReviews[
+                        isTabletorMobile ? index : index + 1 * index
+                      ].title
+                    }
                   ></img>
                 </div>
                 <div className={styles.reviews__info}>
@@ -118,7 +122,7 @@ const Home: React.FC = ({}) => {
                   <div className={styles.reviews__img}>
                     <img
                       src={carouselReviews[index + 1 * (index + 1)].src}
-                      alt=""
+                      alt={carouselReviews[index + 1 * (index + 1)].title}
                     ></img>
                   </div>
                   <div className={styles.reviews__info}>
@@ -144,11 +148,9 @@ const Home: React.FC = ({}) => {
   return (
     <Layout>
       <Head
-        title={
-          "Laissez-vous tenter  avec FeelAgain et découvrez nos chaussures"
-        }
+        title={"Découvrez  les 4 saisons avec FeelAgain."}
         description={
-          "Découvrez  les 4 saisons avec FeelAgain.Avec nos produits en éditions limitées. Laissez-vous tenter et découvrez nos chaussures."
+          "Découvrez  les 4 saisons avec FeelAgain .Avec nos produits en éditions limitées. Laissez-vous tenter et découvrez nos chaussures."
         }
       />
       <div className="container__shop">
@@ -185,7 +187,7 @@ const Home: React.FC = ({}) => {
               </div>
               <div className={styles.presentation_40}>
                 <div>
-                  <img src="/shoes_landing.jpeg"></img>
+                  <img src="/shoes_landing.jpeg" alt="top"></img>
                 </div>
               </div>
             </div>

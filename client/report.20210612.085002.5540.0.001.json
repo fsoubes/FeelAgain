@@ -4,10 +4,10 @@
     "reportVersion": 1,
     "event": "Allocation failed - JavaScript heap out of memory",
     "trigger": "FatalError",
-    "filename": "report.20210606.000854.4238.0.001.json",
-    "dumpEventTime": "2021-06-06T00:08:54Z",
-    "dumpEventTimeStamp": "1622930934853",
-    "processId": 4238,
+    "filename": "report.20210612.085002.5540.0.001.json",
+    "dumpEventTime": "2021-06-12T08:50:02Z",
+    "dumpEventTimeStamp": "1623480602457",
+    "processId": 5540,
     "cwd": "/home/franck/FeelAgain/client",
     "commandLine": [
       "node",
@@ -50,56 +50,56 @@
     "cpus": [
       {
         "model": "Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz",
-        "speed": 3600,
-        "user": 6712700,
-        "nice": 419400,
-        "sys": 923200,
-        "idle": 61885300,
+        "speed": 3599,
+        "user": 7203400,
+        "nice": 846000,
+        "sys": 1000600,
+        "idle": 66377900,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz",
-        "speed": 3600,
-        "user": 7493700,
-        "nice": 394800,
-        "sys": 1006100,
-        "idle": 60896300,
+        "speed": 3599,
+        "user": 7418400,
+        "nice": 783600,
+        "sys": 986500,
+        "idle": 66152600,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz",
-        "speed": 3600,
-        "user": 7298200,
-        "nice": 394100,
-        "sys": 886200,
-        "idle": 61388700,
+        "speed": 3599,
+        "user": 7410600,
+        "nice": 879000,
+        "sys": 1045900,
+        "idle": 65947200,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz",
-        "speed": 3600,
-        "user": 7217000,
-        "nice": 344300,
-        "sys": 1068600,
-        "idle": 61182600,
+        "speed": 3599,
+        "user": 7405800,
+        "nice": 740400,
+        "sys": 1164300,
+        "idle": 65890900,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz",
-        "speed": 3600,
-        "user": 7170800,
-        "nice": 412900,
-        "sys": 951300,
-        "idle": 61389700,
+        "speed": 3599,
+        "user": 7316700,
+        "nice": 769900,
+        "sys": 1009100,
+        "idle": 66277300,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz",
-        "speed": 3600,
-        "user": 7158600,
-        "nice": 424600,
-        "sys": 920000,
-        "idle": 61360700,
+        "speed": 3599,
+        "user": 7626300,
+        "nice": 825500,
+        "sys": 920500,
+        "idle": 65919600,
         "irq": 0
       }
     ],
@@ -198,10 +198,10 @@
     }
   ],
   "javascriptHeap": {
-    "totalMemory": 2176827392,
-    "totalCommittedMemory": 2173786544,
-    "usedMemory": 2109590128,
-    "availableMemory": 51871048,
+    "totalMemory": 2154455040,
+    "totalCommittedMemory": 2152822080,
+    "usedMemory": 2125483280,
+    "availableMemory": 46272744,
     "memoryLimit": 2197815296,
     "heapSpaces": {
       "read_only_space": {
@@ -212,38 +212,38 @@
         "available": 229576
       },
       "new_space": {
-        "memorySize": 33554432,
-        "committedMemory": 31195672,
-        "capacity": 16759808,
-        "used": 2950576,
-        "available": 13809232
+        "memorySize": 2097152,
+        "committedMemory": 1114504,
+        "capacity": 1047488,
+        "used": 65080,
+        "available": 982408
       },
       "old_space": {
-        "memorySize": 1748348928,
-        "committedMemory": 1748291968,
-        "capacity": 1718542264,
-        "used": 1718457736,
-        "available": 84528
+        "memorySize": 1754378240,
+        "committedMemory": 1754108448,
+        "capacity": 1734562584,
+        "used": 1733909568,
+        "available": 653016
       },
       "code_space": {
-        "memorySize": 5144576,
-        "committedMemory": 4919424,
-        "capacity": 4087648,
-        "used": 4087648,
+        "memorySize": 5406720,
+        "committedMemory": 5256512,
+        "capacity": 4317664,
+        "used": 4317664,
         "available": 0
       },
       "map_space": {
-        "memorySize": 6033408,
-        "committedMemory": 5863008,
-        "capacity": 4227360,
-        "used": 4227360,
+        "memorySize": 5509120,
+        "committedMemory": 5508384,
+        "capacity": 4114000,
+        "used": 4114000,
         "available": 0
       },
       "large_object_space": {
-        "memorySize": 382287872,
-        "committedMemory": 382287872,
-        "capacity": 378736752,
-        "used": 378736752,
+        "memorySize": 385605632,
+        "committedMemory": 385605632,
+        "capacity": 381946912,
+        "used": 381946912,
         "available": 0
       },
       "code_large_object_space": {
@@ -256,32 +256,32 @@
       "new_large_object_space": {
         "memorySize": 0,
         "committedMemory": 0,
-        "capacity": 16759808,
+        "capacity": 1047488,
         "used": 0,
-        "available": 16759808
+        "available": 1047488
       }
     }
   },
   "resourceUsage": {
-    "userCpuSeconds": 947.873,
-    "kernelCpuSeconds": 56.9456,
-    "cpuConsumptionPercent": 16.7637,
-    "maxRss": 3314810880,
+    "userCpuSeconds": 1122.19,
+    "kernelCpuSeconds": 57.6675,
+    "cpuConsumptionPercent": 16.5525,
+    "maxRss": 3207438336,
     "pageFaults": {
-      "IORequired": 354,
-      "IONotRequired": 7937251
+      "IORequired": 107,
+      "IONotRequired": 8359155
     },
     "fsActivity": {
-      "reads": 4840752,
-      "writes": 16641880
+      "reads": 4947488,
+      "writes": 23028312
     }
   },
   "uvthreadResourceUsage": {
-    "userCpuSeconds": 467.221,
-    "kernelCpuSeconds": 21.5256,
-    "cpuConsumptionPercent": 8.15394,
+    "userCpuSeconds": 479.026,
+    "kernelCpuSeconds": 19.6034,
+    "cpuConsumptionPercent": 6.99537,
     "fsActivity": {
-      "reads": 203368,
+      "reads": 155840,
       "writes": 0
     }
   },
@@ -298,6 +298,7 @@
     "npm_config_sign_git_tag": "",
     "USER": "franck",
     "npm_package_dependencies_react_simplemde_editor": "^5.0.1",
+    "npm_package_devDependencies__types_react_image_gallery": "^1.0.3",
     "npm_config_user_agent": "npm/6.11.3 node/v12.11.1 linux x64",
     "npm_config_always_auth": "",
     "TEXTDOMAIN": "im-config",
@@ -307,8 +308,9 @@
     "npm_package_devDependencies__types_vanilla_tilt": "^1.6.2",
     "npm_config_bin_links": "true",
     "npm_config_key": "",
-    "SSH_AGENT_PID": "1958",
+    "SSH_AGENT_PID": "2817",
     "XDG_SESSION_TYPE": "x11",
+    "npm_package_devDependencies__types_glidejs": "^1.0.30",
     "npm_config_allow_same_version": "",
     "npm_config_description": "true",
     "npm_config_fetch_retries": "2",
@@ -336,7 +338,6 @@
     "GNOME_SHELL_SESSION_MODE": "ubuntu",
     "GTK_MODULES": "gail:atk-bridge",
     "npm_package_scripts_gen": "graphql-codegen --config codegen.yml",
-    "npm_package_dependencies__types_dompurify": "^2.2.2",
     "npm_package_devDependencies__types_glidejs__glide": "^3.4.0",
     "npm_config_editor": "vi",
     "npm_config_rollback": "true",
@@ -346,6 +347,8 @@
     "npm_config_timing": "",
     "npm_config_userconfig": "/home/franck/.npmrc",
     "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+    "npm_package_devDependencies__types_react_lazyload": "^3.1.0",
+    "npm_package_devDependencies_next": "^10.2.3",
     "npm_config_engine_strict": "",
     "npm_config_init_author_name": "",
     "npm_config_init_author_url": "",
@@ -362,7 +365,7 @@
     "npm_config_save_dev": "",
     "npm_config_usage": "",
     "NVM_DIR": "/home/franck/.nvm",
-    "npm_package_dependencies_react_image_gallery": "^1.0.9",
+    "npm_package_dependencies_react_image_gallery": "^1.1.1",
     "npm_package_readmeFilename": "README.md",
     "npm_config_metrics_registry": "https://registry.npmjs.org/",
     "npm_config_cafile": "",
@@ -374,7 +377,6 @@
     "MANDATORY_PATH": "/usr/share/gconf/ubuntu.mandatory.path",
     "IM_CONFIG_PHASE": "2",
     "npm_package_scripts_dev": "next dev",
-    "npm_package_dependencies_use_places_autocomplete": "^1.9.1",
     "npm_package_dependencies_vanilla_tilt": "^1.7.0",
     "npm_package_devDependencies_prettier": "^1.19.1",
     "npm_config_audit": "true",
@@ -423,7 +425,7 @@
     "npm_config_viewer": "man",
     "npm_config_node_gyp": "/home/franck/.nvm/versions/node/v12.11.1/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
     "PATH": "/home/franck/.nvm/versions/node/v12.11.1/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/home/franck/FeelAgain/client/node_modules/.bin:/home/franck/.nvm/versions/node/v12.11.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
-    "SESSION_MANAGER": "local/franck-VirtualBox:@/tmp/.ICE-unix/1824,unix/franck-VirtualBox:/tmp/.ICE-unix/1824",
+    "SESSION_MANAGER": "local/franck-VirtualBox:@/tmp/.ICE-unix/2617,unix/franck-VirtualBox:/tmp/.ICE-unix/2617",
     "npm_package_name": "frso-boilerplate",
     "npm_package_dependencies_easymde": "^2.15.0",
     "npm_config_audit_level": "low",
@@ -431,13 +433,14 @@
     "NODE": "/home/franck/.nvm/versions/node/v12.11.1/bin/node",
     "XDG_MENU_PREFIX": "gnome-",
     "S_COLORS": "auto",
-    "GNOME_TERMINAL_SCREEN": "/org/gnome/Terminal/screen/11f3d30d_9d45_4ea4_a74b_a23454ec45f3",
+    "GNOME_TERMINAL_SCREEN": "/org/gnome/Terminal/screen/527c1df1_4f53_441b_9ade_0acfc6d0e6d7",
     "XDG_RUNTIME_DIR": "/run/user/1000",
     "npm_package_dependencies_marked": "^2.0.7",
     "npm_package_dependencies_react_lazyload": "^3.2.0",
     "npm_config_color": "true",
     "npm_config_sign_git_commit": "",
     "DISPLAY": ":0",
+    "npm_package_devDependencies__types_dompurify": "^2.2.2",
     "npm_config_fetch_retry_mintimeout": "10000",
     "npm_config_maxsockets": "50",
     "npm_config_offline": "",
@@ -450,7 +453,7 @@
     "LS_COLORS": "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:",
     "XDG_SESSION_DESKTOP": "ubuntu",
     "XMODIFIERS": "@im=ibus",
-    "GNOME_TERMINAL_SERVICE": ":1.70",
+    "GNOME_TERMINAL_SERVICE": ":1.74",
     "XAUTHORITY": "/run/user/1000/gdm/Xauthority",
     "npm_config_fetch_retry_maxtimeout": "60000",
     "npm_config_loglevel": "notice",
@@ -465,7 +468,6 @@
     "npm_config_link": "",
     "SHELL": "/bin/bash",
     "npm_package_version": "0.1.0",
-    "npm_package_dependencies__types_react_image_gallery": "^1.0.2",
     "npm_package_devDependencies__types_react": "^17.0.0",
     "npm_package_devDependencies__types_react_paginate": "^6.2.1",
     "npm_config_access": "",
@@ -485,7 +487,6 @@
     "npm_config_unsafe_perm": "true",
     "npm_config_update_notifier": "true",
     "LESSCLOSE": "/usr/bin/lesspipe %s %s",
-    "npm_package_dependencies__types_glidejs": "^1.0.30",
     "npm_config_auth_type": "legacy",
     "npm_config_node_version": "12.11.1",
     "npm_config_tag": "latest",
@@ -522,8 +523,6 @@
     "npm_config_node_options": "",
     "npm_config_save_prefix": "^",
     "npm_config_scripts_prepend_node_path": "warn-only",
-    "npm_package_dependencies__types_react_lazyload": "^3.1.0",
-    "npm_package_dependencies_next": "^10.2.3",
     "npm_config_group": "1000",
     "npm_config_init_author_email": "",
     "npm_config_searchexclude": "",
@@ -538,7 +537,7 @@
     "NODE_ENV": "development",
     "__NEXT_PROCESSED_ENV": "true",
     "NEXT_PUBLIC_API_URL": "http://localhost:4000/graphql",
-    "TRACE_ID": "42cd9aacc064863d"
+    "TRACE_ID": "2bced328d6be6320"
   },
   "userLimits": {
     "core_file_size_blocks": {
@@ -574,8 +573,8 @@
       "hard": "unlimited"
     },
     "max_user_processes": {
-      "soft": 31653,
-      "hard": 31653
+      "soft": 31648,
+      "hard": 31648
     },
     "virtual_memory_kbytes": {
       "soft": "unlimited",

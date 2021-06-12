@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import ArticleList from "../../../../components/Articles/ArticleList";
 import Spinner from "../../../../components/Spinner/Spinner";
 import { useGetArticlesQuery } from "../../../../generated/graphql";
-import styles from "../../../../styles/Home.module.scss";
+import styles from "../../../../styles/Blog.module.scss";
 
 interface LatestProps {}
 
@@ -27,6 +27,7 @@ const Latest: React.FC<LatestProps> = ({}) => {
           />
           {data && data.getArticles.pageInfo.hasNextPage && (
             <Button
+              disableRipple
               onClick={() => {
                 fetchMore({
                   variables: {

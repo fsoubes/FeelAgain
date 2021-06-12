@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@material-ui/core";
-import { themes } from "../../../constants/constants";
 
 interface ArticleItemProps {
   title: String;
@@ -13,6 +12,7 @@ interface ArticleItemProps {
   ago?: String;
   visual?: String;
   isBlog: Boolean;
+  tags: String;
 }
 
 const ArticleItem: React.FC<ArticleItemProps> = ({
@@ -24,12 +24,16 @@ const ArticleItem: React.FC<ArticleItemProps> = ({
   ago,
   visual,
   isBlog,
+  tags,
 }) => {
   return (
     <section
       className={styles.articles__container_item}
       style={{ width: "100%" }}
     >
+      <div className={styles.tag__container}>
+        <div className={`${styles.tag} ${styles[tags as string]}`}>{tags}</div>
+      </div>
       <div className={styles.articles__container_title}>
         <Link href={isBlog ? `/article/${id}` : `/dashboard/update/blog/${id}`}>
           <h2>{title}</h2>
@@ -38,21 +42,21 @@ const ArticleItem: React.FC<ArticleItemProps> = ({
           <span>
             Posté par {author} - {ago}
           </span>
-          <div className={styles.tag}>
-            {themes[Math.floor(Math.random() * (themes as string[]).length)]}
-          </div>
+          <span>2 commentaires</span>
         </div>
       </div>
 
       <div className={styles.articles__image}>
         <Link href={isBlog ? `/article/${id}` : `/dashboard/update/blog/${id}`}>
-          <img
-            loading="lazy"
-            src={visual as string}
-            width="374"
-            height="211"
-            alt="visual__article"
-          ></img>
+          {visual && (
+            <img
+              loading="lazy"
+              src={visual as string}
+              width="374"
+              height="211"
+              alt="visual__article"
+            ></img>
+          )}
         </Link>
       </div>
       <div className={styles.articles__description}>

@@ -25,6 +25,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
         border={"1px solid #eaecef"}
         borderRadius={"5px"}
         marginTop={5}
+        marginBottom={5}
       >
         <div className={styles.form__register_header}>
           <h1>Inscription à Feel Again</h1>

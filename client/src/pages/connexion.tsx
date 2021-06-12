@@ -27,6 +27,7 @@ const Login: React.FC<LoginProps> = ({}) => {
         border={"1px solid #eaecef"}
         borderRadius={"5px"}
         marginTop={5}
+        marginBottom={5}
       >
         <div className={styles.form__register_header}>
           <h1>Se connecter</h1>

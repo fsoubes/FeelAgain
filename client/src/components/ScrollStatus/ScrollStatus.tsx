@@ -53,7 +53,9 @@ const ScrollStatus: React.FC<ScrollStatusProps> = ({ articleRef }) => {
   return (
     <div className={classes.root}>
       <LinearProgress
+        role={"progressbar"}
         variant="determinate"
+        aria-label={"Article Progression"}
         classes={{
           barColorPrimary: classes.barColorPrimary,
         }}

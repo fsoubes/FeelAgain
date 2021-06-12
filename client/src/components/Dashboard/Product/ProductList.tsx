@@ -30,14 +30,20 @@ const ProductListDash: React.FC<ProductListProps> = ({
   isProduct = false,
   isTilt = true,
 }) => {
-  const products = shoes.map((item) => {
+  const products = shoes.map((item, index) => {
     return (
       <ProductItem
         isTilt={isTilt}
         path={path as string}
-        key={item._id}
+        key={item._id ? item._id : index}
         id={item._id}
-        src={item.vendor === "Anaki" ? item.images[1].src : item.images[0].src}
+        src={
+          !item.vendor
+            ? ""
+            : item.vendor === "Anaki"
+            ? item.images[1].src
+            : item.images[0].src
+        }
         price={item.price}
         title={item.title}
         remove={remove}

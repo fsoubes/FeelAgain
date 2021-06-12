@@ -9,7 +9,7 @@ import { useIncrementCountViewMutation } from "../../../../generated/graphql";
 interface ProductItemProps {
   isTilt: Boolean;
   path: string;
-  src: string;
+  src?: string;
   title: string;
   price: number;
   id: string;
@@ -38,55 +38,65 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
 }) => {
   const router = useRouter();
   const [incrementCount] = useIncrementCountViewMutation();
-
   return (
-    <div
-      onClick={async (event) => {
-        router.push(`/products/${id}`);
-        if (!remove) await incrementCount({ variables: { shoeId: id } });
-        event.stopPropagation();
-      }}
-    >
-      <Tilt style={{ cursor: "pointer" }} isTilt={isTilt}>
-        <LazyLoadWrapper>
-          <div
-            style={{
-              backgroundImage: `url( ${src} )`,
-              backgroundSize: contain ? "contain" : "cover",
-              ...(isTilt === false && { boxShadow: "none" }),
-            }}
-          >
-            <Button
-              disableRipple
-              onClick={(event) => (remove ? remove(event, id) : null)}
-            >
-              {remove && <CancelIcon />}
-            </Button>
-            <Button
-              disableRipple
-              onClick={async (event) => {
-                router.push(path ? `${path}${id}` : `/dashboard/update/${id}`);
-                event.stopPropagation();
+    <div>
+      <div
+        onClick={async (event) => {
+          router.push(`/products/${id}`);
+          if (!remove) await incrementCount({ variables: { shoeId: id } });
+          event.stopPropagation();
+        }}
+      >
+        <Tilt style={{ cursor: "pointer" }} isTilt={isTilt}>
+          <LazyLoadWrapper>
+            <div
+              style={{
+                backgroundImage: `url( ${src} )`,
+                backgroundSize: contain ? "contain" : "cover",
+                ...(isTilt === false && { boxShadow: "none" }),
               }}
             >
-              {remove ? "Modifier" : "Aperçu"}
-            </Button>
-            {!remove && (
-              <div>
-                <RatingRes rating={score as number} />
-                <span>
-                  {score} pour {scoredBy} utilisateurs
-                </span>
-              </div>
-            )}
-          </div>
-        </LazyLoadWrapper>
-      </Tilt>
+              <Button
+                disableRipple
+                onClick={(event) => (remove ? remove(event, id) : null)}
+              >
+                {remove && <CancelIcon />}
+              </Button>
+              <Button
+                disableRipple
+                onClick={async (event) => {
+                  router.push(
+                    path ? `${path}${id}` : `/dashboard/update/${id}`
+                  );
+                  event.stopPropagation();
+                }}
+              >
+                {remove ? "Modifier" : "Aperçu"}
+              </Button>
+              {!remove && (
+                <div>
+                  <RatingRes rating={score as number} />
+                  <span>
+                    {score} pour {scoredBy} utilisateurs
+                  </span>
+                </div>
+              )}
+            </div>
+          </LazyLoadWrapper>
+        </Tilt>
+      </div>
       <div style={{ textAlign: "center" }}>
-        <h3>
+        <h3
+          style={{ cursor: "pointer" }}
+          onClick={async (event) => {
+            router.push(`/products/${id}`);
+            if (!remove) await incrementCount({ variables: { shoeId: id } });
+            event.stopPropagation();
+          }}
+        >
           <span>{title}</span>
         </h3>
-        <span>{price}€</span>
+        {price && <span>{price}€</span>}
       </div>
     </div>
   );

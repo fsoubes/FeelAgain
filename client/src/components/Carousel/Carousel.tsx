@@ -38,7 +38,7 @@ export const Carousel: React.FC<CarouselProps> = forwardRef(
     }, [options]);
 
     return (
-      <div className="glide" style={{ marginTop: "2rem" }} ref={sliderRef}>
+      <div className="glide" style={{ marginTop: "1rem" }} ref={sliderRef}>
         <div className="glide__track" data-glide-el="track">
           <ul style={{ margin: "0" }} className="glide__slides">
             {children}

@@ -32,7 +32,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         <h3>
           <span>{title}</span>
         </h3>
-        <span>{price}€</span>
+        {price && <span>{price}€</span>}
       </div>
     </div>
   );

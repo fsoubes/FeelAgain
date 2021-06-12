@@ -1,14 +1,25 @@
 import { Layout } from "../components/Layout";
 import { useGetArticlesQuery } from "../generated/graphql";
 import ArticleList from "../components/Articles/ArticleList";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/Blog.module.scss";
 import { Button } from "@material-ui/core";
 import * as Carousel from "../components/Carousel/index";
 import { withApollo } from "../utils/withApollo";
 import Link from "next/link";
-import { themes } from "../constants/constants";
 import useResponsive from "../utils/useResponsive";
 import Head from "../components/SEO/Head";
+import Spinner from "../components/Spinner/Spinner";
+
+const emptyFill = {
+  _id: "",
+  tags: "",
+  title: "",
+  image_url: "",
+  article: "",
+  author: {
+    nickname: "",
+  },
+};
 
 const Blog: React.FC = ({}) => {
   const { data, loading, variables, fetchMore } = useGetArticlesQuery({
@@ -24,7 +35,7 @@ const Blog: React.FC = ({}) => {
       return (
         <Carousel.Slide key={index}>
           <div className={styles.grid__carousel}>
-            {data?.getArticles?.edges
+            {data?.getArticles.edges
               .slice(index === 0 ? 0 : 4, index === 0 ? 4 : 8)
               .map((item) => {
                 return (
@@ -37,14 +48,12 @@ const Blog: React.FC = ({}) => {
                     >
                       <div className={styles.thumb__overlay}>
                         <span className={styles.thumb__categories}>
-                          <div className={styles.post__cat}>
-                            {
-                              themes[
-                                Math.floor(
-                                  Math.random() * (themes as string[]).length
-                                )
-                              ]
-                            }
+                          <div
+                            className={`${styles.post__cat} ${
+                              styles[item.tags as string]
+                            }`}
+                          >
+                            {item.tags}
                           </div>
                         </span>
                         <div className={styles.thumb__content}>
@@ -62,10 +71,25 @@ const Blog: React.FC = ({}) => {
 
   return (
     <Layout variant="main">
-      <Head title={"Découvrez l'univers feelagain avec nos articles/blog"} />
+      <Head
+        title={"Découvrez l'univers feelagain avec nos articles"}
+        description={
+          "Articles proposés par FeelAgain incluant différentes thématiques technologies, sport, lecture, musique, mode"
+        }
+      />
       <div className={styles.home__container}>
         {!data && loading ? (
-          <div>Loading ...</div>
+          <>
+            <section>
+              <Spinner />
+            </section>
+            <div className={styles.articles__container}>
+              <ArticleList
+                articles={Array(9).fill(emptyFill)}
+                styles={styles}
+              />
+            </div>
+          </>
         ) : (
           <>
             <section>
@@ -85,18 +109,21 @@ const Blog: React.FC = ({}) => {
             <div className={styles.articles__container}>
               <ArticleList articles={data!.getArticles.edges} styles={styles} />
               {data && data.getArticles.pageInfo.hasNextPage && (
-                <Button
-                  onClick={() => {
-                    fetchMore({
-                      variables: {
-                        limit: variables?.limit,
-                        cursor: data?.getArticles.pageInfo.endCursor,
-                      },
-                    });
-                  }}
-                >
-                  Charger plus
-                </Button>
+                <div className={styles.load__more}>
+                  <Button
+                    disableRipple
+                    onClick={() => {
+                      fetchMore({
+                        variables: {
+                          limit: variables?.limit,
+                          cursor: data?.getArticles.pageInfo.endCursor,
+                        },
+                      });
+                    }}
+                  >
+                    Charger plus
+                  </Button>
+                </div>
               )}
             </div>
           </>

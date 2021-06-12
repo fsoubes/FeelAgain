@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { Layout } from "../../components/Layout";
 import {
   useGetClosestShoesQuery,
@@ -8,17 +9,24 @@ import {
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import styles from "../../styles/Product.module.scss";
-import Outside from "../../components/OutsideEvent/Outside";
 import ProductListDash from "../../components/Dashboard/Product/ProductList";
-import CartSideBar from "../../components/SideBar/CartSideBar";
-import CartProduct from "../../components/Cart/CartProduct";
-import BackDropShadow from "../../components/BackDrop/BackDropShadow";
 import { withApollo } from "../../utils/withApollo";
-import SmallCartProduct from "../../components/Cart/SmallCartProduct";
 import ProdutDetail from "../../components/Products/ProdutDetail";
 import CommentsList from "../../components/Comments/CommentsList";
 import ScoreShoes from "../../components/Score/ScoreShoes";
 import Head from "../../components/SEO/Head";
+
+const Outside = dynamic(() => import("../../components/OutsideEvent/Outside"));
+const CartProduct = dynamic(() => import("../../components/Cart/CartProduct"));
+const CartSideBar = dynamic(() =>
+  import("../../components/SideBar/CartSideBar")
+);
+const BackDropShadow = dynamic(() =>
+  import("../../components/BackDrop/BackDropShadow")
+);
+const SmallCartProduct = dynamic(() =>
+  import("../../components/Cart/SmallCartProduct")
+);
 
 interface Props {
   id?: string;
@@ -27,6 +35,7 @@ interface Props {
 interface Info {
   title: string;
   product: string;
+  handle: string;
   comments: Comments[] | [];
   scored_by: number;
   score_1: number;
@@ -43,6 +52,7 @@ const Article: NextPage<Props> = ({ id }) => {
   const [info, setInfo] = useState<Info>({
     title: "",
     product: "",
+    handle: "",
     comments: [],
     scored_by: 0,
     score_1: 0,
@@ -73,7 +83,11 @@ const Article: NextPage<Props> = ({ id }) => {
   return (
     <Layout isBasket={openCard as boolean}>
       {info.product && info.title && (
-        <Head title={info.title} product={info.product} />
+        <Head
+          title={info.title}
+          product={info.product}
+          description={`${info.handle.split("-").join("")}`}
+        />
       )}
       {openCard && <BackDropShadow></BackDropShadow>}
       <Outside open={openCard} setOpen={setOpenCard}>
@@ -98,6 +112,7 @@ const Article: NextPage<Props> = ({ id }) => {
                 isTilt={false}
                 isProduct={true}
                 shoes={dataClosest?.getClosestShoes as Shoes[]}
+                path={"/products/"}
               ></ProductListDash>
             </div>
           )}

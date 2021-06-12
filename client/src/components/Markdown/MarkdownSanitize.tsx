@@ -136,7 +136,8 @@ const RenderSanitize: React.FC<RenderSanitizeProps> = ({
         overflowWrap: "break-word",
         wordBreak: "break-word",
         padding: isPreview ? "20px" : "",
-        fontFamily: "Roboto",
+        fontFamily: "Spectral sans serif",
+        fontSize: "17px",
       }}
     >
       <div onClick={clickHandler} dangerouslySetInnerHTML={getMarkdown()} />

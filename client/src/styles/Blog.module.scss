@@ -18,18 +18,6 @@
     font-size: 2rem;
   }
 
-  @include tablet() {
-    max-width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-  }
-
-  @include mobile() {
-    max-width: 96%;
-    margin-left: 2%;
-    margin-right: 2%;
-  }
-
   padding-left: calc(50% - var(--container-width) / 2) !important;
   padding-right: calc(50% - var(--container-width) / 2) !important;
   width: 100%;
@@ -49,35 +37,36 @@
       }
 
       width: 100%;
-      padding: 15px 15px;
+      padding: 15px 15px 15px;
       box-shadow: 2px 3px #000;
       margin-bottom: 1rem;
       border-radius: 7px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      &:hover {
-        -webkit-transform: scale(1.03);
-        -moz-transform: scale(1.03);
-        -o-transform: scale(1.03);
-        -ms-transform: scale(1.03);
-        transform: scale(1.03);
+
+      .tag__container {
+        margin-bottom: 10px;
+        width: 100%;
+        display: flex;
+        height: 100%;
+        justify-content: flex-start;
+        .tag {
+          color: #ffffff !important;
+          padding: 0 6px;
+          border-radius: 2px;
+          display: block;
+        }
       }
       .articles__container_title {
         display: flex;
         flex-wrap: nowrap;
         flex-direction: column;
+
         .articles__author {
           display: flex;
           justify-content: space-between;
           font-size: 12px;
-          .tag {
-            background-color: #9b59b6 !important;
-            color: #ffffff !important;
-            margin-bottom: 10px;
-            padding: 0 6px;
-            border-radius: 2px;
-          }
         }
         h2 {
           cursor: pointer;
@@ -136,11 +125,18 @@
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */
   display: flex;
-  margin-left: -30px; /* gutter size offset */
+  margin-left: calc(50% - var(--container-width) / 2) !important;
+  // margin-left: -30px; /* gutter size offset */
   width: auto;
 }
+
 .my__masonry_grid_column {
   padding-left: 15px; /* gutter size */
+  background-clip: padding-box;
+}
+
+.my__masonry_grid_column:first-child {
+  padding-left: 0;
   background-clip: padding-box;
 }
 
@@ -164,9 +160,12 @@
     background-position: center;
     background-size: cover;
     cursor: pointer;
+    margin-bottom: 4px;
+    margin-right: 4px;
 
     .thumb__overlay {
       padding: 20px 20px 15px;
+
       .thumb__categories {
         float: left;
         position: relative;
@@ -177,9 +176,9 @@
         font-family: inherit !important;
         line-height: 0;
         display: block;
+        z-index: 50;
         .post__cat {
           display: inline-block;
-          background-color: #9b59b6 !important;
           color: #ffffff !important;
           padding: 0 6px;
           font-size: 12px;
@@ -209,6 +208,12 @@
           color: white !important;
           text-shadow: 0 0 10px rgb(0 0 0 / 90%);
         }
+        @media screen and (max-width: 1024px) {
+          padding: 0px 10px 8px;
+        }
+        @media screen and (max-width: 500px) {
+          font-size: 10px;
+        }
       }
     }
   }
@@ -216,26 +221,26 @@
   .grid__item:first-child {
     float: left;
     height: 100%;
-    width: 50%;
+    width: calc(50% - 4px);
   }
 
   .grid__item:nth-child(2) {
     width: 50%;
     float: right;
-    height: calc(50%);
+    height: calc(50% - 2px);
     margin-right: 0;
   }
 
   .grid__item:nth-child(3) {
-    width: calc(25%);
     float: left;
-    height: calc(50%);
+    width: calc(25% - 4px);
+    height: calc(50% - 2px);
   }
 
   .grid__item:nth-child(4) {
-    width: calc(25%);
     float: left;
-    height: calc(50%);
+    width: calc(25% - 4px);
+    height: calc(50% - 2px);
   }
 
   @media only screen and (max-width: 991px) {
@@ -264,6 +269,7 @@
 
   @media only screen and (max-width: 500px) {
     display: block;
+    height: 100%;
     .grid__item:first-child,
     .grid__item:nth-child(2),
     .grid__item:nth-child(3),
@@ -273,4 +279,41 @@
       height: 120px;
     }
   }
+}
+
+.load__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  button {
+    padding: 10px 15px;
+  }
+}
+
+.Technologie {
+  background: rgb(112, 74, 140) !important;
+}
+
+.Animaux {
+  background: rgb(140, 114, 74) !important;
+}
+
+.Musique {
+  background: rgb(140, 74, 74) !important;
+}
+
+.Mode {
+  background: rgb(74, 103, 140) !important;
+}
+
+.Voyage {
+  background: rgb(48, 95, 53) !important;
+}
+
+.Lecture {
+  background: rgb(54, 104, 116) !important;
+}
+
+.Sport {
+  background: rgb(124, 114, 36) !important;
 }

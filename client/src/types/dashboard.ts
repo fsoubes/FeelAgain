@@ -51,6 +51,8 @@ export interface GeneralFormProps {
   variants: any[];
   setRelation?: React.Dispatch<React.SetStateAction<Relation[]>>;
   children: JSX.Element;
+  description: string;
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface ShoesFormProps {
