@@ -2,8 +2,7 @@ import { User } from "../entities/User";
 import { isAuth } from "../middlewares/isAuth";
 import { BlogInput } from "./types/blog-input";
 import { MyContext } from "../type";
-import { ObjectType, Field } from "type-graphql";
-import { PaginationInfo } from "./types/pagination-result";
+
 const toObjectId = require("mongodb").ObjectID;
 import {
   Query,
@@ -24,15 +23,11 @@ import { isUpdoot, votingRes } from "../helpers/updoot";
 import { isAdmin } from "../middlewares/isAdmin";
 import { toDot } from "../helpers/toDot";
 import { Comments, CommentsModel } from "../entities/Comments";
-
-@ObjectType()
-class PaginationResponse {
-  @Field()
-  pageInfo?: PaginationInfo;
-
-  @Field(() => [Blog])
-  edges?: Blog[];
-}
+import {
+  PaginatedCommentsResponse,
+  PaginatedBlogResponse,
+} from "./types/PaginatedResponse";
+import { cursorPagination } from "../helpers/cursorPagination";
 
 @Resolver((_of) => Blog)
 export class BlogResolver {
@@ -77,54 +72,43 @@ export class BlogResolver {
     }
   }
 
-  @Query(() => PaginationResponse)
+  @Query(() => PaginatedCommentsResponse)
+  async getArticleComments(
+    @Arg("articleId") articleId: string,
+    @Arg("limit") limit: number,
+    @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
+    @Ctx() {  }: MyContext
+  ): Promise<PaginatedCommentsResponse | []> {
+    try {
+      return cursorPagination(
+        CommentsModel,
+        limit,
+        articleId,
+        cursor as string,
+        "_id",
+        "article"
+      ) as Promise<PaginatedCommentsResponse | []>;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Query(() => PaginatedBlogResponse)
   async getArticles(
     @Arg("limit") limit: number,
     @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
     @Ctx() { req }: MyContext
-  ): Promise<PaginationResponse | []> {
+  ): Promise<PaginatedBlogResponse | []> {
     try {
-      limit = limit ? limit : 10;
-      let match = {
-        ...(cursor && {
-          title: {
-            $gt: cursor,
-          },
-        }),
-        ...(!req.session.isAdmin && { is_published: true }),
-      };
-
-      const cursorOptions = cursor
-        ? {
-            limit: limit + 1,
-            where: match,
-          }
-        : {
-            where: match,
-            limit: limit + 1,
-          };
-
-      const articles = await BlogModel.find({}, {}, { ...cursorOptions })
-        .sort({
-          title: 1,
-        })
-        .lean();
-
-      const hasNextPage = articles.length > limit;
-
-      if (articles.length > 0) {
-        const edges = hasNextPage ? articles.slice(0, -1) : articles;
-
-        return {
-          edges: [...edges],
-          pageInfo: {
-            hasNextPage: hasNextPage,
-            endCursor: edges[edges.length - 1].title,
-          },
-        };
-      } else {
-        return [];
-      }
+      return cursorPagination(
+        BlogModel,
+        limit,
+        "",
+        cursor as string,
+        "title",
+        "",
+        req.session.isAdmin as boolean
+      ) as Promise<PaginatedBlogResponse | []>;
     } catch (err) {
       throw err;
     }

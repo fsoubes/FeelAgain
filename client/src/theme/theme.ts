@@ -206,7 +206,7 @@ const options = (dark: boolean): ThemeOptions => {
           },
 
           "#basket .cls-1, #basket .cls-2": {
-            stroke: paletteColors.logo,
+            stroke: `${paletteColors.logo} !important`,
           },
           "html body div#__next div.container footer div.Footer_footer__9WsPL div.Footer_logo__2n8aq svg#Calque_1 path.cls-1": {
             stroke: `${paletteColors.logo} !important`,

@@ -32,6 +32,7 @@ export type Query = {
   userRole: Scalars['Boolean'];
   getSingleArticle: Blog;
   getClosestArticles: Array<Blog>;
+  getArticleComments: PaginationResponse;
   getArticles: PaginationResponse;
   getBasket: Basket;
   getAllBasket: Array<Basket>;
@@ -85,6 +86,13 @@ export type QueryGetSingleArticleArgs = {
 export type QueryGetClosestArticlesArgs = {
   title: Scalars['String'];
   tags: Scalars['String'];
+};
+
+
+export type QueryGetArticleCommentsArgs = {
+  cursor?: Maybe<Scalars['String']>;
+  limit: Scalars['Float'];
+  articleId: Scalars['String'];
 };
 
 
