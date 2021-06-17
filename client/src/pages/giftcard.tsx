@@ -6,7 +6,7 @@ interface GiftcardProps {}
 const Giftcard: React.FC<GiftcardProps> = ({}) => {
   return (
     <Layout>
-      <h1>Hello</h1>
+      <h1>Carte cadeau</h1>
     </Layout>
   );
 };

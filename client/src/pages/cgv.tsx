@@ -6,7 +6,7 @@ interface CgvProps {}
 const Cgv: React.FC<CgvProps> = ({}) => {
   return (
     <Layout>
-      <h1>Hello</h1>
+      <h1>CGV</h1>
     </Layout>
   );
 };

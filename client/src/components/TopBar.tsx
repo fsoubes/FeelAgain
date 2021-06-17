@@ -24,6 +24,7 @@ import Basket from "../svg/basket";
 import SearchIcon from "@material-ui/icons/Search";
 import SubMenu from "./SubMenu/SubMenu";
 import { debounce } from "@material-ui/core";
+import BackDropShadow from "./BackDrop/BackDropShadow";
 
 const useStyles = makeStyles({
   show: {
@@ -108,34 +109,8 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
 
   const unlogged = (
     <Fragment>
-      <Link href="/connexion">
-        <Button
-          variant="text"
-          color="inherit"
-          style={{ marginRight: "0.5rem" }}
-          disableRipple
-        >
-          Connexion
-        </Button>
-      </Link>
-      <Link href="/inscription">
-        <Button
-          variant="text"
-          color="inherit"
-          className={styles.inscription}
-          style={
-            isTabletorMobile
-              ? {
-                  marginLeft: "1rem",
-                  borderRadius: "6px",
-                }
-              : { display: "inline-block" }
-          }
-          disableRipple
-        >
-          Inscription
-        </Button>
-      </Link>
+      <Link href="/connexion">Connexion</Link>
+      <Link href="/inscription">Inscription</Link>
     </Fragment>
   );
 
@@ -165,125 +140,139 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
   );
 
   return (
-    <AppBar
-      className={
-        trigger && !isBasket
-          ? `${classes.hide} topbar__nav`
-          : `${classes.show} topbar__nav`
-      }
-      position={isBasket ? "fixed" : "sticky"}
-    >
-      <Toolbar
-        style={{ overflowX: isTabletorMobile ? "hidden" : "inherit" }}
+    <>
+      {open && <BackDropShadow />}
+      <AppBar
         className={
-          isBasket
-            ? `${styles.navbar__content} ${styles.navbar__basket}`
-            : styles.navbar__content
+          trigger && !isBasket
+            ? `${classes.hide} topbar__nav`
+            : `${classes.show} topbar__nav`
         }
+        position={isBasket ? "fixed" : "sticky"}
       >
-        <div className={styles.navbar__logo}>
-          <Link href="/">
-            <div
-              style={{
-                height: "100%",
-                width: "40px",
-                display: "flex",
-                alignItems: "center",
-                position: "relative",
-                cursor: "pointer",
-                margin: "15px",
-              }}
-            >
-              <Logo />
-            </div>
-          </Link>
-        </div>
-        <div className={styles.navbar__left}>
-          {isTabletorMobile && (
-            <div className={styles.hamburger}>
-              <SearchShoes>
-                <SearchIcon />
-              </SearchShoes>
-              <Link href="/">
-                <Button aria-label="shopping basket" disableRipple>
-                  <Basket
-                    total={data?.me?.items ? (data?.me?.items as number) : 0}
-                  />
-                </Button>
-              </Link>
-              <Button
-                disableRipple
-                style={{ zIndex: 1500 }}
-                onClick={() => setOpen(!open)}
-                aria-label="menu"
+        <Toolbar
+          style={{ overflowX: isTabletorMobile ? "hidden" : "inherit" }}
+          className={
+            isBasket
+              ? `${styles.navbar__content} ${styles.navbar__basket}`
+              : styles.navbar__content
+          }
+        >
+          <div className={styles.navbar__logo}>
+            <Link href="/">
+              <div
+                style={{
+                  height: "100%",
+                  width: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  cursor: "pointer",
+                  margin: "15px",
+                }}
               >
-                <MenuIcon />
-              </Button>
-            </div>
-          )}
-          <div
-            className={
-              !isTabletorMobile
-                ? `${styles.navbar__links}`
-                : open
-                ? `${styles.navbar__links_small} ${styles.navbar__media}`
-                : `${styles.hide} `
-            }
-          >
-            <Link href="/shop">&nbsp;Shop</Link>
-            <Link href="/blog">&nbsp;Blog</Link>
-            <Link href="/marque">&nbsp;MARQUE</Link>
-            {isTabletorMobile && (
-              <>
-                <Link href="/order">&nbsp;Commandes</Link>
-                <Link href="/panier">&nbsp;Panier</Link>
-                <Link href="/comments">&nbsp;Evaluer</Link>
-                <a
-                  href="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLogout();
-                  }}
-                >
-                  Deconnexion
-                </a>
-              </>
-            )}
-            {isTabletorMobile && (
-              <Fragment>{!data?.me ? unlogged : logged}</Fragment>
-            )}
+                <Logo />
+              </div>
+            </Link>
           </div>
-        </div>
-        {!isTabletorMobile && data && typeof data === "object" && (
-          <div className={styles.navbar__right}>
-            <div className={styles.search}>
-              <SearchShoes>
-                <SearchIcon />
-              </SearchShoes>
-              <Link href="/panier">
-                <Button disableRipple aria-label="shopping basket">
-                  {data && (
+          <div className={styles.navbar__left}>
+            {isTabletorMobile && (
+              <div className={styles.hamburger}>
+                <SearchShoes>
+                  <SearchIcon />
+                </SearchShoes>
+                <Link href="/">
+                  <Button aria-label="shopping basket" disableRipple>
                     <Basket
                       total={data?.me?.items ? (data?.me?.items as number) : 0}
                     />
-                  )}
+                  </Button>
+                </Link>
+                <Button
+                  disableRipple
+                  style={{ zIndex: 1500 }}
+                  onClick={() => setOpen(!open)}
+                  aria-label="menu"
+                >
+                  <MenuIcon />
                 </Button>
-              </Link>
-            </div>
-
-            <div
-              className={
-                data && data?.me ? styles.navbar__auth : styles.navbar__unlogged
-              }
-            >
-              {data && typeof data === "object" && (
-                <Fragment>{!data?.me ? unlogged : logged}</Fragment>
-              )}
-            </div>
+              </div>
+            )}
+            {data && (
+              <div
+                className={
+                  !isTabletorMobile
+                    ? `${styles.navbar__links}`
+                    : open
+                    ? `${styles.navbar__links_small} ${styles.navbar__media}`
+                    : `${styles.hide} `
+                }
+              >
+                <Link href="/shop">&nbsp;Shop</Link>
+                <Link href="/blog">&nbsp;Blog</Link>
+                <Link href="/marque">&nbsp;MARQUE</Link>
+                {isTabletorMobile && (
+                  <>
+                    <Link href="/shop">&nbsp;Shop</Link>
+                    <Link href="/blog">&nbsp;Blog</Link>
+                    <Link href="/marque">&nbsp;MARQUE</Link>
+                    <Link href="/order">&nbsp;Commandes</Link>
+                    <Link href="/panier">&nbsp;Panier</Link>
+                    <Link href="/order/comments">&nbsp;Evaluer</Link>
+                    {data.me && (
+                      <a
+                        href="/"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLogout();
+                        }}
+                      >
+                        Deconnexion
+                      </a>
+                    )}
+                  </>
+                )}
+                {isTabletorMobile && (
+                  <Fragment>{!data?.me ? unlogged : logged}</Fragment>
+                )}
+              </div>
+            )}
           </div>
-        )}
-      </Toolbar>
-    </AppBar>
+          {!isTabletorMobile && data && typeof data === "object" && (
+            <div className={styles.navbar__right}>
+              <div className={styles.search}>
+                <SearchShoes>
+                  <SearchIcon />
+                </SearchShoes>
+                <Link href="/panier">
+                  <Button disableRipple aria-label="shopping basket">
+                    {data && (
+                      <Basket
+                        total={
+                          data?.me?.items ? (data?.me?.items as number) : 0
+                        }
+                      />
+                    )}
+                  </Button>
+                </Link>
+              </div>
+
+              <div
+                className={
+                  data && data?.me
+                    ? styles.navbar__auth
+                    : styles.navbar__unlogged
+                }
+              >
+                {data && typeof data === "object" && (
+                  <Fragment>{!data?.me ? unlogged : logged}</Fragment>
+                )}
+              </div>
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

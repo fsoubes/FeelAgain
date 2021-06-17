@@ -18,6 +18,9 @@ query GetOrders {
     user {
       email
     }
+    purchases {
+      _id
+    }
     products {
       _id
       quantity

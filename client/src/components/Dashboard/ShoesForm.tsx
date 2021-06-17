@@ -79,6 +79,7 @@ const ShoesForm: React.FC<ShoesFormProps> = ({ current, fetchValues }) => {
             ...values,
             tags: tags,
             handle: handle,
+            body_html: description,
           };
 
           let {

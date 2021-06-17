@@ -32,8 +32,8 @@ export type Query = {
   userRole: Scalars['Boolean'];
   getSingleArticle: Blog;
   getClosestArticles: Array<Blog>;
-  getArticleComments: PaginationResponse;
-  getArticles: PaginationResponse;
+  getArticleComments: PaginatedCommentsResponse;
+  getArticles: PaginatedBlogResponse;
   getBasket: Basket;
   getAllBasket: Array<Basket>;
   getCartItems: Array<CartItem>;
@@ -251,6 +251,7 @@ export type Orders = {
   adress: Adress;
   createdAt: Scalars['DateTime'];
   user: User;
+  purchases: Array<Purchases>;
 };
 
 /** type of payment */
@@ -278,6 +279,14 @@ export enum DeliveryType {
   Home = 'Home'
 }
 
+export type Purchases = {
+  __typename?: 'Purchases';
+  _id: Scalars['ObjectId'];
+  product: Variants;
+  comment?: Maybe<Comments>;
+  owner: User;
+};
+
 export type PaginationShoes = {
   __typename?: 'PaginationShoes';
   pageInfo: PaginationPage;
@@ -304,10 +313,10 @@ export type SearchResults = {
   edges: Array<Shoes>;
 };
 
-export type PaginationResponse = {
-  __typename?: 'PaginationResponse';
+export type PaginatedCommentsResponse = {
+  __typename?: 'PaginatedCommentsResponse';
+  edges: Array<Comments>;
   pageInfo: PaginationInfo;
-  edges: Array<Blog>;
 };
 
 export type PaginationInfo = {
@@ -316,20 +325,18 @@ export type PaginationInfo = {
   endCursor?: Maybe<Scalars['String']>;
 };
 
+export type PaginatedBlogResponse = {
+  __typename?: 'PaginatedBlogResponse';
+  edges: Array<Blog>;
+  pageInfo: PaginationInfo;
+};
+
 export type Newsletter = {
   __typename?: 'Newsletter';
   _id: Scalars['ObjectId'];
   type: Scalars['String'];
   email: Array<Scalars['String']>;
   users: Array<User>;
-};
-
-export type Purchases = {
-  __typename?: 'Purchases';
-  _id: Scalars['ObjectId'];
-  product: Variants;
-  comment?: Maybe<Comments>;
-  owner: User;
 };
 
 export type Mutation = {
@@ -1083,7 +1090,7 @@ export type GetArticlesQueryVariables = Exact<{
 export type GetArticlesQuery = (
   { __typename?: 'Query' }
   & { getArticles: (
-    { __typename?: 'PaginationResponse' }
+    { __typename?: 'PaginatedBlogResponse' }
     & { edges: Array<(
       { __typename?: 'Blog' }
       & ArticleFragmentFragment
@@ -1248,7 +1255,10 @@ export type GetOrdersQuery = (
     ), user: (
       { __typename?: 'User' }
       & Pick<User, 'email'>
-    ), products: Array<(
+    ), purchases: Array<(
+      { __typename?: 'Purchases' }
+      & Pick<Purchases, '_id'>
+    )>, products: Array<(
       { __typename?: 'CartItem' }
       & Pick<CartItem, '_id' | 'quantity'>
       & { variant: (
@@ -2873,6 +2883,9 @@ export const GetOrdersDocument = gql`
     }
     user {
       email
+    }
+    purchases {
+      _id
     }
     products {
       _id

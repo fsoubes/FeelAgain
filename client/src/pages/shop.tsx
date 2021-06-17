@@ -14,6 +14,7 @@ import Sort from "../components/Sort/Sort";
 import Outside from "../components/OutsideEvent/Outside";
 import styles from "../styles/Shop.module.scss";
 import Head from "../components/SEO/Head";
+import useResponsive from "../utils/useResponsive";
 
 interface ShopProps {
   page?: number;
@@ -57,9 +58,11 @@ const Shop: NextPage<ShopProps> = ({
   const [sortingBy, setSort] = useState<String | null>(null);
   const [currentSearch, setSearch] = useState<String | null>(search as string);
 
+  const { isMobile } = useResponsive();
+
   let { data, refetch } = useGetShoesQuery({
     variables: {
-      limit: 15,
+      limit: isMobile ? 14 : 15,
       page: currentPage ? currentPage : 1,
       ...(search && {
         search: search,

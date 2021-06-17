@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import styles from "../../styles/Stripe.module.scss";
+import styles from "../../styles/Payment.module.scss";
 import {
   PaymentMethod,
   StripeCardElement,

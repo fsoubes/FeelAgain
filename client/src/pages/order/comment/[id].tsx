@@ -22,9 +22,10 @@ const CommentOrder: NextPage<Props> = ({ id, itemId }) => {
   const { data } = useGetMinShoesQuery({ variables: { shoesId: id } });
   const { data: review } = useGetReviewQuery({
     variables: { shoesId: id as string },
+    skip: !id,
   });
-  const router = useRouter();
   const [addComment] = useAddReviewMutation();
+  const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [rating, setRating] = useState<number>(0);

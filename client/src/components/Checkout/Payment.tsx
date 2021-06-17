@@ -1,7 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
-import styles from "../../styles/Stripe.module.scss";
+import styles from "../../styles/Payment.module.scss";
 import Paypall from "../Paypall/Paypall";
 import CheckoutClassic from "../Stripe/CheckoutClassic";
 import Validation from "./Validation";
@@ -77,14 +77,25 @@ const Payment: React.FC<PaymentProps> = ({
           {hideStripe && !hidePaypal && <Validation></Validation>}
           {!hidePaypal && !hideStripe && <h2>Ou avec Stripe</h2>}
           {!hideStripe && (
-            <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
-              <CheckoutClassic
-                setPaypal={setPaypal}
-                total={total}
-                billingDetails={billingDetails}
-                shippingDetails={shippingDetails}
-              ></CheckoutClassic>
-            </Elements>
+            <>
+              <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
+                <CheckoutClassic
+                  setPaypal={setPaypal}
+                  total={total}
+                  billingDetails={billingDetails}
+                  shippingDetails={shippingDetails}
+                ></CheckoutClassic>
+              </Elements>
+              <div
+                style={{
+                  width: "100%",
+                  marginTop: "1rem",
+                  textAlign: "center",
+                }}
+              >
+                Test Credit Card: 4000&nbsp;0025&nbsp;0000&nbsp;0003
+              </div>
+            </>
           )}
         </div>
       </div>

@@ -249,6 +249,7 @@ export class BasketResolver {
   ): Promise<String> {
     try {
       let customerId;
+      let purchases = [];
       const user = await UserModel.findById(req.session.userId);
 
       const email = user ? user.email : "";
@@ -324,7 +325,7 @@ export class BasketResolver {
                 );
                 await variant.save();
 
-                await PurchasesModel.findOneAndUpdate(
+                const purchase = await PurchasesModel.findOneAndUpdate(
                   {
                     owner: req.session.userId,
                     product: product.variant,
@@ -332,6 +333,8 @@ export class BasketResolver {
                   { products: product.variant, owner: req.session.userId },
                   { useFindAndModify: false, new: true, upsert: true }
                 );
+
+                purchases.push(purchase._id);
               }
             }
           }
@@ -346,6 +349,7 @@ export class BasketResolver {
             payment_method: details.payment_method,
             tracking: dataset[randomIntFromInterval(0, 3)],
             payment_intent: paymentIntent.id,
+            purchases: [...purchases],
           });
 
           basket.products = [];

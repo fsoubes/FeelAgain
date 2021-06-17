@@ -154,9 +154,14 @@ export class OrderResolver {
     @Ctx() { req }: MyContext
   ) {
     try {
+      if (comments.score === 0) {
+        return "";
+      }
+
       const review = await CommentsModel.findOneAndUpdate(
         {
-          _id: ObjectId(reviewId),
+          product: ObjectId(shoesId),
+          author: req.session.userId,
         },
         { ...comments, author: req.session.userId, product: shoesId as string },
         {
@@ -167,12 +172,6 @@ export class OrderResolver {
       );
 
       if (review) {
-        /* await CartItemModel.findOneAndUpdate(
-          { _id: ObjectId(itemId) },
-          { comments: review._id },
-          { useFindAndModify: false, new: true }
-        ); */
-
         await PurchasesModel.findOneAndUpdate(
           { _id: ObjectId(itemId) },
           { comment: review._id },
@@ -182,10 +181,12 @@ export class OrderResolver {
         let shoes = await ShoesModel.findById(shoesId);
 
         if (shoes) {
+          const isContain = shoes.comments.includes(review._id);
           const shoesScore = shoes.score as number;
           const scoredBy = shoes.scored_by as number;
           const currentScore = comments.score as number;
-          if (reviewId) {
+
+          if (reviewId || isContain) {
             shoes.score =
               shoes.scored_by === 1
                 ? currentScore
@@ -269,7 +270,7 @@ export class OrderResolver {
           const resBody = await res.json();
           data.push(resBody);
         } catch (err) {
-          console.log(err);
+          throw err;
         }
       }
 
@@ -325,21 +326,6 @@ export class OrderResolver {
           }
         );
       }
-
-      /*   const res = await fetch(
-        // "https://api.laposte.fr/suivi/v2/idships/CB571480618FR,CB571480619FR?lang=fr_FR",
-        // "https://api.laposte.fr/suivi/v2/idships/115111111111111,6W111111111XX?lang=fr_FR",
-        `https://api.laposte.fr/suivi/v2/idships/6T11111111110FR?lang=fr_FR`,
-
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "X-Okapi-Key": process.env.LAPOSTE_KEY_DEV,
-          },
-        }
-      ); */
 
       const resBody = await res.json();
 

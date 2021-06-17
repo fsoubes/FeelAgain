@@ -1,4 +1,4 @@
-import { PaginationResponse, PaginationShoes } from "./../generated/graphql";
+import { PaginatedBlogResponse } from "./../generated/graphql";
 import { createWithApollo } from "./createWithApollo.js";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { NextPageContext } from "next";
@@ -20,9 +20,9 @@ const createClient = (ctx: NextPageContext) =>
             getArticles: {
               keyArgs: [],
               merge(
-                existing: PaginationResponse | undefined,
-                incoming: PaginationResponse
-              ): PaginationResponse {
+                existing: PaginatedBlogResponse | undefined,
+                incoming: PaginatedBlogResponse
+              ): PaginatedBlogResponse {
                 return {
                   ...incoming,
                   edges: [...(existing?.edges || []), ...incoming.edges],

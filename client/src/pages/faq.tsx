@@ -6,7 +6,7 @@ interface FaqProps {}
 const Faq: React.FC<FaqProps> = ({}) => {
   return (
     <Layout>
-      <h1>Hello</h1>
+      <h1>FAQ</h1>
     </Layout>
   );
 };

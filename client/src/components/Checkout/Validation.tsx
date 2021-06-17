@@ -1,5 +1,5 @@
 import { Link, Button } from "@material-ui/core";
-import styles from "../../styles/Stripe.module.scss";
+import styles from "../../styles/Payment.module.scss";
 
 interface ValidationProps {
   children?: JSX.Element;

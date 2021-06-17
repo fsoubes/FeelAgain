@@ -156,6 +156,10 @@ a {
 }
 
 @media screen and (max-width: 1024px) {
+  .MuiButton-root {
+    min-width: 50px !important;
+  }
+
   .container__dashboard {
     flex-direction: column;
   }
@@ -472,3 +476,26 @@ a {
     }
   }
 }
+
+// Paypal
+
+// .paypal-buttons {
+//   max-width: 100% !important;
+//   iframe {
+//     html {
+//       body {
+//         button {
+//           max-width: 100% !important;
+//           width: 100% !important;
+//         }
+//         .buttons-container {
+//           width: 100%;
+//           .paypal-button-container {
+//             max-width: 100% !important;
+//             width: 100% !important;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

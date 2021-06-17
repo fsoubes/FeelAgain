@@ -91,7 +91,7 @@ const OrderList: React.FC<OrderListProps> = ({ data }) => {
                 if (data.products.length === 1) {
                   router.push({
                     pathname: `/order/comment/${data.products[0].variant.shoes._id}`,
-                    query: { item: data.products[0]._id },
+                    query: { item: data.purchases[0]._id },
                   });
                 } else {
                   router.push("/order/comments");

@@ -1,3 +1,4 @@
+import { Purchases } from "./Purchases";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
@@ -59,6 +60,10 @@ export class Orders {
   @Field((_type) => User)
   @Property({ ref: "User", nullable: true })
   user?: Ref<User>;
+
+  @Field((_type) => [Purchases])
+  @Property({ ref: Purchases, default: [], nullable: true })
+  purchases: Ref<Purchases>[];
 }
 
 export const OrdersModel = getModelForClass(Orders, {

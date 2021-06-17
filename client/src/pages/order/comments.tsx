@@ -12,7 +12,7 @@ interface ProductsToCommentProps {
 }
 
 const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
-  const { data } = useGetPurchasesQuery();
+  const { data } = useGetPurchasesQuery({ fetchPolicy: "network-only" });
 
   return (
     <Layout>
@@ -32,7 +32,7 @@ const ProductsToComment: NextPage<ProductsToCommentProps> = ({ thanks }) => {
         )}
         <h1>Évaluez vos achats</h1>
         <div style={{ width: "100%" }}>
-          {data && (
+          {data && data.getPurchases && (
             <ul className={styles.purchases__list}>
               {data.getPurchases.map((item) => {
                 return (

@@ -36,6 +36,9 @@ const PurchasesItem: React.FC<PurchasesItemProps> = ({
     setRating(index);
   };
   useEffect(() => {
+    if (reviewId && rating === currentRating) {
+      return;
+    }
     addComment({
       variables: {
         shoesId: shoesId,

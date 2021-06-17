@@ -6,7 +6,7 @@ interface DeliveryreturnProps {}
 const Deliveryreturn: React.FC<DeliveryreturnProps> = ({}) => {
   return (
     <Layout>
-      <h1>Hello</h1>
+      <h1>Politique de retour</h1>
     </Layout>
   );
 };
