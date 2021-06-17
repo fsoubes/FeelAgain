@@ -137,7 +137,12 @@
   }
 
   h3 {
-    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  h3,
+  span {
+    font-family: "Marcellus", serif;
   }
 
   img {

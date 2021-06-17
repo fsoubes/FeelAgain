@@ -37,6 +37,11 @@ export default class MyDocument extends Document {
             }
             crossOrigin={"anonymous"}
           /> */}
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Marcellus&family=Tenor+Sans&display=swap"
+            rel="stylesheet"
+          ></link>
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Alex+Brush|Roboto+Slab:300,400,500,700&display=swap|Lato:300,400,500,700&display=swap|Spectral&display=swap"

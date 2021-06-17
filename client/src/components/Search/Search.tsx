@@ -1,15 +1,14 @@
 import dynamic from "next/dynamic";
 import { memo, useState, Fragment } from "react";
 import { useApolloClient } from "@apollo/client";
-import SearchBar from "./UI/SearchBar";
 import { GetShoesByNameDocument, SearchResults } from "../../generated/graphql";
 import SearchList from "./SearchList/SearchList";
-import styles from "../../styles/Search.module.scss";
 import Link from "next/link";
 import { Button } from "@material-ui/core";
 import { SearchProps, Relation } from "../../types/dashboard";
-
-const PopUp = dynamic(() => import("../Modal/modal")); // Good for Modal
+import styles from "../../styles/Search.module.scss";
+const PopUp = dynamic(() => import("../Modal/modal"));
+const SearchBar = dynamic(() => import("./UI/SearchBar"));
 
 const SearchShoes: React.FC<SearchProps> = ({
   children,

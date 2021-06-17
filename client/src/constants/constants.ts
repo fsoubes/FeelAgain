@@ -1,46 +1,79 @@
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import SearchIcon from "@material-ui/icons/Search";
+import Forward10Icon from "@material-ui/icons/Forward10";
+import PersonIcon from "@material-ui/icons/Person";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import EditIcon from "@material-ui/icons/Edit";
+import NoteAddIcon from "@material-ui/icons/NoteAdd";
+
 export const name = "FeelAgain";
 
 export const sideBarMenu = [
-  { title: "Ajouter Chaussure", path: "/dashboard/add", icon: "null", sub: [] },
   {
-    title: "Modifier Chaussure",
+    title: "Ajouter Chaussure",
+    path: "/dashboard/add",
+    icon: AddShoppingCartIcon,
+    sub: [],
+  },
+  {
+    title: "Editer Chaussure",
     path: "/dashboard/update",
-    icon: "null",
+    icon: EditIcon,
     sub: [
-      { title: "Recherche", path: "/dashboard/update/search", icon: "null" },
+      {
+        title: "Recherche",
+        path: "/dashboard/update/search",
+        icon: SearchIcon,
+      },
       {
         title: "Dernier ajouts",
         path: "/dashboard/update/latest",
-        icon: "null",
+        icon: Forward10Icon,
       },
     ],
   },
   {
     title: "Ajouter Article",
     path: "/dashboard/blog/add",
-    icon: "null",
+    icon: NoteAddIcon,
     sub: [],
   },
   {
-    title: "Modifier Article",
+    title: "Editer Article",
     path: "/dashboard/blog/update",
-    icon: "null",
+    icon: EditIcon,
     sub: [
       {
         title: "Recherche",
         path: "/dashboard/update/blog/search",
-        icon: "null",
+        icon: SearchIcon,
       },
       {
         title: "Dernier ajouts",
         path: "/dashboard/update/blog/latest",
-        icon: "null",
+        icon: Forward10Icon,
       },
     ],
   },
-  { title: "Statistiques", path: "/dashboard/stats", icon: "null", sub: [] },
-  { title: "Commandes", path: "/dashboard/delivery", icon: "null", sub: [] },
-  { title: "Utilisateurs", path: "/dashboard/user", icon: "null", sub: [] },
+  {
+    title: "Statistiques",
+    path: "/dashboard/stats",
+    icon: EqualizerIcon,
+    sub: [],
+  },
+  {
+    title: "Commandes",
+    path: "/dashboard/delivery",
+    icon: LocalShippingIcon,
+    sub: [],
+  },
+  {
+    title: "Utilisateurs",
+    path: "/dashboard/user",
+    icon: PersonIcon,
+    sub: [],
+  },
 ];
 
 export const productType = [

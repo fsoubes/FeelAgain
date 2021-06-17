@@ -1,3 +1,5 @@
+// import { ISourceOptions } from "react-tsparticles";
+
 export const particles = {
   particles: {
     number: {
@@ -92,7 +94,7 @@ export const particles = {
         size: 0,
         duration: 2,
         opacity: 0,
-        speed: 8,
+        // speed: 8,
       },
       repulse: {
         distance: 800,

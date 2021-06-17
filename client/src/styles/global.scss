@@ -106,6 +106,10 @@ a {
     padding-right: calc(50% - var(--container-width) / 2);
   }
 
+  h2 {
+    font-family: "Marcellus", serif;
+  }
+
   @media only screen and (max-width: 991px) {
     padding: 0;
     margin: 1rem 0;

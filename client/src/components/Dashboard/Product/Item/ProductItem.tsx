@@ -73,7 +73,7 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
               >
                 {remove ? "Modifier" : "Aperçu"}
               </Button>
-              {!remove && (
+              {!remove && (scoredBy as number) > 0 && (
                 <div>
                   <RatingRes rating={score as number} />
                   <span>

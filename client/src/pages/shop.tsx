@@ -1,5 +1,6 @@
 import { useEffect, useState, Fragment } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { Button } from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
@@ -8,13 +9,15 @@ import { useGetShoesQuery } from "../generated/graphql";
 import { withApollo } from "../utils/withApollo";
 import { NextPage } from "next";
 import Pagination from "../components/Pagination/Pagination";
-import CustomAccordion from "../components/Accordion/Accordion";
 import ProductListDash from "../components/Dashboard/Product/ProductList";
-import Sort from "../components/Sort/Sort";
-import Outside from "../components/OutsideEvent/Outside";
 import styles from "../styles/Shop.module.scss";
 import Head from "../components/SEO/Head";
 import useResponsive from "../utils/useResponsive";
+const CustomAccordion = dynamic(() =>
+  import("../components/Accordion/Accordion")
+);
+const Sort = dynamic(() => import("../components/Sort/Sort"));
+const Outside = dynamic(() => import("../components/OutsideEvent/Outside"));
 
 interface ShopProps {
   page?: number;
@@ -114,7 +117,9 @@ const Shop: NextPage<ShopProps> = ({
             </header> */}
         <div
           className="container__header"
-          style={{ backgroundColor: "rgba(215, 215, 221,.5" }}
+          style={{
+            backgroundColor: "rgba(215, 215, 221,.5",
+          }}
         >
           <h2>FeelAgain/Shop</h2>
           <h2>
@@ -130,7 +135,9 @@ const Shop: NextPage<ShopProps> = ({
           <div>
             <Button onClick={() => setFilter(!isFilter)}>
               <FilterListIcon />
-              <span>{isFilter ? "Masquer" : "Afficher"} les filtres</span>
+              <span style={{ fontFamily: `"Marcellus", serif` }}>
+                {isFilter ? "Masquer" : "Afficher"} les filtres
+              </span>
             </Button>
           </div>
           <div style={{ position: "relative" }}>
@@ -141,7 +148,9 @@ const Shop: NextPage<ShopProps> = ({
                     setSorting(!isSorting);
                   }}
                 >
-                  <span>Trier</span>
+                  <span style={{ fontFamily: `"Marcellus", serif` }}>
+                    Trier
+                  </span>
                   <SortIcon />
                 </Button>
                 {isSorting && (

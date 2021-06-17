@@ -21,15 +21,14 @@
     "formik": "^2.2.6",
     "graphql": "^15.5.0",
     "marked": "^2.0.7",
-    "next-with-apollo": "^5.1.1",
-    "react": "17.0.1",
-    "react-alert": "^7.0.3",
-    "react-alert-template-basic": "^1.0.2",
-    "react-dom": "17.0.1",
+    "next-with-apollo": "^5.1.0",
+    "react-alert": "^7.0.2",
+    "react-alert-template-basic": "^1.0.0",
     "react-image-gallery": "^1.1.1",
     "react-lazyload": "^3.2.0",
     "react-masonry-css": "^1.0.16",
     "react-paginate": "^7.1.0",
+    "react-particles-js": "^3.4.1",
     "react-paypal-button-v2": "^2.6.3",
     "react-responsive": "^8.2.0",
     "react-simplemde-editor": "^5.0.1",
@@ -56,8 +55,10 @@
     "@types/react-paginate": "^6.2.1",
     "@types/react-responsive": "^8.0.2",
     "@types/vanilla-tilt": "^1.6.2",
-    "next": "^10.2.3",
+    "next": "^11.0.0",
     "prettier": "^1.19.1",
-    "typescript": "^4.3.3"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "typescript": "^4.1.5"
   }
 }
