@@ -11,6 +11,11 @@ import { createShoesLoader } from "loaders/createShoesLoader";
 import { createCommentLoader } from "loaders/createCommentLoader";
 import { createCommentsLoader } from "loaders/createCommentsLoader";
 
+export type req = Request & {
+  session: Session &
+    Partial<SessionData> & { userId?: string } & { isAdmin?: Boolean };
+};
+
 export type MyContext = {
   user: User;
   req: Request & {

@@ -8,6 +8,10 @@ import { withApollo } from "../utils/withApollo";
 import { useLoginMutation, MeQuery, MeDocument } from "../generated/graphql";
 import { useRouter } from "next/router";
 import { toErrorMap } from "../utils/toErrorMap";
+import { FacebookOAuthIcon } from "../components/Icons/FacebookOAuthIcon";
+
+import { GoogleOAuthIcon } from "../components/Icons/GoogleOAuthIcon";
+import { TwitterOAuthIcon } from "../components/Icons/TwitterOAuthIcon";
 
 interface LoginProps {}
 
@@ -59,7 +63,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                 }
               }
             } catch (err) {
-              console.log(err);
+              throw err;
             }
           }}
         >
@@ -129,6 +133,11 @@ const Login: React.FC<LoginProps> = ({}) => {
           Nouveau sur FeelAgain ?
           <NextLink href="/inscription"> Créer un compte</NextLink>
         </p>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <FacebookOAuthIcon />
+          <GoogleOAuthIcon />
+          <TwitterOAuthIcon />
+        </div>
       </Box>
     </Layout>
   );

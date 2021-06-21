@@ -1,26 +1,43 @@
-import { prop as Property, getModelForClass } from "@typegoose/typegoose";
+import { MonthlyStats } from "./MonthlyStats";
+import {
+  prop as Property,
+  getModelForClass,
+  index,
+} from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
 import { Ref } from "../constant/types";
-import { User } from "./User";
-import { CartItem } from "./CartItem";
+import { SeasonalStats } from "./SeasonalStats";
 
+@index({ year: 1 }, { unique: true })
 @ObjectType()
 export class YearlyStats {
   @Field()
   readonly _id: ObjectId;
 
-  @Field((_type) => [CartItem])
-  @Property({ ref: CartItem, default: [], nullable: true })
-  products: Ref<CartItem>[];
-
   @Field()
-  @Property()
+  @Property({ unique: true, index: true })
   year: String;
 
-  @Field((_type) => User)
-  @Property({ ref: "User", nullable: true })
-  user?: Ref<User>;
+  @Field()
+  @Property({ default: 0 })
+  revenus: String;
+
+  @Field()
+  @Property({ default: 0 })
+  sold__count: Number;
+
+  @Field()
+  @Property({ default: 0 })
+  cancellation__count: Number;
+
+  @Field((_type) => [MonthlyStats])
+  @Property({ ref: MonthlyStats, default: [], nullable: true })
+  months: Ref<MonthlyStats>[];
+
+  @Field((_type) => [SeasonalStats])
+  @Property({ ref: SeasonalStats, default: [], nullable: true })
+  seasons: Ref<SeasonalStats>[];
 }
 
 export const YearlyStatsModel = getModelForClass(YearlyStats, {

@@ -21,6 +21,8 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
   handleUpdate,
   setOpen,
 }) => {
+  console.log(data);
+
   return (
     <div>
       <div className={styles.header}>
@@ -41,38 +43,43 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
         )}
       </div>
       <div className={styles.content}>
-        {data && (
-          <SmallProductList
-            data={data}
-            remove={
-              handleRemove as (
-                itemId: string,
-                BasketId: string,
-                quantity: number
-              ) => Promise<void>
-            }
-            update={
-              handleUpdate as (
-                itemId: string,
-                quantity: number
-              ) => Promise<void>
-            }
-          />
+        {data && data.getBasket.products.length > 0 && (
+          <>
+            <SmallProductList
+              data={data}
+              remove={
+                handleRemove as (
+                  itemId: string,
+                  BasketId: string,
+                  quantity: number
+                ) => Promise<void>
+              }
+              update={
+                handleUpdate as (
+                  itemId: string,
+                  quantity: number
+                ) => Promise<void>
+              }
+            />
+            <p className={styles.total}>
+              <strong>SOUS-TOTAL:</strong>
+              <span style={{ color: "black", fontWeight: "bold" }}>
+                {data &&
+                  data?.getBasket.products.reduce(
+                    (acc, currentValue) =>
+                      acc +
+                      currentValue.variant.price *
+                        (currentValue.quantity as number),
+                    0
+                  )}
+                ,00€
+              </span>
+            </p>
+          </>
         )}
-        <p className={styles.total}>
-          <strong>SOUS-TOTAL:</strong>
-          <span style={{ color: "black", fontWeight: "bold" }}>
-            {data &&
-              data?.getBasket.products.reduce(
-                (acc, currentValue) =>
-                  acc +
-                  currentValue.variant.price *
-                    (currentValue.quantity as number),
-                0
-              )}
-            ,00€
-          </span>
-        </p>
+        {data?.getBasket?.products.length === 0 && (
+          <h4 style={{ margin: "1rem" }}>Votre panier est vide actuellement</h4>
+        )}
         <div className={styles.routing}>
           {setOpen && (
             <Link href={"/panier"}>
@@ -81,11 +88,13 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
               </Button>
             </Link>
           )}
-          <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
-            <Button className={styles.action__payment} disableRipple>
-              PAIEMENT
-            </Button>
-          </Link>
+          {data && data?.getBasket?.products?.length > 0 && (
+            <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
+              <Button className={styles.action__payment} disableRipple>
+                PAIEMENT
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

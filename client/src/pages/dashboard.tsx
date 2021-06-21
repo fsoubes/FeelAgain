@@ -22,7 +22,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-const drawerWidth = 300;
+const drawerWidth = 270;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

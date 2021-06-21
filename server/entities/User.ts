@@ -28,6 +28,18 @@ export class User {
   @Property({ nullable: true, unique: true, index: true })
   nickname?: string;
 
+  @Field()
+  @Property({ nullable: true, unique: true, index: true })
+  twitter_id?: string;
+
+  @Field()
+  @Property({ nullable: true, unique: true, index: true })
+  facebook_id?: string;
+
+  @Field()
+  @Property({ nullable: true, unique: true, index: true })
+  google_id?: string;
+
   @Field({ nullable: true })
   @Property({ default: 0, min: 0 })
   items?: number;

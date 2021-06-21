@@ -30,7 +30,7 @@ const LargeCartProduct: React.FC<LargeCartProductProps> = ({
         <div className={styles.quantity}>QUANTITÉ</div>
         <div className={styles.total}>TOTAL</div>
       </div>
-      {data && (
+      {data && data.getBasket.products.length > 0 && (
         <ProductList
           data={data}
           remove={
@@ -45,12 +45,16 @@ const LargeCartProduct: React.FC<LargeCartProductProps> = ({
           }
         />
       )}
-      {!data && <h4>Votre panier est vide actuellement</h4>}
-      <div className={styles.payment}>
-        <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
-          <Button>PROCEDER AU PAIEMENT</Button>
-        </Link>
-      </div>
+      {data?.getBasket?.products.length === 0 && (
+        <h4 style={{ margin: "1rem" }}>Votre panier est vide actuellement</h4>
+      )}
+      {data && data.getBasket.products.length > 0 && (
+        <div className={styles.payment}>
+          <Link href={`/checkouts/${data?.getBasket._id}?step=information`}>
+            <Button>PROCEDER AU PAIEMENT</Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

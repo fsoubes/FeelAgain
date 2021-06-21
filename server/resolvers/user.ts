@@ -18,6 +18,7 @@ import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constant/constant";
 import { sendEmail } from "../helpers/sendEmail";
 import { v4 } from "uuid";
 import { BasketModel } from "../entities/Basket";
+import { display } from "../helpers/display";
 
 @ObjectType()
 export class FieldError {
@@ -44,6 +45,15 @@ export class UserResolver {
       return user.email;
     }
     return "not allowed to see";
+  }
+
+  @FieldResolver(() => String)
+  async nickname(@Root() user: User, @Ctx() {  }: MyContext) {
+    try{
+      return display(user.nickname as string)
+    }catch(err){
+      throw err
+    }
   }
 
   @FieldResolver(() => Number)

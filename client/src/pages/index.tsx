@@ -7,6 +7,7 @@ import RatingRes from "../components/StarRating/RatingRes";
 import useResponsive from "../utils/useResponsive";
 import { useRouter } from "next/router";
 import Head from "../components/SEO/Head";
+import { useEffect } from "react";
 
 type Review = {
   src: string;
@@ -58,6 +59,13 @@ const carouselReviews: Review[] = [
 const Home: React.FC = ({}) => {
   const router = useRouter();
   const { isTabletorMobile } = useResponsive();
+
+  useEffect(() => {
+    if (router.asPath === "/#_=_") {
+      router.replace("/");
+    }
+  }, []);
+
   const carousel = Array(isTabletorMobile ? 4 : 2)
     .fill(null)
     .map((__, index) => {

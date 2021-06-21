@@ -9,6 +9,7 @@ import { TypegooseMiddleware } from "./middlewares/typegoose-middleware";
 import { Resolvers } from "./resolvers/index";
 import session from "express-session";
 import Redis from "ioredis";
+import passport from "passport";
 import connectRedis from "connect-redis";
 import { MyContext } from "./type";
 import mongoose from "mongoose";
@@ -17,6 +18,7 @@ import { Loader } from "./loaders/index";
 // import { seedDataBase } from "./helpers/seedDatabase";
 import { User } from "entities/User";
 require("dotenv").config();
+import { authRoutes } from "./routes/authRoutes";
 
 // Constant
 
@@ -79,6 +81,10 @@ const main = async () => {
         resave: false,
       })
     );
+
+    app.use(passport.initialize());
+
+    authRoutes(app);
 
     const apolloServer = new ApolloServer({
       schema: await buildSchema({

@@ -7,7 +7,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { Collapse } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import Link from "next/link";
-import * as Icons from "material-ui/svg-icons";
 
 interface MenuItemProps {
   title: string;

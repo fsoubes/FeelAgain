@@ -181,7 +181,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                 <SearchShoes>
                   <SearchIcon />
                 </SearchShoes>
-                <Link href="/">
+                <Link href="/panier">
                   <Button aria-label="shopping basket" disableRipple>
                     <Basket
                       total={data?.me?.items ? (data?.me?.items as number) : 0}
@@ -208,9 +208,13 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                     : `${styles.hide} `
                 }
               >
-                <Link href="/shop">&nbsp;Shop</Link>
-                <Link href="/blog">&nbsp;Blog</Link>
-                <Link href="/marque">&nbsp;MARQUE</Link>
+                {!isTabletorMobile && (
+                  <>
+                    <Link href="/shop">&nbsp;Shop</Link>
+                    <Link href="/blog">&nbsp;Blog</Link>
+                    <Link href="/marque">&nbsp;MARQUE</Link>
+                  </>
+                )}
                 {isTabletorMobile && (
                   <>
                     <Link href="/shop">&nbsp;Shop</Link>

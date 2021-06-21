@@ -5,16 +5,22 @@ import {
 } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
+import { Ref } from "../constant/types";
+import { CartItem } from "./CartItem";
 
-@index({ year: 1, month: 1 }, { unique: true })
+@index({ year: 1 }, { unique: true })
 @ObjectType()
-export class MonthlyStats {
+export class SeasonalStats {
   @Field()
   readonly _id: ObjectId;
 
+  @Field((_type) => [CartItem])
+  @Property({ ref: CartItem, default: [], nullable: true })
+  products: Ref<CartItem>[];
+
   @Field()
   @Property({ index: true })
-  month: String;
+  season: String;
 
   @Field()
   @Property({ unique: true, index: true })
@@ -33,6 +39,6 @@ export class MonthlyStats {
   cancellation__count: Number;
 }
 
-export const MonthlyStatsModel = getModelForClass(MonthlyStats, {
+export const SeasonalStatsModel = getModelForClass(SeasonalStats, {
   schemaOptions: { timestamps: true },
 });
