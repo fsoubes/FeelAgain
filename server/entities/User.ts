@@ -29,15 +29,15 @@ export class User {
   nickname?: string;
 
   @Field()
-  @Property({ nullable: true, unique: true, index: true })
+  @Property({ nullable: true, index: true })
   twitter_id?: string;
 
   @Field()
-  @Property({ nullable: true, unique: true, index: true })
+  @Property({ nullable: true, index: true })
   facebook_id?: string;
 
   @Field()
-  @Property({ nullable: true, unique: true, index: true })
+  @Property({ nullable: true, index: true })
   google_id?: string;
 
   @Field({ nullable: true })

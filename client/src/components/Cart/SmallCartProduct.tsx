@@ -21,8 +21,6 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
   handleUpdate,
   setOpen,
 }) => {
-  console.log(data);
-
   return (
     <div>
       <div className={styles.header}>

@@ -13,8 +13,8 @@ export const TwitterOAuthIcon: React.FC<TwitterOAuthIconProps> = ({}) => {
     >
       <Button>
         <img
-          alt="Twitter"
-          title="Twitter connexion feelagain.fr"
+          alt="Connexion Twitter"
+          title="Connexion à FeelAgain avec Twitter"
           src={
             "https://res.cloudinary.com/dunc6xvuh/image/upload/v1614946082/material/twitter_jrdxsw.png"
           }

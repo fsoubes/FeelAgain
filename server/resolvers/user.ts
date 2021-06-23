@@ -42,7 +42,7 @@ export class UserResolver {
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { req }: MyContext) {
     if (req.session.userId === String(user._id)) {
-      return user.email;
+      return  display(user.email as string);
     }
     return "not allowed to see";
   }
@@ -60,6 +60,7 @@ export class UserResolver {
   async items(@Root() user: User, @Ctx() {  }: MyContext) {
     try {
       const basket = await BasketModel.findById(user.basket).select("total");
+      console.log(user.basket, basket)
       return basket?.total;
     } catch (err) {
       throw err;

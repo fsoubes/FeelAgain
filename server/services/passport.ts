@@ -59,7 +59,10 @@ passport.use(
           nickname,
           avator: profile._json.picture,
         });
-        await user.save();
+
+        defaultBasket.user = user._id;
+        await Promise.all([user.save(), defaultBasket.save()]);
+
         if (user) done(undefined, user);
       }
     }
@@ -120,7 +123,10 @@ passport.use(
           password,
           nickname,
         });
-        await user.save();
+        defaultBasket.user = user._id;
+
+        await Promise.all([user.save(), defaultBasket.save()]);
+
         if (user) done(undefined, user);
       }
     }
@@ -136,8 +142,6 @@ passport.use(
       callbackURL: "/auth/twitter/callback",
     },
     async (_, __, profile, done) => {
-      console.log(profile);
-
       const twitterId = profile.id;
       const nickname = oauth2Mask(twitterId, profile.displayName, "twitter");
       const email = oauth2Mask(twitterId, profile._json.email, "twitter");
@@ -172,7 +176,10 @@ passport.use(
           nickname,
           avator: profile._json.picture,
         });
-        await user.save();
+
+        defaultBasket.user = user._id;
+        await Promise.all([user.save(), defaultBasket.save()]);
+
         done(undefined, user);
       }
     }

@@ -13,8 +13,8 @@ export const GoogleOAuthIcon: React.FC<GoogleOAuthIconIconProps> = ({}) => {
     >
       <Button>
         <img
-          alt="Google oauth2"
-          title="Google feelagain.fr"
+          alt="Connexion Google"
+          title="Connexion à FeelAgain avec Google"
           src={
             "https://res.cloudinary.com/dunc6xvuh/image/upload/v1614944830/material/google-symbol_acleoo.png"
           }
