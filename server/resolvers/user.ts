@@ -14,7 +14,7 @@ import { User, UserModel } from "../entities/User";
 import { UserRegister, UserLogin } from "./types/user-input";
 import argon2 from "argon2";
 import { validateEmail } from "../helpers/validation";
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constant/constant";
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX, __prod__  } from "../constant/constant";
 import { sendEmail } from "../helpers/sendEmail";
 import { v4 } from "uuid";
 import { BasketModel } from "../entities/Basket";
@@ -60,7 +60,6 @@ export class UserResolver {
   async items(@Root() user: User, @Ctx() {  }: MyContext) {
     try {
       const basket = await BasketModel.findById(user.basket).select("total");
-      console.log(user.basket, basket)
       return basket?.total;
     } catch (err) {
       throw err;
@@ -269,9 +268,8 @@ export class UserResolver {
   logout(@Ctx() { req, res }: MyContext) {
     return new Promise((resolve) =>
       req.session.destroy((err) => {
-        res.clearCookie(COOKIE_NAME);
+        res.clearCookie(COOKIE_NAME,{domain: __prod__ ? ".feelagain.fr" : "localhost", path:"/",  expires: new Date(0)});
         if (err) {
-          console.log(err);
           resolve(false);
           return;
         }

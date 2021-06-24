@@ -25,8 +25,6 @@ const SmallProductItem: React.FC<SmallProductItemProps> = ({
   size,
   id,
 }) => {
-  // console.log(quantity);
-
   return (
     <li>
       <div

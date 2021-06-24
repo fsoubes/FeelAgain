@@ -44,8 +44,6 @@ const AddToCart: React.FC<AddToCartProps> = ({ setOpenCard, id }) => {
             query: MeDocument,
           });
 
-          console.log(currentUser, basket);
-
           if (basket?.getBasket && data?.addCartItem) {
             const isPresent = basket.getBasket.products.filter(
               (item) => item._id === data?.addCartItem._id

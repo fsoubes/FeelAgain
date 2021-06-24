@@ -19,6 +19,7 @@ import { isAuth } from "../middlewares/isAuth";
 import { CommentInput } from "./types/comment-input";
 import { ShoesModel } from "../entities/Shoes";
 import { PurchasesModel } from "../entities/Purchases";
+import { CancelModel } from "../entities/Cancel";
 const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const Stripe = require("stripe");
@@ -79,7 +80,7 @@ export class OrderResolver {
     @Arg("orderId") orderId: String,
     @Arg("updated", () => [String]) updated: string[],
     @Arg("total") total: number,
-    @Ctx() {  }: MyContext
+    @Ctx() { req }: MyContext
   ): Promise<String> {
     try {
       const stripe = Stripe(process.env.STRIPE_SECRET);
@@ -132,10 +133,19 @@ export class OrderResolver {
               _id: currentId,
             });
 
+            const cancelOrder = new CancelModel({
+              total: total * 100,
+              order: order._id,
+              owner: req.session.userId,
+              product: item.variant,
+            });
+            await cancelOrder.save();
+
             if (order.products.length === 0) {
               await OrdersModel.deleteOne({ _id: order._id });
             }
           }
+
           await order.save();
         }
       }
