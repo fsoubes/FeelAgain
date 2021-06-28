@@ -122,11 +122,13 @@ const Shop: NextPage<ShopProps> = ({
           }}
         >
           <h2>FeelAgain/Shop</h2>
-          <h2>
-            {currentSearch
-              ? `${data?.getFilterShoes.pageInfo.totalItem} résultats pour “${currentSearch}”`
-              : `${data?.getFilterShoes.pageInfo.totalItem} articles`}
-          </h2>
+          {data?.getFilterShoes.pageInfo && (
+            <h2>
+              {currentSearch
+                ? `${data?.getFilterShoes.pageInfo.totalItem} résultats pour “${currentSearch}”`
+                : `${data?.getFilterShoes.pageInfo.totalItem} articles`}
+            </h2>
+          )}
         </div>
         <div
           className="container__header"

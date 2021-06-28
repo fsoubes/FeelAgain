@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useLayoutEffect } from "react";
 import VanillaTilt from "vanilla-tilt";
 
 interface TiltProps {
@@ -16,10 +16,14 @@ const options = {
 const Tilt: React.FC<TiltProps> = ({ style, children, isTilt = true }) => {
   const divRef = useRef<any>(null);
 
-  useEffect((): any => {
-    if (!isTilt) {
+  const useEnhancedEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+  useEnhancedEffect((): any => {
+    if (!isTilt || window.innerWidth < 1024) {
       return;
     }
+
     const node = divRef.current;
     if (node) {
       VanillaTilt.init(node, options);
