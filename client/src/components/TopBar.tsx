@@ -24,6 +24,7 @@ import Basket from "../svg/basket";
 import SearchIcon from "@material-ui/icons/Search";
 import SubMenu from "./SubMenu/SubMenu";
 import { debounce } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import BackDropShadow from "./BackDrop/BackDropShadow";
 
 const useStyles = makeStyles({
@@ -194,7 +195,7 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                   onClick={() => setOpen(!open)}
                   aria-label="menu"
                 >
-                  <MenuIcon />
+                  {open ? <CloseIcon /> : <MenuIcon />}
                 </Button>
               </div>
             )}
@@ -220,19 +221,21 @@ const TopBar: React.FC<TopBarProps> = ({ isBasket }): ReactElement => {
                     <Link href="/shop">&nbsp;Shop</Link>
                     <Link href="/blog">&nbsp;Blog</Link>
                     <Link href="/marque">&nbsp;MARQUE</Link>
-                    <Link href="/order">&nbsp;Commandes</Link>
-                    <Link href="/panier">&nbsp;Panier</Link>
-                    <Link href="/order/comments">&nbsp;Evaluer</Link>
                     {data.me && (
-                      <a
-                        href="/"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleLogout();
-                        }}
-                      >
-                        Deconnexion
-                      </a>
+                      <>
+                        <Link href="/order">&nbsp;Commandes</Link>
+                        <Link href="/panier">&nbsp;Panier</Link>
+                        <Link href="/order/comments">&nbsp;Evaluer</Link>
+                        <a
+                          href="/"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleLogout();
+                          }}
+                        >
+                          Deconnexion
+                        </a>
+                      </>
                     )}
                   </>
                 )}

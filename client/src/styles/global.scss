@@ -410,6 +410,14 @@ a {
 }
 
 @media screen and (max-width: 768px) {
+  .image-gallery-content {
+    .image-gallery-fullscreen-button {
+      display: flex !important;
+      position: absolute;
+      top: 0;
+    }
+  }
+
   .image-gallery-content.fullscreen {
     .image-gallery-slide-wrapper {
       width: 100%;

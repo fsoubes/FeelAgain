@@ -213,16 +213,18 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         >
           <Typography className={classes.filter_title}>PAR PRODUIT</Typography>
         </AccordionSummary>
-        <AccordionDetails className={classes.details}>
-          {filter.categories && (
-            <CheckboxForm
-              router={router}
-              state={filter.categories}
-              update={dispatch}
-              field={"categories"}
-            />
-          )}
-        </AccordionDetails>
+        {expanded === "panel1" && (
+          <AccordionDetails className={classes.details}>
+            {filter.categories && (
+              <CheckboxForm
+                router={router}
+                state={filter.categories}
+                update={dispatch}
+                field={"categories"}
+              />
+            )}
+          </AccordionDetails>
+        )}
       </Accordion>
       <Accordion
         className={classes.accordion}
@@ -236,14 +238,16 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         >
           <Typography className={classes.filter_title}>PAR COULEUR</Typography>
         </AccordionSummary>
-        <AccordionDetails className={classes.details}>
-          <FilterList
-            router={router}
-            data={filter?.colors}
-            isColor={true}
-            update={dispatch}
-          />
-        </AccordionDetails>
+        {expanded === "panel2" && (
+          <AccordionDetails className={classes.details}>
+            <FilterList
+              router={router}
+              data={filter?.colors}
+              isColor={true}
+              update={dispatch}
+            />
+          </AccordionDetails>
+        )}
       </Accordion>
       <Accordion
         className={classes.accordion}
@@ -257,16 +261,18 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         >
           <Typography className={classes.filter_title}>PAR MATIERE</Typography>
         </AccordionSummary>
-        <AccordionDetails className={classes.details}>
-          {filter.materials && (
-            <CheckboxForm
-              router={router}
-              state={filter.materials}
-              update={dispatch}
-              field={"materials"}
-            />
-          )}
-        </AccordionDetails>
+        {expanded === "panel3" && (
+          <AccordionDetails className={classes.details}>
+            {filter.materials && (
+              <CheckboxForm
+                router={router}
+                state={filter.materials}
+                update={dispatch}
+                field={"materials"}
+              />
+            )}
+          </AccordionDetails>
+        )}
       </Accordion>
       <Accordion
         className={classes.accordion}
@@ -280,16 +286,18 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         >
           <Typography className={classes.filter_title}>PAR TALON</Typography>
         </AccordionSummary>
-        <AccordionDetails className={classes.details}>
-          {filter.heels && (
-            <CheckboxForm
-              router={router}
-              state={filter.heels}
-              update={dispatch}
-              field={"heels"}
-            />
-          )}
-        </AccordionDetails>
+        {expanded === "panel4" && (
+          <AccordionDetails className={classes.details}>
+            {filter.heels && (
+              <CheckboxForm
+                router={router}
+                state={filter.heels}
+                update={dispatch}
+                field={"heels"}
+              />
+            )}
+          </AccordionDetails>
+        )}
       </Accordion>
       <Accordion
         className={classes.accordion}
@@ -303,9 +311,15 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
         >
           <Typography className={classes.filter_title}>PAR POINTURE</Typography>
         </AccordionSummary>
-        <AccordionDetails className={classes.details}>
-          <FilterList router={router} data={filter?.sizes} update={dispatch} />
-        </AccordionDetails>
+        {expanded === "panel5" && (
+          <AccordionDetails className={classes.details}>
+            <FilterList
+              router={router}
+              data={filter?.sizes}
+              update={dispatch}
+            />
+          </AccordionDetails>
+        )}
       </Accordion>
     </div>
   );

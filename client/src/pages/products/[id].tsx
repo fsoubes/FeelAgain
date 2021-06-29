@@ -92,9 +92,11 @@ const Article: NextPage<Props> = ({ id }) => {
       {openCard && <BackDropShadow></BackDropShadow>}
       <Outside open={openCard} setOpen={setOpenCard}>
         <CartSideBar isOpen={openCard}>
-          <CartProduct setOpen={setOpenCard} isOpen={openCard}>
-            <SmallCartProduct />
-          </CartProduct>
+          {openCard && (
+            <CartProduct setOpen={setOpenCard} isOpen={openCard}>
+              <SmallCartProduct />
+            </CartProduct>
+          )}
         </CartSideBar>
       </Outside>
       <div className="container__shop">

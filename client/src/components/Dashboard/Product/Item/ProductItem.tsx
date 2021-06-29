@@ -39,16 +39,16 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
   const router = useRouter();
   const [incrementCount] = useIncrementCountViewMutation();
   return (
-    <div>
-      <div
-        onClick={async (event) => {
-          router.push(`/products/${id}`);
-          if (!remove) await incrementCount({ variables: { shoeId: id } });
-          event.stopPropagation();
-        }}
-      >
-        <Tilt style={{ cursor: "pointer" }} isTilt={isTilt}>
-          <LazyLoadWrapper>
+    <LazyLoadWrapper>
+      <>
+        <div
+          onClick={async (event) => {
+            router.push(`/products/${id}`);
+            if (!remove) await incrementCount({ variables: { shoeId: id } });
+            event.stopPropagation();
+          }}
+        >
+          <Tilt style={{ cursor: "pointer" }} isTilt={isTilt}>
             <div
               style={{
                 backgroundImage: `url( ${src} )`,
@@ -82,23 +82,23 @@ const ProductItemDash: React.FC<ProductItemProps> = ({
                 </div>
               )}
             </div>
-          </LazyLoadWrapper>
-        </Tilt>
-      </div>
-      <div style={{ textAlign: "center" }}>
-        <h3
-          style={{ cursor: "pointer" }}
-          onClick={async (event) => {
-            router.push(`/products/${id}`);
-            if (!remove) await incrementCount({ variables: { shoeId: id } });
-            event.stopPropagation();
-          }}
-        >
-          <span>{title}</span>
-        </h3>
-        {price && <span>{price}€</span>}
-      </div>
-    </div>
+          </Tilt>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <h3
+            style={{ cursor: "pointer" }}
+            onClick={async (event) => {
+              router.push(`/products/${id}`);
+              if (!remove) await incrementCount({ variables: { shoeId: id } });
+              event.stopPropagation();
+            }}
+          >
+            <span>{title}</span>
+          </h3>
+          {price && <span>{price}€</span>}
+        </div>
+      </>
+    </LazyLoadWrapper>
   );
 };
 export default ProductItemDash;
