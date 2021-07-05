@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout } from "../components/Layout";
 import { withApollo } from "../utils/withApollo";
+import styles from "../styles/Contact.module.scss";
 
 interface ContactProps {}
 

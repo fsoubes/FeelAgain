@@ -44,7 +44,7 @@ export class UserResolver {
     if (req.session.userId === String(user._id)) {
       return  display(user.email as string);
     }
-    return "not allowed to see";
+    return "Vous n'êtes pas autorisés à voir cette information";
   }
 
   @FieldResolver(() => String)
@@ -77,7 +77,7 @@ export class UserResolver {
         errors: [
           {
             field: "newPassword",
-            message: "length must be greater than 2",
+            message: "la longueur doit être supérieure à 2 caractères",
           },
         ],
       };
@@ -143,7 +143,8 @@ export class UserResolver {
       "ex",
       1000 * 60 * 60 * 24 * 1
     ); // 1day
-
+    
+    
     await sendEmail(
       email,
       `<a href="http://localhost:3000/change-password/${token}">reset password</a>`
@@ -179,7 +180,7 @@ export class UserResolver {
           errors: [
             {
               field: "nickname",
-              message: "Length must be greater than 2",
+              message: "La longueur doit être supérieure à 2 caractères",
             },
           ],
         };
@@ -190,7 +191,7 @@ export class UserResolver {
           errors: [
             {
               field: "password",
-              message: "Password must be greater than 3",
+              message: "Le mot de passe doit être supérieur à 3 caractères",
             },
           ],
         };
@@ -201,7 +202,7 @@ export class UserResolver {
           errors: [
             {
               field: "email",
-              message: "Incorrect email",
+              message: "Courriel erroné",
             },
           ],
         };
@@ -228,7 +229,7 @@ export class UserResolver {
           errors: [
             {
               field: "email",
-              message: "This email is already present in the database",
+              message: "Cet email est déjà présent dans la base de données",
             },
           ],
         };
@@ -246,7 +247,7 @@ export class UserResolver {
 
     if (!user) {
       return {
-        errors: [{ field: "email", message: "That e-mail doesn't exist" }],
+        errors: [{ field: "email", message: "Cet e-mail n'existe pas" }],
       };
     }
 
@@ -254,7 +255,7 @@ export class UserResolver {
 
     if (!isValid) {
       return {
-        errors: [{ field: "password", message: "Incorrect password" }],
+        errors: [{ field: "password", message: "Mot de passe incorrect" }],
       };
     }
 

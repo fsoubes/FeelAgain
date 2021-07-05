@@ -102,6 +102,7 @@ const Blog: React.FC = ({}) => {
                   dragThreshold: isTabletorMobile,
                 }}
                 isLanding={false}
+                isTabletorMobile={isTabletorMobile}
               >
                 {carousel}
               </Carousel.Component>

@@ -1,10 +1,4 @@
-import {
-  useImperativeHandle,
-  useEffect,
-  useRef,
-  forwardRef,
-  useState,
-} from "react";
+import { useImperativeHandle, useEffect, useRef, forwardRef } from "react";
 import Glide from "@glidejs/glide";
 import "@glidejs/glide/dist/css/glide.core.min.css";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
@@ -28,7 +22,6 @@ interface SlideProps {
 export const Carousel: React.FC<CarouselProps> = forwardRef(
   ({ options, children, isTabletorMobile, isLanding = true }, ref) => {
     const sliderRef = useRef<any>(null);
-    const [isHover, setHover] = useState(false);
 
     useImperativeHandle(ref, () => sliderRef.current);
 

@@ -194,6 +194,9 @@ const Footer: React.FC<FooterProps> = () => {
               <Link href="/cgv">
                 <li>CGV</li>
               </Link>
+              <Link href="/contact">
+                <li>Contact</li>
+              </Link>
               <Link href="/faq">
                 <li>FAQ</li>
               </Link>

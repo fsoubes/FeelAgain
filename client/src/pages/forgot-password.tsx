@@ -24,7 +24,8 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({}) => {
         padding={"20px"}
         border={"1px solid #eaecef"}
         borderRadius={"5px"}
-        marginTop={5}
+        marginTop={"40px"}
+        marginBottom={"40px"}
       >
         {!complete && (
           <>
@@ -42,7 +43,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({}) => {
                 }
               }}
             >
-              {({ errors }) => (
+              {({}) => (
                 <Form>
                   <Box
                     marginBottom={2}
@@ -68,7 +69,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({}) => {
                     variant="contained"
                     color="primary"
                   >
-                    Send email
+                    Envoyer un email
                   </Button>
                 </Form>
               )}
@@ -76,7 +77,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({}) => {
           </>
         )}
         {complete && (
-          <span>An email has been sent to change your password.</span>
+          <span>Un courriel a été envoyé pour changer votre mot de passe.</span>
         )}
       </Box>
     </Layout>
