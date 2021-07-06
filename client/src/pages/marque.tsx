@@ -3,8 +3,10 @@ import { withApollo } from "../utils/withApollo";
 import Head from "../components/SEO/Head";
 import styles from "../styles/Brand.module.scss";
 import dynamic from "next/dynamic";
-import { useRef } from "react";
-const CountUp = dynamic({
+import { useRef, useEffect, useState } from "react";
+import { useIntersection } from "../utils/useIntersection";
+
+const CountUpDynamicComponent = dynamic({
   loader: () => import("react-countup"),
   ssr: false,
 });
@@ -13,6 +15,16 @@ interface MarqueProps {}
 
 const Marque: React.FC<MarqueProps> = ({}) => {
   const stats = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  const inViewport = useIntersection(stats, "-200px"); // Trigger if 200px is visible from the element
+
+  const CountUp = visible ? CountUpDynamicComponent : () => null;
+
+  useEffect(() => {
+    if (inViewport) {
+      setVisible(true);
+    }
+  }, [inViewport]);
 
   return (
     <Layout>
