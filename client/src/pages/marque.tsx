@@ -2,10 +2,18 @@ import { Layout } from "../components/Layout";
 import { withApollo } from "../utils/withApollo";
 import Head from "../components/SEO/Head";
 import styles from "../styles/Brand.module.scss";
+import dynamic from "next/dynamic";
+import { useRef } from "react";
+const CountUp = dynamic({
+  loader: () => import("react-countup"),
+  ssr: false,
+});
 
 interface MarqueProps {}
 
 const Marque: React.FC<MarqueProps> = ({}) => {
+  const stats = useRef<HTMLDivElement>(null);
+
   return (
     <Layout>
       <Head
@@ -290,14 +298,56 @@ const Marque: React.FC<MarqueProps> = ({}) => {
       </section>
       <section className={styles.section__5}>
         <div className={styles.shape__4} />
-        <div className={`${styles.sheet}`}></div>
+        <div className={`${styles.sheet}`}>
+          <div className={styles.column}>
+            <div className={styles.row}>
+              <div className={styles.image__1} />
+              <div className={styles.image__2} />
+              <div className={styles.image__3} />
+            </div>
+            <div className={styles.row}>
+              <div className={styles.image__4} />
+              <div className={styles.image__5} />
+              <div className={styles.image__6} />
+            </div>
+            <div className={styles.row}>
+              <div className={styles.image__7} />
+              <div className={styles.image__8} />
+              <div className={styles.image__9} />
+            </div>
+            <div className={styles.row}>
+              <div className={styles.image__10} />
+              <div className={styles.image__11} />
+              <div className={styles.image__12} />
+            </div>
+          </div>
+        </div>
         <div className={styles.vertical__line}></div>
       </section>
-      <section>
-        <div className={styles.section__6}>
-          <div className={`${styles.sheet}`}>
-            <h2>Contactez Nous</h2>
+      <section className={styles.section__6}>
+        <div className={`${styles.sheet}`}>
+          <div className={styles.container}>
+            <h2>Nos résultats</h2>
+            <div ref={stats} className={styles.stats}>
+              <div>
+                <CountUp end={227} duration={5} />
+                <h5>Chaussures</h5>
+              </div>
+              <div>
+                <CountUp end={123} duration={5} />
+                <h5>Ventes total</h5>
+              </div>
+              <div>
+                <CountUp end={120} duration={5} />
+                <h5>Clients satisfait</h5>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+      <section className={styles.section__7}>
+        <div className={`${styles.sheet}`}>
+          <h2>Contactez Nous</h2>
         </div>
       </section>
     </Layout>
