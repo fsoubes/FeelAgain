@@ -3,8 +3,9 @@ import { withApollo } from "../utils/withApollo";
 import Head from "../components/SEO/Head";
 import styles from "../styles/Brand.module.scss";
 import dynamic from "next/dynamic";
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useIntersection } from "../utils/useIntersection";
+import { Button } from "@material-ui/core";
 
 const CountUpDynamicComponent = dynamic({
   loader: () => import("react-countup"),
@@ -304,7 +305,7 @@ const Marque: React.FC<MarqueProps> = ({}) => {
                 </li>
               </ul>
             </div>
-            <div className={styles.content__side}></div>
+            <div className={styles.content__50}></div>
           </div>
         </div>
       </section>
@@ -342,15 +343,19 @@ const Marque: React.FC<MarqueProps> = ({}) => {
             <h2>Nos résultats</h2>
             <div ref={stats} className={styles.stats}>
               <div>
-                <CountUp end={227} duration={5} />
+                <CountUp end={227} duration={4} />
                 <h5>Chaussures</h5>
               </div>
               <div>
-                <CountUp end={123} duration={5} />
+                <CountUp end={10} duration={4} />
+                <h5>Saisons</h5>
+              </div>
+              <div>
+                <CountUp end={123} duration={4} />
                 <h5>Ventes total</h5>
               </div>
               <div>
-                <CountUp end={120} duration={5} />
+                <CountUp end={120} duration={4} />
                 <h5>Clients satisfait</h5>
               </div>
             </div>
@@ -359,7 +364,22 @@ const Marque: React.FC<MarqueProps> = ({}) => {
       </section>
       <section className={styles.section__7}>
         <div className={`${styles.sheet}`}>
-          <h2>Contactez Nous</h2>
+          <div className={styles.container}>
+            <div className={`${styles.contact__image} ${styles.content__50}`}>
+              <div className={styles.shape__5}></div>
+              <img src="https://images03.nicepage.com/c461c07a441a5d220e8feb1a/78047082d18e557194269c5b/6b12dcda02a6430ce0c2c2a3bbc98bf3.jpg"></img>
+            </div>
+            <div className={`${styles.contact__info} ${styles.content__50}`}>
+              <h2>Contactez Nous</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Perferendis veniam modi iure commodi saepe asperiores autem,
+                iusto corrupti accusamus sed voluptatum perspiciatis cum
+                nesciunt quisquam nostrum distinctio magnam a iste.
+              </p>
+              <Button disableRipple>Nous contacter</Button>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>

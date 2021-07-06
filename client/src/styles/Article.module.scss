@@ -74,7 +74,7 @@
       -webkit-font-smoothing: antialiased;
       background-repeat: no-repeat;
       background-size: contain;
-      border: 2px solid orange;
+      border: 2px solid #d61728;
       position: relative;
       background-position: center;
       background-color: white;
@@ -101,7 +101,6 @@
         -webkit-font-smoothing: antialiased;
         content: "\f06d";
         font-family: FontAwesome;
-        color: darkorange;
       }
       .info__read::before {
         -webkit-font-smoothing: antialiased;
@@ -127,7 +126,7 @@
       z-index: 3;
 
       &:hover {
-        color: darkorange;
+        color: #d61728;
       }
 
       .angle__down::before {

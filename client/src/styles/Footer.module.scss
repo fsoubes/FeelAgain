@@ -1,12 +1,12 @@
 .feelagain__methods {
   width: 100%;
   background: black;
-  border-top: 2px solid darkorange;
+  border-top: 2px solid #d61728;
   min-width: 320px;
 
   span {
     strong {
-      color: darkorange;
+      color: #d61728;
     }
   }
   ul {
@@ -110,7 +110,7 @@
       svg {
         width: 45px !important;
         &:hover {
-          color: darkorange;
+          color: #d61728;
           font-weight: bolder;
         }
       }

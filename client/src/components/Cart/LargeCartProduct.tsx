@@ -45,7 +45,7 @@ const LargeCartProduct: React.FC<LargeCartProductProps> = ({
           }
         />
       )}
-      {data?.getBasket?.products.length === 0 && (
+      {(!data || data?.getBasket?.products.length === 0) && (
         <h4 style={{ margin: "1rem" }}>Votre panier est vide actuellement</h4>
       )}
       {data && data.getBasket.products.length > 0 && (

@@ -175,26 +175,28 @@ const Article: NextPage<Props> = ({ id }) => {
                 {closest?.getClosestArticles &&
                   closest?.getClosestArticles.length > 0 && (
                     <div className={styles.similar__articles}>
-                      <h3 style={{ color: "#ff4500" }}>Articles similaires</h3>
-                      <div className={styles.similar__list}>
-                        {closest?.getClosestArticles.map((item) => {
-                          return (
-                            <div
-                              className={styles.similar__item}
-                              key={item._id}
-                            >
-                              <Link href={`/article/${item._id}`}>
-                                <img
-                                  loading="lazy"
-                                  src={item.image_url as string}
-                                  alt="closest"
-                                ></img>
-                              </Link>
-                              <h5>{item.title}</h5>
-                            </div>
-                          );
-                        })}
-                      </div>
+                      <h3 style={{ color: "#d61728" }}>Articles similaires</h3>
+                      {closest?.getClosestArticles.length > 0 && (
+                        <div className={styles.similar__list}>
+                          {closest?.getClosestArticles.map((item) => {
+                            return (
+                              <div
+                                className={styles.similar__item}
+                                key={item._id}
+                              >
+                                <Link href={`/article/${item._id}`}>
+                                  <img
+                                    loading="lazy"
+                                    src={item.image_url as string}
+                                    alt="closest"
+                                  ></img>
+                                </Link>
+                                <h5>{item.title}</h5>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   )}
                 {(data?.getSingleArticle?.comments as Comments[]) &&
