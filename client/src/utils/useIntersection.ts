@@ -6,10 +6,12 @@ export const useIntersection = (element: any, rootMargin: string) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
+        console.log(entry);
         setState(entry.isIntersecting);
       },
       { rootMargin }
     );
+
     element && observer.observe(element.current as Element);
     return () => observer.unobserve(element.current);
   }, []);

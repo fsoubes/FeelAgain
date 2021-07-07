@@ -175,13 +175,17 @@ const Article: NextPage<Props> = ({ id }) => {
                 {closest?.getClosestArticles &&
                   closest?.getClosestArticles.length > 0 && (
                     <div className={styles.similar__articles}>
-                      <h3 style={{ color: "#d61728" }}>Articles similaires</h3>
+                      <h3 style={{ color: "#ff3c00" }}>Articles similaires</h3>
                       {closest?.getClosestArticles.length > 0 && (
                         <div className={styles.similar__list}>
                           {closest?.getClosestArticles.map((item) => {
                             return (
                               <div
-                                className={styles.similar__item}
+                                className={
+                                  closest?.getClosestArticles.length === 4
+                                    ? styles.similar__item
+                                    : styles.closest__item
+                                }
                                 key={item._id}
                               >
                                 <Link href={`/article/${item._id}`}>

@@ -74,7 +74,7 @@
       -webkit-font-smoothing: antialiased;
       background-repeat: no-repeat;
       background-size: contain;
-      border: 2px solid #d61728;
+      border: 2px solid #ff3c00;
       position: relative;
       background-position: center;
       background-color: white;
@@ -126,7 +126,7 @@
       z-index: 3;
 
       &:hover {
-        color: #d61728;
+        color: #ff3c00;
       }
 
       .angle__down::before {
@@ -192,7 +192,8 @@
           display: block;
           overflow: hidden;
           margin: 0 -15px -15px;
-          .similar__item {
+          .similar__item,
+          .closest__item {
             position: relative;
             float: left;
             width: 33.333%;

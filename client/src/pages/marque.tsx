@@ -3,9 +3,9 @@ import { withApollo } from "../utils/withApollo";
 import Head from "../components/SEO/Head";
 import styles from "../styles/Brand.module.scss";
 import dynamic from "next/dynamic";
-import React, { useRef, useEffect, useState } from "react";
-import { useIntersection } from "../utils/useIntersection";
 import { Button } from "@material-ui/core";
+import { useRouter } from "next/router";
+import { useInView } from "react-intersection-observer";
 
 const CountUpDynamicComponent = dynamic({
   loader: () => import("react-countup"),
@@ -15,17 +15,14 @@ const CountUpDynamicComponent = dynamic({
 interface MarqueProps {}
 
 const Marque: React.FC<MarqueProps> = ({}) => {
-  const stats = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  const inViewport = useIntersection(stats, "-200px"); // Trigger if 200px is visible from the element
+  const { ref, inView } = useInView({
+    delay: 100,
+    threshold: 0,
+  });
 
-  const CountUp = visible ? CountUpDynamicComponent : () => null;
+  const router = useRouter();
 
-  useEffect(() => {
-    if (inViewport) {
-      setVisible(true);
-    }
-  }, [inViewport]);
+  const CountUp = inView ? CountUpDynamicComponent : () => null;
 
   return (
     <Layout>
@@ -341,7 +338,7 @@ const Marque: React.FC<MarqueProps> = ({}) => {
         <div className={`${styles.sheet}`}>
           <div className={styles.container}>
             <h2>Nos résultats</h2>
-            <div ref={stats} className={styles.stats}>
+            <div ref={ref} className={styles.stats}>
               <div>
                 <CountUp end={227} duration={4} />
                 <h5>Chaussures</h5>
@@ -366,7 +363,6 @@ const Marque: React.FC<MarqueProps> = ({}) => {
         <div className={`${styles.sheet}`}>
           <div className={styles.container}>
             <div className={`${styles.contact__image} ${styles.content__50}`}>
-              <div className={styles.shape__5}></div>
               <img src="https://images03.nicepage.com/c461c07a441a5d220e8feb1a/78047082d18e557194269c5b/6b12dcda02a6430ce0c2c2a3bbc98bf3.jpg"></img>
             </div>
             <div className={`${styles.contact__info} ${styles.content__50}`}>
@@ -377,7 +373,9 @@ const Marque: React.FC<MarqueProps> = ({}) => {
                 iusto corrupti accusamus sed voluptatum perspiciatis cum
                 nesciunt quisquam nostrum distinctio magnam a iste.
               </p>
-              <Button disableRipple>Nous contacter</Button>
+              <Button onClick={() => router.push("/contact")} disableRipple>
+                Nous contacter
+              </Button>
             </div>
           </div>
         </div>
