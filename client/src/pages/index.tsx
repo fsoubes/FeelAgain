@@ -8,6 +8,7 @@ import useResponsive from "../utils/useResponsive";
 import { useRouter } from "next/router";
 import Head from "../components/SEO/Head";
 import { useEffect } from "react";
+import LazyLoadWrapper from "../components/LazyLoad/LazyLoadWrapper";
 
 type Review = {
   src: string;
@@ -224,18 +225,20 @@ const Home: React.FC = ({}) => {
           <div className={styles.reviews}>
             <h2>Le choix des clients</h2>
             <div className={styles.presentation__line}></div>
-            <Carousel.Component
-              isTabletorMobile={isTabletorMobile}
-              options={{
-                perView: 1,
-                focusAt: "center",
-                type: "carousel",
-                swipeThreshold: isTabletorMobile,
-                dragThreshold: isTabletorMobile,
-              }}
-            >
-              {carousel}
-            </Carousel.Component>
+            <LazyLoadWrapper>
+              <Carousel.Component
+                isTabletorMobile={isTabletorMobile}
+                options={{
+                  perView: 1,
+                  focusAt: "center",
+                  type: "carousel",
+                  swipeThreshold: isTabletorMobile,
+                  dragThreshold: isTabletorMobile,
+                }}
+              >
+                {carousel}
+              </Carousel.Component>
+            </LazyLoadWrapper>
           </div>
           <div className={styles.brand}>
             <h2>La marque</h2>

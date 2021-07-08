@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { Button } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { useInView } from "react-intersection-observer";
+import LazyLoadWrapper from "../components/LazyLoad/LazyLoadWrapper";
 
 const CountUpDynamicComponent = dynamic({
   loader: () => import("react-countup"),
@@ -302,7 +303,7 @@ const Marque: React.FC<MarqueProps> = ({}) => {
                 </li>
               </ul>
             </div>
-            <div className={styles.content__50}></div>
+            <div className={styles.content__50} />
           </div>
         </div>
       </section>
@@ -310,26 +311,49 @@ const Marque: React.FC<MarqueProps> = ({}) => {
         <div className={styles.shape__4} />
         <div className={`${styles.sheet}`}>
           <div className={styles.column}>
-            <div className={styles.row}>
-              <div className={styles.image__1} />
-              <div className={styles.image__2} />
-              <div className={styles.image__3} />
-            </div>
-            <div className={styles.row}>
-              <div className={styles.image__4} />
-              <div className={styles.image__5} />
-              <div className={styles.image__6} />
-            </div>
-            <div className={styles.row}>
-              <div className={styles.image__7} />
-              <div className={styles.image__8} />
-              <div className={styles.image__9} />
-            </div>
-            <div className={styles.row}>
-              <div className={styles.image__10} />
-              <div className={styles.image__11} />
-              <div className={styles.image__12} />
-            </div>
+            <LazyLoadWrapper>
+              <div className={styles.row}>
+                <div className={styles.image__1} />
+                <div className={styles.image__2} />
+                <div className={styles.image__3} />
+              </div>
+            </LazyLoadWrapper>
+            <LazyLoadWrapper>
+              <div className={styles.row}>
+                <div className={styles.image__4} />
+                <div className={styles.image__5} />
+                <div className={styles.image__6} />
+              </div>
+            </LazyLoadWrapper>
+            <LazyLoadWrapper>
+              <div className={styles.row}>
+                <div className={styles.image__7} />
+                <div className={styles.image__8} />
+                <div className={styles.image__9} />
+              </div>
+            </LazyLoadWrapper>
+            <LazyLoadWrapper>
+              <div className={styles.row}>
+                <div className={styles.image__10}>
+                  <div>
+                    <h3>Respect de l'environnement</h3>
+                    <div
+                      className={styles.white__line}
+                      style={{ borderColor: "black" }}
+                    />
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Eveniet dolorum qui exercitationem maiores distinctio
+                      quod. Assumenda illo qui officiis doloremque, non
+                      perspiciatis animi distinctio asperiores similique rerum
+                      veritatis aliquid tempore.
+                    </p>
+                  </div>
+                </div>
+                <div className={styles.image__11} />
+                <div className={styles.image__12} />
+              </div>
+            </LazyLoadWrapper>
           </div>
         </div>
         <div className={styles.vertical__line}></div>
@@ -363,7 +387,10 @@ const Marque: React.FC<MarqueProps> = ({}) => {
         <div className={`${styles.sheet}`}>
           <div className={styles.container}>
             <div className={`${styles.contact__image} ${styles.content__50}`}>
-              <img src="https://images03.nicepage.com/c461c07a441a5d220e8feb1a/78047082d18e557194269c5b/6b12dcda02a6430ce0c2c2a3bbc98bf3.jpg"></img>
+              <img
+                loading="lazy"
+                src="https://images.unsplash.com/reserve/LJIZlzHgQ7WPSh5KVTCB_Typewriter.jpg?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80"
+              ></img>
             </div>
             <div className={`${styles.contact__info} ${styles.content__50}`}>
               <h2>Contactez Nous</h2>
