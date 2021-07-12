@@ -131,6 +131,8 @@ export class UserResolver {
     @Ctx() { redis }: MyContext
   ) {
     const user = await UserModel.findOne({ email: email });
+
+
     if (!user) {
       return true;
     }
@@ -145,10 +147,23 @@ export class UserResolver {
     ); // 1day
     
     
-    await sendEmail(
+     await sendEmail(
       email,
-      `<a href="http://localhost:3000/change-password/${token}">reset password</a>`
+      `<div>
+      <h3>Bonjour ${user.nickname}<h3/>
+      </div>
+      <div>
+      <p>une demande a été reçue pour changer le mot de passe de votre compte feelagain</p>
+      <a style="padding: 10px ;color : white; background-color: black; text-decoration: none; margin-bottom: 1rem;" href="https://feelagain.fr/change-password/${token}">Modifier votre password</a>
+      </div>
+      <br/>
+      <div>Si vous n'êtes pas l'auteur de cette requète. Contactez-nous immédiatement à cette adresse: feelagain.contact@gmail.coml</div>
+      <div>Merci,</div>
+      <div>L'équipe FeelAgain</div>
+      `
     );
+
+
     return true;
   }
 

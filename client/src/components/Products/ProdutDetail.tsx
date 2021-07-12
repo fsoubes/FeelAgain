@@ -1,12 +1,14 @@
 import { Button } from "@material-ui/core";
-import { NextRouter } from "next/router";
 import { useState, useEffect, memo } from "react";
 import { Comments, useGetSingleShoesQuery } from "../../generated/graphql";
 import styles from "../../styles/Product.module.scss";
 import AddToCart from "../Button/AddToCart";
-import Gallery from "../ImageGallery/Gallery";
 import SelectRelative from "../Select/SelectRelative";
 import SelectSize from "../Select/SelectSize";
+import dynamic from "next/dynamic";
+const Gallery = dynamic(() => import("../ImageGallery/Gallery"), {
+  ssr: false,
+});
 
 interface Info {
   comments: Comments[] | [];

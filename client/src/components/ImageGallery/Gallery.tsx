@@ -16,7 +16,6 @@ const Gallery: React.FC<GalleryProps> = ({ img }) => {
   const ref = useRef<any>(null);
   const thumbClicked = useRef(false);
   const [isFullScreen, setFullScreen] = useState(false);
-
   const { isMobile } = useResponsive();
 
   const handleCloseEvent = (e: any) => {

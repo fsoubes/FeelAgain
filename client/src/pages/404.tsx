@@ -11,7 +11,7 @@ const Custom404: React.FC = ({}) => {
       <div className={styles.permission_denied}>
         <Particles
           id={styles["particles-js"]}
-          options={{ particles: particles.particles, fpsLimit: 60 }}
+          options={{ particles: particles.particles as any, fpsLimit: 60 }}
         ></Particles>
         <div className={styles.denied__wrapper}>
           <h1>404</h1>

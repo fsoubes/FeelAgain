@@ -147,7 +147,27 @@ const options = (dark: boolean): ThemeOptions => {
           ".topbar__nav": {
             background: ` ${paletteColors.header} !important`,
           },
-
+          ".Contact_section__4__2_hsn, .Contact_content__2w_wb": {
+            background: paletteColors.background,
+          },
+          ".Contact_content__2w_wb ": {
+            color: `${paletteColors.text} !important`,
+          },
+          ".Contact_section__4__2_hsn h2:after": {
+            background: paletteColors.text,
+          },
+          ".Contact_content__2w_wb > form > input": {
+            borderBottom: `2px solid ${paletteColors.text} !important`,
+          },
+          ".Contact_content__2w_wb > form > input,textarea": {
+            color: `${paletteColors.text} !important`,
+          },
+          ".Contact_content__2w_wb > form > textarea": {
+            border: `2px solid ${paletteColors.text} !important`,
+          },
+          ".Contact_content__2w_wb > form > button": {
+            border: `2px solid ${paletteColors.text} !important`,
+          },
           ".Blog_load__more__QKcLm button": {
             color: paletteColors.logo,
             border: `1px solid ${paletteColors.logo} !important`,
