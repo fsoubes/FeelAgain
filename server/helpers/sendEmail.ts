@@ -2,38 +2,34 @@ import { __prod__ } from "../constant/constant";
 import nodemailer from "nodemailer";
 
 // async..await is not allowed in global scope, must use a wrapper
-export async function sendEmail(to: string | string[], html: string) {
+export async function sendEmail(
+  to: string | string[],
+  html: string,
+  subjet: string
+) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
 
   /* let testAccount = await nodemailer.createTestAccount();
   console.log("testAccount", testAccount); */
 
-  // const options = __prod__
-  //   ? {
-  //       service: "Gmail",
-  //       auth: {
-  //         user: process.env.GMAIL_USER,
-  //         pass: process.env.GMAIL_PASS,
-  //       },
-  //     }
-  //   : {
-  //       host: "smtp.ethereal.email",
-  //       port: 587,
-  //       secure: false, // true for 465, false for other ports
-  //       auth: {
-  //         user: process.env.NODEMAILER_DEV_MAIL, // generated ethereal user
-  //         pass: process.env.NODEMAILER_DEV_PASS, // generated ethereal password
-  //       },
-  //     };
-
-  const options = {
-    service: "Gmail",
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS,
-    },
-  };
+  const options = __prod__
+    ? {
+        service: "Gmail",
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_PASS,
+        },
+      }
+    : {
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: process.env.NODEMAILER_DEV_MAIL, // generated ethereal user
+          pass: process.env.NODEMAILER_DEV_PASS, // generated ethereal password
+        },
+      };
 
   // create reusable transporter object using the default SMTP transport
 
@@ -43,7 +39,7 @@ export async function sendEmail(to: string | string[], html: string) {
   let info = await transporter.sendMail({
     from: process.env.GMAIL_USER, // sender address
     to: to, // list of receivers
-    subject: "Reset de votre mot de passe pour FeelAgain", // Subject line
+    subject: subjet, // Subject line
     html,
   });
 

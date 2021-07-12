@@ -214,6 +214,9 @@ export type User = {
   updatedAt: Scalars['DateTime'];
   customer_id: Scalars['String'];
   nickname: Scalars['String'];
+  twitter_id: Scalars['String'];
+  facebook_id: Scalars['String'];
+  google_id: Scalars['String'];
   items?: Maybe<Scalars['Float']>;
   email: Scalars['String'];
   basket: Basket;
@@ -354,6 +357,7 @@ export type Mutation = {
   addVariant: Scalars['String'];
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
+  sendContact: Scalars['Boolean'];
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
@@ -447,6 +451,13 @@ export type MutationChangePasswordArgs = {
 
 
 export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationSendContactArgs = {
+  content: Scalars['String'];
+  name: Scalars['String'];
   email: Scalars['String'];
 };
 
@@ -983,6 +994,18 @@ export type RemoveCartItemMutationVariables = Exact<{
 export type RemoveCartItemMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'removeCartItem'>
+);
+
+export type SendContactMutationVariables = Exact<{
+  email: Scalars['String'];
+  name: Scalars['String'];
+  content: Scalars['String'];
+}>;
+
+
+export type SendContactMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'sendContact'>
 );
 
 export type UpdateArticleMutationVariables = Exact<{
@@ -2328,6 +2351,38 @@ export function useRemoveCartItemMutation(baseOptions?: Apollo.MutationHookOptio
 export type RemoveCartItemMutationHookResult = ReturnType<typeof useRemoveCartItemMutation>;
 export type RemoveCartItemMutationResult = Apollo.MutationResult<RemoveCartItemMutation>;
 export type RemoveCartItemMutationOptions = Apollo.BaseMutationOptions<RemoveCartItemMutation, RemoveCartItemMutationVariables>;
+export const SendContactDocument = gql`
+    mutation SendContact($email: String!, $name: String!, $content: String!) {
+  sendContact(email: $email, name: $name, content: $content)
+}
+    `;
+export type SendContactMutationFn = Apollo.MutationFunction<SendContactMutation, SendContactMutationVariables>;
+
+/**
+ * __useSendContactMutation__
+ *
+ * To run a mutation, you first call `useSendContactMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendContactMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendContactMutation, { data, loading, error }] = useSendContactMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      name: // value for 'name'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useSendContactMutation(baseOptions?: Apollo.MutationHookOptions<SendContactMutation, SendContactMutationVariables>) {
+        return Apollo.useMutation<SendContactMutation, SendContactMutationVariables>(SendContactDocument, baseOptions);
+      }
+export type SendContactMutationHookResult = ReturnType<typeof useSendContactMutation>;
+export type SendContactMutationResult = Apollo.MutationResult<SendContactMutation>;
+export type SendContactMutationOptions = Apollo.BaseMutationOptions<SendContactMutation, SendContactMutationVariables>;
 export const UpdateArticleDocument = gql`
     mutation UpdateArticle($title: String!, $description: String, $image_url: String, $tags: String!, $source: [String!], $social: [String!], $article: String, $is_published: Boolean, $image_back: String, $blogId: String!) {
   updateArticle(

@@ -125,6 +125,7 @@ export class UserResolver {
     return { user };
   }
 
+ 
   @Mutation(() => Boolean)
   async forgotPassword(
     @Arg("email") email: string,
@@ -150,19 +151,49 @@ export class UserResolver {
      await sendEmail(
       email,
       `<div>
-      <h3>Bonjour ${user.nickname}<h3/>
+      <h3>Bonjour ${user.nickname},<h3/>
       </div>
       <div>
       <p>une demande a été reçue pour changer le mot de passe de votre compte feelagain</p>
       <a style="padding: 10px ;color : white; background-color: black; text-decoration: none; margin-bottom: 1rem;" href="https://feelagain.fr/change-password/${token}">Modifier votre password</a>
       </div>
       <br/>
-      <div>Si vous n'êtes pas l'auteur de cette requète. Contactez-nous immédiatement à cette adresse: feelagain.contact@gmail.coml</div>
+      <div>Si vous n'êtes pas l'auteur de cette requète. Contactez-nous immédiatement à cette adresse: feelagain.contact@gmail.com</div>
       <div>Merci,</div>
       <div>L'équipe FeelAgain</div>
-      `
+      `,
+      "Reset de votre mot de passe pour FeelAgain"
     );
 
+    return true;
+  }
+
+
+  @Mutation(() => Boolean)
+  async sendContact(
+    @Arg("email") email: string,
+    @Arg("name") name: string,
+    @Arg("content") content: string,
+    @Ctx() {  }: MyContext
+  ) {
+ 
+    if(!email && !name && !content){
+      return false
+    }
+
+     await sendEmail(
+      "feelagain.contact@gmail.com",
+      `<div>
+      <h3>Bonjour,<h3/>
+      </div>
+      <div>
+      <p>${content}</p>
+      <br/>
+      <div>Cordialement,</div>
+      <div>${name}</div>
+      `,
+      `Commentaire de la part de ${name} ~ ${email}`
+    );
 
     return true;
   }

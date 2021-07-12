@@ -1,0 +1,3 @@
+mutation SendContact($email: String!, $name: String!, $content: String!) {
+  sendContact(email: $email, name: $name, content: $content)
+}
