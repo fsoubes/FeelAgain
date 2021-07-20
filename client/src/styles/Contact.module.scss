@@ -3,6 +3,7 @@
   display: block;
   width: 100%;
   min-height: 657px;
+
   h2 {
     position: relative;
     font-weight: 700;
@@ -52,7 +53,7 @@
         padding: 0;
         list-style: none;
         padding-right: 30px;
-        margin-top: 1rem;
+        margin-top: 30px;
         display: flex;
         flex-direction: column;
         max-width: 400px;
@@ -64,6 +65,8 @@
           padding: 10px;
           background: inherit;
           color: inherit;
+          font-family: "Lato";
+          font-size: 15px;
         }
 
         textarea {
@@ -85,6 +88,51 @@
             color: white;
           }
         }
+
+        ul {
+          font-size: 15px;
+          outline: none;
+          appearance: none;
+          border: 2px solid black;
+          left: 0;
+          padding: 0;
+          width: 100%;
+          list-style: none;
+          position: absolute;
+          background: #ecf0f5;
+          margin: 0;
+          top: 0;
+
+          .item__size {
+            padding: 10px;
+          }
+
+          .item__relatives {
+            padding: 10px;
+          }
+
+          .item__size:hover {
+            background: darkgrey;
+            color: white;
+          }
+
+          .notavailable {
+            text-decoration: line-through;
+            color: grey;
+          }
+
+          .current {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
+              100% 50% no-repeat;
+          }
+
+          .hidden {
+            display: none;
+          }
+        }
       }
     }
     .content__50 {
@@ -94,10 +142,19 @@
       background-repeat: no-repeat;
       background-size: cover;
     }
+
+    .content__50_gift {
+      background-position: 50% 50%;
+      min-height: 544px;
+      background-image: url("https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1924&q=80");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
   }
 }
 
-.content__50 {
+.content__50,
+.content__50_gift {
   flex: 0 0 50%;
   max-width: 50%;
 }
@@ -139,7 +196,8 @@
     }
     .container {
       .content {
-        .content__50 {
+        .content__50,
+        .content__50_gift {
           min-height: 504px;
           background-position: 20.37% 50%;
         }

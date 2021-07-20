@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 import { Ref } from "../constant/types";
 import { Variants } from "./Variants";
 import { Comments } from "./Comments";
+import { GiftCard } from "./GiftCard";
 
 @ObjectType()
 export class CartItem {
@@ -22,9 +23,13 @@ export class CartItem {
   @Property({ ref: "Comments", nullable: true })
   comments: Ref<Comments>;
 
-  @Field((_type) => Variants)
+  @Field((_type) => Variants, { nullable: true })
   @Property({ ref: "Variants" })
   variant: Ref<Variants>;
+
+  @Field((_type) => GiftCard, { nullable: true })
+  @Property({ ref: "GiftCard" })
+  card: Ref<GiftCard>;
 
   @Field((_type) => String)
   @Property({ required: true })

@@ -1,0 +1,21 @@
+mutation AddGiftCardItem(
+  $from: String!
+  $to: String!
+  $message: String!
+  $price: RangeGift
+) {
+  addGiftCardItem(
+    card: { from: $from, to: $to, message: $message, price: $price }
+  ) {
+    _id
+    quantity
+    card {
+      _id
+      from
+      to
+      used
+      price
+      message
+    }
+  }
+}

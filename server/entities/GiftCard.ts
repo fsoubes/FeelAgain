@@ -1,7 +1,7 @@
-import { prop as Property, getModelForClass } from "@typegoose/typegoose";
+import { prop as Property, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Field, ObjectType } from "type-graphql";
 import { ObjectId } from "mongodb";
-import { RangeGift } from "../resolvers/enum/rangeGift";
+import { User } from "./User";
 
 @ObjectType()
 export class GiftCard {
@@ -20,15 +20,19 @@ export class GiftCard {
   @Property({ required: false, default: false })
   used: Boolean;
 
+  @Field((_type) => User)
+  @Property({ ref: "User", nullable: true })
+  buyer?: Ref<User>;
+
   @Field({ nullable: true })
   @Property({ required: false })
   message: String;
 
-  @Field((_type) => RangeGift)
+  @Field()
   @Property({ required: true })
-  price: RangeGift;
+  price: Number;
 
-  @Property({ required: false })
+  @Property({ required: false, unique: true })
   code: String;
 }
 

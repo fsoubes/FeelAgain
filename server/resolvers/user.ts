@@ -14,7 +14,11 @@ import { User, UserModel } from "../entities/User";
 import { UserRegister, UserLogin } from "./types/user-input";
 import argon2 from "argon2";
 import { validateEmail } from "../helpers/validation";
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX, __prod__  } from "../constant/constant";
+import {
+  COOKIE_NAME,
+  FORGET_PASSWORD_PREFIX,
+  __prod__,
+} from "../constant/constant";
 import { sendEmail } from "../helpers/sendEmail";
 import { v4 } from "uuid";
 import { BasketModel } from "../entities/Basket";
@@ -42,22 +46,22 @@ export class UserResolver {
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { req }: MyContext) {
     if (req.session.userId === String(user._id)) {
-      return  display(user.email as string);
+      return display(user.email as string);
     }
     return "Vous n'êtes pas autorisés à voir cette information";
   }
 
   @FieldResolver(() => String)
-  async nickname(@Root() user: User, @Ctx() {  }: MyContext) {
-    try{
-      return display(user.nickname as string)
-    }catch(err){
-      throw err
+  async nickname(@Root() user: User, @Ctx() {}: MyContext) {
+    try {
+      return display(user.nickname as string);
+    } catch (err) {
+      throw err;
     }
   }
 
   @FieldResolver(() => Number)
-  async items(@Root() user: User, @Ctx() {  }: MyContext) {
+  async items(@Root() user: User, @Ctx() {}: MyContext) {
     try {
       const basket = await BasketModel.findById(user.basket).select("total");
       return basket?.total;
@@ -125,14 +129,12 @@ export class UserResolver {
     return { user };
   }
 
- 
   @Mutation(() => Boolean)
   async forgotPassword(
     @Arg("email") email: string,
     @Ctx() { redis }: MyContext
   ) {
     const user = await UserModel.findOne({ email: email });
-
 
     if (!user) {
       return true;
@@ -146,9 +148,8 @@ export class UserResolver {
       "ex",
       1000 * 60 * 60 * 24 * 1
     ); // 1day
-    
-    
-     await sendEmail(
+
+    await sendEmail(
       email,
       `<div>
       <h3>Bonjour ${user.nickname},<h3/>
@@ -168,20 +169,18 @@ export class UserResolver {
     return true;
   }
 
-
   @Mutation(() => Boolean)
   async sendContact(
     @Arg("email") email: string,
     @Arg("name") name: string,
     @Arg("content") content: string,
-    @Ctx() {  }: MyContext
+    @Ctx() {}: MyContext
   ) {
- 
-    if(!email && !name && !content){
-      return false
+    if (!email && !name && !content) {
+      return false;
     }
 
-     await sendEmail(
+    await sendEmail(
       "feelagain.contact@gmail.com",
       `<div>
       <h3>Bonjour,<h3/>
@@ -218,7 +217,7 @@ export class UserResolver {
   @Mutation((_returns) => UserResponse)
   async register(
     @Arg("user") userInput: UserRegister,
-    @Ctx() {  }: MyContext
+    @Ctx() {}: MyContext
   ): Promise<UserResponse> {
     try {
       if (userInput.nickname.length <= 2) {
@@ -315,7 +314,11 @@ export class UserResolver {
   logout(@Ctx() { req, res }: MyContext) {
     return new Promise((resolve) =>
       req.session.destroy((err) => {
-        res.clearCookie(COOKIE_NAME,{domain: __prod__ ? ".feelagain.fr" : "localhost", path:"/",  expires: new Date(0)});
+        res.clearCookie(COOKIE_NAME, {
+          domain: __prod__ ? ".feelagain.fr" : "localhost",
+          path: "/",
+          expires: new Date(0),
+        });
         if (err) {
           resolve(false);
           return;

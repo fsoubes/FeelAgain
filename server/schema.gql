@@ -27,7 +27,7 @@ type Blog {
   article: String
   author: User!
   authRating: String
-  comments: Comments!
+  comments: [Comments!]
   createdAt: String!
   description: String
   downRating: [User!]!
@@ -56,8 +56,16 @@ input BlogInput {
   title: String!
 }
 
+input CardInput {
+  from: String
+  message: String
+  price: RangeGift
+  to: String
+}
+
 type CartItem {
   _id: ObjectId!
+  card: GiftCard
   comments: Comments
   order: Boolean
   quantity: Float
@@ -73,6 +81,7 @@ input CommentInput {
 
 type Comments {
   _id: ObjectId!
+  article: Blog
   author: User!
   comment: String
   createdAt: DateTime!
@@ -115,6 +124,16 @@ type FieldError {
   message: String!
 }
 
+type GiftCard {
+  _id: ObjectId!
+  buyer: User!
+  from: String!
+  message: String
+  price: Float!
+  to: String!
+  used: Boolean!
+}
+
 input ImageInput {
   height: Float
   position: Float
@@ -135,6 +154,8 @@ type Images {
 type Mutation {
   addArticle(blog: BlogInput!): Blog!
   addCartItem(variantId: String!): CartItem!
+  addComment(articleId: String!, comment: String!): String!
+  addGiftCardItem(card: CardInput!): CartItem!
   addGuestCart(isArg: Boolean!): Boolean!
   addImage(image: ImageInput!, parentId: String!): String!
   addPayment(details: DetailsInput!, stripeId: String!): String!
@@ -157,6 +178,7 @@ type Mutation {
   register(user: UserRegister!): UserResponse!
   removeCartItem(basketId: String!, itemId: String!, quantity: Float!): String!
   removeShoe(shoeId: String!): String!
+  sendContact(content: String!, email: String!, name: String!): Boolean!
   sendNewsletter: Boolean!
   updateArticle(blog: BlogInput!, blogId: String!): Blog!
   updateCartItem(itemId: String!, quantity: Float!): String!
@@ -189,11 +211,22 @@ type Orders {
   payment_intent: String!
   payment_method: PaymentType!
   products: [CartItem!]!
+  purchases: [Purchases!]!
   status: String!
   timeline: Float!
   total: Float!
   tracking: String
   user: User!
+}
+
+type PaginatedBlogResponse {
+  edges: [Blog!]!
+  pageInfo: PaginationInfo!
+}
+
+type PaginatedCommentsResponse {
+  edges: [Comments!]!
+  pageInfo: PaginationInfo!
 }
 
 type PaginationInfo {
@@ -205,11 +238,6 @@ type PaginationPage {
   current: Float
   total: Float
   totalItem: Float
-}
-
-type PaginationResponse {
-  edges: [Blog!]!
-  pageInfo: PaginationInfo!
 }
 
 type PaginationShoes {
@@ -234,7 +262,8 @@ type Query {
   getAllBasket: [Basket!]!
   getAllOrderProducts: [CartItem!]!
   getAllOrders: [Orders!]!
-  getArticles(cursor: String, limit: Float!): PaginationResponse!
+  getArticleComments(articleId: String!, cursor: String, limit: Float!): PaginatedCommentsResponse!
+  getArticles(cursor: String, limit: Float!): PaginatedBlogResponse!
   getBasket: Basket!
   getCartItems: [CartItem!]!
   getClosestArticles(tags: String!, title: String!): [Blog!]!
@@ -250,6 +279,18 @@ type Query {
   getSingleShoe(shoesId: ObjectId!): Shoes!
   me: User
   userRole: Boolean!
+}
+
+"""gift card payment"""
+enum RangeGift {
+  card_100
+  card_125
+  card_150
+  card_175
+  card_200
+  card_25
+  card_50
+  card_75
 }
 
 type SearchResults {
@@ -313,8 +354,11 @@ type User {
   createdAt: DateTime!
   customer_id: String!
   email: String!
+  facebook_id: String!
+  google_id: String!
   items: Float
   nickname: String!
+  twitter_id: String!
   updatedAt: DateTime!
 }
 

@@ -10,9 +10,18 @@ import { Comments } from "../entities/Comments";
 export class CartItemResolver {
   @FieldResolver(() => Variants)
   async variant(@Root() item: CartItem, @Ctx() { variantLoader }: MyContext) {
+    if (!item.variant) return null;
+
     if (Object.keys(item.variant).length === 2)
       return variantLoader.load(item.variant as typeof ObjectId);
     else return item.variant;
+  }
+
+  @FieldResolver(() => Variants)
+  async card(@Root() item: CartItem, @Ctx() { giftCardLoader }: MyContext) {
+    if (Object.keys(item.card).length === 2)
+      return giftCardLoader.load(item.card as typeof ObjectId);
+    else return item.card;
   }
 
   @FieldResolver(() => Comments)

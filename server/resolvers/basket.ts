@@ -21,6 +21,9 @@ import { VariantsModel } from "../entities/Variants";
 import { randomIntFromInterval } from "../helpers/randomNumber";
 import { PurchasesModel } from "../entities/Purchases";
 import { ShoesModel } from "../entities/Shoes";
+import { generateCard } from "../helpers/generateGiftCard";
+import { GiftCardModel } from "../entities/GiftCard";
+import { CardInput } from "./types/card-input";
 const ObjectId = require("mongodb").ObjectID;
 
 const dataset = [
@@ -46,7 +49,7 @@ export class BasketResolver {
   }
 
   @Query(() => [Basket])
-  async getAllBasket(@Ctx() {  }: MyContext): Promise<Basket[]> {
+  async getAllBasket(@Ctx() {}: MyContext): Promise<Basket[]> {
     try {
       const basket = await BasketModel.find();
       return basket;
@@ -66,7 +69,7 @@ export class BasketResolver {
   }
 
   @Mutation(() => Boolean)
-  async addGuestCart(@Arg("isArg") isArg: Boolean, @Ctx() {  }: MyContext) {
+  async addGuestCart(@Arg("isArg") isArg: Boolean, @Ctx() {}: MyContext) {
     try {
       return isArg;
     } catch (err) {
@@ -74,13 +77,54 @@ export class BasketResolver {
     }
   }
   @Mutation(() => Boolean)
-  async mergeGuestCart(@Arg("isArg") isArg: Boolean, @Ctx() {  }: MyContext) {
+  async mergeGuestCart(@Arg("isArg") isArg: Boolean, @Ctx() {}: MyContext) {
     try {
       return isArg;
     } catch (err) {
       throw err;
     }
   }
+
+  @Mutation(() => CartItem)
+  @UseMiddleware(isAuth)
+  async addGiftCardItem(
+    @Arg("card") cardInput: CardInput,
+    @Ctx() { req }: MyContext
+  ): Promise<CartItem> {
+    try {
+      const card = new GiftCardModel({
+        ...cardInput,
+        price: parseInt(cardInput.price.split("_")[1]),
+        code: generateCard(),
+        buyer: req.session.userId,
+      });
+
+      const item = new CartItemModel({
+        user: req.session.userId,
+        card: card?._id,
+        quantity: 1,
+        order: false,
+      });
+
+      await BasketModel.findOneAndUpdate(
+        {
+          user: req.session.userId,
+        },
+        {
+          $push: { products: item._id },
+          $inc: { total: 1 },
+        },
+        { new: true, useFindAndModify: false, upsert: true }
+      );
+
+      await Promise.all([card.save(), item.save()]);
+
+      return item;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Mutation(() => CartItem)
   @UseMiddleware(isAuth)
   async addCartItem(
@@ -164,13 +208,14 @@ export class BasketResolver {
       throw err;
     }
   }
+
   @Mutation(() => String)
   @UseMiddleware(isAuth)
   async removeCartItem(
     @Arg("itemId") itemId: string,
     @Arg("basketId") basketId: string,
     @Arg("quantity") quantity: number,
-    @Ctx() {  }: MyContext
+    @Ctx() {}: MyContext
   ): Promise<String> {
     try {
       await BasketModel.findByIdAndUpdate(

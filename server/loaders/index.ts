@@ -6,6 +6,7 @@ import { createVariantLoader } from "./createVariantLoader";
 import { createShoesLoader } from "./createShoesLoader";
 import { createCommentLoader } from "./createCommentLoader";
 import { createCommentsLoader } from "./createCommentsLoader";
+import { createCardItemLoader } from "./createCardItemLoader";
 
 export const Loader = {
   userLoader: createUserLoader(),
@@ -16,4 +17,5 @@ export const Loader = {
   shoesLoader: createShoesLoader(),
   commentLoader: (currentUser: string) => createCommentLoader(currentUser),
   commentsLoader: createCommentsLoader(),
+  giftCardLoader: createCardItemLoader(),
 } as const;

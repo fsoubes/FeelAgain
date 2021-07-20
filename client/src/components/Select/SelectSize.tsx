@@ -6,26 +6,28 @@ interface SelectSizeProps {
   sizes: number[];
   setIndex: React.Dispatch<React.SetStateAction<number>>;
   variants: any;
+  gift?: boolean;
 }
 
 const SelectSize: React.FC<SelectSizeProps> = ({
   sizes,
   setIndex,
   variants,
+  gift = false,
 }) => {
-  const [size, setSize] = useState<number>(36);
+  const [size, setSize] = useState<number>(25);
   const [openSize, setOpenSize] = useState<Boolean>(false);
 
   return (
     <div
-      className={styles.size}
+      className={gift ? `${styles.size} ${styles.full}` : styles.size}
       style={{ zIndex: 50 }}
       onClick={() => setOpenSize(!openSize)}
     >
       <Outside open={openSize} setOpen={setOpenSize}>
         <ul>
           <div className={styles.current} style={{ padding: "10px" }}>
-            {size}
+            {gift ? `${size}€` : size}
           </div>
           {sizes.map((item, index) => {
             return (
@@ -38,14 +40,16 @@ const SelectSize: React.FC<SelectSizeProps> = ({
                 className={
                   openSize
                     ? `${styles.item__size} ${
-                        variants[index].quantity === 0
+                        gift
+                          ? styles.show
+                          : variants[index].quantity === 0
                           ? styles.notavailable
                           : styles.show
                       }`
                     : `${styles.item__size} ${styles.hidden}`
                 }
               >
-                {item}
+                {gift ? `${item}€` : item}
               </li>
             );
           })}

@@ -1,5 +1,4 @@
 export const generateCard = () => {
-  return `feelagain_${Math.random()
-    .toString(36)
-    .substring(15)}`;
+  const r = [...Array(30)].map(() => Math.random().toString(36)[2]).join("");
+  return `feelagain_${r}`;
 };

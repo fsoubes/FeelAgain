@@ -14,16 +14,28 @@ const ProductList: React.FC<ProductListProps> = ({ data, remove, update }) => {
       <ProductLargeItem
         key={item._id}
         src={
-          item.variant.shoes.vendor === "Anaki"
-            ? item.variant.shoes.images[1].src
-            : item.variant.shoes.images[0].src
+          item.card
+            ? "/gift.jpeg"
+            : item.variant?.shoes.vendor === "Anaki"
+            ? item.variant?.shoes.images[1].src
+            : (item.variant?.shoes.images[0].src as string)
         }
         id={item._id}
-        size={item.variant.title}
-        title={item.variant.shoes.title}
-        price={item.variant.price}
-        contain={item.variant.shoes.vendor === "Anaki"}
-        available={(item.quantity as number) <= item.variant.quantity}
+        size={item.variant ? (item.variant.title as string) : undefined}
+        title={
+          item.variant
+            ? (item.variant?.shoes.title as string)
+            : `Carte Cadeau de ${item.card?.price}€`
+        }
+        price={
+          item.variant
+            ? (item.variant.price as number)
+            : (item.card?.price as number)
+        }
+        contain={item.variant?.shoes.vendor === "Anaki"}
+        available={
+          (item.quantity as number) <= (item.variant?.quantity as number)
+        }
         quantity={item.quantity as number}
         remove={() =>
           remove(item._id, data.getBasket?._id, item.quantity as number)
@@ -60,13 +72,12 @@ const ProductList: React.FC<ProductListProps> = ({ data, remove, update }) => {
         <div className={styles.total}>
           <div>
             {data &&
-              data?.getBasket.products.reduce(
-                (acc, currentValue) =>
-                  acc +
-                  currentValue.variant.price *
-                    (currentValue.quantity as number),
-                0
-              )}
+              data?.getBasket.products.reduce((acc, currentValue) => {
+                const price = currentValue.variant
+                  ? (currentValue.variant.price as number)
+                  : (currentValue.card?.price as number);
+                return acc + price * (currentValue.quantity as number);
+              }, 0)}
             ,00€
           </div>
         </div>

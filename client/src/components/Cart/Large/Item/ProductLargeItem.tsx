@@ -11,7 +11,7 @@ interface ProductLargeItemProps {
   remove: any;
   update: (itemId: string, quantity: number) => void;
   id: string;
-  size: string;
+  size?: string;
 }
 
 const ProductLargeItem: React.FC<ProductLargeItemProps> = ({
@@ -40,14 +40,18 @@ const ProductLargeItem: React.FC<ProductLargeItemProps> = ({
       <div className={styles.product}>
         <div className={styles.product__header}>
           <div className={styles.title}>{title}</div>
-          <div className={styles.size}>Taille:&nbsp;{parseInt(size)}</div>
+          {size && (
+            <div className={styles.size}>Taille:&nbsp;{parseInt(size)}</div>
+          )}
         </div>
         <div className={styles.product__bottom}>
-          <div className={styles.status}>
-            <span style={{ color: available ? "green" : "red" }}>
-              {available ? `En stock` : `Stock insuffisant`}
-            </span>
-          </div>
+          {size && (
+            <div className={styles.status}>
+              <span style={{ color: available ? "green" : "red" }}>
+                {available ? `En stock` : `Stock insuffisant`}
+              </span>
+            </div>
+          )}
           <div className={styles.action}>
             <span onClick={remove}>Supprimer</span>
             <span>|</span>
@@ -56,7 +60,15 @@ const ProductLargeItem: React.FC<ProductLargeItemProps> = ({
         </div>
       </div>
       <div className={styles.quantity}>
-        <InputBasket update={update} id={id} quantity={quantity}></InputBasket>
+        {size ? (
+          <InputBasket
+            update={update}
+            id={id}
+            quantity={quantity}
+          ></InputBasket>
+        ) : (
+          <span>1</span>
+        )}
       </div>
       <div className={styles.total}>{price * quantity},00€</div>
     </div>

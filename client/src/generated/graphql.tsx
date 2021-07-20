@@ -236,8 +236,20 @@ export type CartItem = {
   quantity?: Maybe<Scalars['Float']>;
   order?: Maybe<Scalars['Boolean']>;
   comments?: Maybe<Comments>;
-  variant: Variants;
+  variant?: Maybe<Variants>;
+  card?: Maybe<GiftCard>;
   user: Scalars['String'];
+};
+
+export type GiftCard = {
+  __typename?: 'GiftCard';
+  _id: Scalars['ObjectId'];
+  to: Scalars['String'];
+  from: Scalars['String'];
+  used: Scalars['Boolean'];
+  buyer: User;
+  message?: Maybe<Scalars['String']>;
+  price: Scalars['Float'];
 };
 
 export type Orders = {
@@ -369,6 +381,7 @@ export type Mutation = {
   addRelation: Scalars['Boolean'];
   addGuestCart: Scalars['Boolean'];
   mergeGuestCart: Scalars['Boolean'];
+  addGiftCardItem: CartItem;
   addCartItem: CartItem;
   updateCartItem: Scalars['String'];
   removeCartItem: Scalars['String'];
@@ -505,6 +518,11 @@ export type MutationMergeGuestCartArgs = {
 };
 
 
+export type MutationAddGiftCardItemArgs = {
+  card: CardInput;
+};
+
+
 export type MutationAddCartItemArgs = {
   variantId: Scalars['String'];
 };
@@ -612,6 +630,25 @@ export type BlogInput = {
   article?: Maybe<Scalars['String']>;
   is_published?: Maybe<Scalars['Boolean']>;
 };
+
+export type CardInput = {
+  from?: Maybe<Scalars['String']>;
+  to?: Maybe<Scalars['String']>;
+  price?: Maybe<RangeGift>;
+  message?: Maybe<Scalars['String']>;
+};
+
+/** gift card payment */
+export enum RangeGift {
+  Card_25 = 'card_25',
+  Card_50 = 'card_50',
+  Card_75 = 'card_75',
+  Card_100 = 'card_100',
+  Card_125 = 'card_125',
+  Card_150 = 'card_150',
+  Card_175 = 'card_175',
+  Card_200 = 'card_200'
+}
 
 export type DetailsInput = {
   line1?: Maybe<Scalars['String']>;
@@ -723,7 +760,7 @@ export type AddCartItemMutation = (
   & { addCartItem: (
     { __typename?: 'CartItem' }
     & Pick<CartItem, '_id' | 'quantity'>
-    & { variant: (
+    & { variant?: Maybe<(
       { __typename?: 'Variants' }
       & Pick<Variants, '_id' | 'title' | 'quantity' | 'available' | 'price'>
       & { shoes: (
@@ -734,7 +771,7 @@ export type AddCartItemMutation = (
           & Pick<Images, 'src'>
         )> }
       ) }
-    ) }
+    )> }
   ) }
 );
 
@@ -747,6 +784,26 @@ export type AddCommentMutationVariables = Exact<{
 export type AddCommentMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'addComment'>
+);
+
+export type AddGiftCardItemMutationVariables = Exact<{
+  from: Scalars['String'];
+  to: Scalars['String'];
+  message: Scalars['String'];
+  price?: Maybe<RangeGift>;
+}>;
+
+
+export type AddGiftCardItemMutation = (
+  { __typename?: 'Mutation' }
+  & { addGiftCardItem: (
+    { __typename?: 'CartItem' }
+    & Pick<CartItem, '_id' | 'quantity'>
+    & { card?: Maybe<(
+      { __typename?: 'GiftCard' }
+      & Pick<GiftCard, '_id' | 'from' | 'to' | 'used' | 'price' | 'message'>
+    )> }
+  ) }
 );
 
 export type AddImageMutationVariables = Exact<{
@@ -1135,7 +1192,10 @@ export type GetBasketQuery = (
     & { products: Array<(
       { __typename?: 'CartItem' }
       & Pick<CartItem, '_id' | 'quantity'>
-      & { variant: (
+      & { card?: Maybe<(
+        { __typename?: 'GiftCard' }
+        & Pick<GiftCard, '_id' | 'from' | 'to' | 'message' | 'price' | 'used'>
+      )>, variant?: Maybe<(
         { __typename?: 'Variants' }
         & Pick<Variants, '_id' | 'title' | 'quantity' | 'available' | 'price'>
         & { shoes: (
@@ -1146,7 +1206,7 @@ export type GetBasketQuery = (
             & Pick<Images, 'src'>
           )> }
         ) }
-      ) }
+      )> }
     )>, user: (
       { __typename?: 'User' }
       & Pick<User, '_id' | 'email'>
@@ -1165,7 +1225,7 @@ export type GetCartItemsQuery = (
     & { comments?: Maybe<(
       { __typename?: 'Comments' }
       & Pick<Comments, '_id' | 'score' | 'comment' | 'title'>
-    )>, variant: (
+    )>, variant?: Maybe<(
       { __typename?: 'Variants' }
       & Pick<Variants, '_id' | 'title'>
       & { shoes: (
@@ -1176,7 +1236,7 @@ export type GetCartItemsQuery = (
           & Pick<Images, 'src'>
         )> }
       ) }
-    ) }
+    )> }
   )> }
 );
 
@@ -1248,7 +1308,7 @@ export type GetOrderQuery = (
     ), products: Array<(
       { __typename?: 'CartItem' }
       & Pick<CartItem, '_id' | 'quantity'>
-      & { variant: (
+      & { variant?: Maybe<(
         { __typename?: 'Variants' }
         & Pick<Variants, '_id' | 'title' | 'price'>
         & { shoes: (
@@ -1259,7 +1319,7 @@ export type GetOrderQuery = (
             & Pick<Images, 'src'>
           )> }
         ) }
-      ) }
+      )> }
     )> }
   ) }
 );
@@ -1284,7 +1344,7 @@ export type GetOrdersQuery = (
     )>, products: Array<(
       { __typename?: 'CartItem' }
       & Pick<CartItem, '_id' | 'quantity'>
-      & { variant: (
+      & { variant?: Maybe<(
         { __typename?: 'Variants' }
         & Pick<Variants, 'title'>
         & { shoes: (
@@ -1295,7 +1355,7 @@ export type GetOrdersQuery = (
             & Pick<Images, 'src'>
           )> }
         ) }
-      ) }
+      )> }
     )> }
   )> }
 );
@@ -1727,6 +1787,50 @@ export function useAddCommentMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddCommentMutationHookResult = ReturnType<typeof useAddCommentMutation>;
 export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
 export type AddCommentMutationOptions = Apollo.BaseMutationOptions<AddCommentMutation, AddCommentMutationVariables>;
+export const AddGiftCardItemDocument = gql`
+    mutation AddGiftCardItem($from: String!, $to: String!, $message: String!, $price: RangeGift) {
+  addGiftCardItem(card: {from: $from, to: $to, message: $message, price: $price}) {
+    _id
+    quantity
+    card {
+      _id
+      from
+      to
+      used
+      price
+      message
+    }
+  }
+}
+    `;
+export type AddGiftCardItemMutationFn = Apollo.MutationFunction<AddGiftCardItemMutation, AddGiftCardItemMutationVariables>;
+
+/**
+ * __useAddGiftCardItemMutation__
+ *
+ * To run a mutation, you first call `useAddGiftCardItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddGiftCardItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addGiftCardItemMutation, { data, loading, error }] = useAddGiftCardItemMutation({
+ *   variables: {
+ *      from: // value for 'from'
+ *      to: // value for 'to'
+ *      message: // value for 'message'
+ *      price: // value for 'price'
+ *   },
+ * });
+ */
+export function useAddGiftCardItemMutation(baseOptions?: Apollo.MutationHookOptions<AddGiftCardItemMutation, AddGiftCardItemMutationVariables>) {
+        return Apollo.useMutation<AddGiftCardItemMutation, AddGiftCardItemMutationVariables>(AddGiftCardItemDocument, baseOptions);
+      }
+export type AddGiftCardItemMutationHookResult = ReturnType<typeof useAddGiftCardItemMutation>;
+export type AddGiftCardItemMutationResult = Apollo.MutationResult<AddGiftCardItemMutation>;
+export type AddGiftCardItemMutationOptions = Apollo.BaseMutationOptions<AddGiftCardItemMutation, AddGiftCardItemMutationVariables>;
 export const AddImageDocument = gql`
     mutation AddImage($parentId: String!, $position: Float, $src: String, $width: Float, $height: Float, $product_id: String) {
   addImage(
@@ -2634,6 +2738,14 @@ export const GetBasketDocument = gql`
     products {
       _id
       quantity
+      card {
+        _id
+        from
+        to
+        message
+        price
+        used
+      }
       variant {
         _id
         title

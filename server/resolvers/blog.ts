@@ -2,7 +2,6 @@ import { User } from "../entities/User";
 import { isAuth } from "../middlewares/isAuth";
 import { BlogInput } from "./types/blog-input";
 import { MyContext } from "../type";
-
 const toObjectId = require("mongodb").ObjectID;
 import {
   Query,
@@ -34,7 +33,7 @@ export class BlogResolver {
   @Query(() => Blog)
   async getSingleArticle(
     @Arg("articleId") articleId: ObjectId,
-    @Ctx() {  }: MyContext
+    @Ctx() {}: MyContext
   ): Promise<Blog> {
     try {
       const article = await BlogModel.findById(articleId).lean();
@@ -51,7 +50,7 @@ export class BlogResolver {
   async getClosestArticles(
     @Arg("tags") tags: string,
     @Arg("title") title: string,
-    @Ctx() {  }: MyContext
+    @Ctx() {}: MyContext
   ): Promise<Blog[]> {
     try {
       const randomArticles = await BlogModel.aggregate([
@@ -77,7 +76,7 @@ export class BlogResolver {
     @Arg("articleId") articleId: string,
     @Arg("limit") limit: number,
     @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
-    @Ctx() {  }: MyContext
+    @Ctx() {}: MyContext
   ): Promise<PaginatedCommentsResponse | []> {
     try {
       return cursorPagination(
@@ -251,7 +250,7 @@ export class BlogResolver {
   }
 
   @FieldResolver()
-  createdAt(@Root() articles: Blog, @Ctx() {  }: MyContext) {
+  createdAt(@Root() articles: Blog, @Ctx() {}: MyContext) {
     const currentDate = new Date();
     return getIntervalBetweenDates(
       currentDate,

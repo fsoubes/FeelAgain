@@ -10,6 +10,7 @@ import { createVariantLoader } from "loaders/createVariantLoader";
 import { createShoesLoader } from "loaders/createShoesLoader";
 import { createCommentLoader } from "loaders/createCommentLoader";
 import { createCommentsLoader } from "loaders/createCommentsLoader";
+import { createCardItemLoader } from "loaders/createCardItemLoader";
 
 export type req = Request & {
   session: Session &
@@ -34,4 +35,5 @@ export type MyContext = {
   imageLoader: ReturnType<typeof createImageLoader>;
   itemLoader: (isCart: boolean) => ReturnType<typeof createCartItemLoader>;
   shoesLoader: ReturnType<typeof createShoesLoader>;
+  giftCardLoader: ReturnType<typeof createCardItemLoader>;
 };

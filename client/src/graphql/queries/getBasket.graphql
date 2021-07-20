@@ -4,6 +4,14 @@ query GetBasket {
     products {
       _id
       quantity
+      card {
+        _id
+        from
+        to
+        message
+        price
+        used
+      }
       variant {
         _id
         title

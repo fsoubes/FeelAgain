@@ -35,61 +35,6 @@
           margin-bottom: 1rem;
         }
 
-        .size {
-          font-size: 15px;
-          position: relative;
-          cursor: pointer;
-          border-radius: 0;
-          width: 65%;
-          margin-bottom: 4rem;
-          outline: none;
-          appearance: none;
-        }
-        ul {
-          font-size: 15px;
-          outline: none;
-          appearance: none;
-          border: 0.5px solid black;
-          left: 0;
-          padding: 0;
-          width: 100%;
-          list-style: none;
-          position: absolute;
-          background: #ecf0f5;
-          margin: 0;
-          top: 0;
-
-          .item__size {
-            padding: 10px;
-          }
-
-          .item__relatives {
-            padding: 10px;
-          }
-
-          .item__size:hover {
-            background: darkgrey;
-            color: white;
-          }
-
-          .notavailable {
-            text-decoration: line-through;
-            color: grey;
-          }
-
-          .current {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            -ms-appearance: none;
-            background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
-              100% 50% no-repeat;
-          }
-
-          .hidden {
-            display: none;
-          }
-        }
-
         .card {
           border-radius: 0;
           width: 65%;
@@ -224,4 +169,64 @@
       border-radius: 5px;
     }
   }
+}
+
+.size {
+  font-size: 15px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 0;
+  width: 65%;
+  margin-bottom: 4rem;
+  outline: none;
+  appearance: none;
+  ul {
+    font-size: 15px;
+    outline: none;
+    appearance: none;
+    border: 0.5px solid black;
+    left: 0;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    position: absolute;
+    background: #ecf0f5;
+    margin: 0;
+    top: 0;
+
+    .item__size {
+      padding: 10px;
+    }
+
+    .item__relatives {
+      padding: 10px;
+    }
+
+    .item__size:hover {
+      background: darkgrey;
+      color: white;
+    }
+
+    .notavailable {
+      text-decoration: line-through;
+      color: grey;
+    }
+
+    .current {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
+        100% 50% no-repeat;
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
+}
+
+.full {
+  width: 100%;
+  margin-bottom: 2rem;
 }

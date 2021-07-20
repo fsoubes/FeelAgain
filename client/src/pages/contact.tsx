@@ -4,6 +4,7 @@ import { withApollo } from "../utils/withApollo";
 import styles from "../styles/Contact.module.scss";
 import { Button } from "@material-ui/core";
 import { useSendContactMutation } from "../generated/graphql";
+import Head from "../components/SEO/Head";
 
 interface ContactProps {}
 
@@ -16,6 +17,10 @@ const Contact: React.FC<ContactProps> = ({}) => {
 
   return (
     <Layout>
+      <Head
+        title={"Formulaire de contact"}
+        description={`Contactez-nous pour plus d'informations`}
+      />
       <section className={styles.section__4}>
         <div className={styles.shape__3} />
         <div className={`${styles.sheet__whyus}`}>
