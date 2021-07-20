@@ -2,6 +2,7 @@ import { Button, Link } from "@material-ui/core";
 
 import { GetBasketQuery } from "../../generated/graphql";
 import styles from "../../styles/CartProduct.module.scss";
+import { computeTotal } from "../../utils/totalPrice";
 import SmallProductList from "../Products/SmallProductList";
 
 interface SmallCartProductProps {
@@ -62,15 +63,9 @@ const SmallCartProduct: React.FC<SmallCartProductProps> = ({
             <p className={styles.total}>
               <strong>SOUS-TOTAL:</strong>
               <span style={{ color: "black", fontWeight: "bold" }}>
-                {data &&
-                  data?.getBasket.products.reduce(
-                    (acc, currentValue) =>
-                      acc +
-                      currentValue.variant.price *
-                        (currentValue.quantity as number),
-                    0
-                  )}
-                ,00€
+                {data && (
+                  <div>{computeTotal(data?.getBasket.products)},00€</div>
+                )}
               </span>
             </p>
           </>

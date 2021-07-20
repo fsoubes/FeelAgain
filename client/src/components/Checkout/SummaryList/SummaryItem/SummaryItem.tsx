@@ -1,5 +1,5 @@
 interface SummaryItemProps {
-  size: number;
+  size?: number;
   title: string;
   src: string;
   contain: boolean;

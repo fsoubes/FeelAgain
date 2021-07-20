@@ -16,16 +16,28 @@ const SmallProductList: React.FC<SmallProductListProps> = ({
     <SmallProductItem
       key={item._id}
       src={
-        item.variant.shoes.vendor === "Anaki"
-          ? item.variant.shoes.images[1].src
-          : item.variant.shoes.images[0].src
+        item.card
+          ? "/gift.jpeg"
+          : item.variant?.shoes.vendor === "Anaki"
+          ? item.variant?.shoes.images[1].src
+          : (item.variant?.shoes.images[0].src as string)
       }
       id={item._id}
-      size={item.variant.title}
-      title={item.variant.shoes.title}
-      price={item.variant.price}
-      contain={item.variant.shoes.vendor === "Anaki"}
-      available={(item.quantity as number) <= item.variant.quantity}
+      size={item.variant ? (item.variant.title as string) : undefined}
+      title={
+        item.variant
+          ? (item.variant?.shoes.title as string)
+          : `Carte Cadeau de ${item.card?.price}€`
+      }
+      price={
+        item.variant
+          ? (item.variant.price as number)
+          : (item.card?.price as number)
+      }
+      contain={item.variant?.shoes.vendor === "Anaki"}
+      available={
+        (item.quantity as number) <= (item.variant?.quantity as number)
+      }
       quantity={item.quantity as number}
       remove={() =>
         remove(item._id, data.getBasket?._id, item.quantity as number)

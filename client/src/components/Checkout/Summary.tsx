@@ -3,6 +3,7 @@ import { useGetBasketQuery } from "../../generated/graphql";
 import SummaryList from "./SummaryList/SummaryList";
 import styles from "../../styles/Summary.module.scss";
 import Spinner from "../Spinner/Spinner";
+import { computeTotal } from "../../utils/totalPrice";
 
 interface SummaryProps {
   setMail: React.Dispatch<React.SetStateAction<string>>;
@@ -13,11 +14,7 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ setMail, delivery, setTotal }) => {
   const { data, loading } = useGetBasketQuery();
 
-  const total = data?.getBasket.products.reduce(
-    (acc, currentValue) =>
-      acc + currentValue.variant.price * (currentValue.quantity as number),
-    0
-  );
+  const total = data && computeTotal(data.getBasket?.products);
 
   useEffect(() => {
     if (data && total) {

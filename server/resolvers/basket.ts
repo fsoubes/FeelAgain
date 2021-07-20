@@ -352,10 +352,10 @@ export class BasketResolver {
               {
                 _id: prod,
               },
-
               { order: true },
               { useFindAndModify: false, upsert: true }
             );
+
             if (product) {
               const variant = await VariantsModel.findById(product.variant);
               if (variant) {

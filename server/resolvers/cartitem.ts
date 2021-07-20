@@ -19,6 +19,7 @@ export class CartItemResolver {
 
   @FieldResolver(() => Variants)
   async card(@Root() item: CartItem, @Ctx() { giftCardLoader }: MyContext) {
+    if (!item.card) return null;
     if (Object.keys(item.card).length === 2)
       return giftCardLoader.load(item.card as typeof ObjectId);
     else return item.card;

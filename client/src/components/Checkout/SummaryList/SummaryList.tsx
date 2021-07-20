@@ -12,15 +12,25 @@ const SummaryList: React.FC<SummaryListProps> = ({ data }) => {
       <SummaryItem
         key={item._id}
         src={
-          item.variant.shoes.vendor === "Anaki"
-            ? item.variant.shoes.images[1].src
-            : item.variant.shoes.images[0].src
+          item.card
+            ? "/gift.jpeg"
+            : item.variant?.shoes.vendor === "Anaki"
+            ? item.variant?.shoes.images[1].src
+            : (item.variant?.shoes.images[0].src as string)
         }
-        size={parseFloat(item.variant?.title)}
+        size={item.variant ? parseFloat(item.variant?.title) : undefined}
         quantity={item.quantity as number}
-        title={item.variant.shoes.title}
-        price={item.variant.price}
-        contain={item.variant.shoes.vendor === "Anaki"}
+        title={
+          item.variant
+            ? (item.variant?.shoes.title as string)
+            : `Carte Cadeau de ${item.card?.price}€`
+        }
+        price={
+          item.variant
+            ? (item.variant.price as number)
+            : (item.card?.price as number)
+        }
+        contain={item.variant?.shoes.vendor === "Anaki"}
       ></SummaryItem>
     );
   });

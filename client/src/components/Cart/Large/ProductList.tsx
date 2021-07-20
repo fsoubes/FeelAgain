@@ -1,6 +1,7 @@
 import ProductLargeItem from "./Item/ProductLargeItem";
 import { GetBasketQuery } from "../../../generated/graphql";
 import styles from "../../../styles/LargeProduct.module.scss";
+import { computeTotal } from "../../../utils/totalPrice";
 
 interface ProductListProps {
   data: GetBasketQuery;
@@ -70,16 +71,7 @@ const ProductList: React.FC<ProductListProps> = ({ data, remove, update }) => {
         <div className={styles.product}></div>
         <div className={styles.quantity}></div>
         <div className={styles.total}>
-          <div>
-            {data &&
-              data?.getBasket.products.reduce((acc, currentValue) => {
-                const price = currentValue.variant
-                  ? (currentValue.variant.price as number)
-                  : (currentValue.card?.price as number);
-                return acc + price * (currentValue.quantity as number);
-              }, 0)}
-            ,00€
-          </div>
+          {data && <div>{computeTotal(data?.getBasket.products)},00€</div>}
         </div>
       </div>
     </div>
